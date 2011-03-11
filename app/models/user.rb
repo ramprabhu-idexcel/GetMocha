@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
   has_many :project_users
   has_many :guest_users
   has_many :chats
+  has_many :messages
 end
