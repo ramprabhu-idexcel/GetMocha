@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
 	has_many :project_users
 	has_many :project_guests
-	has_many :users, :through=> :project_users
+	has_many :owners, :through=> :project_users
 	has_many :activities, :polymorphic => true
 	has_many :messages, :through=>:activities
 	has_many :tasks, :through=>:activities
