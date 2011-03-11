@@ -3,8 +3,6 @@ class Message < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :user
 	has_many :activities, :dependent => :destroy
-	has_many :commentable, :polymorphic => true
-	belongs_to :attachable, :polymorphic => true
 end
 
 
