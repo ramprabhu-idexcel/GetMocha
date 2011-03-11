@@ -1,4 +1,21 @@
 GetMocha::Application.routes.draw do
+  #~ devise_for :users
+  devise_scope :user do
+    get "sign_in", :to => "devise/sessions#new"
+    post "users/sign_in",:to=>"devise/sessions#create",:as=>"user_session"
+    get "logout",:to=>"devise/sessions#destroy",:as=>"destroy_user_session"
+    post "users/password",:to=>"devise/passwords#create",:as=>"user_password"
+    get "users/password/new",:to=>"devise/passwords#new",:as=>"new_user_password"
+    get "users/password/edit",:to=>"devise/passwords#edit",:as=>"edit_user_password"
+    put "users/password",:to=>"devise/passwords#update"
+    post "users",:to=>"devise/registrations#create",:as=>"user_registration"
+    get "sign_up",:to=>"devise/registrations#new",:as=>"new_user_registration"
+    get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
+    put "users",:to=>"devise/registrations#update"
+    delete "users",:to=>"devise/registrations#destroy"    
+  end
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
