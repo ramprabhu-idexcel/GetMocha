@@ -9,7 +9,7 @@ gem 'rails', '3.0.5'
 
 gem 'mysql2'
 gem 'devise','1.1.7'
-
+gem 'delayed_job'
 # Use unicorn as the web server
 # gem 'unicorn'
 
