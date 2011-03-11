@@ -9,4 +9,5 @@ class Project < ActiveRecord::Base
 	has_many :comments, :through=>:activities
 	has_many :custom_emails
 	has_many :chats
+	has_many :invites
 end
