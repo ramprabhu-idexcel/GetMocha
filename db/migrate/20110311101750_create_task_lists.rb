@@ -3,7 +3,7 @@ class CreateTaskLists < ActiveRecord::Migration
     create_table :task_lists do |t|
       t.integer :project_id
       t.integer :user_id
-      t.string :name, :limit => 255
+      t.string :name
       t.timestamps
     end
     add_index "task_lists", :project_id

@@ -1,12 +1,12 @@
 class CreateProjectGuests < ActiveRecord::Migration
   def self.up
     create_table :project_guests do |t|
-      t.integer :user_id
+      t.integer :guest_id
       t.integer :project_id
-      t.boolean :status
+      t.boolean :status,:default=>true
       t.timestamps
     end
-    add_index "project_guests", :user_id
+    add_index "project_guests", :guest_id
     add_index "project_guests", :project_id    
   end
 

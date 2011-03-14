@@ -11,8 +11,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :mobile
       t.string :time_zone
       t.string :color
-      t.boolean :status
-      t.boolean :is_guest
+      t.boolean :status,:default=>true
+      t.boolean :is_guest,:default=>false
       t.datetime :joined_date
       t.recoverable
       t.rememberable
