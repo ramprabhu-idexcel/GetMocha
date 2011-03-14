@@ -1,0 +1,32 @@
+/* All conditional Internet Explorer specific styles should go into this stylesheet - we do not support IE6, this is done via ie6update.js */ 
+
+* html .clear { height: 1% }
+
+.attachment-upload {width: auto; float: none; padding-top: 8px;}
+.attach-contain { margin-right: 0px;  }
+.drag-drop { width: auto; }
+
+.l-panel .project ul li span { display: block; }
+
+.r-panel .attachment-upload hr, .attachment-upload hr {margin: 0 -20px -5px;}
+
+.r-panel hr {margin: 0 -20px 10px;}
+
+.settings .m-tab {margin: 0; height: auto; line-height: 18px;}
+
+.message-body .post-time, .message-body .recipients { width: 90%; margin-bottom: none; }
+
+.m-panel .unread .excerpt h4, .m-panel .task .task-name h4 {min-width: 232px; display: block;}
+
+.modal-body-contain {left: -6px;}
+.modal-body {padding-right: 10px;}
+
+.tasks .message-body .checkbox {position: inherit;}
+
+.tasks .message-body h2 { margin-left: 15px; }
+
+.l-panel, .m-panel, .r-panel {margin-bottom: 0;}
+
+.modal-body {width: 100%; }
+.modal-body-contain { border-right: none;}
+.modal-input .textfield {margin: 2px 0 0 0;padding: 8px 0 2px 0;}

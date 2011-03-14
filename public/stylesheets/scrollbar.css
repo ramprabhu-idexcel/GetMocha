@@ -1,0 +1,62 @@
+/* Turn on a 13x13 scrollbar */
+::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+    border: none;
+}
+ 
+::-webkit-scrollbar-button:vertical {
+    background-color: none;
+    border: none; 
+}
+ 
+/* Place The scroll down button at the bottom */
+::-webkit-scrollbar-button:vertical:increment {
+    background: url('../images/scrollbar/down.png') no-repeat;
+    border: none;
+}
+ 
+/* Place The scroll up button at the up */
+::-webkit-scrollbar-button:vertical:decrement {
+    background: url('../images/scrollbar/up.png') no-repeat;
+    border: none;
+}
+ 
+::-webkit-scrollbar-track:vertical {
+    background-color: faf9f8;
+    border: none;
+}
+ 
+/* Top area above thumb and below up button */
+::-webkit-scrollbar-track-piece:vertical:start {
+    border: none;
+}
+ 
+/* Bottom area below thumb and down button */
+::-webkit-scrollbar-track-piece:vertical:end {
+    border: none;
+}
+ 
+/* Track below and above */
+::-webkit-scrollbar-track-piece {
+    background: url('../images/scrollbar/track.png') repeat-y;
+    border: none;
+}
+ 
+/* The thumb itself */
+::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background: url('../images/scrollbar/thumb.png') repeat-y;
+    -webkit-border-radius: 6px;
+    border: 1px solid #bfb7a2;
+}
+ 
+/* Corner */
+::-webkit-scrollbar-corner:vertical {
+    background-color: none;
+}
+ 
+/* Resizer */
+::-webkit-scrollbar-resizer:vertical {
+    background-color: gray;
+}

@@ -1,0 +1,69 @@
+#transformers-rule {
+	height: 100%;
+	clear: both;
+}
+
+.container {
+	width: 100%; height: 412px;
+	-webkit-perspective: 1000;
+}
+
+.card {
+	width: 100%; height: 412px;
+	border: 8px solid #fff;	
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: 0.8s;
+}
+	.container:hover .card {
+		-webkit-transform: rotateY(180deg);				
+	}
+
+.face {
+	position: absolute;
+	-webkit-backface-visibility: hidden;
+}
+
+.optimus {
+	float: left;
+}
+	.optimus .front {
+		background: blue;
+		width: 90%; height: 372px;
+	}
+	.optimus .back {
+		width: 100%; height: 372px; padding: 20px;
+		-webkit-transform: rotateY(180deg);
+		background: #a3a3a3 url(texture.png); 
+	}
+		.optimus .back h2 {
+			width: 292px; height: 33px; margin: 0 auto 20px auto;
+			background: url(optimus-title.png); text-indent: -9999px; 
+		}
+		.optimus img {
+			float: right;
+		}
+		.optimus p {
+			float: left; width: 185px; margin: 0 0 27px 0;
+			font-size: 17px; line-height: 28px; color: #4c4c4c; 
+		}
+		.optimus dl {
+			font-size: 30px; font-weight: bold; 
+			line-height: 40px; color: #717171;
+			width: 264px; padding: 5px 10px; overflow: hidden; 
+			background: #cfcfcf url(gradient.png) repeat-y;
+			-webkit-box-shadow: 0 1px 5px #888;
+			text-shadow: 0 1px 1px #f5f5f5;
+		}
+			.optimus dl dt {
+				float: left; clear: both;
+			}
+			.optimus dl dd {
+				float: right;
+			}
+
+.front {
+	z-index: 10;
+}
+.container:hover .front {
+	z-index: 0;
+} 
