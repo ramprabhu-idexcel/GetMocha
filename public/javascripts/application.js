@@ -5,4 +5,9 @@ $(document).ready(function() {
   $('.user_drop_down').click(function(){
     $('.account-dropdown').toggle();
   });
+  
+  $(#p_add).click(function(){
+    var a=$('#project_invites')
+    });
+    
 });
