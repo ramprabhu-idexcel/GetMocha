@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-	layout "application"
+	before_filter :authenticate_user!
+
 	
 	def new
 	end

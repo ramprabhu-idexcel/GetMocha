@@ -1,4 +1,5 @@
 class UsersController <  Devise::RegistrationsController  
+  before_filter :authenticate_user!,:except=>["new","create"]
   def create
     build_resource
     if resource.save
