@@ -40,5 +40,10 @@ class User < ActiveRecord::Base
     
   end
   
+  #membership in the completed projects
+  def completed_projects
+    
+  end
+  
   
 end
