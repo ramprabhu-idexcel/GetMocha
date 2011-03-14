@@ -6,6 +6,7 @@ GetMocha::Application.configure do
   # since you don't have to restart the webserver when you make code changes.
   config.cache_classes = false
 
+    
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
@@ -13,6 +14,7 @@ GetMocha::Application.configure do
   config.consider_all_requests_local       = true
   config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
+ config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -22,5 +24,19 @@ GetMocha::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  
+ ActionMailer::Base.smtp_settings = {
+:address => "smtp.gmail.com",
+:enable_starttls_auto => true,
+:port => 587,
+:authentication => :plain,
+:user_name => "ramprabu.n@railsbuddies.com",
+:password => 'ramprabu123'
+}
+ 
+#~ ActionMailer::Base.perform_deliveries = true  
+#~ ActionMailer::Base.raise_delivery_errors = true  
+
+
 end
 
