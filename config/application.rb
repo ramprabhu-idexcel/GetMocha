@@ -1,5 +1,5 @@
 require File.expand_path('../boot', __FILE__)
-
+require File.expand_path('../../lib/hard_code_model', __FILE__)
 require 'rails/all'
 
 # If you have a Gemfile, require the gems listed there, including any gems
@@ -14,6 +14,7 @@ module GetMocha
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths << File.join(config.root, "lib") 
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
