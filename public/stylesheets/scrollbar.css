@@ -12,13 +12,13 @@
  
 /* Place The scroll down button at the bottom */
 ::-webkit-scrollbar-button:vertical:increment {
-    background: url('../images/scrollbar/down.png') no-repeat;
+    background: url('/images/scrollbar/down.png') no-repeat;
     border: none;
 }
  
 /* Place The scroll up button at the up */
 ::-webkit-scrollbar-button:vertical:decrement {
-    background: url('../images/scrollbar/up.png') no-repeat;
+    background: url('/images/scrollbar/up.png') no-repeat;
     border: none;
 }
  
@@ -39,14 +39,14 @@
  
 /* Track below and above */
 ::-webkit-scrollbar-track-piece {
-    background: url('../images/scrollbar/track.png') repeat-y;
+    background: url('/images/scrollbar/track.png') repeat-y;
     border: none;
 }
  
 /* The thumb itself */
 ::-webkit-scrollbar-thumb:vertical {
     height: 50px;
-    background: url('../images/scrollbar/thumb.png') repeat-y;
+    background: url('/images/scrollbar/thumb.png') repeat-y;
     -webkit-border-radius: 6px;
     border: 1px solid #bfb7a2;
 }
