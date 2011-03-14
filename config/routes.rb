@@ -1,9 +1,10 @@
 GetMocha::Application.routes.draw do
   
   devise_for :users, :controllers => {:registrations => "users"}     
-  root :to => "devise/sessions#new"
+  
 
   devise_scope :user do
+    root :to => "devise/sessions#new"
     get "sign_in", :to => "devise/sessions#new",:as=>"new_user_session"
     get "logout",:to=>"devise/sessions#destroy",:as=>"destroy_user_session"
     get "forgot_password",:to=>"devise/passwords#new",:as=>"new_user_password"
