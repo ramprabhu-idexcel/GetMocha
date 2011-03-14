@@ -57,37 +57,7 @@
 </div>
 <div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
-<%form_tag :url=>{ :controller => "projects", :action => "create" } , :remote => true do%>
-	<div class="modal-top-center">
-		<a class="save-btn" href="/add-project-1">Save</a>
-		<a class="cancel-btn" href="/">Cancel</a>
-		Add New Project
-	</div>
-	<div class="modal-top-right"></div>
-	<div class="modal-body-contain">
-		<div class="modal-body">
-
-			<div class="modal-input">
-			
-				<fieldset>
-					<label>Name:</label>
-					<input type="text" class="textfield" value="" name="project-name">
-					<%# if session[:first_name] && !session[:first_name].nil? %>
-							<%#=text_field :user, 'first_name',:value=>"#{session[:first_name]}" %> <%# else %> <%=text_field :user, 'first_name' %><%# end %>
-				</fieldset>
-				<fieldset>
-					<label>Invite:</label>
-					<input type="text" class="textfield" value="" name="invite-recipients">
-				</fieldset>
-				<fieldset>
-					<label>Message:</label>
-					<textarea cols="" rows="" class="textarea" name="message"></textarea>
-				</fieldset>
-			
-			</div>
-		</div>
-	</div>
-<%end%>
+<%= render :partial =>'/projects/new'%>
 	<div class="modal-bottom-left"></div>
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>

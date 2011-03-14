@@ -12,4 +12,5 @@ class Project < ActiveRecord::Base
 	has_many :chats
 	has_many :invites
   belongs_to :owner,:class_name=>"User"
+	attr_accesible :invites
 end
