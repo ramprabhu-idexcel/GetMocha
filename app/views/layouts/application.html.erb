@@ -10,15 +10,15 @@
 	
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
-				<link rel="stylesheet" href="styles/base.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="styles/modal.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="styles/scrollbar.css" type="text/css" media="screen" />
+				<link rel="stylesheet" href="/stylesheets/base.css" type="text/css" media="screen" />
+			<link rel="stylesheet" href="/stylesheets/modal.css" type="text/css" media="screen" />
+			<link rel="stylesheet" href="/stylesheets/scrollbar.css" type="text/css" media="screen" />
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
 
-			<script type="text/javascript" src="/scripts/size-container.js"></script>
-			<script type="text/javascript" src="/scripts/open.js"></script>
+			<script type="text/javascript" src="/javascripts/size-container.js"></script>
+			<script type="text/javascript" src="/javascripts/open.js"></script>
 	
 	<!--[if lt IE 7]>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
@@ -55,7 +55,43 @@
 	
 	<div class="clear-fix"></div>
 </div>
+<div class="modal add-item-modal">
+	<div class="modal-top-left"></div>
+<%form_tag :url=>{ :controller => "projects", :action => "create" } , :remote => true do%>
+	<div class="modal-top-center">
+		<a class="save-btn" href="/add-project-1">Save</a>
+		<a class="cancel-btn" href="/">Cancel</a>
+		Add New Project
+	</div>
+	<div class="modal-top-right"></div>
+	<div class="modal-body-contain">
+		<div class="modal-body">
 
+			<div class="modal-input">
+			
+				<fieldset>
+					<label>Name:</label>
+					<input type="text" class="textfield" value="" name="project-name">
+					<%# if session[:first_name] && !session[:first_name].nil? %>
+							<%#=text_field :user, 'first_name',:value=>"#{session[:first_name]}" %> <%# else %> <%=text_field :user, 'first_name' %><%# end %>
+				</fieldset>
+				<fieldset>
+					<label>Invite:</label>
+					<input type="text" class="textfield" value="" name="invite-recipients">
+				</fieldset>
+				<fieldset>
+					<label>Message:</label>
+					<textarea cols="" rows="" class="textarea" name="message"></textarea>
+				</fieldset>
+			
+			</div>
+		</div>
+	</div>
+<%end%>
+	<div class="modal-bottom-left"></div>
+	<div class="modal-bottom"></div>
+	<div class="modal-bottom-right"></div>
+</div>
 </body>
 </html>
 
