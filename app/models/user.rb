@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
          #~ :trackable,
          
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  validates :first_name,:last_name,:presence=> true
+  attr_accessible :email, :password, :remember_me,:first_name,:last_name
   has_many :projects
   has_one :project
   has_many :project_users
