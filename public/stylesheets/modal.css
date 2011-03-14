@@ -1,5 +1,5 @@
 .modal {
-	background: #393939 url('../images/modal/modal-back.png') repeat-x top;
+	background: #393939 url('/images/modal/modal-back.png') repeat-x top;
 	min-width: 100px;
 	position:absolute;
 	z-index: 300;
@@ -13,9 +13,9 @@
 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 
-.modal-top-left { background: url('../images/modal/image-map.png') 0 0 no-repeat; width: 6px; height: 59px; float: left; position:relative; }
+.modal-top-left { background: url('/images/modal/image-map.png') 0 0 no-repeat; width: 6px; height: 59px; float: left; position:relative; }
 .modal-top-center {
-	background: url('../images/modal/top-arrow.png') no-repeat top center;
+	background: url('/images/modal/top-arrow.png') no-repeat top center;
 	height: 19px;
 	position: absolute;
 	top: -10px;
@@ -27,18 +27,18 @@
 	text-shadow: 0 1px 0 #000;
 }
 
-.modal-top-right { background: url('../images/modal/image-map.png') -6px 0 no-repeat; width: 6px; height: 59px;  float: right; position:relative; right: -1px;}
+.modal-top-right { background: url('/images/modal/image-map.png') -6px 0 no-repeat; width: 6px; height: 59px;  float: right; position:relative; right: -1px;}
 .modal-body-contain { border-left: 1px solid #000; border-right: 1px solid #000; position:relative; min-height: 50px; top: 35px;margin-bottom: 38px; }
 .modal-body {border-left: 1px solid #4d4d4d; border-right: 1px solid #4d4d4d; position:relative; min-height: 50px; padding-bottom: 1px; }
 
-.modal-bottom-left { background: url('../images/modal/image-map.png') -12px -1px no-repeat; width: 6px; height: 6px;  float: left; position:absolute; bottom: 1px; left: 1px; }
-.modal-bottom { background: url('../images/modal/modal-bottom.png') repeat-x; height: 2px;  float: left; position:absolute; bottom: 1px; left: 7px; }
-.modal-bottom-right { background: url('../images/modal/image-map.png') -12px -8px no-repeat; width: 6px; height: 6px;  float: right; position:absolute; bottom: 1px; right: 1px; }
+.modal-bottom-left { background: url('/images/modal/image-map.png') -12px -1px no-repeat; width: 6px; height: 6px;  float: left; position:absolute; bottom: 1px; left: 1px; }
+.modal-bottom { background: url('/images/modal/modal-bottom.png') repeat-x; height: 2px;  float: left; position:absolute; bottom: 1px; left: 7px; }
+.modal-bottom-right { background: url('/images/modal/image-map.png') -12px -8px no-repeat; width: 6px; height: 6px;  float: right; position:absolute; bottom: 1px; right: 1px; }
 
 .modal .silver-45 { margin: 0 0 3px 5px; float: none; }
 
 .modal .cancel-btn { 
-	background: url('../images/buttons/modal-cancel.png') no-repeat top center;
+	background: url('/images/buttons/modal-cancel.png') no-repeat top center;
 	display: block;
 	width: 60px;
 	height: 25px;
@@ -54,7 +54,7 @@
 }
 
 .modal .save-btn { 
-	background: url('../images/buttons/modal-save.png') no-repeat top center;
+	background: url('/images/buttons/modal-save.png') no-repeat top center;
 	display: block;
 	width: 50px;
 	height: 25px;
@@ -109,7 +109,7 @@
 
 .modal-input .open .textarea, .modal-input .open .attachment-upload { min-height: 100px; display: block; }
 
-.modal-close { background: url('../images/buttons/close-modal.png') no-repeat center top; display: block; float: left; width: 23px; height: 23px; }
+.modal-close { background: url('/images/buttons/close-modal.png') no-repeat center top; display: block; float: left; width: 23px; height: 23px; }
 .modal-close:active { background-position: center -23px; }
 
 /* Add New Modal */
@@ -174,7 +174,7 @@
 }
 
 .task-dropdown.assigned-to .invite-btn {
-	background: url('../images/layout/l-selected-back.png') repeat-x top;
+	background: url('/images/layout/l-selected-back.png') repeat-x top;
 	border: 1px solid #cccccc;
 	font-size: 20px; 
 	font-weight:bold; 
@@ -191,13 +191,13 @@
 	text-shadow: 0 1px 0 #fff;
 }
 
-.sort-by-top, .task-dropdown-t, .account-dropdown-t { background:url('../images/modal/sort-by-top.png') no-repeat top center; height: 20px; margin: -17px 0 -3px; }
+.sort-by-top, .task-dropdown-t, .account-dropdown-t { background:url('/images/modal/sort-by-top.png') no-repeat top center; height: 20px; margin: -17px 0 -3px; }
 .sort-by-tooltip ul, .task-dropdown ul, .account-dropdown ul { border-bottom: 1px solid #cccccc; }
 .sort-by-tooltip ul:last-child, .task-dropdown ul:last-child, .account-dropdown ul:last-child { border-bottom: none; }
 .sort-by-tooltip ul li, .task-dropdown ul li, .account-dropdown ul li { padding: 0 12px; border-top: 1px solid #fff; border-bottom: 1px solid #fff; }
 .sort-by-tooltip ul li a, .task-dropdown ul li a, .account-dropdown ul li a { color:#292D30; display: block; cursor: default; }
 .sort-by-tooltip ul li span, .task-dropdown ul li span { padding-left: 23px; cursor: default; }
-.sort-by-tooltip ul .selected span, .task-dropdown ul .selected span { display: block; background: url('../images/icons/check.png') no-repeat; background-position: 2px 7px; }
+.sort-by-tooltip ul .selected span, .task-dropdown ul .selected span { display: block; background: url('/images/icons/check.png') no-repeat; background-position: 2px 7px; }
 .sort-by-tooltip ul li:hover, .task-dropdown ul li:hover, .account-dropdown ul li:hover { background: #F9F9F9; background: -moz-linear-gradient(top, #F9F9F9 0%, #EDEDED 99%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F9F9F9), color-stop(99%,#EDEDED)); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F9F9F9', endColorstr='#EDEDED',GradientType=0 ); border-top: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; }
 .sort-by-tooltip ul li:hover:last-child { border-bottom: 1px solid #EDEDED; }
 .sort-by-tooltip ul:first-child li:hover:first-child { border-top: 1px solid #DDDDDD; }
