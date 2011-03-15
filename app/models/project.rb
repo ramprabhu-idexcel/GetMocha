@@ -12,5 +12,13 @@ class Project < ActiveRecord::Base
 	has_many :chats
 	has_many :invites
   belongs_to :owner,:class_name=>"User"
-	attr_accesible :invites
+	attr_accessible :name
+	validate :name, :presence   => true,
+													:uniqueness => true,
+													 :length     => { :within => 3..40 }
+	#~ after_create :create_email_ids
+	
+	#~ def  create_email_ids
+		
+	#~ end
 end

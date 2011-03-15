@@ -7,7 +7,11 @@ class ProjectsController < ApplicationController
 	end
 	
 	def create
-		puts "Create"
-		puts params.inspect
+		@project=Project.new(params[:data])
+		@project.status=ProjectStatus::ACTIVE
+		@project.save
+		@invites=Invitation.new(params[:data])
+		@invites.save
+		render :nothing=>true
 	end
 end

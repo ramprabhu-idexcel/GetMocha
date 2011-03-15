@@ -1,4 +1,4 @@
-<%form_for  :data, :url=>{ :controller => "projects", :action => "create" } do%>
+<%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
 	<div class="modal-top-center">
 		<a class="save-btn" id="p_add" href="#project_create">Save</a> 
 		<a class="cancel-btn" href="/">Cancel</a>
@@ -13,17 +13,17 @@
 				<fieldset>
 					<label>Name:</label>
 				
-							<%=text_field :user, 'first_name', :class=>"textfield" %>
+							<%=f.text_field  'name', :class=>"textfield" %>
 				</fieldset>
 				<fieldset>
 					<label>Invite:</label>
 					
-					 <%=text_field :project, 'invites', :class=>"textfield" %>
+					 <%=f.text_field 'email', :class=>"textfield" %>
 				</fieldset>
 				<fieldset>
 					<label>Message:</label>
 					
-				 <%=text_area :invite, 'message', :cols=>"40", :rows=>""%>
+				 <%=f.text_area 'message', :cols=>"35", :rows=>"4"%>
 				</fieldset>
 			
 			</div>

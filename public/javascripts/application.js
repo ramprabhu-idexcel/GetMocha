@@ -6,8 +6,22 @@ $(document).ready(function() {
     $('.account-dropdown').toggle();
   });
   
-  $(#p_add).click(function(){
-    var a=$('#project_invites')
+  $('#p_add').click(function(){
+    var a=$('#data_name').val();
+     var b=$('#data_invites').val();
+    var c=$('#data_message').val();
+    $.ajax({
+       type :'post',
+       url :"/projects",
+       data : $('#form1').serialize(),
+       success: function(){
+         alert( "Project Created: ");
+         $('.add-item-modal').hide();
+       }
+       
     });
     
+  });
 });
+
+
