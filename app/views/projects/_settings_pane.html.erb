@@ -35,9 +35,11 @@
 						</div>
 						<div class="info-right">
 						<span class="info"><%= @project.message_email_id %></span><br />
-						<span class="info">message@simplestation.com</span><a href="/#" class="edit">Delete</a>						
-							<input type="text" name="title" value="" class="textfield hidden"/>
-				       		<a href="/settings-general-1" class="add-email">+ Add another email</a>
+						<% @project.custom_emails.each do |mail| %>
+						<span class="info"><%= mail.email %></span><a href="/#" class="edit">Delete</a>		<br/>				
+						<% end %>
+							<input type="text" name="title" value="" class="textfield hidden" id="message_email_textfield"/>
+				       		<a href="#add-email" class="add-email" onclick="javascript:add_message_email('<%= @project.id %>');" id="change_message_email">+ Add another email</a>
 						</div>
 				    </fieldset>
 				    <fieldset>

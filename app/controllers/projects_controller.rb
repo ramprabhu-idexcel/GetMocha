@@ -37,6 +37,9 @@ class ProjectsController < ApplicationController
 			@project.update_attributes(:name=>params[:project_name])
 		elsif params[:proj_status]
 			@project.update_attributes(:status=>params[:proj_status])
+		elsif params[:email]
+			@custom=CustomEmail.new(:custom_type=>"Message", :project_id=>@project.id, :email=>params[:email])
+			@custom.save
 		end
 			render :partial=>'settings_pane'
 	end
