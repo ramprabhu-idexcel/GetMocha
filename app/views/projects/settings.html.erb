@@ -167,4 +167,30 @@ var pars = "project_id=" + proj_id +  "&email="+ message_email;
 
 }
 }
+
+function add_task_email(proj_id)
+{
+var message_add=document.getElementById('task_email_textfield').className;
+if(message_add=="textfield hidden")
+{
+document.getElementById('task_email_textfield').style.display="block";
+document.getElementById('change_task_email').innerHTML="Save";
+document.getElementById('task_email_textfield').className="textfield";
+}
+else
+{
+var message_email=document.getElementById('task_email_textfield').value;
+var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
+ $.ajax({
+       type :'post',
+       url : "/update_proj_settings?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_general').style.display="block";
+			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
+    });
+
+}
+}
 </script>
