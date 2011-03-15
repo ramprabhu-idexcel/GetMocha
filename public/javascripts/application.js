@@ -130,6 +130,22 @@ var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="
     });
 }
 
+function settings_project_info(edit)
+{
+if(edit=="edit")
+{
+document.getElementById('settings_project_name').style.display="none";
+document.getElementById('text_anchor').className="textfield";
+document.getElementById('edit_anchor').innerHTML="Save";
+}
+else
+{
+document.getElementById('settings_project_name').style.display="block";
+document.getElementById('text_anchor').className="textfield hidden";
+document.getElementById('edit_anchor').innerHTML="edit";
+}
+}
+
 
 
 
