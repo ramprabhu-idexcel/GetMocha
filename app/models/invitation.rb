@@ -1,7 +1,7 @@
 class Invitation < ActiveRecord::Base
   
 	belongs_to :project
-	attr_accessible :invite, :email, :message
+	attr_accessible :email, :message
 	
 	validates :email, :presence   => true,
 										:uniqueness => true,
