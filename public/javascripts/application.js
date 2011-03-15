@@ -60,17 +60,7 @@ document.getElementById('settings_people').style.display="none";
 document.getElementById('settings_general').style.display="block";
 }
 }
-// Function for displaying second panel in project settings
-function settings_secondpanel(project_id)
-{
-  $.ajax({
-       type :'post',
-       url : "/"+project_id+"/settings",
-       success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
-			 }
-    });
-}
+
 
 
 
