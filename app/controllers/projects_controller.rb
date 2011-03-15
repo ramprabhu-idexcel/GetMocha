@@ -16,5 +16,19 @@ class ProjectsController < ApplicationController
 		render :nothing=>true
 	end
 	def settings
+		p current_user
+#		@projects=current_user.projects if current_user
+@projects=Project.all
+		p @projects.inspect
+	end
+	def settings_pane
+		p params[:project_id]
+		@project=Project.find(params[:project_id])
+		p @project
+		#render :nothing=>true
+		render :partial=>'settings_pane'
+		#~ render :update do |page|
+			#~ page.replace_html 'settings_pane', :partial=>'settings_pane'
+		#~ end
 	end
 end

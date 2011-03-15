@@ -45,22 +45,22 @@
 
 <%= render :partial=>'/layouts/header'%>
 
-
-<div class="clear-fix"></div>
+<%= yield %>
+<!--<div class="clear-fix"></div>
 <div id="container">
 	
-	<%= render :partial=>'/layouts/first_panel'%>
-	<%= render :partial=>'/layouts/second_panel'%>
-	<%= render :partial=>'/layouts/third_panel'%>
+	<%#= render :partial=>'/layouts/first_panel'%>
+	<%#= render :partial=>'/layouts/second_panel'%>
+	<%#= render :partial=>'/layouts/third_panel'%>
 	<div class="clear-fix"></div>
 </div>
 <div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
-<%= render :partial =>'/projects/new'%>
+<%#= render :partial =>'/projects/new'%>
 	<div class="modal-bottom-left"></div>
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
-</div>
+</div>-->
 <%#=render "/layouts/name_settings"%>
 </body>
 </html>
