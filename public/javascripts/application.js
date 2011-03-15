@@ -159,7 +159,31 @@ var pars = "project_id=" + proj_id  + "&project_name="+ name;
 }
 }
 
+function change_project_status(proj_id)
+{
+var pub_access=document.getElementById('project_status_select_box').className;
 
+if(pub_access=="hidden")
+{
+document.getElementById('project_status_select_box').className="";
+document.getElementById('change_project_status').innerHTML="Save";
+document.getElementById('project_status_label').style.display="none";
+}
+else
+{
+var status=document.getElementById('project_status_select_box').value;
+var pars = "project_id=" + proj_id +  "&proj_status="+ status;
+ $.ajax({
+       type :'post',
+       url : "/update_proj_settings?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_general').style.display="block";
+			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
+    });
+}
+}
 
 
 

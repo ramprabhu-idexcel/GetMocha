@@ -55,13 +55,13 @@
 							<label>Status:</label>
 						</div>
 						<div class="info-right">
-							<span class="info"><% if @project.status == 1 %> Active <% elsif @project.status == 2 %>In Progress<% else %> Completed <% end %></span>
-				       		<select class="hidden">
-				       			<option>Active</option>
-				       			<option>On Hold</option>
-				       			<option>Completed</option>
+							<span class="info" id="project_status_label"><% if @project.status == 1 %> Active <% elsif @project.status == 2 %>In Progress<% else %> Completed <% end %></span>
+				       		<select class="hidden" id="project_status_select_box">
+				       			<option value="1">Active</option>
+				       			<option value="2">In Progress</option>
+				       			<option value="3">Completed</option>
 				       		</select>
-				       		<a href="/settings-general-1" class="edit">Edit</a>			       	
+				       		<a href="#edit" class="edit" onclick="javascript:change_project_status(<%= @project.id %>);" id="change_project_status">Edit</a>			       	
 				       	</div>
 
 				    </fieldset>			

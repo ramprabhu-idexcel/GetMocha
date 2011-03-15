@@ -35,6 +35,8 @@ class ProjectsController < ApplicationController
 			@project.update_attributes(:is_public=>checked)
 		elsif params[:project_name]
 			@project.update_attributes(:name=>params[:project_name])
+		elsif params[:proj_status]
+			@project.update_attributes(:status=>params[:proj_status])
 		end
 			render :partial=>'settings_pane'
 	end
