@@ -1,6 +1,6 @@
 GetMocha::Application.routes.draw do
   
-  devise_for :users, :controllers => {:registrations => "users"}     
+  devise_for :users, :controllers => {:registrations => "users",:sessions=>"sessions"}     
   
   devise_scope :user do
     root :to => "projects#new"
