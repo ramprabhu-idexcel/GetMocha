@@ -8,17 +8,10 @@ class SessionsController <  Devise::SessionsController
   #~ end
 	
 	def create
-		puts "^^^^^^^^^^^^^^^"
-		puts resource_name
-		
-    resource = warden.authenticate!(:scope => resource_name, :recall => "new")
-		puts "---------------------"
-		puts resource.inspect
-		
-    set_flash_message :notice, :signed_in
-     render :udpate do |page|
-        page.redirect_to '/projects/new'
-      end
-		end
+    resource = warden.authenticate!(:scope => resource_name)
+    render :udpate do |page|
+      page.redirect_to '/projects/new'
+    end
+  end
 		
 end
