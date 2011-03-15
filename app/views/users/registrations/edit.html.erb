@@ -1,5 +1,145 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
+
+
+
+
+	<div class="l-panel-contain">
+		<div class="l-panel">
+
+			<div class="sub-header">Personal Settings</div>
+			<a href="/settings-profile" class="my-account open" onclick="addClass(this);"><span class="icon"></span>My Account</a>
+		</div>
+	</div>
+	<div class="m-panel-contain">
+		<div class="m-panel">
+			<a href="/settings-profile" class="m-tab open">My Profile</a>
+
+			<a href="/settings-contacts" class="m-tab alt">My Contacts</a>
+		</div>
+	</div>
+	<div class="r-panel-contain">
+		<div class="r-panel">
+			<div class="avatar-upload">
+				<div class="avatar-lg"></div>
+				<img src="images/content/avatar-lg.jpg" class="avatar-lg-img" alt="avatar"/>
+
+				<div class="drag-drop">Drag and drop files here</div>
+				<div class="clear-fix"></div>
+			</div>
+			<div class="user-info">
+				<form action="">
+					<fieldset>
+						<div class="label-contain">
+							<label>First Name:</label>
+
+						</div>
+						<div class="info-right">
+							<span class="info">Jesse</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="text" name="first-name" value="" class="textfield hidden" />
+			       		</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+
+							<label>Last Name:</label>
+						</div>
+						<div class="info-right">
+							<span class="info">Ma</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="text" name="last-name" value="" class="textfield hidden" />
+				       	</div>
+				    </fieldset>
+
+				    <fieldset>
+						<div class="label-contain">
+							<label>Title:</label>
+						</div>
+						<div class="info-right">
+							<span class="info">Founder</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="text" name="title" value="" class="textfield hidden" />
+
+						</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+							<label>Primary:</label>
+						</div>
+						<div class="info-right">
+							<span class="info">jessema@gmail.com</span><a href="/settings-profile-1" class="edit">Edit</a>
+
+				       		<input type="text" name="primary-email" value="" class="textfield hidden" />
+				       	</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+							<label>Secondary:</label>
+						</div>
+						<div class="info-right">
+
+							<span class="info">jessema@me.com</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
+				       		<a href="#" class="add-email">+ Add another email</a>
+				       	</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+
+							<label>Password:</label>
+						</div>
+						<div class="info-right">
+							<span class="info">********</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="password" name="password" value="" class="textfield hidden" />
+				       	</div>
+				    </fieldset>
+
+				    <fieldset>
+						<div class="label-contain">
+							<label>Phone:</label>
+						</div>
+						<div class="info-right">
+							<span class="info">(415) 685-7782</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="text" name="phone" value="" class="textfield hidden" />
+
+				       	</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+							<label>Mobile:</label>
+						</div>
+						<div class="info-right">
+							<span class="info">(778) 682-1723</span><a href="/settings-profile-1" class="edit">Edit</a>
+
+				       		<input type="text" name="mobile" value="" class="textfield hidden" />
+				       	</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+							<label>Time Zone:</label>
+						</div>
+						<div class="info-right">
+
+							<span class="info">GMT +0</span><a href="/settings-profile-1" class="edit">Edit</a>
+				       		<input type="text" name="time-zone" value="" class="textfield hidden" />
+				       	</div>
+				    </fieldset>
+				    <fieldset>
+						<div class="label-contain">
+							<label>Chat Color:</label>
+
+						</div>
+						<div class="info-right">
+							<img src="images/layout/color-choose.png" alt="color-choose" />
+						</div>
+				    </fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
