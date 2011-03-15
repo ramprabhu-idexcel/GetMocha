@@ -1,154 +1,32 @@
 <div class="clear-fix"></div>
 <div id="container">
 	<div class="l-panel-contain">
-		<div class="l-panel">
-			<div class="sub-header">Project Settings</div>
-			<div class="projects-list">
-				<a href="/settings-general" class="project" onclick="addClass(this);"><span class="icon"></span>Apple</a>
-				<a href="/settings-general" class="project" onclick="addClass(this);"><span class="icon"></span>CoThink Internal</a>
-				<a href="/settings-general" class="project" onclick="addClass(this);"><span class="icon"></span>CoThink Development</a>
-				<a href="/settings-general" class="project" onclick="addClass(this);"><span class="icon"></span>IBM</a>
-
-				<a href="/settings-general" class="project" onclick="addClass(this);"><span class="icon"></span>Nike</a>
-				<a href="/settings-general" class="project open" onclick="addClass(this);"><span class="icon"></span>Simple Station</a>
-				<a href="/settings-general" class="project" onclick="addClass(this);"><span class="icon"></span>SwiftSure Development</a>
-			</div>
-			<div class="expand-completed"><div><span>Show Completed</span><span class="icon"></span></div></div>
-		</div>
+	<% if @projects %>
+		<%= render :partial=>'project_list' %>
+	<% end %>
 	</div>
-
-	<div class="m-panel-contain">
-		<div class="m-panel">
-			<a href="#general" onclick="javascript:settings_thirdpanel('general');" class="m-tab alt" id="general_anchor">General</a>
-			<a href="#people" onclick="javascript:settings_thirdpanel('people');" class="m-tab alt" id="people_anchor">People</a>
-		</div>
-	</div>
-	<div class="r-panel-contain" id="settings_general" style="display:none;">
-		<div class="r-panel">
-			<div class="project-info">
-				<h4>General</h4>
-				<form action="" style="margin-bottom: 10px;">
-					<fieldset>
-						<div class="label-contain">
-							<label>Project Name:</label>
-						</div>
-						<div class="info-right">
-							<span class="info">Simple Station</span>
-							<input type="text" name="first-name" value="" class="textfield hidden"/>
-							<a href="/settings-general-1" class="edit">Edit</a>
-			       		</div>
-				    </fieldset>
-				    <fieldset>
-						<div class="label-contain">
-							<label>Public Access:</label>
-						</div>
-						<div class="info-right">
-							<div class="checkbox"><span class="icon" onclick="checkBox(this);"></span></div>
-				       	</div>
-				    </fieldset>
-				    <fieldset>
-						<div class="label-contain">
-							<label>Messages:</label>
-						</div>
-						<div class="info-right">
-						<span class="info">simple-12348@m.getmocha.com</span><br />
-						<span class="info">message@simplestation.com</span><a href="/#" class="edit">Delete</a>						
-							<input type="text" name="title" value="" class="textfield hidden"/>
-				       		<a href="/settings-general-1" class="add-email">+ Add another email</a>
-						</div>
-				    </fieldset>
-				    <fieldset>
-						<div class="label-contain">
-							<label>Tasks:</label>
-						</div>
-						<div class="info-right">
-							<span class="info">simple-12348@t.getmocha.com</span>
-							<input type="text" name="title" value="" class="textfield hidden"/>
-							<a href="/settings-general-1" class="add-email">+ Add another email</a>
-				       	</div>
-				    </fieldset>
-				    <fieldset>
-						<div class="label-contain">
-							<label>Status:</label>
-						</div>
-						<div class="info-right">
-							<span class="info">Active</span>
-				       		<select class="hidden">
-				       			<option>Active</option>
-				       			<option>On Hold</option>
-				       			<option>Completed</option>
-				       		</select>
-				       		<a href="/settings-general-1" class="edit">Edit</a>			       	
-				       	</div>
-
-				    </fieldset>			
-				</form>				
-			</div>
-		</div>
-	</div>
-	<div class="r-panel-contain" id="settings_people" style="display:none;">
-		<div class="r-panel">
-			<div class="team-members">
-				<h2>Team Members</h2>
-				<div class="person">
-					<div class="avatar-mini"></div>
-					<img src="images/content/stuart-avatar.jpg" class="avatar-mini-img" alt="avatar" />
-					<span class="name">Stuart Bowness</span>
-
-					<a href="#" class="remove">[x]</a>
-					<div class="clear-fix"></div>
-				</div>
-				<div class="person">
-					<div class="avatar-mini"></div>
-					<img src="images/content/jesse-avatar.jpg" class="avatar-mini-img" alt="avatar" />
-					<span class="name">Jesse Ma</span>
-					<a href="#" class="remove">[x]</a>
-
-					<div class="clear-fix"></div>
-				</div>
-			</div>
-			<div class="guests">
-				<h2>Guests</h2>
-				<div class="person">
-					<div class="avatar-mini"></div>
-					<img src="images/content/alex-avatar.jpg" class="avatar-mini-img" alt="avatar" />
-
-					<span class="name">Alex Ristevski</span>
-					<a href="#" class="remove">[x]</a>
-					<div class="clear-fix"></div>
-				</div>
-				<div class="person">
-					<div class="avatar-mini"></div>
-					<img src="images/content/nathan-avatar.jpg" class="avatar-mini-img" alt="avatar" />
-					<span class="name">Nathan Wright</span>
-
-					<a href="#" class="remove">[x]</a>
-					<div class="clear-fix"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<span id="settings_pane">
+		<!-- Second and Third panel to come here -->
+	</span>
 	<div class="clear-fix"></div>
 </div>
-
-
-
 <script>
-function settings_thirdpanel(page)
+// Function for displaying second panel in project settings
+function settings_secondpanel(project_id)
 {
-if(page=="people")
-{
-document.getElementById('people_anchor').className="m-tab alt open";
-document.getElementById('general_anchor').className="m-tab alt";
-document.getElementById('settings_general').style.display="none";
-document.getElementById('settings_people').style.display="block";
-}
+<% @projects.each do |p| %>
+var id=<%= p.id %>;
+if(id==project_id)
+document.getElementById('project_list_'+id).className="project open";
 else
-{
-document.getElementById('general_anchor').className="m-tab alt open";
-document.getElementById('people_anchor').className="m-tab alt";
-document.getElementById('settings_people').style.display="none";
-document.getElementById('settings_general').style.display="block";
-}
+document.getElementById('project_list_'+id).className="project";
+<% end %>
+  $.ajax({
+       type :'post',
+       url : "/"+project_id+"/settings",
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 }
+    });
 }
 </script>

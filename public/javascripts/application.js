@@ -71,6 +71,25 @@ $(document).ready(function() {
   
 });
 
+// Function for displaying third panel in project settings
+function settings_thirdpanel(page)
+{
+if(page=="people")
+{
+document.getElementById('people_anchor').className="m-tab alt open";
+document.getElementById('general_anchor').className="m-tab alt";
+document.getElementById('settings_general').style.display="none";
+document.getElementById('settings_people').style.display="block";
+}
+else
+{
+document.getElementById('general_anchor').className="m-tab alt open";
+document.getElementById('people_anchor').className="m-tab alt";
+document.getElementById('settings_people').style.display="none";
+document.getElementById('settings_general').style.display="block";
+}
+}
+
 
 
 
