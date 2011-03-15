@@ -26,7 +26,7 @@
 							<label>Public Access:</label>
 						</div>
 						<div class="info-right">
-							<div class="checkbox"><span class="<%= @project.status? ? "icon checked" : "icon" %>" onclick="javascript:change_public_access(<%= @project.id %>);" id="settings_public_access"></span></div>
+							<div class="checkbox"><span class="<%= @project.is_public? ? "icon checked" : "icon" %>" onclick="javascript:change_public_access(<%= @project.id %>);" id="settings_public_access"></span></div>
 				       	</div>
 				    </fieldset>
 				    <fieldset>

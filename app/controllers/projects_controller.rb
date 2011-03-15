@@ -32,6 +32,7 @@ class ProjectsController < ApplicationController
 		@project=Project.find(params[:project_id])
 		if params[:change_field]=="public_access"
 			checked=params[:checked]=="false" ? true : false
+			p checked
 			@project.update_attributes(:is_public=>checked)
 		end
 			render :partial=>'settings_pane'

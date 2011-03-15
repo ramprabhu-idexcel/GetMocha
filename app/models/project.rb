@@ -14,7 +14,7 @@ class Project < ActiveRecord::Base
 	has_many :chats
 	has_many :invites
   belongs_to :owner,:class_name=>"User"
-	attr_accessible :name,:status,:message_email_id,:task_email_id
+	attr_accessible :name,:status,:message_email_id,:task_email_id,:is_public
 	validate :name, :presence   => true,
 													:uniqueness => true,
 													 :length     => { :within => 3..40 }
