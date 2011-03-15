@@ -18,4 +18,6 @@ class UsersController <  Devise::RegistrationsController
       #~ render_with_scope :new
     end
   end
+  
+  
 end

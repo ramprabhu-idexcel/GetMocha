@@ -1,12 +1,7 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-
-
-
-
-	<div class="l-panel-contain">
+<h2>Sign up</h2>
+<div class="l-panel-contain">
 		<div class="l-panel">
-
+		  
 			<div class="sub-header">Personal Settings</div>
 			<a href="/settings-profile" class="my-account open" onclick="addClass(this);"><span class="icon"></span>My Account</a>
 		</div>
@@ -14,7 +9,6 @@
 	<div class="m-panel-contain">
 		<div class="m-panel">
 			<a href="/settings-profile" class="m-tab open">My Profile</a>
-
 			<a href="/settings-contacts" class="m-tab alt">My Contacts</a>
 		</div>
 	</div>
@@ -22,8 +16,7 @@
 		<div class="r-panel">
 			<div class="avatar-upload">
 				<div class="avatar-lg"></div>
-				<img src="images/content/avatar-lg.jpg" class="avatar-lg-img" alt="avatar"/>
-
+				<img src="/images/content/avatar-lg.jpg" class="avatar-lg-img" alt="avatar"/>
 				<div class="drag-drop">Drag and drop files here</div>
 				<div class="clear-fix"></div>
 			</div>
@@ -31,112 +24,105 @@
 				<form action="">
 					<fieldset>
 						<div class="label-contain">
-							<label>First Name:</label>
-
+							<p><%= label_tag "First Name:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">Jesse</span><a href="/settings-profile-1" class="edit">Edit</a>
-				       		<input type="text" name="first-name" value="" class="textfield hidden" />
+							<span class="info_firstname" id="label_first_name"><%=current_user.first_name%></span>
+							 <%=text_field :val,:data, :id =>"txt_firstname",:value=>current_user.first_name%>
+						<%=link_to "Edit","#",:class=>"edit",:id=>"first_name"%>
+						<%=link_to "Save","#",:class=>"edit",:id=>"save_firstname"%>
 			       		</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-
-							<label>Last Name:</label>
+							<p><%= label_tag "Last Name:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">Ma</span><a href="/settings-profile-1" class="edit">Edit</a>
+							<span class="info_lastname" id="label_last_name"><%=current_user.last_name%></span>
+    							 <%=text_field :val,:data, :id =>"txt_lastname",:value=>current_user.last_name%>
+                   <%=link_to "Edit","#",:class=>"edit",:id=>"last_name"%>
 				       		<input type="text" name="last-name" value="" class="textfield hidden" />
 				       	</div>
 				    </fieldset>
-
 				    <fieldset>
 						<div class="label-contain">
-							<label>Title:</label>
+							<p><%= label_tag "Title:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">Founder</span><a href="/settings-profile-1" class="edit">Edit</a>
+							<span class="info"><%=current_user.title%></span><%=link_to "Edit","#",:class=>"edit"%>
 				       		<input type="text" name="title" value="" class="textfield hidden" />
-
 						</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-							<label>Primary:</label>
+							<p><%= label_tag "Primary:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">jessema@gmail.com</span><a href="/settings-profile-1" class="edit">Edit</a>
-
-				       		<input type="text" name="primary-email" value="" class="textfield hidden" />
+							<span class="info_email" id="label_email"><%=current_user.email%></span>
+						 <%=text_field :val,:data, :id =>"txt_email",:value=>current_user.email%>
+							<%=link_to "Edit","#",:class=>"edit",:id=>"email"%>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-							<label>Secondary:</label>
+							<p><%= label_tag "Secondary:"%><br /></p>
 						</div>
 						<div class="info-right">
-
-							<span class="info">jessema@me.com</span><a href="/settings-profile-1" class="edit">Edit</a>
+							<span class="info"> </span><%=link_to "Edit","#",:class=>"edit"%>
 				       		<input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
 				       		<a href="#" class="add-email">+ Add another email</a>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-
-							<label>Password:</label>
+							<p><%= label_tag "Password:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">********</span><a href="/settings-profile-1" class="edit">Edit</a>
-				       		<input type="password" name="password" value="" class="textfield hidden" />
+							<span class="info_password" id="label_password">********</span>
+							 <%=password_field :val,:data, :id =>"txt_password",:value=>"********"%>
+							<%=link_to "Edit","#",:class=>"edit",:id=>"password"%>
 				       	</div>
 				    </fieldset>
-
 				    <fieldset>
 						<div class="label-contain">
-							<label>Phone:</label>
+							<p><%= label_tag "Phone:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">(415) 685-7782</span><a href="/settings-profile-1" class="edit">Edit</a>
+							<span class="info"><%=current_user.phone%></span><%=link_to "Edit","#",:class=>"edit"%>
 				       		<input type="text" name="phone" value="" class="textfield hidden" />
-
 				       	</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-							<label>Mobile:</label>
+							<p><%= label_tag "Mobile:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info">(778) 682-1723</span><a href="/settings-profile-1" class="edit">Edit</a>
-
+							<span class="info"><%=current_user.mobile%></span><%=link_to "Edit","#",:class=>"edit"%>
 				       		<input type="text" name="mobile" value="" class="textfield hidden" />
 				       	</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-							<label>Time Zone:</label>
+							<p><%= label_tag "Time Zone:"%><br /></p>
 						</div>
 						<div class="info-right">
-
-							<span class="info">GMT +0</span><a href="/settings-profile-1" class="edit">Edit</a>
+							<span class="info"><%=current_user.time_zone%></span><%=link_to "Edit","#",:class=>"edit"%>
 				       		<input type="text" name="time-zone" value="" class="textfield hidden" />
 				       	</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-							<label>Chat Color:</label>
-
+							<p><%= label_tag "Chat Color:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<img src="images/layout/color-choose.png" alt="color-choose" />
-						</div>
+			       <p><%= text_field :color,:data,:size =>1,:id => 'choose_color' %>
+							<img src="/images/color-chooser.png" alt="color-choose" id="colorSelector" /></p>
+						 </div>
 				    </fieldset>
 				</form>
 			</div>
 		</div>
 	</div>
-
-
 
 
 

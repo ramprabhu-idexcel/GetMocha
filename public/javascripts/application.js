@@ -2,6 +2,90 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 $(document).ready(function() {
+  
+  
+  
+  
+  $('#txt_firstname').hide();
+  $('#txt_lastname').hide();
+  $('#txt_email').hide();
+  $('#txt_password').hide();
+  $('#save_firstname').hide();
+
+
+  $('.user_drop_down').click(function(){
+    $('.account-dropdown').toggle();
+  });
+  
+  $('#colorSelector').ColorPicker({
+	color: '#0000ff',
+	onShow: function (colpkr) {
+		$(colpkr).fadeIn(500);
+		return false;
+	},
+	onHide: function (colpkr) {
+		$(colpkr).fadeOut(500);
+       var a=$('#choose_color').val();
+    $.ajax({
+     	url: "/edit_profile",        
+      type :"put",
+      data :{color: $('#choose_color').val()}
+    });
+   		return false;
+	},
+	onChange: function (hsb, hex, rgb) {
+		$('#choose_color').css('backgroundColor', '#' + hex);
+    $('#choose_color').val(hex);
+	}
+});
+
+ 	$('#first_name').click(function(){
+    $('#label_first_name').hide();
+    $('#txt_firstname').show(); 
+    $('#first_name').hide();
+    $('#save_firstname').show(); 
+     
+  	$('#save_firstname').click(function(){
+        $.ajax({
+         url:"/edit_profile",type: "put",data:{first_name : $('#txt_firstname').val()}
+        });
+    $('#label_first_name').show();
+    $('#txt_firstname').hide(); 
+    $('#first_name').show();
+    $('#save_firstname').hide(); 
+         
+   });
+   
+    });
+    
+    
+ 	$('#last_name').click(function(){
+    $('#label_last_name').hide();
+    $('#txt_lastname').show(); 
+    $(this).text('Save');
+    });
+    
+    
+      
+ 	$('#email').click(function(){
+    $('#label_email').hide();
+    $('#txt_email').show(); 
+    $(this).text('Save');
+    });
+    
+        
+ 	$('#password').click(function(){
+    $('#label_password').hide();
+    $('#txt_password').show(); 
+    $(this).text('Save');
+    });
+	
+  
+  
+  
+  
+  
+  
 
   // user account-dropdown
   
