@@ -5,9 +5,6 @@ class MessagesController < ApplicationController
 		
 	end
 	def create
-		p "---------------"
-		p params.inspect
-		p current_user
 		@message=Message.new(params[:message])
 		@message.user_id=current_user
 		@message.save

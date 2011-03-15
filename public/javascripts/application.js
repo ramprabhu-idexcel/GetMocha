@@ -95,7 +95,7 @@ $(document).ready(function() {
     
 });
 
-<<<<<<< HEAD
+
 
 
 // Function for displaying third panel in project settings
@@ -187,5 +187,3 @@ var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="
 
 
 
-=======
->>>>>>> 680478753e485a327995c743d9cc6ccf9d008107
