@@ -18,6 +18,8 @@ GetMocha::Application.routes.draw do
   match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
   match '/del_people' =>'projects#remove_people', :as=>'remove_people'
   match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'
+  
+  resources :messages
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

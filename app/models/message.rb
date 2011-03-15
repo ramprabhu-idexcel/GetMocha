@@ -3,6 +3,7 @@ class Message < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :user
 	has_many :activities, :dependent => :destroy
+	attr_accessible :subject,:project_id,:user_id,:message
 end
 
 
