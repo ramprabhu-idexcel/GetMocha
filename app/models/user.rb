@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :chats
   has_many :messages
   has_many :activities
+  has_many :secondary_emails
   
   #starred messages from all project
   def starred_messages
@@ -50,5 +51,10 @@ class User < ActiveRecord::Base
     "#{first_name.titleize} #{last_name.titleize}"
   end
   
+  #overwrite method to login using the secondary emails
+  def self.find_for_authentication(conditions={})
+    login = conditions.delete(:email)
+    find(:first,:conditions=>["users.email=:value or secondary_emails.email=:value",{:value => login}],:include=>:secondary_emails)
+   end
   
 end
