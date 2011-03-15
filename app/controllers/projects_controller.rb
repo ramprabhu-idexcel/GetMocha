@@ -16,7 +16,8 @@ class ProjectsController < ApplicationController
 		render :nothing=>true
 	end
 	def settings
-		@projects=Project.all
+		@projects=Project.find(:all, :conditions=>['status=? OR status=?', 1, 2])
+		@completed_projects=Project.find_all_by_status(3)
 	end
 	def settings_pane
 		@project=Project.find(params[:project_id])
