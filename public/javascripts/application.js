@@ -15,12 +15,14 @@ $(document).ready(function() {
        url :"/projects",
        data : $('#form1').serialize(),
        success: function(){
-         alert( "Project Created: ");
          $('.add-item-modal').hide();
        }
        
     });
     
+  });
+  $('#p_can').click(function(){
+    $('.add-item-modal').hide()
   });
 });
 
