@@ -112,6 +112,24 @@ return false;
 }
 }
 
+function change_public_access(proj_id)
+{
+var pub_access=document.getElementById('settings_public_access').className;
+var access=true;
+if(pub_access=="icon")
+access=false;
+var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="+ access;
+ $.ajax({
+       type :'post',
+       url : "/update_proj_settings?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_general').style.display="block";
+			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
+    });
+}
+
 
 
 
