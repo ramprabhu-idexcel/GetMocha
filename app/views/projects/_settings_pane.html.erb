@@ -74,13 +74,15 @@
 				<div class="team-members">
 					<h2>Team Members</h2>
 					<% @project.project_users.each do |proj_user| %>
-						<div class="person">
-							<div class="avatar-mini"></div>
-							<img src="images/content/stuart-avatar.jpg" class="avatar-mini-img" alt="avatar" />
-							<span class="name"><%= proj_user.user.full_name %></span>
-							<a href="#" class="remove">[x]</a>
-							<div class="clear-fix"></div>
-						</div>
+						<% if proj_user.user.status? %>
+								<div class="person">
+								<div class="avatar-mini"></div>
+								<img src="images/content/stuart-avatar.jpg" class="avatar-mini-img" alt="avatar" />
+								<span class="name"><%= proj_user.user.full_name %></span>
+								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_user.user.id %>,<%= @project.id %>);">[x]</a>
+								<div class="clear-fix"></div>
+							</div>
+						<% end %>
 					<% end %>
 				</div>
 			<% end %>
@@ -88,13 +90,15 @@
 				<div class="guests">
 					<h2>Guests</h2>
 					<% @project.project_guests.each do |proj_guest| %>
-						<div class="person">
-							<div class="avatar-mini"></div>
-							<img src="images/content/alex-avatar.jpg" class="avatar-mini-img" alt="avatar" />
-							<span class="name"><%= proj_guest.guest.email %></span>
-							<a href="#" class="remove">[x]</a>
-							<div class="clear-fix"></div>
-						</div>
+					  <% if proj_guest.guest.status? %>
+							<div class="person">
+								<div class="avatar-mini"></div>
+								<img src="images/content/alex-avatar.jpg" class="avatar-mini-img" alt="avatar" />
+								<span class="name"><%= proj_guest.guest.email %></span>
+								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_guest.guest.id %>,<%= @project.id %>);">[x]</a>
+								<div class="clear-fix"></div>
+							</div>
+						<% end %>
 					<% end %>
 				</div>
 			<% end %>

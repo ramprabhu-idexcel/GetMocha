@@ -90,6 +90,28 @@ document.getElementById('settings_general').style.display="block";
 }
 }
 
+function remove_people_settings(id, proj_id)
+{
+var pars = "user=" + id  + "&project_id=" + proj_id;
+var where_to= confirm("Are you sure to remove this person?");
+if(where_to==true)
+{
+  $.ajax({
+       type :'post',
+       url : "/del_people?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_people').style.display="block";
+			 document.getElementById('people_anchor').className="m-tab alt open";
+			 }
+    });
+}
+else
+{
+return false;
+}
+}
+
 
 
 
