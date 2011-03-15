@@ -1,7 +1,7 @@
-<%form_tag :url=>{ :controller => "projects", :action => "create" } , :remote => true do%>
+<%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
 	<div class="modal-top-center">
-		<a class="save-btn" href="/projects/create">Save</a> 
-		<a class="cancel-btn" href="/">Cancel</a>
+		<a class="save-btn" id="p_add" href="#project_create">Save</a> 
+		<a class="cancel-btn" id="p_can" href="#">Cancel</a>
 		Add New Project
 	</div>
 	<div class="modal-top-right"></div>
@@ -12,24 +12,23 @@
 			
 				<fieldset>
 					<label>Name:</label>
-					<input type="text" class="textfield" value="" name="project-name">
-					<%# if session[:first_name] && !session[:first_name].nil? %>
-							<%#=text_field :user, 'first_name',:value=>"#{session[:first_name]}" %> <%# else %> <%=text_field :user, 'first_name' %><%# end %>
+				
+							<%=f.text_field  'name', :class=>"textfield" %>
 				</fieldset>
 				<fieldset>
 					<label>Invite:</label>
-					<input type="text" class="textfield" value="" name="invite-recipients">
-					<%# if session[:first_name] && !session[:first_name].nil? %>
-					<%#=text_field :user, 'first_name',:value=>"#{session[:first_name]}" %> <%# else %> <%=text_field :project, 'invites' %><%# end %>
+					
+					 <%=f.text_field 'email', :class=>"textfield" %>
 				</fieldset>
 				<fieldset>
 					<label>Message:</label>
-					<textarea cols="30" rows="5" class="textarea" name="message"></textarea>
-					<%# if session[:first_name] && !session[:first_name].nil? %>
-					<%#=text_field :user, 'first_name',:value=>"#{session[:first_name]}" %> <%# else %> <%=text_area :invite, 'message', :cols=>"35", :rows=>"5"%><%# end %>
+					
+				 <%=f.text_area 'message', :cols=>"35", :rows=>"4"%>
 				</fieldset>
 			
 			</div>
 		</div>
 	</div>
 <%end%>
+
+

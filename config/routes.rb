@@ -14,7 +14,7 @@ GetMocha::Application.routes.draw do
   end
  
   resources :projects
-
+  match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

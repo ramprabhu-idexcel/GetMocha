@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+	Message_email="@m.getmocha.com"
+	Task_email="@t.getmocha.com"
 	has_many :project_users
 	has_many :project_guests
 	has_many :users, :through=> :project_users
@@ -12,5 +14,13 @@ class Project < ActiveRecord::Base
 	has_many :chats
 	has_many :invites
   belongs_to :owner,:class_name=>"User"
-	attr_accesible :invites
+	attr_accessible :name,:status,:message_email_id,:task_email_id
+	validate :name, :presence   => true,
+													:uniqueness => true,
+													 :length     => { :within => 3..40 }
+	after_create :create_email_ids
+	
+	def  create_email_ids
+		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name}-#{self.id}"+Message_email, :task_email_id=>"#{self.name}-#{self.id}"+Task_email)
+	end
 end
