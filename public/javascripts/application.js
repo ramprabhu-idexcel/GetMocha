@@ -118,7 +118,7 @@ var pub_access=document.getElementById('settings_public_access').className;
 var access=true;
 if(pub_access=="icon")
 access=false;
-var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="+ access;
+var pars = "project_id=" + proj_id +  "&checked="+ access;
  $.ajax({
        type :'post',
        url : "/update_proj_settings?"+pars,
@@ -130,9 +130,9 @@ var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="
     });
 }
 
-function settings_project_info(edit)
+function settings_project_info(edit,proj_id)
 {
-if(edit=="edit")
+if(edit=="Edit")
 {
 document.getElementById('settings_project_name').style.display="none";
 document.getElementById('text_anchor').className="textfield";
@@ -142,7 +142,20 @@ else
 {
 document.getElementById('settings_project_name').style.display="block";
 document.getElementById('text_anchor').className="textfield hidden";
-document.getElementById('edit_anchor').innerHTML="edit";
+document.getElementById('edit_anchor').innerHTML="Edit";
+var name=document.getElementById('text_anchor').value;
+document.getElementById('project_list_'+proj_id).innerHTML='<span class="icon"></span>'+name;
+var pars = "project_id=" + proj_id  + "&project_name="+ name;
+ $.ajax({
+       type :'post',
+       url : "/update_proj_settings?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_general').style.display="block";
+			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
+    });
+
 }
 }
 

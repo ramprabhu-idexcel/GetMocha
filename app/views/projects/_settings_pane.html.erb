@@ -17,8 +17,8 @@
 						<div class="info-right">
 
 	<span class="info" id="settings_project_name"><%= @project.name %></span>
-								<input type="text" name="first-name" value="" class="textfield hidden" id="text_anchor"/>
-								<a href="#edit" onclick="javascript:settings_project_info('edit');" class="edit" id="edit_anchor">Edit</a>
+								<input type="text" name="first-name" 	class="textfield hidden" id="text_anchor" value="<%= @project.name %>"/>
+								<a href="#edit" onclick="javascript:settings_project_info(this.innerHTML,'<%= @project.id %>');" class="edit" id="edit_anchor">Edit</a>
 			       		</div>
 				    </fieldset>
 				    <fieldset>
