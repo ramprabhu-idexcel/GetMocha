@@ -30,9 +30,22 @@ class ProjectsController < ApplicationController
 	end
 	def update_proj_settings
 		@project=Project.find(params[:project_id])
-		if params[:change_field]=="public_access"
+		if params[:checked]
 			checked=params[:checked]=="false" ? true : false
 			@project.update_attributes(:is_public=>checked)
+		elsif params[:project_name]
+			@project.update_attributes(:name=>params[:project_name])
+		elsif params[:proj_status]
+			@project.update_attributes(:status=>params[:proj_status])
+		elsif params[:email]
+			@custom=CustomEmail.new(:custom_type=>"Message", :project_id=>@project.id, :email=>params[:email])
+			@custom.save
+		elsif params[:task_email]
+			@custom=CustomEmail.new(:custom_type=>"Task", :project_id=>@project.id, :email=>params[:task_email])
+			@custom.save
+		elsif params[:remove_email]
+			@custom=CustomEmail.find(params[:remove_email])
+			@custom.destroy
 		end
 			render :partial=>'settings_pane'
 	end

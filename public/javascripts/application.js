@@ -3,11 +3,14 @@
 
 $(document).ready(function() {
 
+  // user account-dropdown
+  
   $('.user_drop_down').click(function(){
     $('.account-dropdown').toggle();
   });
   
-
+  //signup and login
+  
   if(typeof Signup!="undefined" && Signup==true)
   {
     $('#user_submit').click(function(){
@@ -37,13 +40,20 @@ $(document).ready(function() {
         debug:true
       });
   
-    $('#user_submit').click(function(){
+   $('#user_submit').click(function(){
       $.ajax({
         url:'/users/sign_in',
         data: $('form#user_login').serialize(),
         type: "POST",
         success: function(data){
-          alert(data);
+          if(data!="redirect")
+          {
+            alert(data);
+          }
+          else
+          {
+            window.location.href="/projects/new";
+          }
         }
       });
       return false;
@@ -85,6 +95,7 @@ $(document).ready(function() {
     
 });
 
+<<<<<<< HEAD
 
 
 // Function for displaying third panel in project settings
@@ -176,3 +187,5 @@ var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="
 
 
 
+=======
+>>>>>>> 680478753e485a327995c743d9cc6ccf9d008107

@@ -17,8 +17,8 @@
 						<div class="info-right">
 
 	<span class="info" id="settings_project_name"><%= @project.name %></span>
-								<input type="text" name="first-name" value="" class="textfield hidden" id="text_anchor"/>
-								<a href="#edit" onclick="javascript:settings_project_info('edit');" class="edit" id="edit_anchor">Edit</a>
+								<input type="text" name="first-name" 	class="textfield hidden" id="text_anchor" value="<%= @project.name %>"/>
+								<a href="#edit" onclick="javascript:settings_project_info(this.innerHTML,'<%= @project.id %>');" class="edit" id="edit_anchor">Edit</a>
 			       		</div>
 				    </fieldset>
 				    <fieldset>
@@ -26,7 +26,7 @@
 							<label>Public Access:</label>
 						</div>
 						<div class="info-right">
-							<div class="checkbox"><span class="<%= @project.status? ? "icon checked" : "icon" %>" onclick="javascript:change_public_access(<%= @project.id %>);" id="settings_public_access"></span></div>
+							<div class="checkbox"><span class="<%= @project.is_public? ? "icon checked" : "icon" %>" onclick="javascript:change_public_access(<%= @project.id %>);" id="settings_public_access"></span></div>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
@@ -35,9 +35,12 @@
 						</div>
 						<div class="info-right">
 						<span class="info"><%= @project.message_email_id %></span><br />
-						<span class="info">message@simplestation.com</span><a href="/#" class="edit">Delete</a>						
-							<input type="text" name="title" value="" class="textfield hidden"/>
-				       		<a href="/settings-general-1" class="add-email">+ Add another email</a>
+						<% @project.custom_emails.each do |mail| %>
+						<% if mail.custom_type=="Message" %>
+						<span class="info"><%= mail.email %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
+						<% end %>
+							<input type="text" name="title" value="" class="textfield hidden" id="message_email_textfield"/>
+				       		<a href="#add-email" class="add-email" onclick="javascript:add_message_email('<%= @project.id %>');" id="change_message_email">+ Add another email</a>
 						</div>
 				    </fieldset>
 				    <fieldset>
@@ -45,9 +48,12 @@
 							<label>Tasks:</label>
 						</div>
 						<div class="info-right">
-							<span class="info"><%= @project.task_email_id %></span>
-							<input type="text" name="title" value="" class="textfield hidden"/>
-							<a href="/settings-general-1" class="add-email">+ Add another email</a>
+						<span class="info"><%= @project.message_email_id %></span><br />
+							<% @project.custom_emails.each do |mail| %>
+						<% if mail.custom_type=="Task" %><span class="info"><%= mail.email %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
+						<% end %>
+							<input type="text" name="title" value="" class="textfield hidden"  id="task_email_textfield"/>
+						 		<a href="#add-email" class="add-email" onclick="javascript:add_task_email('<%= @project.id %>');" id="change_task_email">+ Add another email</a>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
@@ -55,13 +61,13 @@
 							<label>Status:</label>
 						</div>
 						<div class="info-right">
-							<span class="info"><% if @project.status == 1 %> Active <% elsif @project.status == 2 %>In Progress<% else %> Completed <% end %></span>
-				       		<select class="hidden">
-				       			<option>Active</option>
-				       			<option>On Hold</option>
-				       			<option>Completed</option>
+							<span class="info" id="project_status_label"><% if @project.status == 1 %> Active <% elsif @project.status == 2 %>In Progress<% else %> Completed <% end %></span>
+				       		<select class="hidden" id="project_status_select_box">
+				       			<option value="1">Active</option>
+				       			<option value="2">In Progress</option>
+				       			<option value="3">Completed</option>
 				       		</select>
-				       		<a href="/settings-general-1" class="edit">Edit</a>			       	
+				       		<a href="#edit" class="edit" onclick="javascript:change_project_status(<%= @project.id %>);" id="change_project_status">Edit</a>			       	
 				       	</div>
 
 				    </fieldset>			
