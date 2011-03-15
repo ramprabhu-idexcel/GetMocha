@@ -37,7 +37,7 @@
 						<span class="info"><%= @project.message_email_id %></span><br />
 						<% @project.custom_emails.each do |mail| %>
 						<% if mail.custom_type=="Message" %>
-						<span class="info"><%= mail.email %></span><a href="/#" class="edit">Delete</a>		<br/>				<% end %>
+						<span class="info"><%= mail.email %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
 						<% end %>
 							<input type="text" name="title" value="" class="textfield hidden" id="message_email_textfield"/>
 				       		<a href="#add-email" class="add-email" onclick="javascript:add_message_email('<%= @project.id %>');" id="change_message_email">+ Add another email</a>
@@ -50,7 +50,7 @@
 						<div class="info-right">
 						<span class="info"><%= @project.message_email_id %></span><br />
 							<% @project.custom_emails.each do |mail| %>
-						<% if mail.custom_type=="Task" %><span class="info"><%= mail.email %></span><a href="/#" class="edit">Delete</a>		<br/>				<% end %>
+						<% if mail.custom_type=="Task" %><span class="info"><%= mail.email %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
 						<% end %>
 							<input type="text" name="title" value="" class="textfield hidden"  id="task_email_textfield"/>
 						 		<a href="#add-email" class="add-email" onclick="javascript:add_task_email('<%= @project.id %>');" id="change_task_email">+ Add another email</a>

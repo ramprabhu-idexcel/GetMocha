@@ -43,6 +43,9 @@ class ProjectsController < ApplicationController
 		elsif params[:task_email]
 			@custom=CustomEmail.new(:custom_type=>"Task", :project_id=>@project.id, :email=>params[:task_email])
 			@custom.save
+		elsif params[:remove_email]
+			@custom=CustomEmail.find(params[:remove_email])
+			@custom.destroy
 		end
 			render :partial=>'settings_pane'
 	end

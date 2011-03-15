@@ -193,4 +193,19 @@ var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
 
 }
 }
+
+function delete_custom_mail(id,proj_id)
+{
+var pars = "project_id=" + proj_id +  "&remove_email="+ id;
+$.ajax({
+       type :'post',
+       url : "/update_proj_settings?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_general').style.display="block";
+			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
+    });
+
+}
 </script>
