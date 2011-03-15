@@ -8,21 +8,51 @@ $(document).ready(function() {
   });
   
 
-      if(typeof Signup!="undefined" && Signup==true)
-      {
-        $('#user_submit').click(function(){
-          $.ajax({
-            url:'/users',
-            data: $('form#user_new').serialize(),
-            type: "POST"        
-          });
-          return false;
-        });
-      }
+  if(typeof Signup!="undefined" && Signup==true)
+  {
+    $('#user_submit').click(function(){
+      $.ajax({
+        url:'/users',
+        data: $('form#user_new').serialize(),
+        type: "POST"        
+      });
+      return false;
+    });
+  }
+
+  if(typeof Login!="undefined" && Login==true)
+  {
+    $("form#user_login").validate({
+      rules: {
+                'user[email]': {
+                required : true
+              }
+            },
+        messages: {
+          'user[email]': "can't be blank"
+        },
+        errorPlacement: function(error, element) {
+
+        },
+        debug:true
+      });
+  
+    $('#user_submit').click(function(){
+      $.ajax({
+        url:'/users/sign_in',
+        data: $('form#user_login').serialize(),
+        type: "POST",
+        success: function(data){
+          alert(data);
+        }
+      });
+      return false;
+    });
+  }
       
-    $('#p_add').click(function(){
+  $('#p_add').click(function(){
     var a=$('#data_name').val();
-     var b=$('#data_invites').val();
+    var b=$('#data_invites').val();
     var c=$('#data_message').val();
     $.ajax({
        type :'post',
@@ -31,10 +61,9 @@ $(document).ready(function() {
        success: function(){
          $('.add-item-modal').hide();
        }
-       
     });
-    
   });
+  
   $('#p_can').click(function(){
     $('.add-item-modal').hide()
   });
