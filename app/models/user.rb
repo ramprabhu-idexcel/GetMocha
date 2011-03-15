@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :projects
   has_one :project
   has_many :project_users
-  has_many :guest_users
+  has_many :project_guests
   has_many :chats
   has_many :messages
   has_many :activities
