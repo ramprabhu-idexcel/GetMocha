@@ -9,9 +9,7 @@ class SessionsController <  Devise::SessionsController
 	
 	def create
     resource = warden.authenticate!(:scope => resource_name)
-    render :udpate do |page|
-      page.redirect_to '/projects/new'
-    end
+    render :text=>"redirect"
   end
 		
 end
