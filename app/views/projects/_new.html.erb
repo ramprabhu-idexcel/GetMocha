@@ -1,0 +1,35 @@
+<<<<<<< HEAD
+=======
+<%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
+	<div class="modal-top-center">
+		<a class="save-btn" id="p_add" href="#project_create">Save</a> 
+		<a class="cancel-btn" id="p_can" href="#">Cancel</a>
+		Add New Project
+	</div>
+	<div class="modal-top-right"></div>
+	<div class="modal-body-contain">
+		<div class="modal-body">
+
+			<div class="modal-input">
+			
+				<fieldset>
+					<label>Name:</label>
+				
+							<%=f.text_field  'name', :class=>"textfield", :id=>"txtInput2" %>
+				</fieldset>
+				<fieldset>
+					<label>Invite:</label>
+					
+					 <%=f.text_field 'email', :class=>"textfield", :id=>"txtInput2" %>
+				</fieldset>
+				<fieldset>
+					<label>Message:</label>
+					
+				 <%=f.text_area 'message', :cols=>"35", :rows=>"4"%>
+				</fieldset>
+			
+			</div>
+		</div>
+	</div>
+<%end%>
+>>>>>>> d6594f1bcc30ef5f71c8136c9243100d78f0f3c2
