@@ -153,6 +153,13 @@ document.getElementById('message_email_textfield').className="textfield";
 else
 {
 var message_email=document.getElementById('message_email_textfield').value;
+var x=message_email;
+var atpos=x.indexOf("@");
+var dotpos=x.lastIndexOf(".");
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+alert("Please enter valid email address");
+else
+{
 var pars = "project_id=" + proj_id +  "&email="+ message_email;
  $.ajax({
        type :'post',
@@ -163,7 +170,7 @@ var pars = "project_id=" + proj_id +  "&email="+ message_email;
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
     });
-
+}
 }
 }
 
@@ -179,6 +186,13 @@ document.getElementById('task_email_textfield').className="textfield";
 else
 {
 var message_email=document.getElementById('task_email_textfield').value;
+var x=message_email;
+var atpos=x.indexOf("@");
+var dotpos=x.lastIndexOf(".");
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+alert("Please enter valid email address");
+else
+{
 var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
  $.ajax({
        type :'post',
@@ -189,7 +203,7 @@ var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
     });
-
+}
 }
 }
 
