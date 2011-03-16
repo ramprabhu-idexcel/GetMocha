@@ -7,19 +7,22 @@ class MessagesController < ApplicationController
 		@tcMovies=[]
 		@Movies=[]
 		@a.each do |f|
-		@tcMovies<<"#{f.first_name}-'#{f.email}'"
+		@tcMovies<<"#{f.email}"
 	end
 	@b.each do |g|
 		@Movies<<"#{g.name}"
 		end
 		end
 	def create
-		@message=Message.new(params[:message])
-		@message.user_id=current_user
+		@a=User.find_by_email(params[:message][:recipient])
+		@b=Project.find_by_name(params[:message][:project])
+	
+    @message=Message.new(:subject=> "params[:message][:subject]", :message=> "params[:message][:message]",:user_id=> @a.id, :project_id=>@b.id)
+		
 		@message.save
-		@attach=Attachment.new(params[:data])
-		@attach.message_id=@message.id
-		@attach.save
+		#~ @attach=Attachment.new(params[:data])
+		#~ @attach.message_id=@message.id
+		#~ @attach.save
 		render :nothing=>true
 		
 	end
