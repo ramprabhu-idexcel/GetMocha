@@ -274,9 +274,12 @@ $(document).ready(function() {
        
    });
    
-   $('a#add_new_email').click(function(){
+  $('a#add_new_email').click(function(){
     $('#semail').append("<div class='info-right'><span class='info hidden'>********</span><input class='textfield' type='text' value='' name='secondary_emails' /> <a class='edit save_email' href='#' >Save</a></div><br />");
-    $('.save_email').live('click', function() {
+    return false;
+  });
+  
+  $('.save_email').live('click', function() {
       var link=$(this);
       var email=link.siblings('input.textfield');
       $.ajax({
@@ -298,8 +301,6 @@ $(document).ready(function() {
         }      
       });
     });
-    return false;
-  });
    
  } //end of user edit
 
