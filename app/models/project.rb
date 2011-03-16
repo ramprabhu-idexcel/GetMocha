@@ -21,6 +21,6 @@ class Project < ActiveRecord::Base
 	after_create :create_email_ids
 	
 	def  create_email_ids
-		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name}-#{self.id}"+Message_email, :task_email_id=>"#{self.name}-#{self.id}"+Task_email)
+		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
 	end
 end

@@ -13,20 +13,24 @@ class Message < ActiveRecord::Base
                     :length     => { :within => 6..250 }
 	validates :message, :presence   => true
 	
-	
-	
-	def send_message_to_team_members (project,message,to_users)
+	def self.send_message_to_team_members(project,message,to_users)
 		team_members=project.users
-		@team_members.each do |team_member|
+		team_members.each do |team_member|
 		activity=message.activities.create! :user=>team_member
-			@to_users.each do |to_user|
+			to_users.each do |to_user|
 			     if to_user = team_member.email
 				     activity.update_attributes(:is_subscribed=>1)
 			     end	
 			end
 		end
 	end 
-
+def self.send_notification_to_team_members(user,to_users)
+	@user=user
+	to_users.each do |to_user|
+		@to_user=to_user
+	ProjectMailer.delay.message_notification(user,to_user)
+ end
+end
 
 end
 
