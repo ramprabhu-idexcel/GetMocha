@@ -28,8 +28,9 @@ GetMocha::Application.routes.draw do
   
   resources :updates do
     collection do
-       put 'edit_profile'
-       put 'edit_password'
+      put 'edit_profile'
+      put 'edit_password'
+      post 'create_secondary_email'
     end
   end
    

@@ -4,38 +4,42 @@ class UpdatesController < ApplicationController
 
 	def edit_profile
 	 @user=current_user
-    if @user.update_attributes(params[:user]) then		
-             render :nothing=>true
+    if @user.update_attributes(params[:user])	
+      render :nothing=>true
 		else
-			    render :update do |page|
-					 	page.alert(@user.errors)
-					end	
-				end	
-		
+      render :update do |page|
+        page.alert(@user.errors)
+      end	
+    end	
   end	
-
  
- 
- def edit_password
-	 
-	 current_user.password=params[:password]
-	 current_user.password_confirmation=params[:password]
-	 current_user.save
+  def edit_password
+    current_user.password=params[:password]
+    current_user.password_confirmation=params[:password]
+    current_user.save
 	end 
-
-def contacts
-			puts "********"
+  
+  def contacts
 		@fullname=[]
 		@users=User.find(:all)
 		@users.each do |i|
-		@fullname << i.first_name + i.last_name
+      @fullname << i.first_name + i.last_name
 		end
-		puts @fullname.inspect
 		
-		 for i in 0..@users.length-1
-			  puts @fullname[i]
+		 #~ for i in 0..@users.length-1
 			
-					  end
-					end
+					  #~ end
+  end
+          
+  def create_secondary_email
+    @secondary_email=current_user.secondary_emails.build(:email=>params[:secondary_email])
+    if @secondary_email.valid?
+      @secondary_email.save
+      render :partial=>"field"
+    else
+      p @secondary_email.errors.inspect
+      render :json=>{"error"=>"Email already in use"}.to_json
+    end
+  end
 end					
 					
