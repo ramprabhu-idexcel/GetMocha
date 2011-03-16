@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
 			@tcMovies<<"#{f.email}"
 		end
 		@movies=@tcMovies.to_a
+		render :partial=>'new'
 	end
 	
 	def create		
