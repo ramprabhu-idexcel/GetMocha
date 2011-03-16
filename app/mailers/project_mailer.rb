@@ -6,6 +6,7 @@ class ProjectMailer < ActionMailer::Base
       @old_project=old_project
       @new_project=new_project
       mail(:from=>"#{user.email}", :to=>"#{to_user.email}", :subject=>"#{old_project} Project Has Been Renamed to #{new_project}")
+      @content_type="text/html"
   end
   
   def project_completed(project, user, to_user)
