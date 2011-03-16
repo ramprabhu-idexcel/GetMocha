@@ -15,11 +15,10 @@
 							<label>Project Name:</label>
 						</div>
 						<div class="info-right">
-
-	<span class="info" id="settings_project_name"><%= @project.name %></span>
-								<input type="text" name="first-name" 	class="textfield hidden" id="text_anchor" value="<%= @project.name %>"/>
-								<a href="#edit" onclick="javascript:settings_project_info(this.innerHTML,'<%= @project.id %>');" class="edit" id="edit_anchor">Edit</a>
-			       		</div>
+							<span class="info" id="settings_project_name"><%= @project.name %></span>
+							<input type="text" name="first-name" 	class="textfield hidden" id="text_anchor" value="<%= @project.name %>"/>
+							<a href="#edit" onclick="javascript:settings_project_info(this.innerHTML,'<%= @project.id %>');" class="edit" id="edit_anchor">Edit</a>
+						</div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
@@ -27,7 +26,7 @@
 						</div>
 						<div class="info-right">
 							<div class="checkbox"><span class="<%= @project.is_public? ? "icon checked" : "icon" %>" onclick="javascript:change_public_access(<%= @project.id %>);" id="settings_public_access"></span></div>
-				       	</div>
+				      </div>
 				    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
@@ -40,7 +39,7 @@
 						<span class="info"><%= mail.email %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
 						<% end %>
 							<input type="text" name="title" value="" class="textfield hidden" id="message_email_textfield"/>
-				       		<a href="#add-email" class="add-email" onclick="javascript:add_message_email('<%= @project.id %>');" id="change_message_email">+ Add another email</a>
+							<a href="#add-email" class="add-email" onclick="javascript:add_message_email('<%= @project.id %>');" id="change_message_email">+ Add another email</a>
 						</div>
 				    </fieldset>
 				    <fieldset>
@@ -62,11 +61,7 @@
 						</div>
 						<div class="info-right">
 							<span class="info" id="project_status_label"><% if @project.status == 1 %> Active <% elsif @project.status == 2 %>In Progress<% else %> Completed <% end %></span>
-				       		<select class="hidden" id="project_status_select_box">
-				       			<option value="1">Active</option>
-				       			<option value="2">In Progress</option>
-				       			<option value="3">Completed</option>
-				       		</select>
+							    <%= select_tag(:project_status_select_box, options_for_select([["Active",1], ["In Progress",2],["Completed",3]],:selected => @project.status), :class=>"hidden")   %>
 				       		<a href="#edit" class="edit" onclick="javascript:change_project_status(<%= @project.id %>);" id="change_project_status">Edit</a>			       	
 				       	</div>
 
