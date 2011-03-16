@@ -1,23 +1,26 @@
 class UpdatesController < ApplicationController
 	skip_before_filter :verify_authenticity_token
-	   before_filter :authenticate_user!
+	before_filter :authenticate_user!
 
 	def edit_profile
-		puts "------------------"
-		puts params[:user][:first_name]
-	   puts "----------------" 
-   
-    @user=current_user
+	 @user=current_user
     if @user.update_attributes(params[:user]) then		
-         	puts @user.first_name
-		      render :partial=>'edit1'
+             render :nothing=>true
 		else
 			    render :update do |page|
-						page.alert(@user.errors)
+					 	page.alert(@user.errors)
 					end	
 	end	
-	 end	
-end
+ end	
+
+ 
+ 
+ def edit_password
+	 
+	 current_user.password=params[:password]
+	 current_user.password_confirmation=params[:password]
+	 current_user.save
+	end 
 
 def contacts
 			puts "********"
@@ -32,4 +35,6 @@ def contacts
 			  puts @fullname[i]
 			
 					  end
-end
+					end
+end					
+					

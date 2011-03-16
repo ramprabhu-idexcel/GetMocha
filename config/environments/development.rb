@@ -25,13 +25,13 @@ GetMocha::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   
-  ActionMailer::Base.smtp_settings = {
-    :address => "railsfactory.com",
-    :enable_starttls_auto => true,
-    :port => 25,
-    :authentication => :login,
-    :user_name => "mailer@railsfactory.com",
-    :password => 'mail3r'
-  }
+ ActionMailer::Base.smtp_settings = {
+:address => "smtp.gmail.com",
+:enable_starttls_auto => true,
+:port => 587,
+:authentication => :plain,
+:user_name => "ramprabu.n@railsbuddies.com",
+:password => 'ramprabu123'
+}
 end
 

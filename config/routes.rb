@@ -29,11 +29,13 @@ GetMocha::Application.routes.draw do
   resources :updates do
     collection do
        put 'edit_profile'
+       put 'edit_password'
     end
   end
    
   
   match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
+  
   #~ match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
   #~ match '/del_people' =>'projects#remove_people', :as=>'remove_people'
   #~ match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'
