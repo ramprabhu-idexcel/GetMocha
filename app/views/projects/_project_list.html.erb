@@ -6,11 +6,14 @@
 		<!--<a href="/settings-general" class="project open" onclick="addClass(this);"><span class="icon"></span>Simple Station</a>-->
 	<% end %>
 	</div>
+	<% if @completed_projects %>
 		<div class="expand-completed"><div><span  onclick="javascript:show_completed_projects();">Show Completed</span><span class="icon"></span></div></div>
+	
 	<div class="projects-list" id="completed_list" style="display:none";>
 	<% @completed_projects.each do |project| %>
 		<a href="#project" class="project" onclick="javascript:settings_secondpanel('<%= project.id %>');" id="project_list_<%= project.id %>"><span class="icon"></span><%= project.name %></a>
 		<!--<a href="/settings-general" class="project open" onclick="addClass(this);"><span class="icon"></span>Simple Station</a>-->
+	<% end %>
 	<% end %>
 	</div>
 

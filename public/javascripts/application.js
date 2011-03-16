@@ -46,7 +46,7 @@ $(document).ready(function() {
           }
           else
           {
-            window.location.href="/projects/new";
+            window.location.href="/messages";
           }
         }
       });
