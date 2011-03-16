@@ -397,7 +397,8 @@ var a=$('#data_name').val();
        type :'post',
        url :"/projects",
        data : $('#form1').serialize(),
-       success: function(){
+       success: function(data){
+if(data.length==1)
          $('.add-item-modal').hide();
        },
 	failure: function(){
@@ -415,7 +416,8 @@ function message_save_button()
        type :'post',
        url :"/messages",
        data : $('#form2').serialize(),
-       success: function(){
+       success: function(data){
+if(data.length==1)
          $('.add-item-modal').hide();
        }
     });
