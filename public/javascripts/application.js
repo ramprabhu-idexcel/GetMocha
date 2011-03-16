@@ -274,10 +274,29 @@ $(document).ready(function() {
        
    });
    
-  $('a#add_new_email').click(function(){
+   $('a#add_new_email').click(function(){
     $('#semail').append("<div class='info-right'><span class='info hidden'>********</span><input class='textfield' type='text' value='' name='secondary_emails' /> <a class='edit save_email' href='#' >Save</a></div><br />");
     $('.save_email').live('click', function() {
-      alert($(this).siblings('input.textfield').val());
+      var link=$(this);
+      var email=link.siblings('input.textfield');
+      $.ajax({
+        url:'/updates/create_secondary_email',
+        type:'POST',
+        data:{"secondary_email":email.val()},
+        success: function(data){
+          if(typeof(data)=="string")
+          {
+            email.siblings('span.info.hidden').html(data);
+            email.siblings('span.info.hidden').removeClass('hidden');
+            email.remove();
+            link.remove();
+          }
+          else
+          {
+            alert(data.error);
+          }
+        }      
+      });
     });
     return false;
   });
