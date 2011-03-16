@@ -1,0 +1,6 @@
+<div class="info-right">
+  <span id="label_email" class="info_email"><%=@secondary_email.email%></span>
+  <%=text_field_tag "val[data]",@secondary_email.email,:style=>"display:none;",:class=>"edit_secondary"%>
+  <a id="email" class="edit" href="#">Edit</a>
+  <a id="save_email" class="edit" style="display: none;" href="#">Save</a>
+</div>
