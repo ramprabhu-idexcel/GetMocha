@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
 	@b.each do |g|
 		@Movies<<"#{g.name}"
 	end
-	#~ render :partial=>'new'
+	render :partial=>'new'
 		end
 	def create
 		@a=User.find_by_email(params[:message][:recipient])

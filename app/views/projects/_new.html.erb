@@ -3,8 +3,11 @@
 <script>
     goog.require('goog.ui.AutoComplete.Basic');
   </script>
-
+  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 <%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
+<div class="modal add-item-modal">
+	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
 		<a class="save-btn" id="p_add" href="#project_create" onclick="javascript:project_save_button();">Save</a> 
 		<a class="cancel-btn" id="p_can" href="#project_cancel" onclick="javascript:project_cancel_button();">Cancel</a>
@@ -35,6 +38,10 @@
 			</div>
 		</div>
 	</div>
+		<div class="modal-bottom-left"></div>
+	<div class="modal-bottom"></div>
+	<div class="modal-bottom-right"></div>
+</div>
 <%end%>
 <script type="text/javascript">
 <%=@name=[]%>
