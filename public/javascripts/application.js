@@ -11,9 +11,10 @@ $(document).ready(function() {
   $('#txt_email').hide();
   $('#txt_password').hide();
   $('#save_firstname').hide();
+   $('#myprofile2').hide();
+  $('#mycontact2').hide();
 
-
-  $('.user_drop_down').click(function(){
+    $('.user_drop_down').click(function(){
     $('.account-dropdown').toggle();
   });
   
@@ -47,7 +48,9 @@ $(document).ready(function() {
      
   	$('#save_firstname').click(function(){
         $.ajax({
-         url:"/edit_profile",type: "put",data:{first_name : $('#txt_firstname').val()}
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[first_name]" : $('#txt_firstname').val()}
         });
     $('#label_first_name').show();
     $('#txt_firstname').hide(); 
@@ -80,11 +83,30 @@ $(document).ready(function() {
     $(this).text('Save');
     });
 	
+   $('#mycontact1').click(function(){
+      $('#user_information').hide();
+      $('#myprofile2').show();
+      $('#myprofile1').hide();
+      $('#mycontact1').hide();
+      $('#mycontact2').show();
+      $('.drag-drop').hide();
+      $.ajax({
+     	url: "/edit_profile",        
+        }); 
+     
+     
+      });
+   $('#myprofile2').click(function(){
+       $('#user_information').show();
+       $('#myprofile2').hide();
+       $('#myprofile1').show();
+       $('#mycontact1').show();
+       $('#mycontact2').hide();
   
-  
-  
-  
-  
+    
+ 
+   });
+   
   
 
   // user account-dropdown

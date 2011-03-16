@@ -11,11 +11,17 @@ GetMocha::Application.routes.draw do
     get "change_password",:to=>"devise/passwords#edit",:as=>"edit_user_password"
     get "sign_up",:to=>"devise/registrations#new",:as=>"new_user_registration"
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
+    get "create" ,:to=>"devise/projects#create"
   end
  
   resources :projects
   
-    put "/edit_profile"=>"updates#edit_profile"
+  resources :updates do
+    collection do
+       put 'edit_profile'
+    end
+  end
+   
   
   match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
   match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
