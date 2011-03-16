@@ -1,7 +1,59 @@
+
+<script src="/closure-library/closure/goog/base.js"></script>
+<script>
+    goog.require('goog.ui.AutoComplete.Basic');
+  </script>
+  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
+<%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
 <div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
-<%= render :partial =>'/projects/new'%>
-	<div class="modal-bottom-left"></div>
+	<div class="modal-top-center">
+		<a class="save-btn" id="p_add" href="#project_create" onclick="javascript:project_save_button();">Save</a> 
+		<a class="cancel-btn" id="p_can" href="#project_cancel" onclick="javascript:project_cancel_button();">Cancel</a>
+		Add New Project
+	</div>
+	<div class="modal-top-right"></div>
+	<div class="modal-body-contain">
+		<div class="modal-body">
+
+			<div class="modal-input">
+			
+				<fieldset>
+					<label>Name:</label>
+				
+							<%=f.text_field  'name', :class=>"textfield", :id=>"txtInput1" %>
+				</fieldset>
+				<fieldset>
+					<label>Invite:</label>
+					
+					 <%=f.text_field 'email', :class=>"textfield", :id=>"txtInput2", :style=>"overflow:visible;" %>
+				</fieldset>
+				<fieldset>
+					<label>Message:</label>
+					
+				 <%=f.text_area 'message', :cols=>"35", :rows=>"4"%>
+				</fieldset>
+			
+			</div>
+		</div>
+	</div>
+		<div class="modal-bottom-left"></div>
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
 </div>
+<%end%>
+<script type="text/javascript">
+<%=@name=[]%>
+	<% @tcMovies.each do |f|%>
+	
+	<%@name<<f <<","%>
+		var tcMovies = "<%= @name %>";
+	<%end%>
+<% #@final_list=@name.split(',') %>
+				tcMovies=tcMovies.split(',');
+          var ac2 = new goog.ui.AutoComplete.Basic(
+        tcMovies, document.getElementById('txtInput2'), true);
+  </script>
+	
+
