@@ -55,19 +55,30 @@ $(document).ready(function() {
   }
   
   
-  $('#txt_firstname').hide();
-  $('#txt_lastname').hide();
-  $('#txt_email').hide();
-  $('#txt_password').hide();
-  $('#save_firstname').hide();
-   $('#myprofile2').hide();
-  $('#mycontact2').hide();
+ if(typeof Edit!="undefined" && Edit==true)
+  {
+     //Edit the User profile
+    
+    $('#txt_firstname').hide();
+    $('#txt_lastname').hide();
+    $('#txt_email').hide();
+    $('#txt_password').hide();
+    $('#txt_title').hide();
+
+    $('#save_firstname').hide();
+    $('#save_lastname').hide();
+    $('#save_title').hide();
+    $('#save_email').hide();
+
+
+    $('#myprofile2').hide();
+    $('#mycontact2').hide();
 
     $('.user_drop_down').click(function(){
     $('.account-dropdown').toggle();
-  });
+    });
   
-  $('#colorSelector').ColorPicker({
+    $('#colorSelector').ColorPicker({
 	color: '#0000ff',
 	onShow: function (colpkr) {
 		$(colpkr).fadeIn(500);
@@ -89,6 +100,7 @@ $(document).ready(function() {
 	}
 });
 
+  //To edit the first_name
  	$('#first_name').click(function(){
     $('#label_first_name').hide();
     $('#txt_firstname').show(); 
@@ -111,26 +123,77 @@ $(document).ready(function() {
     });
     
     
- 	$('#last_name').click(function(){
+  //To edit the last_name  
+    $('#last_name').click(function(){
     $('#label_last_name').hide();
     $('#txt_lastname').show(); 
-    $(this).text('Save');
+    $('#last_name').hide();
+    $('#save_lastname').show(); 
+     
+  	$('#save_lastname').click(function(){
+        $.ajax({
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[last_name]" : $('#txt_lastname').val()}
+        });
+    $('#label_last_name').show();
+    $('#txt_lastname').hide(); 
+    $('#last_name').show();
+    $('#save_lastname').hide(); 
+         
+   });
+   
     });
     
+    //To edit the title
     
-      
- 	$('#email').click(function(){
-    $('#label_email').hide();
-    $('#txt_email').show(); 
-    $(this).text('Save');
+    $('#title').click(function(){
+    $('#label_title').hide();
+    $('#txt_title').show(); 
+    $('#title').hide();
+    $('#save_title').show(); 
+     
+  	$('#save_title').click(function(){
+        $.ajax({
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[title]" : $('#txt_title').val()}
+        });
+    $('#label_title').show();
+    $('#txt_title').hide(); 
+    $('#title').show();
+    $('#save_title').hide(); 
+         
+   });
+   
     });
     
         
- 	$('#password').click(function(){
-    $('#label_password').hide();
-    $('#txt_password').show(); 
-    $(this).text('Save');
+   //To edit the email
+    
+   $('#email').click(function(){
+    $('#label_email').hide();
+    $('#txt_email').show(); 
+    $('#email').hide();
+    $('#save_email').show(); 
+     
+  	$('#save_email').click(function(){
+        $.ajax({
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[email]" : $('#txt_email').val()}
+        });
+    $('#label_email').show();
+    $('#txt_email').hide(); 
+    $('#email').show();
+    $('#save_email').hide(); 
+         
+   });
+   
     });
+    
+    
+ 	
 	
    $('#mycontact1').click(function(){
       $('#user_information').hide();
@@ -151,12 +214,10 @@ $(document).ready(function() {
        $('#myprofile1').show();
        $('#mycontact1').show();
        $('#mycontact2').hide();
-  
-    
- 
+       
    });
    
-  
+ } 
 
   // user account-dropdown
   
