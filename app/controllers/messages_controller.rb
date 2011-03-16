@@ -5,27 +5,27 @@ class MessagesController < ApplicationController
 		@projects=current_user.projects(:conditions=>['status!=?', 3])
 	end
 	def new
-		@a=User.find(:all,:select=>[:first_name,:email])
-		@b=Project.find(:all,:select=>[:name])
+		@users=User.find(:all,:select=>[:first_name,:email])
+		@projects=Project.find(:all,:select=>[:name])
 		@tcMovies=[]
 		@Movies=[]
-		@a.each do |f|
+		@users.each do |f|
 		@tcMovies<<"#{f.email}"
 	end
-	@b.each do |g|
+	@projects.each do |g|
 		@Movies<<"#{g.name}"
 	end
 	render 'new'
 		end
 	def create
-		@b=Project.find_by_name(params[:message][:project])
-    @message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@b.id)
+		projects=Project.find_by_name(params[:message][:project])
+    @message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>project.id)
 		@message.save
 		@to_user=params[:message][:recipient].split(', ')
 		@to_user.each do |user|
-		@a=User.find_by_email(user)
-		if @a 
-		@activity=Activity.new(:resource_type=>"Message",:resource_id=>@message.id,:user_id=>@a.id,:is_subscribed=>true);
+		user=User.find_by_email(user)
+		if user
+		@activity=Activity.new(:resource_type=>"Message",:resource_id=>@message.id,:user_id=>user.id,:is_subscribed=>true);
 		@activity.save
 		#~ else
 			

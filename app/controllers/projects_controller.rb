@@ -5,9 +5,9 @@ class ProjectsController < ApplicationController
 
 	
 	def new
-@a=User.find(:all,:select=>[:first_name,:email])
+@users=User.find(:all,:select=>[:first_name,:email])
 		@tcMovies=[]
-		@a.each do |f|
+		@users.each do |f|
 			@tcMovies<<"#{f.email}"
 
 			
