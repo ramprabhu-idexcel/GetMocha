@@ -2,7 +2,6 @@ class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!
 	layout "application", :except=>['new']
-
 	
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
@@ -50,7 +49,14 @@ class ProjectsController < ApplicationController
 			checked=params[:checked]=="false" ? true : false
 			@project.update_attributes(:is_public=>checked)
 		elsif params[:project_name]
+			@old_project=@project.name
 			@project.update_attributes(:name=>params[:project_name])
+			@project.project_users.each do |proj_user|
+				ProjectMailer.delay.project_renamed(current_user,@old_project,@project.name,proj_user.user)
+			end
+			@project.project_guests.each do |proj_user|
+				ProjectMailer.delay.project_renamed(current_user,@old_project,@project.name,proj_user.guest)
+			end
 		elsif params[:proj_status]
 			@project.update_attributes(:status=>params[:proj_status])
 		elsif params[:email]
