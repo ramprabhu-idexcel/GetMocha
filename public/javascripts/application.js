@@ -399,7 +399,10 @@ var a=$('#data_name').val();
        data : $('#form1').serialize(),
        success: function(){
          $('.add-item-modal').hide();
-       }
+       },
+	failure: function(){
+alert("hi");
+}
     });
 }
 function message_cancel_button()

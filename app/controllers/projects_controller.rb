@@ -14,15 +14,32 @@ class ProjectsController < ApplicationController
 	
 	def create		
 		@project=Project.new(params[:data])
-		@project.user_id=current_user
-		@project.save
-		@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
-		@p_user.save
+		@project.user_id=current_user.id
+		project=@project.valid?
 		@invites=Invitation.new(params[:data])
 		@invites.project_id=@project.id
-		@invites.save
-		render :nothing=>true
+		invites=@invites.valid?
+		invites=true if 
+		errors=[]
+      @project.errors.each_full{|msg| 
+				errors<< msg 
+			} 
+      @invites.errors.each_full{|msg| 			if msg!="Email is too short (minimum is 6 characters)" && msg!="Email can't be blank" && msg!="Email is invalid"
+			errors<< msg 
+			end } 
+		if project && invites
+			@project.save
+			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
+			@p_user.save
+			@invites.save
+			render :nothing=>true
+		else
+			render :update do |page|
+				page.alert errors.join("\n")
+			end
 		end
+		 
+	end
 	def settings
 		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
