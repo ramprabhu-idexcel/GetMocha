@@ -59,6 +59,13 @@ class ProjectsController < ApplicationController
 			end
 		elsif params[:proj_status]
 			@project.update_attributes(:status=>params[:proj_status])
+			@project.project_users.each do |proj_user|
+				if @project.status == 3
+					ProjectMailer.delay.project_completed(@project,current_user,proj_user.user)
+				else
+					ProjectMailer.delay.project_activated(@project,current_user,proj_user.user)
+				end
+			end
 		elsif params[:email]
 			@custom=CustomEmail.new(:custom_type=>"Message", :project_id=>@project.id, :email=>params[:email])
 			@custom.save
