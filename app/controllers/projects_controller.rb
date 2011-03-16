@@ -69,9 +69,11 @@ class ProjectsController < ApplicationController
 		elsif params[:email]
 			@custom=CustomEmail.new(:custom_type=>"Message", :project_id=>@project.id, :email=>params[:email])
 			@custom.save
+			ProjectMailer.delay.custom_email(current_user,@custom)
 		elsif params[:task_email]
 			@custom=CustomEmail.new(:custom_type=>"Task", :project_id=>@project.id, :email=>params[:task_email])
 			@custom.save
+			ProjectMailer.delay.custom_email(current_user,@custom)
 		elsif params[:remove_email]
 			@custom=CustomEmail.find(params[:remove_email])
 			@custom.destroy

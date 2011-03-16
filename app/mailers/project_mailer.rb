@@ -24,4 +24,12 @@ class ProjectMailer < ActionMailer::Base
     mail(:from=>"#{user.email}", :to=>"#{to_user.email}", :subject=>"#{project.name} Project Is Now In Progress")
     @content_type="text/html"
   end
+  
+  def custom_email(user, invite)
+    @user = user
+    @verify_email=invite.email
+    @invite="http://localhost:3000/projects/verify_email/#{invite.verification_code}"
+     mail(:from=>"#{user.email}", :to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha")
+    @content_type="text/html"
+  end
 end
