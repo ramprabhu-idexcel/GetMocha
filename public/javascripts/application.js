@@ -57,6 +57,24 @@ $(document).ready(function() {
   
  if(typeof Edit!="undefined" && Edit==true)
   {
+    
+    
+   $('#colorSelector').ColorPicker({
+  	color: '#0000ff',
+	  onShow: function (colpkr) {
+    $(colpkr).fadeIn(500);
+		return false;
+	},
+	onHide: function (colpkr) {
+		$(colpkr).fadeOut(500);
+   	return false;
+	},
+	onChange: function (hsb, hex, rgb) {
+  	$('#choose_color').css('backgroundColor', '#' + hex);
+    $('#choose_color').val(hex);
+	}
+  });
+
      //Edit the User profile
     
     $('#txt_firstname').hide();
@@ -64,11 +82,24 @@ $(document).ready(function() {
     $('#txt_email').hide();
     $('#txt_password').hide();
     $('#txt_title').hide();
+    $('#txt_phone').hide();
+    $('#txt_mobile').hide();
+    $('#txt_time_zone').hide();
+
+   
 
     $('#save_firstname').hide();
     $('#save_lastname').hide();
     $('#save_title').hide();
     $('#save_email').hide();
+    $('#save_phone').hide();
+    $('#save_mobile').hide();
+    $('#save_time_zone').hide();
+    $('#save_password').hide();
+  
+   
+    
+
 
 
     $('#myprofile2').hide();
@@ -78,28 +109,7 @@ $(document).ready(function() {
     $('.account-dropdown').toggle();
     });
   
-    $('#colorSelector').ColorPicker({
-	color: '#0000ff',
-	onShow: function (colpkr) {
-		$(colpkr).fadeIn(500);
-		return false;
-	},
-	onHide: function (colpkr) {
-		$(colpkr).fadeOut(500);
-       var a=$('#choose_color').val();
-    $.ajax({
-     	url: "/edit_profile",        
-      type :"put",
-      data :{color: $('#choose_color').val()}
-    });
-   		return false;
-	},
-	onChange: function (hsb, hex, rgb) {
-		$('#choose_color').css('backgroundColor', '#' + hex);
-    $('#choose_color').val(hex);
-	}
-});
-
+   
   //To edit the first_name
  	$('#first_name').click(function(){
     $('#label_first_name').hide();
@@ -192,6 +202,100 @@ $(document).ready(function() {
    
     });
     
+    //To edit the phone no
+    
+   $('#phone').click(function(){
+    $('#label_phone').hide();
+    $('#txt_phone').show(); 
+    $('#phone').hide();
+    $('#save_phone').show(); 
+     
+  	$('#save_phone').click(function(){
+        $.ajax({
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[phone]" : $('#txt_phone').val()}
+        });
+    $('#label_phone').show();
+    $('#txt_phone').hide(); 
+    $('#phone').show();
+    $('#save_phone').hide(); 
+         
+   });
+   
+    });
+    
+    
+    
+        //To edit the mobile no
+    
+   $('#mobile').click(function(){
+    $('#label_mobile').hide();
+    $('#txt_mobile').show(); 
+    $('#mobile').hide();
+    $('#save_mobile').show(); 
+     
+  	$('#save_mobile').click(function(){
+        $.ajax({
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[mobile]" : $('#txt_mobile').val()}
+        });
+    $('#label_mobile').show();
+    $('#txt_mobile').hide(); 
+    $('#mobile').show();
+    $('#save_mobile').hide(); 
+         
+   });
+   
+    });
+    
+    //To edit the Timezone
+    
+   $('#time_zone').click(function(){
+    $('#label_time_zone').hide();
+    $('#txt_time_zone').show(); 
+    $('#time_zone').hide();
+    $('#save_time_zone').show(); 
+     
+  	$('#save_time_zone').click(function(){
+        $.ajax({
+         url:"/updates/edit_profile",
+          type: "put",
+          data:{"user[time_zone]" : $('#txt_time_zone').val()}
+        });
+    $('#label_time_zone').show();
+    $('#txt_time_zone').hide(); 
+    $('#time_zone').show();
+    $('#save_time_zone').hide(); 
+         
+   });
+   
+    });
+    
+    
+    //To edit the password
+    
+   $('#password').click(function(){
+    $('#label_password').hide();
+    $('#txt_password').show(); 
+    $('#password').hide();
+    $('#save_password').show(); 
+     
+  	$('#save_password').click(function(){
+        $.ajax({
+         url:"/updates/edit_password",
+          type: "put",
+          data:{"password" : $('#txt_password').val()}
+        });
+    $('#label_password').show();
+    $('#txt_password').hide(); 
+    $('#password').show();
+    $('#save_password').hide(); 
+         
+   });
+   
+    });
     
  	
 	
