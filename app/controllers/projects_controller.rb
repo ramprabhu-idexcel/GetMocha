@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 		@a=User.find(:all,:select=>[:first_name,:email])
 		@tcMovies=[]
 		@a.each do |f|
-			@tcMovies<<"#{f.first_name}-'#{f.email}'"
+			@tcMovies<<"#{f.email}"
 		end
 		@movies=@tcMovies.to_a
 	end
@@ -17,14 +17,16 @@ class ProjectsController < ApplicationController
 		@project=Project.new(params[:data])
 		@project.user_id=current_user
 		@project.save
+		@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
+		@p_user.save
 		@invites=Invitation.new(params[:data])
 		@invites.project_id=@project.id
 		@invites.save
 		render :nothing=>true
 	end
 	def settings
-		@projects=Project.find(:all, :conditions=>['status!=?', 3])
-		@completed_projects=Project.find_all_by_status(3)
+		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
+		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
 	end
 	def settings_pane
 		@project=Project.find(params[:id])

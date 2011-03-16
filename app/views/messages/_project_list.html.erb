@@ -1,0 +1,8 @@
+<div class="l-panel">
+	<div class="sub-header">Project Settings</div>
+	<div class="projects-list">
+	<% @projects.each do |project| %>
+		<a href="#project" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
+	<% end %>
+	</div>
+</div>
