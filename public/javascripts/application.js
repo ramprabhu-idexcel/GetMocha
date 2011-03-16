@@ -227,7 +227,7 @@ $(document).ready(function() {
   
   
       
-  $('#p_add').click(function(){
+ /* $('#p_add').click(function(){
     var a=$('#data_name').val();
     var b=$('#data_invites').val();
     var c=$('#data_message').val();
@@ -243,7 +243,7 @@ $(document).ready(function() {
   
   $('#p_can').click(function(){
     $('.add-item-modal').hide()
-  });
+  });*/
   $('#m_add').click(function(){
     
     $.ajax({
@@ -268,6 +268,35 @@ function add_new_modal()
        url :"/projects/add_new",
             success: function(data){
 			 document.getElementById('add_new_mod').innerHTML=data;  
+       }
+    });
+}
+function add_new_project()
+{
+  $.ajax({
+       type :'get',
+       url :"/projects/new",
+            success: function(data){
+			 document.getElementById('add_new_mod').innerHTML=data;  
+       }
+    });
+}
+function project_cancel_button()
+{
+ $('.add-item-modal').hide()
+}
+
+function project_save_button()
+{
+var a=$('#data_name').val();
+    var b=$('#data_invites').val();
+    var c=$('#data_message').val();
+    $.ajax({
+       type :'post',
+       url :"/projects",
+       data : $('#form1').serialize(),
+       success: function(){
+         $('.add-item-modal').hide();
        }
     });
 }
