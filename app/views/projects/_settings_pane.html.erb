@@ -78,7 +78,7 @@
 				<div class="team-members">
 					<h2>Team Members</h2>
 					<% @project.project_users.each do |proj_user| %>
-						<% if proj_user.user.status? %>
+						<% if proj_user.status? %>
 								<div class="person">
 								<div class="avatar-mini"></div>
 								<img src="images/content/stuart-avatar.jpg" class="avatar-mini-img" alt="avatar" />
@@ -94,7 +94,7 @@
 				<div class="guests">
 					<h2>Guests</h2>
 					<% @project.project_guests.each do |proj_guest| %>
-					  <% if proj_guest.guest.status? %>
+					  <% if proj_guest.status? %>
 							<div class="person">
 								<div class="avatar-mini"></div>
 								<img src="images/content/alex-avatar.jpg" class="avatar-mini-img" alt="avatar" />

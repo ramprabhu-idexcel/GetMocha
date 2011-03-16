@@ -178,4 +178,13 @@ $(document).ready(function() {
   });
     
 });
-
+function add_new_modal()
+{
+  $.ajax({
+       type :'post',
+       url :"/projects/add_new",
+            success: function(data){
+			 document.getElementById('add_new_mod').innerHTML=data;  
+       }
+    });
+}
