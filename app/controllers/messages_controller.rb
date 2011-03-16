@@ -14,13 +14,14 @@ class MessagesController < ApplicationController
 	end
 	@b.each do |g|
 		@Movies<<"#{g.name}"
-		end
+	end
+	#~ render :partial=>'new'
 		end
 	def create
 		@a=User.find_by_email(params[:message][:recipient])
 		@b=Project.find_by_name(params[:message][:project])
 	
-    @message=Message.new(:subject=> "params[:message][:subject]", :message=> "params[:message][:message]",:user_id=> @a.id, :project_id=>@b.id)
+    @message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=> @a.id, :project_id=>@b.id)
 		
 		@message.save
 		#~ @attach=Attachment.new(params[:data])

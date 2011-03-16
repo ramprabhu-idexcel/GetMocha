@@ -243,7 +243,7 @@ $(document).ready(function() {
   
   $('#p_can').click(function(){
     $('.add-item-modal').hide()
-  });*/
+  });
   $('#m_add').click(function(){
     
     $.ajax({
@@ -258,7 +258,7 @@ $(document).ready(function() {
   
   $('#m_can').click(function(){
     $('.add-item-modal').hide()
-  });
+  });*/
     
 });
 function add_new_modal()
@@ -281,6 +281,16 @@ function add_new_project()
        }
     });
 }
+function add_new_message()
+{
+  $.ajax({
+       type :'get',
+       url :"/messages/new",
+            success: function(data){
+			 document.getElementById('add_new_mod').innerHTML=data;  
+       }
+    });
+}
 function project_cancel_button()
 {
  $('.add-item-modal').hide()
@@ -295,6 +305,21 @@ var a=$('#data_name').val();
        type :'post',
        url :"/projects",
        data : $('#form1').serialize(),
+       success: function(){
+         $('.add-item-modal').hide();
+       }
+    });
+}
+function message_cancel_button()
+{
+$('.add-item-modal').hide()
+}
+function message_save_button()
+{
+ $.ajax({
+       type :'post',
+       url :"/messages",
+       data : $('#form2').serialize(),
        success: function(){
          $('.add-item-modal').hide();
        }

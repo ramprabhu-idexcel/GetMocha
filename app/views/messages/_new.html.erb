@@ -1,6 +1,3 @@
-
-<html>
-<head>
 <script src="/closure-library/closure/goog/base.js"></script>
 <script>
     goog.require('goog.ui.AutoComplete.Basic');
@@ -11,8 +8,8 @@
 <%form_for  :message, :url=>{ :controller => "messages", :action => "create" }, :html=>{ :id => 'form2'} do |f|%>
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
-		<a class="save-btn" id="m_add" href="#message_create">Save</a> 
-		<a class="cancel-btn" id="m_can" href="#">Cancel</a>
+		<a class="save-btn" id="m_add" href="#message_create" onclick="javascript:message_save_button();">Save</a> 
+		<a class="cancel-btn" id="m_can" href="#message_cancel" onclick="javascript:message_cancel_button();">Cancel</a>
 		Add New Message
 	</div>
 	<div class="modal-top-right"></div>
@@ -81,4 +78,3 @@
           var ac1 = new goog.ui.AutoComplete.Basic(tcMovies, document.getElementById('txtInput1'), false);
     var ac2 = new goog.ui.AutoComplete.Basic(Movies, document.getElementById('txtInput2'),false);
   </script>
-</html>
