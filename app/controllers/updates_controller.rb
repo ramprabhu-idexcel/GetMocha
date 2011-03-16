@@ -4,6 +4,7 @@ class UpdatesController < ApplicationController
 
 	def edit_profile
 	 @user=current_user
+   puts params[:user].inspect
     if @user.update_attributes(params[:user])	
       render :nothing=>true
 		else
@@ -37,8 +38,7 @@ class UpdatesController < ApplicationController
       @secondary_email.save
       render :partial=>"field"
     else
-      p @secondary_email.errors.inspect
-      render :json=>{"error"=>"Email already in use"}.to_json
+      render :json=>{"error"=>@secondary_email.errors.entries.first.join(' ')}.to_json
     end
   end
 end					
