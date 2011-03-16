@@ -5,14 +5,15 @@ class ProjectsController < ApplicationController
 
 	
 	def new
-		@a=User.find(:all,:select=>[:first_name,:email])
+@a=User.find(:all,:select=>[:first_name,:email])
 		@tcMovies=[]
 		@a.each do |f|
 			@tcMovies<<"#{f.email}"
+
+			
 		end
-		@movies=@tcMovies.to_a
-		render 'new'
-	end
+		
+		end
 	
 	def create		
 		@project=Project.new(params[:data])
@@ -24,7 +25,7 @@ class ProjectsController < ApplicationController
 		@invites.project_id=@project.id
 		@invites.save
 		render :nothing=>true
-	end
+		end
 	def settings
 		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
