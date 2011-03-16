@@ -307,6 +307,7 @@ $(document).ready(function() {
   
   $('.user_drop_down').click(function(){
     $('.account-dropdown').toggle();
+    return false;
   });
   
   
