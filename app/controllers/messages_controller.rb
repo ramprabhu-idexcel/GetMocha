@@ -8,9 +8,9 @@ class MessagesController < ApplicationController
 		@message=Message.new(params[:message])
 		@message.user_id=current_user
 		@message.save
-		#~ @invites=Invitation.new(params[:data])
-		#~ @invites.message_id=@message.id
-		#~ @invites.save
+		@attach=Attachment.new(params[:data])
+		@attach.message_id=@message.id
+		@attach.save
 		render :nothing=>true
 		
 	end

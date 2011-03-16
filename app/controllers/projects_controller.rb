@@ -1,9 +1,16 @@
 class ProjectsController < ApplicationController
-	#~ before_filter :authenticate_user!
+	 before_filter :authenticate_user!
 	layout "application"
 
 	
 	def new
+		@a=User.find(:all,:select=>[:first_name,:email])
+		@tcMovies=[]
+		@a.each do |f|
+		@tcMovies<<"#{f.first_name}-'#{f.email}'"
+	end
+	@movies=@tcMovies.to_a
+	p @movies
 	end
 	
 	def create		
@@ -16,7 +23,7 @@ class ProjectsController < ApplicationController
 		render :nothing=>true
 	end
 	def settings
-		@projects=Project.find(:all, :conditions=>['status=? OR status=?', 1, 2])
+		@projects=Project.find(:all, :conditions=>['status!=?', 3])
 		@completed_projects=Project.find_all_by_status(3)
 	end
 	def settings_pane

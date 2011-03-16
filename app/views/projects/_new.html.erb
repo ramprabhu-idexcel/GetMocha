@@ -1,4 +1,12 @@
-
+<html>
+<head>
+<script src="/closure-library/closure/goog/base.js"></script>
+<script>
+    goog.require('goog.ui.AutoComplete.Basic');
+  </script>
+  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
+	</head>
 <%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
 	<div class="modal-top-center">
 		<a class="save-btn" id="p_add" href="#project_create">Save</a> 
@@ -14,12 +22,12 @@
 				<fieldset>
 					<label>Name:</label>
 				
-							<%=f.text_field  'name', :class=>"textfield", :id=>"txtInput2" %>
+							<%=f.text_field  'name', :class=>"textfield", :id=>"txtInput1" %>
 				</fieldset>
 				<fieldset>
 					<label>Invite:</label>
 					
-					 <%=f.text_field 'email', :class=>"textfield", :id=>"txtInput2" %>
+					 <%=f.text_field 'email', :class=>"textfield", :id=>"txtInput2", :style=>"overflow:visible;" %>
 				</fieldset>
 				<fieldset>
 					<label>Message:</label>
@@ -31,4 +39,17 @@
 		</div>
 	</div>
 <%end%>
+<script type="text/javascript">
+<%=@name=[]%>
+	<% @tcMovies.each do |f|%>
+	
+	<%@name<<f <<","%>
+		var tcMovies = "<%= @name %>";
+	<%end%>
+<% #@final_list=@name.split(',') %>
+				tcMovies=tcMovies.split(',');
+          var ac2 = new goog.ui.AutoComplete.Basic(
+        tcMovies, document.getElementById('txtInput2'), true);
+  </script>
+	</html>
 
