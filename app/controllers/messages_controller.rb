@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
-	layout 'application'
+	layout 'application', :except=>['new']
 	def index
 		@projects=current_user.projects(:conditions=>['status!=?', 3])
 	end

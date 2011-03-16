@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!
-	layout "application"
+	layout "application", :except=>['new']
 
 	
 	def new
