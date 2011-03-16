@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 		@a=User.find(:all,:select=>[:first_name,:email])
 		@tcMovies=[]
 		@a.each do |f|
-			@tcMovies<<"#{f.first_name}-'#{f.email}'"
+			@tcMovies<<"#{f.email}"
 		end
 		@movies=@tcMovies.to_a
 	end
@@ -17,6 +17,8 @@ class ProjectsController < ApplicationController
 		@project=Project.new(params[:data])
 		@project.user_id=current_user
 		@project.save
+		@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
+		@p_user.save
 		@invites=Invitation.new(params[:data])
 		@invites.project_id=@project.id
 		@invites.save
