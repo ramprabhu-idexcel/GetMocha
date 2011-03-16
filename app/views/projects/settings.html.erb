@@ -97,10 +97,15 @@ document.getElementById('edit_anchor').innerHTML="Save";
 }
 else
 {
+var name=document.getElementById('text_anchor').value;
+if(name.length == 0)
+alert("Please enter a project name");
+else
+{
 document.getElementById('settings_project_name').style.display="block";
 document.getElementById('text_anchor').className="textfield hidden";
 document.getElementById('edit_anchor').innerHTML="Edit";
-var name=document.getElementById('text_anchor').value;
+
 document.getElementById('project_list_'+proj_id).innerHTML='<span class="icon"></span>'+name;
 var pars = "project_id=" + proj_id  + "&project_name="+ name;
  $.ajax({
@@ -112,7 +117,7 @@ var pars = "project_id=" + proj_id  + "&project_name="+ name;
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
     });
-
+}
 }
 }
 
