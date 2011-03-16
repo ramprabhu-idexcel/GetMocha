@@ -1,4 +1,14 @@
-	<%form_for  :message, :url=>{ :controller => "messages", :action => "create" }, :html=>{ :id => 'form2'} do |f|%>
+
+<html>
+<head>
+<script src="/closure-library/closure/goog/base.js"></script>
+<script>
+    goog.require('goog.ui.AutoComplete.Basic');
+  </script>
+  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
+	</head>
+<%form_for  :message, :url=>{ :controller => "messages", :action => "create" }, :html=>{ :id => 'form2'} do |f|%>
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
 		<a class="save-btn" id="m_add" href="#message_create">Save</a> 
@@ -12,7 +22,7 @@
 			<div class="modal-input">
 				<fieldset>
 					<label>To:</label>
-							<%=f.text_field  'recipient', :class=>"textfield" %>
+							<%=f.text_field  'recipient', :class=>"textfield", :id=>"txtInput1" %>
 		       		
 			    </fieldset>
 			    <fieldset>
@@ -22,7 +32,7 @@
 			    </fieldset>
 				<fieldset>
 					<label>Project:</label>
-		       		<%=f.text_field  'project', :class=>"textfield"%>
+		       		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
 			    </fieldset>
 			    <fieldset class="open">
 					<label>Message:</label>
@@ -53,3 +63,21 @@
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
 <%end%>
+<script type="text/javascript">
+<%=@name=[]%>
+<%=@names=[]%>
+	<% @tcMovies.each do |f|%>
+	
+	<%@name<<f <<","%>
+		var tcMovies = "<%= @name %>";
+	<%end%>
+				tcMovies=tcMovies.split(',');
+	<% @Movies.each do |f|%>
+	    <%@names<<f <<","%>
+		var Movies = "<%= @names %>";
+	<%end%>
+				Movies=Movies.split(',');
+			
+          var ac1 = new goog.ui.AutoComplete.Basic(tcMovies, document.getElementById('txtInput1'), false);
+    var ac2 = new goog.ui.AutoComplete.Basic(Movies, document.getElementById('txtInput2'),false);
+  </script>

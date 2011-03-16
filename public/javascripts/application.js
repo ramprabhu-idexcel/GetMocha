@@ -3,7 +3,56 @@
 
 $(document).ready(function() {
   
+  //signup and login
   
+  if(typeof Signup!="undefined" && Signup==true)
+  {
+    $('#user_submit').click(function(){
+      $.ajax({
+        url:'/users',
+        data: $('form#user_new').serialize(),
+        type: "POST"        
+      });
+      return false;
+    });
+  }
+
+  if(typeof Login!="undefined" && Login==true)
+  {
+    $("form#user_login").validate({
+      rules: {
+                'user[email]': {
+                required : true
+              }
+            },
+        messages: {
+          'user[email]': "can't be blank"
+        },
+        errorPlacement: function(error, element) {
+
+        },
+        debug:true
+      });
+  
+   $('#user_submit').click(function(){
+      $.ajax({
+        url:'/users/sign_in',
+        data: $('form#user_login').serialize(),
+        type: "POST",
+        success: function(data){
+          if(data!="redirect")
+          {
+            alert(data);
+          }
+          else
+          {
+            window.location.href="/projects/new";
+          }
+        }
+      });
+      return false;
+    });
+  }
   
   
   $('#txt_firstname').hide();
@@ -115,56 +164,7 @@ $(document).ready(function() {
     $('.account-dropdown').toggle();
   });
   
-  //signup and login
   
-  if(typeof Signup!="undefined" && Signup==true)
-  {
-    $('#user_submit').click(function(){
-      $.ajax({
-        url:'/users',
-        data: $('form#user_new').serialize(),
-        type: "POST"        
-      });
-      return false;
-    });
-  }
-
-  if(typeof Login!="undefined" && Login==true)
-  {
-    $("form#user_login").validate({
-      rules: {
-                'user[email]': {
-                required : true
-              }
-            },
-        messages: {
-          'user[email]': "can't be blank"
-        },
-        errorPlacement: function(error, element) {
-
-        },
-        debug:true
-      });
-  
-   $('#user_submit').click(function(){
-      $.ajax({
-        url:'/users/sign_in',
-        data: $('form#user_login').serialize(),
-        type: "POST",
-        success: function(data){
-          if(data!="redirect")
-          {
-            alert(data);
-          }
-          else
-          {
-            window.location.href="/projects/new";
-          }
-        }
-      });
-      return false;
-    });
-  }
       
   $('#p_add').click(function(){
     var a=$('#data_name').val();
@@ -200,96 +200,13 @@ $(document).ready(function() {
   });
     
 });
-
-
-
-
-// Function for displaying third panel in project settings
-function settings_thirdpanel(page)
-{
-if(page=="people")
-{
-document.getElementById('people_anchor').className="m-tab alt open";
-document.getElementById('general_anchor').className="m-tab alt";
-document.getElementById('settings_general').style.display="none";
-document.getElementById('settings_people').style.display="block";
-}
-else
-{
-document.getElementById('general_anchor').className="m-tab alt open";
-document.getElementById('people_anchor').className="m-tab alt";
-document.getElementById('settings_people').style.display="none";
-document.getElementById('settings_general').style.display="block";
-}
-}
-
-function remove_people_settings(id, proj_id)
-{
-var pars = "user=" + id  + "&project_id=" + proj_id;
-var where_to= confirm("Are you sure to remove this person?");
-if(where_to==true)
+function add_new_modal()
 {
   $.ajax({
        type :'post',
-       url : "/del_people?"+pars,
-       success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
-			 document.getElementById('settings_people').style.display="block";
-			 document.getElementById('people_anchor').className="m-tab alt open";
-			 }
+       url :"/projects/add_new",
+            success: function(data){
+			 document.getElementById('add_new_mod').innerHTML=data;  
+       }
     });
 }
-else
-{
-return false;
-}
-}
-
-function change_public_access(proj_id)
-{
-var pub_access=document.getElementById('settings_public_access').className;
-var access=true;
-if(pub_access=="icon")
-access=false;
-var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="+ access;
- $.ajax({
-       type :'post',
-       url : "/update_proj_settings?"+pars,
-       success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
-			 document.getElementById('settings_general').style.display="block";
-			 document.getElementById('general_anchor').className="m-tab alt open";
-			 }
-    });
-}
-
-function settings_project_info(edit)
-{
-if(edit=="edit")
-{
-document.getElementById('settings_project_name').style.display="none";
-document.getElementById('text_anchor').className="textfield";
-document.getElementById('edit_anchor').innerHTML="Save";
-}
-else
-{
-  var pub_access=document.getElementById('settings_project_name').className;
-var access=true;
-if(pub_access=="icon")
-access=false;
-var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="+ access;
- $.ajax({
-       type :'post',
-       url : "/update_proj_settings?"+pars,
-       success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
-			 document.getElementById('settings_general').style.display="block";
-			 document.getElementById('general_anchor').className="m-tab alt open";
-         }
-     });
-}
-}
-
-
-
-

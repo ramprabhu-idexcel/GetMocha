@@ -1,9 +1,16 @@
 class ProjectsController < ApplicationController
-	#~ before_filter :authenticate_user!
+	skip_before_filter :verify_authenticity_token
+	 before_filter :authenticate_user!
 	layout "application"
 
 	
 	def new
+		@a=User.find(:all,:select=>[:first_name,:email])
+		@tcMovies=[]
+		@a.each do |f|
+			@tcMovies<<"#{f.first_name}-'#{f.email}'"
+		end
+		@movies=@tcMovies.to_a
 	end
 	
 	def create		
@@ -16,17 +23,23 @@ class ProjectsController < ApplicationController
 		render :nothing=>true
 	end
 	def settings
-		@projects=Project.find(:all, :conditions=>['status=? OR status=?', 1, 2])
+		@projects=Project.find(:all, :conditions=>['status!=?', 3])
 		@completed_projects=Project.find_all_by_status(3)
 	end
 	def settings_pane
-		@project=Project.find(params[:project_id])
+		@project=Project.find(params[:id])
 		render :partial=>'settings_pane'
 	end
 	def remove_people
 		@project=Project.find(params[:project_id])
 		@user=User.find(params[:user])
-		@user.update_attributes(:status => false)
+		@proj_user=ProjectUser.find_by_project_id_and_status_and_user_id(@project.id,true,@user.id)
+		if @proj_user
+			@proj_user.update_attributes(:status=>false)
+		else
+			@guest_user=ProjectGuest.find_by_project_id_and_status_and_user_id(@project.id,true,@user.id)
+			@guest_user.update_attributes(:status=>false)
+		end
 		render :partial=>'settings_pane'
 	end
 	def update_proj_settings
@@ -49,5 +62,8 @@ class ProjectsController < ApplicationController
 			@custom.destroy
 		end
 			render :partial=>'settings_pane'
-	end
+		end
+		def add_new
+			render :partial=>'add_new'
+		end
 end

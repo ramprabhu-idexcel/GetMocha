@@ -5,7 +5,7 @@ class UsersController <  Devise::RegistrationsController
     if resource.save
       set_flash_message :notice, :signed_up
       render :udpate do |page|
-        page.redirect_to '/projects/new'
+        page.redirect_to '/sign_in'
       end
       
     else

@@ -14,7 +14,17 @@ GetMocha::Application.routes.draw do
     get "create" ,:to=>"devise/projects#create"
   end
  
-  resources :projects
+  resources :projects do 
+      collection do
+        post 'remove_people'
+        post 'add_new'
+        post 'update_proj_settings'
+      end
+      member do
+        post 'settings_pane'
+      end
+    
+  end
   
   resources :updates do
     collection do
@@ -24,9 +34,10 @@ GetMocha::Application.routes.draw do
    
   
   match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
-  match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
-  match '/del_people' =>'projects#remove_people', :as=>'remove_people'
-  match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'
+  #~ match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
+  #~ match '/del_people' =>'projects#remove_people', :as=>'remove_people'
+  #~ match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'
+  #~ match '/projects/add_new' =>'projects#add_new', :as=>'add_new'
   
   resources :messages
   # The priority is based upon order of creation:

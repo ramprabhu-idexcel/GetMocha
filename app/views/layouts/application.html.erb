@@ -21,7 +21,7 @@
 			<script type="text/javascript" src="/javascripts/size-container.js"></script>
 			<script type="text/javascript" src="/javascripts/open.js"></script>
 
-      <%= javascript_include_tag 'jquery-1.4.4.min', 'application','jquery.colorbox-min','colorpicker','eye','layout','utils'%>
+      <%= javascript_include_tag 'jquery-1.4.4.min', 'jquery.colorbox-min','colorpicker','eye','layout','utils','application'%>
 			<%=stylesheet_link_tag "colorpicker"%>
 			<%= csrf_meta_tag %>
 	
@@ -48,26 +48,29 @@
 <body class="tasks">
 
 <%= render :partial=>'/layouts/header'%>
-
+	<%=yield%>
 
 <div class="clear-fix"></div>
-<div id="container">
+<!--<div id="container">
 	
 	<%#= render :partial=>'/layouts/first_panel'%>
 	<%#= render :partial=>'/layouts/second_panel'%>
 	<%#= render :partial=>'/layouts/third_panel'%>
 
-	<%=yield%>
+
 	<div class="clear-fix"></div>
 </div>
 <div class="modal add-item-modal" style="display:none">
 	<div class="modal-top-left"></div>
-<%= render :partial =>'/projects/new'%>
+<%#= render :partial =>'/projects/new'%>
+<%#= render :partial =>'/projects/add_new'%>
 	<div class="modal-bottom-left"></div>
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
+</div>-->
+<div id="add_new_mod">
 </div>
-<%=render "/layouts/name_settings"%>
+<%#=render "/layouts/name_settings"%>
 </body>
 </html>
 

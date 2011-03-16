@@ -23,7 +23,7 @@ document.getElementById('project_list_'+id).className="project";
 <% end %>
   $.ajax({
        type :'post',
-       url : "/"+project_id+"/settings",
+			 url : "/projects/"+project_id+"/settings_pane",
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 }
@@ -56,7 +56,7 @@ if(where_to==true)
 {
   $.ajax({
        type :'post',
-       url : "/del_people?"+pars,
+       url : "/projects/remove_people?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_people').style.display="block";
@@ -79,7 +79,7 @@ access=false;
 var pars = "project_id=" + proj_id +  "&checked="+ access;
  $.ajax({
        type :'post',
-       url : "/update_proj_settings?"+pars,
+       url : "/projects/update_proj_settings?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
@@ -106,7 +106,7 @@ document.getElementById('project_list_'+proj_id).innerHTML='<span class="icon"><
 var pars = "project_id=" + proj_id  + "&project_name="+ name;
  $.ajax({
        type :'post',
-       url : "/update_proj_settings?"+pars,
+       url : "/projects/update_proj_settings?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
@@ -133,7 +133,7 @@ var status=document.getElementById('project_status_select_box').value;
 var pars = "project_id=" + proj_id +  "&proj_status="+ status;
  $.ajax({
        type :'post',
-       url : "/update_proj_settings?"+pars,
+       url : "/projects/update_proj_settings?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
@@ -157,7 +157,7 @@ var message_email=document.getElementById('message_email_textfield').value;
 var pars = "project_id=" + proj_id +  "&email="+ message_email;
  $.ajax({
        type :'post',
-       url : "/update_proj_settings?"+pars,
+       url : "/projects/update_proj_settings?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
@@ -183,7 +183,7 @@ var message_email=document.getElementById('task_email_textfield').value;
 var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
  $.ajax({
        type :'post',
-       url : "/update_proj_settings?"+pars,
+       url : "/projects/update_proj_settings?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
@@ -199,7 +199,7 @@ function delete_custom_mail(id,proj_id)
 var pars = "project_id=" + proj_id +  "&remove_email="+ id;
 $.ajax({
        type :'post',
-       url : "/update_proj_settings?"+pars,
+       url : "/projects/update_proj_settings?"+pars,
        success: function(data){
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
