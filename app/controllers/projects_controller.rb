@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-	 before_filter :authenticate_user!
+	 #~ before_filter :authenticate_user!
 	layout "application"
 
 	
@@ -7,10 +7,9 @@ class ProjectsController < ApplicationController
 		@a=User.find(:all,:select=>[:first_name,:email])
 		@tcMovies=[]
 		@a.each do |f|
-		@tcMovies<<"#{f.first_name}-'#{f.email}'"
-	end
-	@movies=@tcMovies.to_a
-	p @movies
+			@tcMovies<<"#{f.first_name}-'#{f.email}'"
+		end
+		@movies=@tcMovies.to_a
 	end
 	
 	def create		
