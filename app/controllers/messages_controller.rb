@@ -24,8 +24,8 @@ end
 		@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
 		@message.save
 		@to_users=params[:message][:recipient].split(', ')
-		send_message_to_team_members (@project,@message,@to_users)
-		send_notification_to_team_members(@to_user)
+		Message.send_message_to_team_members(@project,@message,@to_users)
+		Message.send_notification_to_team_members(current_user,@to_users)
 		render :nothing=>true
 	end
 	
