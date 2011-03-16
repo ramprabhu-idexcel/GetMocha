@@ -83,4 +83,10 @@ class ProjectsController < ApplicationController
 		def add_new
 			render :partial=>'add_new'
 		end
+		
+		def verify_email
+			@custom=CustomEmail.find_by_verification_code(params[:verification_code])
+			@custom.update_attributes(:verification_code=>nil)
+			redirect_to '/settings'
+		end
 end
