@@ -22,6 +22,9 @@ class ProjectsController < ApplicationController
 		invites=true if 
 		errors=[]
       @project.errors.each_full{|msg| 
+			if msg=="Name can't be blank"
+				msg="Please enter project name"
+			end
 				errors<< msg 
 			} 
       @invites.errors.each_full{|msg| 			if msg!="Email is too short (minimum is 6 characters)" && msg!="Email can't be blank" && msg!="Email is invalid"
