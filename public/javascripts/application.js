@@ -76,37 +76,7 @@ $(document).ready(function() {
   });
 
      //Edit the User profile
-    
-    $('#txt_firstname').hide();
-    $('#txt_lastname').hide();
-    $('#txt_email').hide();
-    $('#txt_password').hide();
-    $('#txt_title').hide();
-    $('#txt_phone').hide();
-    $('#txt_mobile').hide();
-    $('#txt_time_zone').hide();
-
-   
-
-    $('#save_firstname').hide();
-    $('#save_lastname').hide();
-    $('#save_title').hide();
-    $('#save_email').hide();
-    $('#save_phone').hide();
-    $('#save_mobile').hide();
-    $('#save_time_zone').hide();
-    $('#save_password').hide();
   
-   
-    
-
-
-
-    $('#myprofile2').hide();
-    $('#mycontact2').hide();
-
-  
-   
   //To edit the first_name
  	$('#first_name').click(function(){
     $('#label_first_name').hide();
