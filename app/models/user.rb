@@ -13,8 +13,10 @@ class User < ActiveRecord::Base
   has_many :project_users
   has_many :project_guests
   has_many :chats
-  has_many :messages
+ # has_many :messages
+  has_many :messages, :through => :activities, :source => :resource, :source_type => 'Message'
   has_many :activities
+  #has_many :activities
   has_many :secondary_emails
   
   #starred messages from all project
