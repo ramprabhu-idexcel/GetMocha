@@ -23,6 +23,10 @@
 
       <%= javascript_include_tag 'jquery-1.4.4.min', 'colorpicker','eye','layout','utils','application' %>
 			<%=stylesheet_link_tag "colorpicker"%>
+			<script src="/closure-library/closure/goog/base.js"></script>
+<script>
+    goog.require('goog.ui.AutoComplete.Basic');
+  </script>
 			<%= csrf_meta_tag %>
 	
 	<!--[if lt IE 7]>

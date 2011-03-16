@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
 	@projects.each do |g|
 		@Movies<<"#{g.name}"
 	end
-	render 'new'
+	render :partial=>'new'
 		end
 	def create
 		projects=Project.find_by_name(params[:message][:project])

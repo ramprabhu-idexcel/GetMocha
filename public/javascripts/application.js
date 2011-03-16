@@ -356,7 +356,7 @@ function add_new_project()
        type :'get',
        url :"/projects/new",
             success: function(data){
-			 document.getElementById('add_new_mod').innerHTML=data;  
+			 $('#add_new_mod').html(data); 
        }
     });
 }
@@ -366,7 +366,7 @@ function add_new_message()
        type :'get',
        url :"/messages/new",
             success: function(data){
-			 document.getElementById('add_new_mod').innerHTML=data;  
+			$('#add_new_mod').html(data); 
        }
     });
 }

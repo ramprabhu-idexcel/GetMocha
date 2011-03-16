@@ -5,14 +5,12 @@ class ProjectsController < ApplicationController
 
 	
 	def new
-@users=User.find(:all,:select=>[:first_name,:email])
+		@users=User.find(:all,:select=>[:first_name,:email])
 		@tcMovies=[]
 		@users.each do |f|
 			@tcMovies<<"#{f.email}"
-
-			
 		end
-		
+		render :partial => 'new'
 		end
 	
 	def create		
