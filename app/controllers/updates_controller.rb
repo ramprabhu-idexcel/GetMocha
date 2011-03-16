@@ -10,8 +10,9 @@ class UpdatesController < ApplicationController
 			    render :update do |page|
 					 	page.alert(@user.errors)
 					end	
-	end	
- end	
+				end	
+		
+  end	
 
  
  

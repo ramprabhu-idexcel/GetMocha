@@ -54,7 +54,12 @@
 						</div>
 						<div class="info-right">
 							<span class="info_title" id="label_title">
-							<%=current_user.title%></span>
+							<% if current_user.title==""%>
+							       <%=link_to "Edit","#",:class=>"edit",:id=>"last_name"%>
+							 <%else%>
+							<%=current_user.title%>
+							<%end%>
+							</span>
 							<%=text_field :val,:data, :id =>"txt_title",:value=>current_user.title,:style=>"display:none;"%>
               <%=link_to "Edit","#",:class=>"edit",:id=>"title"%>
 						 <%=link_to "Save","#",:class=>"edit",:id=>"save_title",:style=>"display:none;"%>
@@ -119,10 +124,12 @@
 							<p><%= label_tag "Time Zone:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info_time_zone" id="label_time_zone"><%=current_user.time_zone%></span>
+							<span class="info_time_zone" id="label_time_zone">
+							<%= select_tag("time_zone",options_for_select(time_zone_select),{:prompt => 'Select time_zone'})%>
+							</span>
 						  <%=text_field :val,:data, :id =>"txt_time_zone",:value=>current_user.time_zone,:style=>"display:none;"%>
-               <%=link_to "Edit","#",:class=>"edit",:id=>"time_zone"%>
-							<%=link_to "Save","#",:class=>"edit",:id=>"save_time_zone",:style=>"display:none;"%>
+               <%#=link_to "Edit","#",:class=>"edit",:id=>"time_zone"%>
+							<%=link_to "Save","#",:class=>"edit",:id=>"save_time_zone"%>
 				       	</div>
 				    </fieldset>
 				    <fieldset>

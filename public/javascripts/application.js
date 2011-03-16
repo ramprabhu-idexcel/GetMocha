@@ -219,27 +219,13 @@ $(document).ready(function() {
     
     //To edit the Timezone
     
-   $('#time_zone').click(function(){
-    $('#label_time_zone').hide();
-    $('#txt_time_zone').show(); 
-    $('#time_zone').hide();
-    $('#save_time_zone').show(); 
-     
-  	$('#save_time_zone').click(function(){
-        $.ajax({
+    $('#save_time_zone').click(function(){
+         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[time_zone]" : $('#txt_time_zone').val()}
+          data:{"user[time_zone]" : $('#time_zone').val()}
         });
-    $('#label_time_zone').show();
-    $('#txt_time_zone').hide(); 
-    $('#time_zone').show();
-    $('#save_time_zone').hide(); 
-         
-   });
-   
-    });
-    
+       });
     
     //To edit the password
     
