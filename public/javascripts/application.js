@@ -55,7 +55,7 @@ $(document).ready(function() {
   }
   
   
- if(typeof Edit!="undefined" && Edit==true)
+ if(typeof UserEdit!="undefined" && UserEdit==true)
   {
     
     
@@ -105,9 +105,6 @@ $(document).ready(function() {
     $('#myprofile2').hide();
     $('#mycontact2').hide();
 
-    $('.user_drop_down').click(function(){
-    $('.account-dropdown').toggle();
-    });
   
    
   //To edit the first_name
@@ -321,7 +318,15 @@ $(document).ready(function() {
        
    });
    
- } 
+  $('a#add_new_email').click(function(){
+    $('#semail').append("<div class='info-right'><span class='info hidden'>********</span><input class='textfield' type='text' value='' name='secondary_emails' /> <a class='edit save_email' href='#' >Save</a></div><br />");
+    $('.save_email').live('click', function() {
+      alert($(this).siblings('input.textfield').val());
+    });
+    return false;
+  });
+   
+ } //end of user edit
 
   // user account-dropdown
   

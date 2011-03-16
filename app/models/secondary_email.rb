@@ -1,3 +1,6 @@
 class SecondaryEmail < ActiveRecord::Base
-	belongs_to :user
+	validates :email,:uniqueness=>true,:message=>"Already in use"
+  
+  belongs_to :user
+  
 end

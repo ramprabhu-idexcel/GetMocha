@@ -74,10 +74,10 @@
 						<div class="label-contain">
 							<p><%= label_tag "Secondary:"%><br /></p>
 						</div>
-						<div class="info-right">
-							<span class="info"> </span><%=link_to "Edit","#",:class=>"edit"%>
+						 <div class="info-right">
 				       		<input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
-				       		<a href="#" class="add-email">+ Add another email</a>
+                  <span id="semail"></span>
+				       		<a href="#" class="add-email" id="add_new_email">+ Add another email</a>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
@@ -139,7 +139,7 @@
 	</div>
 
 <script>
-var Edit=true;
+var UserEdit=true;
 
 </script>
 
