@@ -1,6 +1,9 @@
 class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
 	layout 'application'
+	def index
+		@projects=current_user.projects(:conditions=>['status!=?', 3])
+	end
 	def new
 		@a=User.find(:all,:select=>[:first_name,:email])
 		@b=Project.find(:all,:select=>[:name])
