@@ -67,11 +67,16 @@ $(document).ready(function() {
 	},
 	onHide: function (colpkr) {
 		$(colpkr).fadeOut(500);
+    $.ajax({
+      url:'/updates/edit_profile',
+      type:'put',
+      data:{'user[color]':$('#choose_color_value').val()}
+    });
    	return false;
 	},
 	onChange: function (hsb, hex, rgb) {
   	$('#choose_color').css('backgroundColor', '#' + hex);
-    $('#choose_color').val(hex);
+    $('#choose_color_value').val(hex);
 	}
   });
 
@@ -300,6 +305,7 @@ $(document).ready(function() {
           }
         }      
       });
+      return false;
     });
    
  } //end of user edit

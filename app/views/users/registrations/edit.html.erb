@@ -137,8 +137,9 @@
 							<p><%= label_tag "Chat Color:"%><br /></p>
 						</div>
 						<div class="info-right">
-			       <p><%= text_field :color,:data,:size =>1,:id =>'choose_color' %>
-							<img src="/images/color-chooser.png" alt="color-choose" id="colorSelector" /></p>
+			       <%= hidden_field :color,:data,:size =>1,:id =>'choose_color_value' ,:value=>current_user.color%>
+			       <%= text_field :color,:data,:size =>1,:id =>'choose_color' ,:style=>"width:19px;height:14px;background-color:##{current_user.color}"%>
+             <img src="/images/color-chooser.png" alt="color-choose" id="colorSelector"/>
 						 </div>
 				    </fieldset>
 				</form>
