@@ -122,8 +122,9 @@ class ProjectsController < ApplicationController
 		def invite_people_settings
 			@invite=Invitation.new(:project_id=>params[:project_id], :name=>params[:name], :email=>params[:email], :message=>params[:message])
 			@invite.save
-			
+			@project=Project.find(params[:project_id])
 			if @invite.valid?
+				ProjectMailer.delay.invite_people(current_user,@invite.email,@project,@invite)
 				render :nothing=>true
 			else
 				errors=[]
