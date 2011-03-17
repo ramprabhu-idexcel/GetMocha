@@ -75,21 +75,27 @@
 							<%=link_to "Save","#",:class=>"edit",:id=>"save_email",:style=>"display:none;"%>
 				       	</div>
 				    </fieldset>
+						
 				    <fieldset>
 						<div class="label-contain">
 							<p><%= label_tag "Secondary:"%><br /></p>
 						</div>
 						 <div class="info-right">
-							<%unless current_user.secondary_emails.empty?%>
-										<% current_user.secondary_emails.each do |e| %>
-										<%=e.email%><br/>
-									  <%end%>
-						       <input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
+ 	 						  <%if current_user.secondary_emails.present?%>
+       								     <% current_user.secondary_emails.each do |e| %>
+					           	 						  <%if e.confirmation_token.present?%>
+										                    <br/><%=e.email%>(unverified)
+																		 <%else%>
+                                        <br/><%=e.email%>(verified)
+																		<%end%>	
+							       			 <%end%>
+									<%end%>		
+							    <input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
                    <span id="semail"></span>
 				      	   <a href="#" class="add-email" id="add_new_email">+ Add another email</a>
-						  <%end%>		
 				       	</div>
 				     </fieldset>
+						 
 				    <fieldset>
 						<div class="label-contain">
 							   <p><%= label_tag "Password:"%><br /></p>
