@@ -50,14 +50,16 @@ class ProjectsController < ApplicationController
 	def settings
 		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
-	end
-	def settings_pane
-		@project=Project.find(params[:id])
-		render :partial=>'settings_pane'
 		@users=User.find(:all,:select=>[:first_name,:email])
 		  @user_emails=[]
 		  @users.each do |f|
 			@user_emails<<"#{f.email}"
+		end
+		end
+	def settings_pane
+		@project=Project.find(params[:id])
+		render :partial=>'settings_pane'
+		
 	end
 	def remove_people
 		@project=Project.find(params[:project_id])
@@ -144,7 +146,7 @@ class ProjectsController < ApplicationController
 				end
 			end
 		end
-		def join_project
+				def join_project
 			@invite=Invitation.find_by_invitation_code(params[:invitation_code])
 			@user=User.find_by_email(@invite.email)
 			if @user

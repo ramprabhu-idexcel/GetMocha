@@ -1,6 +1,8 @@
 <div class="modal invite-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
+	<link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 		<a href="#" class="save-btn" onclick="javascript:send_people_invite();">Send</a>
 		<a href="#" class="cancel-btn"  onclick="javascript:cancel_people_invite();">Cancel</a>
 
@@ -18,7 +20,7 @@
 			    </fieldset>
 			    <fieldset>
 					<label>Email:</label>
-					<%= text_field :invite, :email, :class=>"textfield", :id=>"txtInput2" %>
+					<%= text_field :invite, :email, :class=>"textfield" %>
 		       		<!--<input type="text" name="email" value="" class="textfield"/>-->
 			    </fieldset>
 			    <fieldset class="open">
@@ -42,6 +44,7 @@
 	<%end%>
 
 				userEmails=userEmails.split(',');
-			  var ac2 = new goog.ui.AutoComplete.Basic(
-      userEmails, document.getElementById('txtInput2'), false);
+				alert(userEmails);
+				var ac2 = new goog.ui.AutoComplete.Basic(
+      userEmails, document.getElementById("invite_email"), false);
   </script>
