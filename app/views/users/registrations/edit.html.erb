@@ -82,9 +82,9 @@
  	 						  <%if current_user.secondary_emails.present?%>
        								     <% current_user.secondary_emails.each do |e| %>
 					           	 						  <%if e.confirmation_token.present?%>
-										                    <br/><%=e.email%>(unverified)
+										                    <br/><%=e.email%>&nbsp;(unverified)
 																		 <%else%>
-                                        <br/><%=e.email%>(verified)
+                                        <br/><%=e.email%>&nbsp;(verified)
 																		<%end%>	
 							       			 <%end%>
 									<%end%>		
@@ -165,7 +165,7 @@
 						</div>
 						<div class="info-right">
 			       <%= hidden_field :color,:data,:size =>1,:id =>'choose_color_value' ,:value=>current_user.color%>
-			       <%= text_field :color,:data,:class=>"textfield",:size =>1,:id =>'choose_color' ,:style=>"width:19px;height:14px;background-color:##{current_user.color}"%>
+			       <%= text_field :color,:data,:class=>"textfield",:size =>1,:id =>'choose_color' ,:style=>"width:19px;height:19px;background-color:##{current_user.color}"%>
              <img src="/images/color-chooser.png" alt="color-choose" id="colorSelector"/>
 						 </div>
 				    </fieldset>
