@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
     Activity.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false]).group_by{|m| m.created_at.to_date}
   end
   
+  def all_messages_count
+    all_messages.count
+  end
+  
   #starred messages from the project
   def project_starred_messages(project_id)
     starred_messages.collect{|a| a.resource.project_id==project_id}
