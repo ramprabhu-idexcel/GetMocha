@@ -41,5 +41,9 @@ class UpdatesController < ApplicationController
       render :json=>{"error"=>@secondary_email.errors.entries.first.join(' ')}.to_json
     end
   end
+  
+  def verify_email
+        
+  end
 end					
 					

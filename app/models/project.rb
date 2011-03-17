@@ -19,6 +19,10 @@ class Project < ActiveRecord::Base
 	validates :name, :length     => { :within => 3..40, :message=>": Please enter a project name with more than 3 characters and less than 20 characters" }
 	after_create :create_email_ids
 	
+  def self.user_projects(user_id)
+    find(:all,:conditions=>['project_users.user_id=?',user_id],:include=>:proje
+  end
+  
 	def  create_email_ids
 		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
 	end
