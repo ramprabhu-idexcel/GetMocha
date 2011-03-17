@@ -101,11 +101,12 @@ $(document).ready(function() {
      //Edit the User profile
   
   //To edit the first_name
+  $('#first_name').css('visibility','visible');
  	$('#first_name').click(function(){
     $('#label_first_name').hide();
     $('#txt_firstname').show(); 
-    $('#first_name').hide();
-    $('#save_firstname').show(); 
+    $('#first_name').css('visibility','hidden');
+    $('#save_firstname').css('visibility','visible');
     return false;
     });
     
@@ -128,20 +129,21 @@ $(document).ready(function() {
        });
 
     $('#txt_firstname').hide(); 
-    $('#save_firstname').hide(); 
+    $('#save_firstname').css('visibility','hidden');
     $('#label_first_name').show();
-    $('#first_name').show();     
+    $('#first_name').css('visibility','visible');
     return false;
        
    });
     
     
   //To edit the last_name  
+    $('#last_name').css('visibility','visible');
     $('#last_name').click(function(){
     $('#label_last_name').hide();
     $('#txt_lastname').show(); 
-    $('#last_name').hide();
-    $('#save_lastname').show(); 
+    $('#last_name').css('visibility','hidden');
+    $('#save_lastname').css('visibility','visible');
     return false;
        });
        
@@ -161,24 +163,23 @@ $(document).ready(function() {
            }
 			}			
           
-          
-        });
+    });
     $('#txt_lastname').hide(); 
-    $('#save_lastname').hide(); 
+    $('#save_lastname').css('visibility','hidden');
     $('#label_last_name').show();
-   $('#last_name').show();
+    $('#last_name').css('visibility','visible');
     return false;
    });
    
 
     
     //To edit the title
-    
+    $('#title').css('visibility','visible');
     $('#title').click(function(){
     $('#label_title').hide();
     $('#txt_title').show(); 
-    $('#title').hide();
-    $('#save_title').show(); 
+    $('#title').css('visibility','hidden');
+    $('#save_title').css('visibility','visible');
     return false;
      });
      
@@ -202,9 +203,9 @@ $(document).ready(function() {
         });
     
     $('#txt_title').hide(); 
-    $('#save_title').hide(); 
+    $('#save_title').css('visibility','hidden');
     $('#label_title').show();     
-    $('#title').show();
+    $('#title').css('visibility','visible');
      return false;
    });
    
@@ -212,12 +213,12 @@ $(document).ready(function() {
     
         
    //To edit the email
-    
-   $('#email').click(function(){
+    $('#email').css('visibility','visible');
+    $('#email').click(function(){
     $('#label_email').hide();
     $('#txt_email').show(); 
-    $('#email').hide();
-    $('#save_email').show(); 
+    $('#email').css('visibility','hidden');
+    $('#save_email').css('visibility','visible');
     return false;
    });
      
@@ -238,22 +239,22 @@ $(document).ready(function() {
 			}			
         });
     $('#txt_email').hide(); 
-    $('#save_email').hide(); 
+    $('#save_email').css('visibility','hidden');
      $('#label_email').show();
-    $('#email').show();
+    $('#email').css('visibility','visible');
      return false;
   });
    
    
     
     //To edit the phone no
-    
+   $('#phone').css('visibility','visible');
    $('#phone').click(function(){
-    $('#label_phone').hide();
-    $('#txt_phone').show(); 
-    $('#phone').hide();
-    $('#save_phone').show(); 
-      return false;
+   $('#label_phone').hide();
+   $('#txt_phone').show(); 
+   $('#phone').css('visibility','hidden');
+   $('#save_phone').css('visibility','visible');
+   return false;
    
     });
      
@@ -275,10 +276,10 @@ $(document).ready(function() {
 			}			
         });
     
-    $('#txt_phone').hide(); 
-    $('#save_phone').hide(); 
-    $('#label_phone').show();
-     $('#phone').show();
+   $('#txt_phone').hide(); 
+    $('#save_phone').css('visibility','hidden');
+     $('#label_phone').show();
+    $('#phone').css('visibility','visible');
     return false;
         
    });
@@ -286,12 +287,12 @@ $(document).ready(function() {
 
     
         //To edit the mobile no
-    
+   $('#mobile').css('visibility','visible');
    $('#mobile').click(function(){
     $('#label_mobile').hide();
     $('#txt_mobile').show(); 
-    $('#mobile').hide();
-    $('#save_mobile').show(); 
+   $('#mobile').css('visibility','hidden');
+   $('#save_mobile').css('visibility','visible');
     return false;
     });
      
@@ -314,9 +315,9 @@ $(document).ready(function() {
         });
     
     $('#txt_mobile').hide(); 
-    $('#save_mobile').hide(); 
-    $('#label_mobile').show();
-     $('#mobile').show();
+    $('#save_mobile').css('visibility','hidden');
+     $('#label_mobile').show();
+    $('#mobile').css('visibility','visible');
     return false;
          
    });
@@ -335,14 +336,15 @@ $(document).ready(function() {
        });
     
     //To edit the password
-    
+   $('#password').css('visibility','visible');
    $('#password').click(function(){
     $('#label_password').hide();
     $('#txt_password').show(); 
      $('#confirm').show(); 
      $('#confirm_pass').show();
      $('#txt_confirm').show();
-     $('#password').hide();
+     $('#password').css('visibility','hidden');
+    $('#save_confirm').css('visibility','visible');
     //~ $('#save_password').show(); 
      return false;
       });
@@ -364,8 +366,8 @@ $(document).ready(function() {
 
     $('#label_password').show();
     $('#txt_password').hide(); 
-    $('#password').show();
-    $('#save_password').hide(); 
+     $('#password').css('visibility','visible');
+    $('#save_password').css('visibility','hidden');
     $('#confirm').hide(); 
     $('#confirm_pass').hide();    
      return false;

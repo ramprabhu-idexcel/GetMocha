@@ -25,17 +25,15 @@
 				<form action="">
 					<fieldset>
 						<div class="label-contain">
-							<p><%= label_tag "First Name:"%><br /></p>
+						    	<p><%= label_tag "First Name:"%><br /></p>
 						</div>
-						<div id="first_name_display" >
-						<div class="info-right">
-							<span class="info_firstname" id="label_first_name"><%=current_user.first_name%></span>
-							 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_firstname",:value=>current_user.first_name,:style=>"display:none;"%>
-						<%=link_to "Edit","#",:class=>"edit",:id=>"first_name"%>
-						<%=link_to "Save","#",:class=>"edit",:id=>"save_firstname",:style=>"display:none;"%>
-			       		</div>
-								</div>
-				    </fieldset>
+					<div class="info-right">
+					      <span class="info_firstname" id="label_first_name"><%=current_user.first_name%></span>
+					      <%=text_field :val,:data,:class=>"textfield",:id =>"txt_firstname",:value=>current_user.first_name,:style=>"display:none;"%>
+					     	<%=link_to "Edit","#",:class=>"edit",:id=>"first_name",:style=>"visibility:hidden;"%>
+						    <%=link_to "Save","#",:class=>"edit",:id=>"save_firstname",:style=>"visibility:hidden;"%>
+			    </div>
+  			    </fieldset>
 				    <fieldset>
 						<div class="label-contain">
 							<p><%= label_tag "Last Name:"%><br /></p>
@@ -44,8 +42,8 @@
 						<div class="info-right">
 							<span class="info_lastname" id="label_last_name"><%=current_user.last_name%></span>
     							 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_lastname",:value=>current_user.last_name,:style=>"display:none;"%>
-                   <%=link_to "Edit","#",:class=>"edit",:id=>"last_name"%>
-									 <%=link_to "Save","#",:class=>"edit",:id=>"save_lastname",:style=>"display:none;"%>
+                   <%=link_to "Edit","#",:class=>"edit",:id=>"last_name",:style=>"visibility:hidden;"%>
+									 <%=link_to "Save","#",:class=>"edit",:id=>"save_lastname",:style=>"visibility:hidden;"%>
 				       	</div>
 								</div>
 				    </fieldset>
@@ -60,8 +58,8 @@
 					 <span class="info_title" id="label_title" ><%=current_user.title%></span>
 						<%end%>
 						 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_title",:value=>current_user.title,:style=>"display:none;"%>
-              <%=link_to "Edit","#",:class=>"edit",:id=>"title"%>
-							<%=link_to "Save","#",:class=>"edit",:id=>"save_title",:style=>"display:none;"%>
+              <%=link_to "Edit","#",:class=>"edit",:id=>"title",:style=>"visibility:hidden;"%>
+							<%=link_to "Save","#",:class=>"edit",:id=>"save_title",:style=>"visibility:hidden;"%>
 				    </div>
 				    </fieldset>
 				    <fieldset>
@@ -71,8 +69,8 @@
 						<div class="info-right">
 							<span class="info_email" id="label_email"><%=current_user.email%></span>
 						 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_email",:value=>current_user.email,:style=>"display:none;"%>
-               <%=link_to "Edit","#",:class=>"edit",:id=>"email"%>
-							<%=link_to "Save","#",:class=>"edit",:id=>"save_email",:style=>"display:none;"%>
+               <%=link_to "Edit","#",:class=>"edit",:id=>"email",:style=>"visibility:hidden;"%>
+							<%=link_to "Save","#",:class=>"edit",:id=>"save_email",:style=>"visibility:hidden;"%>
 				       	</div>
 				    </fieldset>
 						
@@ -103,7 +101,7 @@
 							<div class="info-right">
 							<span class="info_password" id="label_password">********</span>
 						    	 <%=password_field :val,:data,:class=>"textfield",:id =>"txt_password",:value=>"********",:style=>"display:none;"%>
-							     <%=link_to "Edit","#",:class=>"edit",:id=>"password"%>
+							     <%=link_to "Edit","#",:class=>"edit",:id=>"password",:style=>"visibility:hidden;"%>
  		       	</div>
 				    </fieldset>
 						
@@ -114,7 +112,7 @@
          			<div class="info-right" id="confirm_pass">			
 	                  <span class="info_password" id="label_confirm"></span>	
                      <%=password_field :val,:data,:class=>"textfield",:id =>"txt_confirm",:value=>"********",:style=>"display:none;"%>
-							       <%=link_to "Save","#",:class=>"edit",:id=>"save_confirm"%>
+							       <%=link_to "Save","#",:class=>"edit",:id=>"save_confirm",:style=>"visibility:hidden;"%>
 						  </div>
 						</fieldset>
 						
@@ -129,8 +127,8 @@
 					 <span class="info_phone" id="label_phone" ><%=current_user.phone%></span>
 						<%end%>
 						 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_phone",:value=>current_user.phone,:style=>"display:none;"%>
-              <%=link_to "Edit","#",:class=>"edit",:id=>"phone"%>
-							<%=link_to "Save","#",:class=>"edit",:id=>"save_phone",:style=>"display:none;"%>
+              <%=link_to "Edit","#",:class=>"edit",:id=>"phone",:style=>"visibility:hidden;"%>
+							<%=link_to "Save","#",:class=>"edit",:id=>"save_phone",:style=>"visibility:hidden;"%>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
@@ -144,8 +142,8 @@
 						<span class="info_mobile" id="label_mobile" style="visibility:hidden">*****</span>
 						 <%end%>
 						 	 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_mobile",:value=>current_user.mobile,:style=>"display:none;"%>
-               <%=link_to "Edit","#",:class=>"edit",:id=>"mobile"%>
-							<%=link_to "Save","#",:class=>"edit",:id=>"save_mobile",:style=>"display:none;"%>
+               <%=link_to "Edit","#",:class=>"edit",:id=>"mobile",:style=>"visibility:hidden;"%>
+							<%=link_to "Save","#",:class=>"edit",:id=>"save_mobile",:style=>"visibility:hidden;"%>
 				       	</div>
 				    </fieldset>
 				    <fieldset>
