@@ -1,8 +1,12 @@
 <div class="l-panel">
-	<div class="sub-header">Project Settings</div>
+	<a onclick="addClass(this);" class="all-messages has-unread open" href="#"><span class="num-unread"><%= unread_message_count%></span><span class="icon"></span>All Messages </a>
+			<a href="#" class="starred" onclick="addClass(this);"><span class="num-tasks"><%= starred_message_count%></span><span class="icon"></span>Starred </a>
+			
 	<div class="projects-list">
 	<% @projects.each do |project| %>
+	<%# count= unread_project_message_count(project.id)%>
 		<a href="#project" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
 	<% end %>
 	</div>
 </div>
+

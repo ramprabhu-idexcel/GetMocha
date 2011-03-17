@@ -24,13 +24,16 @@ class Message < ActiveRecord::Base
 			end
 		end
 	end 
-def self.send_notification_to_team_members(user,to_users)
-	@user=user
-	to_users.each do |to_user|
-		@to_user=to_user
-	ProjectMailer.delay.message_notification(user,to_user)
- end
-end
+	def self.send_notification_to_team_members(user,to_users)
+		@user=user
+		to_users.each do |to_user|
+			@to_user=to_user
+		ProjectMailer.delay.message_notification(user,to_user)
+		end
+	end
+
+	
+	
 
 end
 
