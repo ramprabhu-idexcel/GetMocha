@@ -22,11 +22,11 @@ class User < ActiveRecord::Base
   
   #starred messages from all project
   def starred_messages
-    Activity.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
+    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
   end
   
   def all_messages
-    Activity.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false]).group_by{|m| m.created_at.to_date}
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false]).group_by{|m| m.created_at.to_date}
   end
   
   def all_messages_count
