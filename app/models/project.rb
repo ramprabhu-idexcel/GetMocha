@@ -22,6 +22,14 @@ class Project < ActiveRecord::Base
   def self.user_projects(user_id)
     find(:all,:conditions=>['project_users.user_id=?',user_id],:include=>:project_users)
   end
+	
+	def self.user_active_projects(user_id)
+    find(:all,:conditions=>['project_users.user_id=? AND projects.status!=?',user_id,3],:include=>:project_users)
+  end
+	
+	def self.user_completed_projects(user_id)
+    find(:all,:conditions=>['project_users.user_id=? AND projects.status=?',user_id,3],:include=>:project_users)
+  end
   
 	def  create_email_ids
 		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
