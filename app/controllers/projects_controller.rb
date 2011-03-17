@@ -119,4 +119,20 @@ class ProjectsController < ApplicationController
 			@custom.update_attributes(:verification_code=>nil)
 			redirect_to '/settings'
 		end
+				def invite_people_settings
+			
+			@invite=Invitation.new(:project_id=>params[:project_id], :name=>params[:name], :email=>params[:email], :message=>params[:message])
+			@invite.save
+			if @invite.valid?
+				render :nothing=>true
+			else
+				errors=[]
+				#~ if @invite.errors[:email]
+				#<OrderedHash {:email=>["is too short (minimum is 6 characters)", "is invalid"]}>
+
+				render :update do |page|
+					page.alert @invite.errors
+				end
+			end
+		end
 end
