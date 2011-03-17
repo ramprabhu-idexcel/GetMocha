@@ -51,6 +51,8 @@ GetMocha::Application.routes.draw do
   
   resources :messages
   match 'all_messages'=>'messages#all_messages',:as=>'all_messages',:method=>:get
+  match 'starred_messages'=>'messages#starred_messages',:as=>'starred_messages',:method=>:get
+  match 'message/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
