@@ -32,13 +32,13 @@
 			    <fieldset id="txtarea">
 					<label>Message:</label>
 
-		       		<%=f.text_area 'message', :class=>'textfield', :rows=>"", :cols=>"",:onfocus=>"javascript:changehight()"%>
+		       		<%=f.text_area 'message', :class=>'textfield', :rows=>"", :cols=>"",:onfocus=>"javascript:changehight(this.id)"%>
 			    </fieldset>
-				<fieldset class="open">
+				<fieldset id="attach">
 					<label>Attachments:</label>
 					
 					<div class="attachment-upload">
-						<%=f.text_area 'attachments', :class=>"drag-drop", :cols=>"", :rows=>"", :value=>"Drag and drop files here"%>
+						<%=f.text_area 'attachments', :class=>"textfield", :rows=>"", :cols=>"", :onfocus=>"javascript:changehight(this.id)"%>
 						<div class="attachment">
 
 							<a href="#">Remove</a>
@@ -59,9 +59,19 @@
 	<div class="modal-bottom-right"></div>
 <%end%>
 <script type="text/javascript">
-function changehight(){
+function changehight(id)
+{
+field=id
+if (field=='message_message')
+{
 	document.getElementById('txtarea').className="open";
 	document.getElementById('message_message').className="textarea";
+	}
+	else{
+	document.getElementById('attach').className="open";
+	document.getElementById('message_attachments').className="drag_drop";
+	document.getElementById('message_attachments').value="drag&drop files here";
+	}
 	}
 <%=@name=[]%>
 <%=@names=[]%>
