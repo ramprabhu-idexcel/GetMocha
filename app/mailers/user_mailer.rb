@@ -4,5 +4,11 @@ class UserMailer < ActionMailer::Base
     @url=verify_secondary_email_url(:verification_code=>code)
     mail(:to=>email, :subject=>"Verify Your Email Address on Mocha")
     @content_type="text/html"
-  end
+   end
+   # Method added for postfix functionality
+   def receive(email)
+    logger.info "*************************"
+    logger.info email.inspect
+    logger.info "*************************"
+    end
 end
