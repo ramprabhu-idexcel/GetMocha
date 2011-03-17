@@ -8,7 +8,7 @@ class SecondaryEmail < ActiveRecord::Base
   def send_verification
     code=Encrypt.verification_code
     self.update_attribute(:confirmation_token,code)
-    UserMailer.verify_secondary_email(self.email,code).deliver
+    UserMailer.delay.verify_secondary_email(self.email,code)
   end
   
 end
