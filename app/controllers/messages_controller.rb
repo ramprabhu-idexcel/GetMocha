@@ -58,5 +58,14 @@ end
 			end
 		end
 	end
-	end
+  end
+
+  def all_messages
+    render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>[:message,:project_id,:subject]}})
+  end
+  
+  private
+  def unwanted_columns
+    [:created_at,:is_assigned,:resource_type,:resource_id]
+  end
 end
