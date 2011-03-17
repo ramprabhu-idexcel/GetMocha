@@ -19,6 +19,7 @@ GetMocha::Application.routes.draw do
         post 'remove_people'
         post 'add_new'
         post 'update_proj_settings'
+        get 'invite_people_settings'
       end
       member do
         post 'settings_pane'

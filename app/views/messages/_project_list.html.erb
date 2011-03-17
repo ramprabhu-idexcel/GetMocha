@@ -4,9 +4,22 @@
 			
 	<div class="projects-list">
 	<% @projects.each do |project| %>
-	<%# count= unread_project_message_count(project.id)%>
+	<% count= unread_project_message_count(project.id)%>
+		<%if !count.nil?%>
+		<a href="#project" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="icon"></span><span class="num-unread"><%=count%></span><%= project.name %></a>
+		<%else%>
 		<a href="#project" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
+		<%end%>
 	<% end %>
 	</div>
 </div>
 
+
+<!--
+<a href="#" class="project has-unread" onclick="addClass(this);">
+<span class="num-unread">5</span>
+<span class="icon"/>
+Apple
+</a>
+
+-->

@@ -16,7 +16,7 @@ class Project < ActiveRecord::Base
   belongs_to :owner,:class_name=>"User"
 	attr_accessible :name,:status,:message_email_id,:task_email_id,:is_public
 	validates :name, :presence   => true
-	validates :name, :length     => { :within => 3..40, :message=>": Please enter a project name with more than 3 characters and less than 20 characters" }
+	validates :name, :length     => { :within => 3..40, :message=>"Please enter a project name with more than 3 characters and less than 20 characters" }
 	after_create :create_email_ids
 	
   def self.user_projects(user_id)
@@ -33,5 +33,15 @@ class Project < ActiveRecord::Base
   
 	def  create_email_ids
 		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
+	end
+	
+	def is_member?(user_id)
+		member=Project.find(:first, :conditions=>['project_users.user_id=? AND project_users.status=?', user_id,true], :include=>:project_users)
+		if member
+			return true
+		else
+			return false
+		end
+		
 	end
 end

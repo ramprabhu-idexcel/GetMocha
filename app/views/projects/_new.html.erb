@@ -18,17 +18,17 @@
 				<fieldset>
 					<label>Name:</label>
 				
-							<%=f.text_field  'name', :class=>"textfield", :id=>"txtInput1" %>
+							<%=text_field  :project, 'name', :class=>"textfield", :id=>"txtInput1" %>
 				</fieldset>
 				<fieldset>
 					<label>Invite:</label>
 					
-					 <%=f.text_field 'email', :class=>"textfield", :id=>"txtInput2"%>
+					 <%=text_field :invite, 'email', :class=>"textfield", :id=>"txtInput2"%>
 				</fieldset>
 				<fieldset>
 					<label>Message:</label>
 					
-				 <%=f.text_area 'message', :cols=>"35", :rows=>"2",:onclick=>"javascript:changeHight()"%>
+				 <%=text_area :invite, 'message', :cols=>"35", :rows=>"2", :id=>"textareaId",:onfocus=>"changeHeight()"%>
 				</fieldset>
 			
 			</div>
@@ -40,6 +40,14 @@
 </div>
 <%end%>
 <script type="text/javascript">
+	
+	function changeHeight(){
+	document.getElementById("textareaId").rows=7;
+	
+}
+
+
+
 <%=@name=[]%>
 	<% @tcMovies.each do |f|%>
 	
@@ -48,11 +56,8 @@
 	<%end%>
 <% #@final_list=@name.split(',') %>
 				tcMovies=tcMovies.split(',');
-          var ac2 = new goog.ui.AutoComplete.Basic(
-        tcMovies, document.getElementById('txtInput2'), true);
+			  var ac2 = new goog.ui.AutoComplete.Basic(
+        tcMovies, document.getElementById('txtInput2'), false);
   </script>
-	<script type="text/javascript">
-	function changeHight(){
-document.forms1.data[:message].rows ="9";
-}
+	
 

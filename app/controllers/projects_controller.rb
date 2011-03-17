@@ -13,23 +13,27 @@ class ProjectsController < ApplicationController
 		end
 	
 	def create		
-		@project=Project.new(params[:data])
+		@project=Project.new(params[:project])
 		@project.user_id=current_user.id
 		project=@project.valid?
-		@invites=Invitation.new(params[:data])
+		@invites=Invitation.new(params[:invite])
 		@invites.project_id=@project.id
 		invites=@invites.valid?
-		invites=true if 
+		#invites=true if 
 		errors=[]
-      @project.errors.each_full{|msg| 
-			if msg=="Name can't be blank"
-				msg="Please enter project name"
+		if @project.errors[:name][0]=="can't be blank"
+				errors<<"Please enter project name"
+				elsif !@project.errors[:name][0].nil?
+					errors<<@project.errors[:name][0]
+				end
+				if !params[:invite][:email].blank?
+		    	if @invites.errors[:email][0]=="is too short (minimum is 6 characters)"
+			  	errors<<"Please enter email minimum 6 charecter "
+			  elsif !@invites.errors[:email][0].nil?&&@invites.errors[:email][0]=="is invalid"
+					errors<<"Email is invalid"
+				end
 			end
-				errors<< msg 
-			} 
-      @invites.errors.each_full{|msg| 			if msg!="Email is too short (minimum is 6 characters)" && msg!="Email can't be blank" && msg!="Email is invalid"
-			errors<< msg 
-			end } 
+			
 		if project && invites
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
@@ -114,5 +118,26 @@ class ProjectsController < ApplicationController
 			@custom=CustomEmail.find_by_verification_code(params[:verification_code])
 			@custom.update_attributes(:verification_code=>nil)
 			redirect_to '/settings'
+		end
+		def invite_people_settings
+			@invite=Invitation.new(:project_id=>params[:project_id], :name=>params[:name], :email=>params[:email], :message=>params[:message])
+			@invite.save
+			@project=Project.find(params[:project_id])
+			if @invite.valid?
+				ProjectMailer.delay.invite_people(current_user,@invite.email,@project,@invite)
+				render :nothing=>true
+			else
+				errors=[]
+				if params[:email].blank?
+					errors<<"Please enter email address"
+				elsif	@invite.errors[:email][0]=="is too short (minimum is 6 characters)"
+					errors<<"Please enter email minimum 6 characters"
+				elsif @invite.errors[:email][0]=="is invalid"
+					errors<<"Please enter valid email address"
+				end
+				render :update do |page|
+					page.alert errors
+				end
+			end
 		end
 end
