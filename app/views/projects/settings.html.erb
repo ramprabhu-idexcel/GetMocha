@@ -170,9 +170,12 @@ var pars = "project_id=" + proj_id +  "&email="+ message_email;
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
+			  if(data.length!=141)
+				{
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
 			 }
     });
 }
@@ -203,9 +206,12 @@ var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
+			 if(data.length!=141)
+			 {
 			 document.getElementById('settings_pane').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
+			 }
 			 }
     });
 }

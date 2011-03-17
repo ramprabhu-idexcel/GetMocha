@@ -9,8 +9,8 @@ class Message < ActiveRecord::Base
 
 	validates :project, :presence   => true
 										
-	validates :subject, :presence   => true,
-                    :length     => { :within => 6..250 }
+	validates :subject, :presence   => true
+                    #:length     => { :within => 6..250 }
 	validates :message, :presence   => true
 	
 	def self.send_message_to_team_members(project,message,to_users)

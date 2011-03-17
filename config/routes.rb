@@ -34,9 +34,9 @@ GetMocha::Application.routes.draw do
     end
   end
    
-  
+   match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondary_email',:method=>:get
   match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
-  
+  match '/projects/verify_email/:verification_code' =>'projects#verify_email', :as => 'verify_email', :method => :post
   #~ match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
   #~ match '/del_people' =>'projects#remove_people', :as=>'remove_people'
   #~ match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'

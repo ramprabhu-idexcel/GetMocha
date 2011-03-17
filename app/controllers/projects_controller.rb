@@ -14,15 +14,35 @@ class ProjectsController < ApplicationController
 	
 	def create		
 		@project=Project.new(params[:data])
-		@project.user_id=current_user
-		@project.save
-		@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
-		@p_user.save
+		@project.user_id=current_user.id
+		project=@project.valid?
 		@invites=Invitation.new(params[:data])
 		@invites.project_id=@project.id
-		@invites.save
-		render :nothing=>true
+		invites=@invites.valid?
+		invites=true if 
+		errors=[]
+      @project.errors.each_full{|msg| 
+			if msg=="Name can't be blank"
+				msg="Please enter project name"
+			end
+				errors<< msg 
+			} 
+      @invites.errors.each_full{|msg| 			if msg!="Email is too short (minimum is 6 characters)" && msg!="Email can't be blank" && msg!="Email is invalid"
+			errors<< msg 
+			end } 
+		if project && invites
+			@project.save
+			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
+			@p_user.save
+			@invites.save
+			render :nothing=>true
+		else
+			render :update do |page|
+				page.alert errors.join("\n")
+			end
 		end
+		 
+	end
 	def settings
 		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
@@ -69,16 +89,30 @@ class ProjectsController < ApplicationController
 		elsif params[:email]
 			@custom=CustomEmail.new(:custom_type=>"Message", :project_id=>@project.id, :email=>params[:email])
 			@custom.save
+			ProjectMailer.delay.custom_email(current_user,@custom)
 		elsif params[:task_email]
 			@custom=CustomEmail.new(:custom_type=>"Task", :project_id=>@project.id, :email=>params[:task_email])
 			@custom.save
+			ProjectMailer.delay.custom_email(current_user,@custom)
 		elsif params[:remove_email]
 			@custom=CustomEmail.find(params[:remove_email])
 			@custom.destroy
 		end
+		if @custom && !@custom.valid?
+			render :update do |page|
+				page.alert "This Email address already taken"
+			end
+		else
 			render :partial=>'settings_pane'
+		end
 		end
 		def add_new
 			render :partial=>'add_new'
+		end
+		
+		def verify_email
+			@custom=CustomEmail.find_by_verification_code(params[:verification_code])
+			@custom.update_attributes(:verification_code=>nil)
+			redirect_to '/settings'
 		end
 end

@@ -1,7 +1,7 @@
 
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
-<%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1'} do |f|%>
+<%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1', :name=>"forms1"} do |f|%>
 <div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
@@ -28,7 +28,7 @@
 				<fieldset>
 					<label>Message:</label>
 					
-				 <%=f.text_area 'message', :cols=>"35", :rows=>"4"%>
+				 <%=f.text_area 'message', :cols=>"35", :rows=>"2",:onclick=>"javascript:changeHight()"%>
 				</fieldset>
 			
 			</div>
@@ -51,5 +51,8 @@
           var ac2 = new goog.ui.AutoComplete.Basic(
         tcMovies, document.getElementById('txtInput2'), true);
   </script>
-	
+	<script type="text/javascript">
+	function changeHight(){
+document.forms1.data[:message].rows ="9";
+}
 
