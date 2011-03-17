@@ -11,17 +11,23 @@
 	</div>
 	
 	<div class="m-header">
+	<% if action_name !="settings" %>
 		<a href="/sort-by-tasks" class="sort-by">Sort by</a>
+	<% end %>
 	</div>
 
 	
 	<div class="r-header">
 		<ul>
+		<% if action_name == "settings" %>
+			<li><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" style="display:none;">Invite</a></li>
+		<% else %>
 			<li><a href="/reply" class="reply">Reply</a></li>
 			<li><a href="#" class="star">Star</a></li>
 			<li><a href="#" class="trash">Trash</a></li>
+		<% end %>
 		</ul>
-		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%#=current_user.full_name%></a>
+		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
 
 		<a href="<%= project_settings_path %>" class="settings"></a>
 	</div>
