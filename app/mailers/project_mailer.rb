@@ -41,10 +41,9 @@ class ProjectMailer < ActionMailer::Base
   
   def invite_people(user,invite)
     @user=user
-    @to_user=to_user
     @message=invite.message
     @invite_link="http://localhost:3000/projects/join_project/#{invite.invitation_code}"
-    mail(:to=>"#{to_user}", :subject=>"#{user.full_name} has invited you to join #{project.name} on GetMocha.com")
+    mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com")
     @content_type="text/html"
   end
 end

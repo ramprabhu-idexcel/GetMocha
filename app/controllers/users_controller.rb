@@ -4,6 +4,15 @@ class UsersController <  Devise::RegistrationsController
     build_resource
     if resource.save
       set_flash_message :notice, :signed_up
+      @invite=Invitation.find(:all, :conditions=>['invitation_code is NULL AND status=? AND email=?', false, resource.email])
+			if @invite 
+        @invite.each do |invite|
+          @project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>resource.id, :status=>true)
+          @project_user.save
+          @invite.update_attributes(:status=>true)
+        end
+      end
+				
       render :udpate do |page|
         page.redirect_to '/sign_in'
       end
