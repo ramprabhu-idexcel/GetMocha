@@ -98,7 +98,13 @@ class ProjectsController < ApplicationController
 			@custom=CustomEmail.find(params[:remove_email])
 			@custom.destroy
 		end
+		if @custom && !@custom.valid?
+			render :update do |page|
+				page.alert "This Email address already taken"
+			end
+		else
 			render :partial=>'settings_pane'
+		end
 		end
 		def add_new
 			render :partial=>'add_new'
