@@ -46,5 +46,11 @@ class UpdatesController < ApplicationController
     s.udpdate_attribute(:confirmation_token,nil) if s
     redirect_to '/sign_in'      
   end
+  
+  def delete_email
+   secondary_email=SecondaryEmail.find_by_id(params[:id])
+   secondary_email.delete if secondary_email
+   render :nothing=>true
+  end
 end					
 					

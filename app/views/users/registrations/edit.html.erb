@@ -79,15 +79,17 @@
 							<p><%= label_tag "Secondary:"%><br /></p>
 						</div>
 						 <div class="info-right">
- 	 						  <%if current_user.secondary_emails.present?%>
-       								     <% current_user.secondary_emails.each do |e| %>
+	  							<span class="info_email" id="label_secondary_email">
+  	 						  <%if current_user.secondary_emails.present?%>
+       								     <% current_user.secondary_emails.each_with_index do |e,index| %>
 					           	 						  <%if e.confirmation_token.present?%>
-										                    <br/><%=e.email%>&nbsp;(unverified)
+										                 <span><%=raw index==0 ? "" : "<br/>"%><%=e.email%>&nbsp;(unverified)<%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete",:id=>"delete_email"%></span>
 																		 <%else%>
-                                        <br/><%=e.email%>&nbsp;(verified)
+                                         <span><br/><%=e.email%><%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete",:id=>"delete_email"%> </span>
 																		<%end%>	
 							       			 <%end%>
 									<%end%>		
+									</span>
 							    <input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
                    <span id="semail"></span>
 				      	   <a href="#" class="add-email" id="add_new_email">+ Add another email</a>

@@ -33,6 +33,9 @@ GetMocha::Application.routes.draw do
       put 'edit_password'
       post 'create_secondary_email'
     end
+    member do
+      delete 'delete_email'
+    end
   end
    
   match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondary_email',:method=>:get

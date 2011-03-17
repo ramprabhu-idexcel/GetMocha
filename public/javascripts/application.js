@@ -430,6 +430,27 @@ $(document).ready(function() {
     return false;
   });
   
+     $('.delete').click(function(){
+         $(this).parent('span').remove();
+       $.ajax({
+         url: $(this).attr('href'),
+         type: 'delete',
+       });
+    return false;
+  });
+  
+  $('.delete').live('click',function(){
+         $(this).parent('span').remove();
+       $.ajax({
+         url: $(this).attr('href'),
+         type: 'delete',
+       });
+    return false;
+  });
+  
+  
+  
+  
   
       
  /* $('#p_add').click(function(){
