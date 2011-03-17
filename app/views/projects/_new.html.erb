@@ -48,16 +48,16 @@
 
 
 
-<%=@name=[]%>
-	<% @tcMovies.each do |f|%>
+<%=@emails=[]%>
+	<% @user_emails.each do |f|%>
 	
-	<%@name<<f <<","%>
-		var tcMovies = "<%= @name %>";
+	<%@emails<<f <<","%>
+		var userEmails= "<%= @emails %>";
 	<%end%>
-<% #@final_list=@name.split(',') %>
-				tcMovies=tcMovies.split(',');
+
+				userEmails=userEmails.split(',');
 			  var ac2 = new goog.ui.AutoComplete.Basic(
-        tcMovies, document.getElementById('txtInput2'), true);
+      userEmails, document.getElementById('txtInput2'), false);
   </script>
 	
 

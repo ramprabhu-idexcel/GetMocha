@@ -18,7 +18,7 @@
 			    </fieldset>
 			    <fieldset>
 					<label>Email:</label>
-					<%= text_field :invite, :email, :class=>"textfield" %>
+					<%= text_field :invite, :email, :class=>"textfield", :id=>"txtInput2" %>
 		       		<!--<input type="text" name="email" value="" class="textfield"/>-->
 			    </fieldset>
 			    <fieldset class="open">
@@ -33,3 +33,15 @@
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
 </div>
+	<script>
+<%=@emails=[]%>
+	<% @user_emails.each do |f|%>
+	
+	<%@emails<<f <<","%>
+		var userEmails= "<%= @emails %>";
+	<%end%>
+
+				userEmails=userEmails.split(',');
+			  var ac2 = new goog.ui.AutoComplete.Basic(
+      userEmails, document.getElementById('txtInput2'), false);
+  </script>

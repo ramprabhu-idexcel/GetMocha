@@ -5,9 +5,9 @@ class ProjectsController < ApplicationController
 	
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
-		@tcMovies=[]
-		@users.each do |f|
-			@tcMovies<<"#{f.email}"
+		  @user_emails=[]
+		  @users.each do |f|
+			@user_emails<<"#{f.email}"
 		end
 		render :partial => 'new'
 		end
@@ -54,6 +54,10 @@ class ProjectsController < ApplicationController
 	def settings_pane
 		@project=Project.find(params[:id])
 		render :partial=>'settings_pane'
+		@users=User.find(:all,:select=>[:first_name,:email])
+		  @user_emails=[]
+		  @users.each do |f|
+			@user_emails<<"#{f.email}"
 	end
 	def remove_people
 		@project=Project.find(params[:project_id])
