@@ -33,11 +33,11 @@ class ProjectsController < ApplicationController
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
-			invite_users.each do |@invite_user|
-			@invites=Invitation.new(:email=>@invite_user,:message=>params[:invite][:message])
-		  @invites.project_id=@project.id
-			@invites.save
-			ProjectMailer.delay.send_invitation_for_project(@invite_user,current_user)
+			invite_users.each do |invite_user|
+			@invite=Invitation.new(:email=>invite_user,:message=>params[:invite][:message])
+		  @invite.project_id=@project.id
+			@invite.save
+			ProjectMailer.delay.invite_people(current_user,@invite)
 		  end
 			render :nothing=>true
 		else

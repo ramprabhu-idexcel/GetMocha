@@ -39,7 +39,7 @@ class ProjectMailer < ActionMailer::Base
     @content_type="text/html"
   end
   
-  def invite_people(user, to_user, project, invite)
+  def invite_people(user,invite)
     @user=user
     @to_user=to_user
     @message=invite.message
