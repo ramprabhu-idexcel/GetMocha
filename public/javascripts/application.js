@@ -622,3 +622,38 @@ var pars = "project_id=" + proj_id + "&change_field=public_access" + "&checked="
      });
 }
 }
+
+function parse_datetime(datetime)
+{
+  var x = datetime.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+  var parsed_date=new Date(x[1],parseInt(x[2])-1,x[3]);
+  var current_date=Date.today();
+    alert(parsed_date);
+  alert(current_date);
+  if(parsed_date.toString()==current_date.toString())
+  {
+    var t=parseInt(x[4])>12 ? " PM" : " AM"
+    var a=x[4]+":"+x[5]+t;
+  }
+  else
+  {
+    var a=x[3]+"/"+x[2]+"/"+x[1];
+  }
+  return a;
+}
+
+function parse_date(date)
+{
+  var d=Date.parse(date)
+  var year=d.getFullYear();
+  var month=d.getMonth();
+  var dat=d.getDate();
+  var day=d.getDay();
+  var month_names = ['January','Febraury','March','April','May','June','July','August','September','October','November','December'];
+  var month_short_names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var day_names=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var day_short_names=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var parsed_date=day_names[day]+", "+month_names[month]+", "+dat+", "+year;
+  return parsed_date;
+}
+
