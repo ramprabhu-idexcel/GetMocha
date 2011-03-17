@@ -257,26 +257,19 @@ $(document).ready(function() {
     
  	
 	
-   $('#mycontact1').click(function(){
-      $('#user_information').hide();
-      $('#myprofile2').show();
-      $('#myprofile1').hide();
-      $('#mycontact1').hide();
-      $('#mycontact2').show();
-      $('.drag-drop').hide();
-      $.ajax({
-     	url: "/edit_profile",        
-        }); 
+     $('#mycontact1').click(function(){
+        $('#mycontact1').toggleClass('open')
+        $('#my_profile').hide();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').show();
      
      
       });
-   $('#myprofile2').click(function(){
-       $('#user_information').show();
-       $('#myprofile2').hide();
-       $('#myprofile1').show();
-       $('#mycontact1').show();
-       $('#mycontact2').hide();
-       
+    $('#myprofile1').click(function(){
+      $('#mycontact1').toggleClass('open')
+        $('#my_profile').show();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').hide();
    });
    
   $('a#add_new_email').click(function(){
