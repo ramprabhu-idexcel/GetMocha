@@ -28,7 +28,7 @@
 				<fieldset>
 					<label>Message:</label>
 					
-				 <%=text_area :invite, 'message', :cols=>"35", :rows=>"2", :id=>"textareaId",:onfocus=>"changeHeight()"%>
+				 <%=text_area :invite, 'message', :class=>"textarea", :cols=>"35", :rows=>"1", :id=>"textareaId",:onfocus=>"changeHeight()"%>
 				</fieldset>
 			
 			</div>
@@ -57,7 +57,7 @@
 <% #@final_list=@name.split(',') %>
 				tcMovies=tcMovies.split(',');
 			  var ac2 = new goog.ui.AutoComplete.Basic(
-        tcMovies, document.getElementById('txtInput2'), false);
+        tcMovies, document.getElementById('txtInput2'), true);
   </script>
 	
 

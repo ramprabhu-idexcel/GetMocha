@@ -12,14 +12,11 @@ class ProjectsController < ApplicationController
 		render :partial => 'new'
 		end
 	
-	def create		
+		def create		
+		invite_users=params[:invite][:email].split(',')
 		@project=Project.new(params[:project])
 		@project.user_id=current_user.id
 		project=@project.valid?
-		@invites=Invitation.new(params[:invite])
-		@invites.project_id=@project.id
-		invites=@invites.valid?
-		#invites=true if 
 		errors=[]
 		if @project.errors[:name][0]=="can't be blank"
 				errors<<"Please enter project name"
@@ -27,18 +24,21 @@ class ProjectsController < ApplicationController
 					errors<<@project.errors[:name][0]
 				end
 				if !params[:invite][:email].blank?
-		    	if @invites.errors[:email][0]=="is too short (minimum is 6 characters)"
-			  	errors<<"Please enter email minimum 6 charecter "
-			  elsif !@invites.errors[:email][0].nil?&&@invites.errors[:email][0]=="is invalid"
-					errors<<"Email is invalid"
-				end
+				 invites=params[:invite][:email].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+				 if !invites
+				errors<<"Please enter valid email addresses for invite"
 			end
-			
+		end
 		if project && invites
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
+			invite_users.each do |@invite_user|
+			@invites=Invitation.new(:email=>@invite_user,:message=>params[:invite][:message])
+		  @invites.project_id=@project.id
 			@invites.save
+			ProjectMailer.delay.send_invitation_for_project(@invite_user,current_user)
+		  end
 			render :nothing=>true
 		else
 			render :update do |page|
