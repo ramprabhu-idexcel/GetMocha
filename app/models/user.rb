@@ -8,9 +8,10 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   validates :first_name,:last_name,:presence=> true
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status
-  has_many :projects
-  has_one :project
+  has_many :projects,:as=>:project_members
+  #~ has_one :project
   has_many :project_users
+  has_many :projects,:through=>:project_users,:as=>:project_members
   has_many :project_guests
   has_many :chats
  # has_many :messages
@@ -50,13 +51,22 @@ class User < ActiveRecord::Base
   end
   
   def full_name
-    "#{first_name.titleize} #{last_name.titleize}"
+    "#{first_name} #{last_name}"
   end
   
   #overwrite method to login using the secondary emails
   def self.find_for_authentication(conditions={})
     login = conditions.delete(:email)
     find(:first,:conditions=>["users.email=:value or secondary_emails.email=:value",{:value => login}],:include=>:secondary_emails)
-   end
+  end
+  
+  def project_memberships
+    Project.user_projects(self.id)
+  end
+  
+  
+  def my_contacts
+    User.find(:all,:conditions=>['project_users.project_id in (?) AND users.status=? AND project_users.status=?',project_memberships,true,true],:include=>:project_users)
+  end
   
 end
