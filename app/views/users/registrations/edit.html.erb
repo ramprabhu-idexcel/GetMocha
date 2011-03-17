@@ -30,7 +30,7 @@
 						<div id="first_name_display" >
 						<div class="info-right">
 							<span class="info_firstname" id="label_first_name"><%=current_user.first_name%></span>
-							 <%=text_field :val,:data, :id =>"txt_firstname",:value=>current_user.first_name,:style=>"display:none;"%>
+							 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_firstname",:value=>current_user.first_name,:style=>"display:none;"%>
 						<%=link_to "Edit","#",:class=>"edit",:id=>"first_name"%>
 						<%=link_to "Save","#",:class=>"edit",:id=>"save_firstname",:style=>"display:none;"%>
 			       		</div>
@@ -43,7 +43,7 @@
 						<div id="last_name_display" >
 						<div class="info-right">
 							<span class="info_lastname" id="label_last_name"><%=current_user.last_name%></span>
-    							 <%=text_field :val,:data, :id =>"txt_lastname",:value=>current_user.last_name,:style=>"display:none;"%>
+    							 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_lastname",:value=>current_user.last_name,:style=>"display:none;"%>
                    <%=link_to "Edit","#",:class=>"edit",:id=>"last_name"%>
 									 <%=link_to "Save","#",:class=>"edit",:id=>"save_lastname",:style=>"display:none;"%>
 				       	</div>
@@ -59,7 +59,7 @@
 						<%else%>
 					 <span class="info_title" id="label_title" ><%=current_user.title%></span>
 						<%end%>
-						 <%=text_field :val,:data, :id =>"txt_title",:value=>current_user.title,:style=>"display:none;"%>
+						 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_title",:value=>current_user.title,:style=>"display:none;"%>
               <%=link_to "Edit","#",:class=>"edit",:id=>"title"%>
 							<%=link_to "Save","#",:class=>"edit",:id=>"save_title",:style=>"display:none;"%>
 				    </div>
@@ -70,7 +70,7 @@
 						</div>
 						<div class="info-right">
 							<span class="info_email" id="label_email"><%=current_user.email%></span>
-						 <%=text_field :val,:data, :id =>"txt_email",:value=>current_user.email,:style=>"display:none;"%>
+						 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_email",:value=>current_user.email,:style=>"display:none;"%>
                <%=link_to "Edit","#",:class=>"edit",:id=>"email"%>
 							<%=link_to "Save","#",:class=>"edit",:id=>"save_email",:style=>"display:none;"%>
 				       	</div>
@@ -80,23 +80,39 @@
 							<p><%= label_tag "Secondary:"%><br /></p>
 						</div>
 						 <div class="info-right">
-				       		<input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
-                  <span id="semail"></span>
-				       		<a href="#" class="add-email" id="add_new_email">+ Add another email</a>
+							<%unless current_user.secondary_emails.empty?%>
+										<% current_user.secondary_emails.each do |e| %>
+										<%=e.email%><br/>
+									  <%end%>
+						       <input type="text" name="secondary-email" value="" class="textfield hidden" /><br />
+                   <span id="semail"></span>
+				      	   <a href="#" class="add-email" id="add_new_email">+ Add another email</a>
+						  <%end%>		
 				       	</div>
-				    </fieldset>
+				     </fieldset>
 				    <fieldset>
 						<div class="label-contain">
-							<p><%= label_tag "Password:"%><br /></p>
-						</div>
-						<div class="info-right">
+							   <p><%= label_tag "Password:"%><br /></p>
+						 </div>
+							<div class="info-right">
 							<span class="info_password" id="label_password">********</span>
-							 <%=password_field :val,:data, :id =>"txt_password",:value=>"********",:style=>"display:none;"%>
-							<%=link_to "Edit","#",:class=>"edit",:id=>"password"%>
-							<%=link_to "Save","#",:class=>"edit",:id=>"save_password",:style=>"display:none;"%>
-				       	</div>
+						    	 <%=password_field :val,:data,:class=>"textfield",:id =>"txt_password",:value=>"********",:style=>"display:none;"%>
+							     <%=link_to "Edit","#",:class=>"edit",:id=>"password"%>
+ 		       	</div>
 				    </fieldset>
-				    <fieldset>
+						
+						 <fieldset>
+							<div class="label-contain" id="confirm" style="display:none;">
+						      	<p><%= label_tag "Confirm:"%><br /></p>
+						 </div>
+         			<div class="info-right" id="confirm_pass">			
+	                  <span class="info_password" id="label_confirm"></span>	
+                     <%=password_field :val,:data,:class=>"textfield",:id =>"txt_confirm",:value=>"********",:style=>"display:none;"%>
+							       <%=link_to "Save","#",:class=>"edit",:id=>"save_confirm"%>
+						  </div>
+						</fieldset>
+						
+						<fieldset>
 						<div class="label-contain">
 							<p><%= label_tag "Phone:"%><br /></p>
 						</div>
@@ -106,7 +122,7 @@
 						<%else%>
 					 <span class="info_phone" id="label_phone" ><%=current_user.phone%></span>
 						<%end%>
-						 <%=text_field :val,:data, :id =>"txt_phone",:value=>current_user.phone,:style=>"display:none;"%>
+						 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_phone",:value=>current_user.phone,:style=>"display:none;"%>
               <%=link_to "Edit","#",:class=>"edit",:id=>"phone"%>
 							<%=link_to "Save","#",:class=>"edit",:id=>"save_phone",:style=>"display:none;"%>
 				       	</div>
@@ -121,7 +137,7 @@
 						<%else%>
 						<span class="info_mobile" id="label_mobile" style="visibility:hidden">*****</span>
 						 <%end%>
-						 	 <%=text_field :val,:data, :id =>"txt_mobile",:value=>current_user.mobile,:style=>"display:none;"%>
+						 	 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_mobile",:value=>current_user.mobile,:style=>"display:none;"%>
                <%=link_to "Edit","#",:class=>"edit",:id=>"mobile"%>
 							<%=link_to "Save","#",:class=>"edit",:id=>"save_mobile",:style=>"display:none;"%>
 				       	</div>
@@ -134,7 +150,7 @@
 							<span class="info_time_zone" id="label_time_zone">
 							<%= select_tag("time_zone",options_for_select(time_zone_select),{:prompt => 'Select time_zone'})%>
 							</span>
-						  <%=text_field :val,:data, :id =>"txt_time_zone",:value=>current_user.time_zone,:style=>"display:none;"%>
+						  <%=text_field :val,:data,:class=>"textfield",:id =>"txt_time_zone",:value=>current_user.time_zone,:style=>"display:none;"%>
                <%#=link_to "Edit","#",:class=>"edit",:id=>"time_zone"%>
 							<%=link_to "Save","#",:class=>"edit",:id=>"save_time_zone"%>
 				       	</div>
@@ -145,7 +161,7 @@
 						</div>
 						<div class="info-right">
 			       <%= hidden_field :color,:data,:size =>1,:id =>'choose_color_value' ,:value=>current_user.color%>
-			       <%= text_field :color,:data,:size =>1,:id =>'choose_color' ,:style=>"width:19px;height:14px;background-color:##{current_user.color}"%>
+			       <%= text_field :color,:data,:class=>"textfield",:size =>1,:id =>'choose_color' ,:style=>"width:19px;height:14px;background-color:##{current_user.color}"%>
              <img src="/images/color-chooser.png" alt="color-choose" id="colorSelector"/>
 						 </div>
 				    </fieldset>

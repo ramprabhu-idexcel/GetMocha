@@ -339,23 +339,37 @@ $(document).ready(function() {
    $('#password').click(function(){
     $('#label_password').hide();
     $('#txt_password').show(); 
-    $('#password').hide();
-    $('#save_password').show(); 
+     $('#confirm').show(); 
+     $('#confirm_pass').show();
+     $('#txt_confirm').show();
+     $('#password').hide();
+    //~ $('#save_password').show(); 
      return false;
       });
      
-  	$('#save_password').click(function(){
-        $.ajax({
+  	$('#save_confirm').click(function(){
+       
+       if (($('#txt_confirm').val())!=($("#txt_password").val()))
+        {
+          alert('password & Confirm Password should be same');
+        }
+         else
+         {
+         $.ajax({
          url:"/updates/edit_password",
           type: "put",
-          data:{"password" : $('#txt_password').val()}
+          data:{"password" : $('#txt_password').val(),
+                      "confirm"  : $('#txt_confirm').val()}
         });
+
     $('#label_password').show();
     $('#txt_password').hide(); 
     $('#password').show();
     $('#save_password').hide(); 
+    $('#confirm').hide(); 
+    $('#confirm_pass').hide();    
      return false;
-       
+     }  
    });
    
 	
