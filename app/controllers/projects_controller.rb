@@ -124,7 +124,7 @@ class ProjectsController < ApplicationController
 			@invite.save
 			@project=Project.find(params[:project_id])
 			if @invite.valid?
-				ProjectMailer.delay.invite_people(current_user,@invite.email,@project,@invite)
+				ProjectMailer.delay.invite_people(current_user,@invite)
 				render :nothing=>true
 			else
 				errors=[]
@@ -140,4 +140,18 @@ class ProjectsController < ApplicationController
 				end
 			end
 		end
+		def join_project
+			@invite=Invitation.find_by_invitation_code(params[:invitation_code])
+			@user=User.find_by_email(@invite.email)
+			if @user
+				@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
+				@project_user.save
+				@invite.update_attributes(:invitation_code=>nil, :status=>true)
+				redirect_to "/"
+			else
+					@invite.update_attributes(:invitation_code=>nil)
+					redirect_to new_user_registration_path
+			end
+		 end
+
 end

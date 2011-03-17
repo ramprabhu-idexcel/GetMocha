@@ -3,7 +3,7 @@ class Invitation < ActiveRecord::Base
 	belongs_to :project
 		
 	before_create :generate_invitation_code
-	attr_accessible :email, :message, :name, :project_id
+	attr_accessible :email, :message, :name, :project_id, :invitation_code, :status
 	
 	validates :email,
                     :format => { :with => /^[^@][\w.-]+@[\w.-]+[.][a-z]{2,4}$/i },
