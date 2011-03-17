@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
 	layout 'application', :except=>['new']
 	def index
-		@projects=current_user.projects(:conditions=>['status!=?', 3])
+		 @projects=Project.user_active_projects(current_user.id)
 	end
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
@@ -20,6 +20,15 @@ end
 
 
 	def create
+		errors=[]
+		if params[:message][:recipient].blank?
+			errors<<"Please enter To_email address"
+				
+				elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+					render :update do |page|
+				page.alert "Please enter valid email"
+			end
+		end
 		@project=Project.find_by_name(params[:message][:project])
 				if !@project
 						render :update do |page|
@@ -27,16 +36,16 @@ end
 			end
 		else
 		@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
+		p"--------------"
 			message=@message.valid?
-				errors=[]
-      @message.errors.each_full{|msg| 
-				errors<< msg 
-			}
-			p params[:message][:project].blank?
-    if params[:message][:project].blank?			
-			errors<<"Please enter a project"
-		end
-
+				
+				p @message.errors
+			 	if @message.errors[:subject][0]=="can't be blank"
+			  	errors<<"Please enter subject"
+			  elsif @message.errors[:message][0]=="can't be blank"
+					errors<<"Please enter message"
+				end
+			end
 		if message
 		@message.save
 		@to_users=params[:message][:recipient].split(', ')
@@ -48,7 +57,6 @@ end
 				page.alert errors.join("\n")
 			end
 		end
-	end
 	end
 	
 end
