@@ -43,7 +43,9 @@ class UpdatesController < ApplicationController
   end
   
   def verify_email
-        
+    s=SecondaryEmail.find_by_confirmation_token(params[:verification_code])
+    s.udpdate_attribute(:confirmation_token,nil) if s
+    redirect_to '/sign_in'      
   end
 end					
 					
