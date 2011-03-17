@@ -64,6 +64,14 @@ end
     render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
+  def starred_messages
+    render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+  end
+  
+  def project_messages
+    render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+  end
+  
   private
   def unwanted_columns
     [:created_at,:is_assigned,:resource_type,:resource_id]

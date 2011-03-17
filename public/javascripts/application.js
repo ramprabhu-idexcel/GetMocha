@@ -649,11 +649,17 @@ function parse_datetime(datetime)
   var x = datetime.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
   var parsed_date=new Date(x[1],parseInt(x[2])-1,x[3]);
   var current_date=Date.today();
-    alert(parsed_date);
-  alert(current_date);
   if(parsed_date.toString()==current_date.toString())
   {
-    var t=parseInt(x[4])>12 ? " PM" : " AM"
+    if(parseInt(x[4])>12)
+    {
+      var t=" PM"
+      x[4]=x[4]-12;
+    }
+    else
+    {
+      var t=" AM"
+    }
     var a=x[4]+":"+x[5]+t;
   }
   else
@@ -677,4 +683,3 @@ function parse_date(date)
   var parsed_date=day_names[day]+", "+month_names[month]+", "+dat+", "+year;
   return parsed_date;
 }
-
