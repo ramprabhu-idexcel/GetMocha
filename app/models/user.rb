@@ -21,8 +21,12 @@ class User < ActiveRecord::Base
   has_many :secondary_emails
   
   #starred messages from all project
-    def starred_messages
+  def starred_messages
     Activity.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
+  end
+  
+  def all_messages
+    Activity.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false]).group_by{|m| m.created_at.to_date}
   end
   
   #starred messages from the project
