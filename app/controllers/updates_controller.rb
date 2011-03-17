@@ -5,12 +5,11 @@ class UpdatesController < ApplicationController
 	def edit_profile
 	 @user=current_user
    puts params[:user].inspect
+	 value=params[:user].values[0]
     if @user.update_attributes(params[:user])	
-      render :nothing=>true
+      render :json=>{"success"=>value}.to_json
 		else
-      render :update do |page|
-        page.alert(@user.errors)
-      end	
+       render :json=>{"error"=>@user.errors}.to_json
     end	
   end	
  
@@ -26,11 +25,7 @@ class UpdatesController < ApplicationController
 		@users.each do |i|
       @fullname << i.first_name + i.last_name
 		end
-		
-		 #~ for i in 0..@users.length-1
-			
-					  #~ end
-  end
+	end
           
   def create_secondary_email
     @secondary_email=current_user.secondary_emails.build(:email=>params[:secondary_email])

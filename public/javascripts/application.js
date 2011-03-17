@@ -88,21 +88,32 @@ $(document).ready(function() {
     $('#txt_firstname').show(); 
     $('#first_name').hide();
     $('#save_firstname').show(); 
-     
-  	$('#save_firstname').click(function(){
+    
+    });
+    
+    $('#save_firstname').click(function(){
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[first_name]" : $('#txt_firstname').val()}
+          data:{"user[first_name]" : $('#txt_firstname').val()},
+          success:function(data){
+		      		//$('#first_name_display').html(data);
+           if(data.success!="undefined")
+           {
+              $('#label_first_name').text(data.success)
+             }
+           else
+           {
+             alert(data.error);
+           }
+			}			
         });
-    $('#label_first_name').show();
+
     $('#txt_firstname').hide(); 
-    $('#first_name').show();
     $('#save_firstname').hide(); 
-         
+    $('#label_first_name').show();
+    $('#first_name').show();       
    });
-   
-    });
     
     
   //To edit the last_name  
@@ -112,20 +123,34 @@ $(document).ready(function() {
     $('#last_name').hide();
     $('#save_lastname').show(); 
      
+       });
+       
   	$('#save_lastname').click(function(){
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[last_name]" : $('#txt_lastname').val()}
+          data:{"user[last_name]" : $('#txt_lastname').val()},
+        success:function(data){
+          if(data.success!="undefined")
+           {
+              $('#label_last_name').text(data.success)
+             }
+           else
+           {
+             alert(data.error);
+           }
+			}			
+          
+          
         });
-    $('#label_last_name').show();
     $('#txt_lastname').hide(); 
-    $('#last_name').show();
     $('#save_lastname').hide(); 
-         
+    $('#label_last_name').show();
+   $('#last_name').show();
+     
    });
    
-    });
+
     
     //To edit the title
     
@@ -134,21 +159,34 @@ $(document).ready(function() {
     $('#txt_title').show(); 
     $('#title').hide();
     $('#save_title').show(); 
+     });
      
   	$('#save_title').click(function(){
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[title]" : $('#txt_title').val()}
+          data:{"user[title]" : $('#txt_title').val()},
+           success:function(data){
+          if(data.success!="undefined")
+           {
+              $('#label_title').text(data.success)
+             }
+           else
+           {
+             alert(data.error);
+           }
+			}			
+          
         });
-    $('#label_title').show();
+    
     $('#txt_title').hide(); 
-    $('#title').show();
     $('#save_title').hide(); 
-         
+    $('#label_title').show();     
+    $('#title').show();
+      
    });
    
-    });
+
     
         
    //To edit the email
@@ -158,21 +196,32 @@ $(document).ready(function() {
     $('#txt_email').show(); 
     $('#email').hide();
     $('#save_email').show(); 
+   });
      
   	$('#save_email').click(function(){
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[email]" : $('#txt_email').val()}
+          data:{"user[email]" : $('#txt_email').val()},
+         success:function(data){
+          if(data.success!="undefined")
+           {
+              $('#label_email').text(data.success)
+             }
+           else
+           {
+             alert(data.error);
+           }
+			}			
         });
-    $('#label_email').show();
     $('#txt_email').hide(); 
-    $('#email').show();
     $('#save_email').hide(); 
-         
+     $('#label_email').show();
+    $('#email').show();
+   
    });
    
-    });
+   
     
     //To edit the phone no
     
@@ -181,23 +230,33 @@ $(document).ready(function() {
     $('#txt_phone').show(); 
     $('#phone').hide();
     $('#save_phone').show(); 
+    });
      
   	$('#save_phone').click(function(){
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[phone]" : $('#txt_phone').val()}
+          data:{"user[phone]" : $('#txt_phone').val()},
+         success:function(data){
+          if(data.success!="undefined")
+           {
+              $('#label_phone').text(data.success)
+             }
+           else
+           {
+             alert(data.error);
+           }
+			}			
         });
-    $('#label_phone').show();
+    
     $('#txt_phone').hide(); 
-    $('#phone').show();
     $('#save_phone').hide(); 
+    $('#label_phone').show();
+     $('#phone').show();
          
    });
    
-    });
-    
-    
+
     
         //To edit the mobile no
     
@@ -206,21 +265,33 @@ $(document).ready(function() {
     $('#txt_mobile').show(); 
     $('#mobile').hide();
     $('#save_mobile').show(); 
+     });
      
   	$('#save_mobile').click(function(){
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
-          data:{"user[mobile]" : $('#txt_mobile').val()}
+          data:{"user[mobile]" : $('#txt_mobile').val()},
+         success:function(data){
+          if(data.success!="undefined")
+           {
+              $('#label_mobile').text(data.success)
+             }
+           else
+           {
+             alert(data.error);
+           }
+			}			
         });
-    $('#label_mobile').show();
+    
     $('#txt_mobile').hide(); 
-    $('#mobile').show();
     $('#save_mobile').hide(); 
+    $('#label_mobile').show();
+     $('#mobile').show();
          
    });
    
-    });
+
     
     //To edit the Timezone
     
