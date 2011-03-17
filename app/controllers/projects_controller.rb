@@ -19,17 +19,21 @@ class ProjectsController < ApplicationController
 		@invites=Invitation.new(params[:data])
 		@invites.project_id=@project.id
 		invites=@invites.valid?
-		invites=true if 
+		#invites=true if 
 		errors=[]
-      @project.errors.each_full{|msg| 
-			if msg=="Name can't be blank"
-				msg="Please enter project name"
+		if @project.errors[:name][0]=="can't be blank"
+				errors<<"Please enter project name"
+				elsif !@project.errors[:name][0].nil?
+					errors<<@project.errors[:name][0]
+				end
+				if !params[:data][:email].blank?
+		    	if @invites.errors[:email][0]=="is too short (minimum is 6 characters)"
+			  	errors<<"Please enter email minimum 6 charecter "
+			  elsif !@invites.errors[:email][0].nil?&&@invites.errors[:email][0]=="is invalid"
+					errors<<"Email is invalid"
+				end
 			end
-				errors<< msg 
-			} 
-      @invites.errors.each_full{|msg| 			if msg!="Email is too short (minimum is 6 characters)" && msg!="Email can't be blank" && msg!="Email is invalid"
-			errors<< msg 
-			end } 
+			
 		if project && invites
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
