@@ -18,17 +18,17 @@
 				<fieldset>
 					<label>Name:</label>
 				
-							<%=f.text_field  'name', :class=>"textfield", :id=>"txtInput1" %>
+							<%=f.text_field  :project, 'name', :class=>"textfield", :id=>"txtInput1" %>
 				</fieldset>
 				<fieldset>
 					<label>Invite:</label>
 					
-					 <%=f.text_field 'email', :class=>"textfield", :id=>"txtInput2"%>
+					 <%=f.text_field :invite, 'email', :class=>"textfield", :id=>"txtInput2"%>
 				</fieldset>
 				<fieldset>
 					<label>Message:</label>
 					
-				 <%=f.text_area 'message', :cols=>"35", :rows=>"2",:onclick=>"javascript:changeHight()"%>
+				 <%=f.text_area :invite 'message', :cols=>"35", :rows=>"2",:onclick=>"javascript:changeHight()"%>
 				</fieldset>
 			
 			</div>

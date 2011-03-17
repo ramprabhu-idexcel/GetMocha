@@ -13,10 +13,10 @@ class ProjectsController < ApplicationController
 		end
 	
 	def create		
-		@project=Project.new(params[:data])
+		@project=Project.new(params[:project])
 		@project.user_id=current_user.id
 		project=@project.valid?
-		@invites=Invitation.new(params[:data])
+		@invites=Invitation.new(params[:invite])
 		@invites.project_id=@project.id
 		invites=@invites.valid?
 		#invites=true if 
@@ -26,7 +26,7 @@ class ProjectsController < ApplicationController
 				elsif !@project.errors[:name][0].nil?
 					errors<<@project.errors[:name][0]
 				end
-				if !params[:data][:email].blank?
+				if !params[:invite][:email].blank?
 		    	if @invites.errors[:email][0]=="is too short (minimum is 6 characters)"
 			  	errors<<"Please enter email minimum 6 charecter "
 			  elsif !@invites.errors[:email][0].nil?&&@invites.errors[:email][0]=="is invalid"

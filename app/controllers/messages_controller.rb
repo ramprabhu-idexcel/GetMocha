@@ -25,9 +25,9 @@ end
 			errors<<"Please enter To_email address"
 				
 				elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
-					render :update do |page|
-				page.alert "Please enter valid email"
-			end
+				
+			errors<<"Please enter valid email"
+			
 		end
 		@project=Project.find_by_name(params[:message][:project])
 				if !@project
@@ -45,7 +45,7 @@ end
 			  elsif @message.errors[:message][0]=="can't be blank"
 					errors<<"Please enter message"
 				end
-			end
+			
 		if message
 		@message.save
 		@to_users=params[:message][:recipient].split(', ')
@@ -58,5 +58,5 @@ end
 			end
 		end
 	end
-	
+	end
 end
