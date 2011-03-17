@@ -21,18 +21,18 @@ class User < ActiveRecord::Base
   has_many :secondary_emails
   
   #starred messages from all project
-  def starred_messages
-    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
+    def starred_messages
+    Activity.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
   end
   
   #starred messages from the project
   def project_starred_messages(project_id)
-    all_starred_messages.collect{|a| a.resource.project_id==project_id}
+    starred_messages.collect{|a| a.resource.project_id==project_id}
   end
   
   #starred count from all project
   def starred_count
-    all_starred_messages.count
+    starred_messages.count
   end
   
   #starred count of the individual project
