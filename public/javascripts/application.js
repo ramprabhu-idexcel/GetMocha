@@ -19,6 +19,7 @@ $(document).ready(function() {
 
   if(typeof Login!="undefined" && Login==true)
   {
+        
     $("form#user_login").validate({
       rules: {
                 'user[email]': {
@@ -35,6 +36,22 @@ $(document).ready(function() {
       });
   
    $('#user_submit').click(function(){
+      if (($('#user_email').val()=="") && ($("#user_password").val()==""))
+       {
+            alert("Email and Password can't be blank");
+       }
+       
+      else if ($('#user_email').val()=="")
+        { 
+           alert("Email can't be blank");
+        }
+       else if ($("#user_password").val()=="")
+       {
+           alert("Password can't be blank");
+       }
+       else
+      {       
+     
       $.ajax({
         url:'/users/sign_in',
         data: $('form#user_login').serialize(),
@@ -50,6 +67,7 @@ $(document).ready(function() {
           }
         }
       });
+    }
       return false;
     });
   }
@@ -88,7 +106,7 @@ $(document).ready(function() {
     $('#txt_firstname').show(); 
     $('#first_name').hide();
     $('#save_firstname').show(); 
-    
+    return false;
     });
     
     $('#save_firstname').click(function(){
@@ -106,13 +124,15 @@ $(document).ready(function() {
            {
              alert(data.error);
            }
-			}			
-        });
+   			}	
+       });
 
     $('#txt_firstname').hide(); 
     $('#save_firstname').hide(); 
     $('#label_first_name').show();
-    $('#first_name').show();       
+    $('#first_name').show();     
+    return false;
+       
    });
     
     
@@ -122,7 +142,7 @@ $(document).ready(function() {
     $('#txt_lastname').show(); 
     $('#last_name').hide();
     $('#save_lastname').show(); 
-     
+    return false;
        });
        
   	$('#save_lastname').click(function(){
@@ -147,7 +167,7 @@ $(document).ready(function() {
     $('#save_lastname').hide(); 
     $('#label_last_name').show();
    $('#last_name').show();
-     
+    return false;
    });
    
 
@@ -159,6 +179,7 @@ $(document).ready(function() {
     $('#txt_title').show(); 
     $('#title').hide();
     $('#save_title').show(); 
+    return false;
      });
      
   	$('#save_title').click(function(){
@@ -169,7 +190,8 @@ $(document).ready(function() {
            success:function(data){
           if(data.success!="undefined")
            {
-              $('#label_title').text(data.success)
+              $('#label_title').text(data.success);
+              $('#label_title').css('visibility','visible');
              }
            else
            {
@@ -183,7 +205,7 @@ $(document).ready(function() {
     $('#save_title').hide(); 
     $('#label_title').show();     
     $('#title').show();
-      
+     return false;
    });
    
 
@@ -196,6 +218,7 @@ $(document).ready(function() {
     $('#txt_email').show(); 
     $('#email').hide();
     $('#save_email').show(); 
+    return false;
    });
      
   	$('#save_email').click(function(){
@@ -218,8 +241,8 @@ $(document).ready(function() {
     $('#save_email').hide(); 
      $('#label_email').show();
     $('#email').show();
-   
-   });
+     return false;
+  });
    
    
     
@@ -230,6 +253,8 @@ $(document).ready(function() {
     $('#txt_phone').show(); 
     $('#phone').hide();
     $('#save_phone').show(); 
+      return false;
+   
     });
      
   	$('#save_phone').click(function(){
@@ -241,6 +266,7 @@ $(document).ready(function() {
           if(data.success!="undefined")
            {
               $('#label_phone').text(data.success)
+             $('#label_phone').css('visibility','visible');
              }
            else
            {
@@ -253,7 +279,8 @@ $(document).ready(function() {
     $('#save_phone').hide(); 
     $('#label_phone').show();
      $('#phone').show();
-         
+    return false;
+        
    });
    
 
@@ -265,7 +292,8 @@ $(document).ready(function() {
     $('#txt_mobile').show(); 
     $('#mobile').hide();
     $('#save_mobile').show(); 
-     });
+    return false;
+    });
      
   	$('#save_mobile').click(function(){
         $.ajax({
@@ -276,6 +304,7 @@ $(document).ready(function() {
           if(data.success!="undefined")
            {
               $('#label_mobile').text(data.success)
+               $('#label_mobile').css('visibility','visible');
              }
            else
            {
@@ -288,6 +317,7 @@ $(document).ready(function() {
     $('#save_mobile').hide(); 
     $('#label_mobile').show();
      $('#mobile').show();
+    return false;
          
    });
    
@@ -301,6 +331,7 @@ $(document).ready(function() {
           type: "put",
           data:{"user[time_zone]" : $('#time_zone').val()}
         });
+        return false;
        });
     
     //To edit the password
@@ -310,6 +341,8 @@ $(document).ready(function() {
     $('#txt_password').show(); 
     $('#password').hide();
     $('#save_password').show(); 
+     return false;
+      });
      
   	$('#save_password').click(function(){
         $.ajax({
@@ -321,26 +354,26 @@ $(document).ready(function() {
     $('#txt_password').hide(); 
     $('#password').show();
     $('#save_password').hide(); 
-         
+     return false;
+       
    });
    
-    });
-    
- 	
 	
      $('#mycontact1').click(function(){
         $('#mycontact1').toggleClass('open')
         $('#my_profile').hide();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').show();
-     
-     
+        return false;
       });
+      
     $('#myprofile1').click(function(){
       $('#mycontact1').toggleClass('open')
         $('#my_profile').show();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').hide();
+        return false;
+
    });
    
   $('a#add_new_email').click(function(){

@@ -54,16 +54,14 @@
 							<p><%= label_tag "Title:"%><br /></p>
 						</div>
 						<div class="info-right">
-							<span class="info_title" id="label_title">
-							<% if current_user.title==""%>
-							       <%=link_to "Edit","#",:class=>"edit",:id=>"last_name"%>
-							 <%else%>
-							<%=current_user.title%>
-							<%end%>
-							</span>
-							<%=text_field :val,:data, :id =>"txt_title",:value=>current_user.title,:style=>"display:none;"%>
+						<%unless current_user.title.present?%>
+				 		<span class="info_title" id="label_title" style="visibility:hidden">*****</span>
+						<%else%>
+					 <span class="info_title" id="label_title" ><%=current_user.title%></span>
+						<%end%>
+						 <%=text_field :val,:data, :id =>"txt_title",:value=>current_user.title,:style=>"display:none;"%>
               <%=link_to "Edit","#",:class=>"edit",:id=>"title"%>
-						 <%=link_to "Save","#",:class=>"edit",:id=>"save_title",:style=>"display:none;"%>
+							<%=link_to "Save","#",:class=>"edit",:id=>"save_title",:style=>"display:none;"%>
 				    </div>
 				    </fieldset>
 				    <fieldset>
@@ -103,10 +101,10 @@
 							<p><%= label_tag "Phone:"%><br /></p>
 						</div>
 						<div class="info-right">
-						<%if current_user.phone!=""%>
-						<span class="info_phone" id="label_phone" ><%=current_user.phone%></span>
+						<%unless current_user.phone.present?%>
+				 		<span class="info_phone" id="label_phone" style="visibility:hidden">*****</span>
 						<%else%>
-						<span class="info_phone" id="label_phone" style="visibility:hidden">*****</span>
+					 <span class="info_phone" id="label_phone" ><%=current_user.phone%></span>
 						<%end%>
 						 <%=text_field :val,:data, :id =>"txt_phone",:value=>current_user.phone,:style=>"display:none;"%>
               <%=link_to "Edit","#",:class=>"edit",:id=>"phone"%>
@@ -118,7 +116,7 @@
 							<p><%= label_tag "Mobile:"%><br /></p>
 						</div>
 						<div class="info-right">
-						<%if current_user.mobile!=""%>
+						<%if current_user.mobile.present?%>
 						<span class="info_mobile" id="label_mobile" ><%=current_user.mobile%></span>
 						<%else%>
 						<span class="info_mobile" id="label_mobile" style="visibility:hidden">*****</span>
