@@ -7,7 +7,9 @@
 	<span id="settings_pane">
 		<!-- Second and Third panel to come here -->
 	</span>
-	
+	<span id="add_people" style="display:none;">
+		<%= render :partial=>'invite' %>
+	<span>
 
 <script>
 // Function for displaying second panel in project settings
@@ -237,5 +239,10 @@ $.ajax({
 
 function show_completed_projects(){
 document.getElementById('completed_list').style.display="block";
+}
+
+function add_people_settings()
+{
+document.getElementById('add_people').style.display="block";
 }
 </script>
