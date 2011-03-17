@@ -25,10 +25,10 @@
 					
 					 <%=text_field :invite, 'email', :class=>"textfield", :id=>"txtInput2"%>
 				</fieldset>
-				<fieldset>
+				<fieldset id="ellaborate">
 					<label>Message:</label>
 					
-				 <%=text_area :invite, 'message', :class=>"textarea", :style=>"margin-bottom: 5px;", :cols=>"35", :rows=>"", :id=>"textareaId",:onblur=>"changeHeight()"%>
+				 <%=text_area :invite,:message, :class=>'textfield', :rows=>"1", :cols=>"30", :onclick=>"javascript:resizing()"%>
 				</fieldset>
 			
 			</div>
@@ -39,14 +39,12 @@
 	<div class="modal-bottom-right"></div>
 </div>
 <%end%>
-<script type="text/javascript">
-	
-	function changeHeight(){
-	document.getElementById("textareaId").rows=7;
-	
-}
+<script>
+function resizing(){
 
-
+	document.getElementById('ellaborate').className="open";
+	document.getElementById('invite_message').className="textarea";
+	}
 
 <%=@emails=[]%>
 	<% @user_emails.each do |f|%>

@@ -23,9 +23,9 @@
 					<%= text_field :invite, :email, :class=>"textfield" %>
 		       		<!--<input type="text" name="email" value="" class="textfield"/>-->
 			    </fieldset>
-			    <fieldset class="open">
+			    <fieldset  id="ellaborates" >
 					<label>Message:</label>
-		       		<textarea name='message' class='textarea' rows="" cols="" id="invite_message"></textarea>
+		       		<%=text_area_tag 'message', nil,:class=>'textfield', :rows=>"", :cols=>"", :id=>"message",:onfocus=>"javascript:ellaborates()"%>
 
 			    </fieldset>
 			</div>
@@ -36,6 +36,10 @@
 	<div class="modal-bottom-right"></div>
 </div>
 	<script>
+	function ellaborates(){
+	document.getElementById('ellaborates').className="open";
+	document.getElementById('message').className="textarea";
+	}
 <%=@emails=[]%>
 	<% @user_emails.each do |f|%>
 	
@@ -44,7 +48,6 @@
 	<%end%>
 
 				userEmails=userEmails.split(',');
-				alert(userEmails);
 				var ac2 = new goog.ui.AutoComplete.Basic(
       userEmails, document.getElementById("invite_email"), false);
   </script>
