@@ -21,8 +21,8 @@ class ProjectMailer < ActionMailer::Base
     @user = user
     @to_user = to_user
     @project=project
-    mail(:from=>"#{user.email}", :to=>"#{to_user.email}", :subject=>"#{project.name} Project Is Now In Progress")
-    @content_type="text/html"
+    @user = user
+    @to_user = to_user
   end
   
   def custom_email(user, invite)
@@ -32,4 +32,10 @@ class ProjectMailer < ActionMailer::Base
      mail(:from=>"#{user.email}", :to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha")
     @content_type="text/html"
   end
+  def message_notification(user,to_user)
+    @user = user
+    @to_user = to_user
+    mail(:from=>"#{user.email}", :to=>"#{to_user.email}", :subject=>"#{user.first_name} posted a new message to #{to_user}")
+    @content_type="text/html"
+    end
 end
