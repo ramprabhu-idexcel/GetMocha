@@ -32,6 +32,7 @@ GetMocha::Application.routes.draw do
       put 'edit_profile'
       put 'edit_password'
       post 'create_secondary_email'
+      post 'save_image'
     end
     member do
       delete 'delete_email'

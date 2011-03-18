@@ -449,9 +449,10 @@ $(document).ready(function() {
   });
   
   
+  //To upload the image
   
-  
-  
+
+    
       
  /* $('#p_add').click(function(){
     var a=$('#data_name').val();

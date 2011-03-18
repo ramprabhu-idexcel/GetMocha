@@ -8,7 +8,6 @@
 	<div class="m-panel-contain">
 		<div class="m-panel">
 			<a href="#" class="m-tab open" id="myprofile1">My Profile</a>
-
 			<a href="#" class="m-tab alt" id="mycontact1">My Contacts</a>
 
 		</div>
@@ -16,12 +15,17 @@
 	<div class="r-panel-contain" id="my_profile">
 		<div class="r-panel">
 			<div class="avatar-upload">
-				<div class="avatar-lg"></div>
-				<img src="/images/content/index.jpeg" width="69" height="69" class="avatar-lg-img" alt="avatar"/>
-				<div class="drag-drop">Drag and drop files here</div>
+					<div class="avatar-lg"></div>
+				<img src="images/content/avatar-lg.jpg" class="avatar-lg-img" alt="avatar"/>
+				
+			<table id="files"></table>
+			<form id="file_upload" action="/updates/save_image" method="POST" enctype="multipart/form-data">
+		 	<div class="drag-drop">Drag and drop files here</div>
+			</form>
+			
 				<div class="clear-fix"></div>
 			</div>
-			<div class="user-info" id="user_information">
+				<div class="user-info" id="user_information">
 				<form action="">
 					<fieldset>
 						<div class="label-contain">
@@ -200,6 +204,25 @@
 
 <script>
 var UserEdit=true;
+
+     $('#file_upload').fileUploadUI({
+        uploadTable: $('#files'),
+        downloadTable: $('#files'),
+        buildUploadRow: function (files, index) {
+            return $('<tr><td>' + files[index].name + '<\/td>' +
+                    '<td class="file_upload_progress"><div><\/div><\/td>' +
+                    '<td class="file_upload_cancel">' +
+                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                    '<\/button><\/td><\/tr>');
+        },
+        buildDownloadRow: function (file) {
+            return $('<tr><td>' + file.name + '<\/td><\/tr>');
+        }
+    });
+
+
+
 
 </script>
 

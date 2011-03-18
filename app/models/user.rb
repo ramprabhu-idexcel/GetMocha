@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :project_users
   has_many :projects,:through=>:project_users,:as=>:project_members
   has_many :project_guests
+  has_many :attachments ,:as => :attachable, :dependent=>:destroy
   has_many :chats
  # has_many :messages
   has_many :messages, :through => :activities, :source => :resource, :source_type => 'Message'

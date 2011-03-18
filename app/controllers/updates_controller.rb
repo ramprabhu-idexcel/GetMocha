@@ -51,6 +51,21 @@ class UpdatesController < ApplicationController
    secondary_email=SecondaryEmail.find_by_id(params[:id])
    secondary_email.delete if secondary_email
    render :nothing=>true
-  end
+ end
+ 
+ def save_image
+   puts "------------------------"
+   puts params.inspect
+   puts "********"
+   puts params["undefined"].inspect
+   @attach=Attachment.new(:uploaded_data=>params["undefined"])
+   @attach.attachable=current_user
+   @attach.save
+   puts "^^^^^^^"
+   puts @attach.inspect
+   
+ 
+ end 
+ 
 end					
 					
