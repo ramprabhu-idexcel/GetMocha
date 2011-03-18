@@ -20,6 +20,7 @@ end
 
 
 	def create
+		p params["undefined"].inspect
 		errors=[]
 		if params[:message][:recipient].blank?
 			errors<<"Please enter To_email address"
@@ -51,7 +52,7 @@ end
 		@project=Project.find_by_name(params[:message][:project])
 		Message.send_message_to_team_members(@project,@message,@to_users)
 		Message.send_notification_to_team_members(current_user,@to_users)
-		attachment=Attachment.new(:uploaded_data=>params["undefined"])
+		attachment=Attachment.new(:uploaded_data => params["undefined"])
 		attachment.attachable=@message
 		attachment.save
 		render :nothing=>true

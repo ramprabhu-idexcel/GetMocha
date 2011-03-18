@@ -93,7 +93,7 @@ if (field=='message_message')
 		
 		
 		$(function () {
-    $('#attach').fileUploadUI({
+    $('#form2').fileUploadUI({
     uploadTable: $('#files'),
     downloadTable: $('#files'),
     buildUploadRow: function (files, index) {
@@ -115,6 +115,7 @@ if (field=='message_message')
     beforeSend: function (event, files, index, xhr, handler, callBack) {
         handler.uploadRow.find('.file_upload_start').click(callBack);
     }
+	
 });
 
 });
