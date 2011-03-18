@@ -559,7 +559,7 @@ $('.add-item-modal').hide()
 	function message_save_button()
 {
   $('#form2').submit();
- $('#start_uploads').click();
+$('.file_upload_start button').click();
 
 
  /*$.ajax({

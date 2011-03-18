@@ -25,7 +25,6 @@ class Message < ActiveRecord::Base
 			@user=User.find_by_email(to_user)
 		#	if !@user.nil?
 			#to_usr=user.create! :user.email=>to_user	
-			 p @to_users
 			activity=message.activities.create! :user=>@user, :is_subscribed=>true
 			#else !team_members.include? to_user
 				#activity=Activity.new! :resource_type=>"Message", :user=>to_usr.id,:resource_id=>message.id, :is_subscribed=>true
