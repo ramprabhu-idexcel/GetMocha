@@ -493,9 +493,10 @@ function add_new_modal()
        type :'post',
        url :"/projects/add_new",
             success: function(data){
-			 document.getElementById('add_new_mod').innerHTML=data;  
+           document.getElementById('add_new_mod').innerHTML=data;  
        }
     });
+ 
 }
 function add_new_project()
 {
@@ -546,7 +547,8 @@ $('.add-item-modal').hide()
 }
 function message_save_button()
 {
- $.ajax({
+  $('#form2').submit();
+ /*$.ajax({
        type :'post',
        url :"/messages",
        data : $('#form2').serialize(),
@@ -554,7 +556,7 @@ function message_save_button()
 if(data.length==1)
          $('.add-item-modal').hide();
        }
-    });
+    });*/
 }
 
 
