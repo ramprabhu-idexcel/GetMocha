@@ -2,7 +2,7 @@
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 	</head>
-<%form_for  :message, :url=>{ :controller => "messages", :action => "create" }, :html=>{ :id => 'form2'} do |f|%>
+<%form_for :message, :url=>({ :controller => "messages", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true, :id => 'form2'}) do |f|%>
 <div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
@@ -39,10 +39,11 @@
 					
 					<div  id="attach_upload">
 						<%=f.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
-						<%=f.file_field :file, :upload_files %>
-						
-					</div>
+						</div>
 			    </fieldset>
+					<fieldset>
+					<%=f.file_field :file %>
+					</fieldset>
 			</div>
 		</div>
 	</div>
@@ -50,6 +51,7 @@
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
 <%end%>
+<iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
 function changehight(id)
 {
