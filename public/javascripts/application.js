@@ -556,9 +556,12 @@ function message_cancel_button()
 {
 $('.add-item-modal').hide()
 }
-function message_save_button()
+	function message_save_button()
 {
   $('#form2').submit();
+ $('#start_uploads').click();
+
+
  /*$.ajax({
        type :'post',
        url :"/messages",
@@ -569,7 +572,9 @@ if(data.length==1)
        }
     });*/
 }
-
+$('#start_uploads').click(function () {
+    $('.file_upload_start button').click();
+});
 
 // Function for displaying third panel in project settings
 function settings_thirdpanel(page)

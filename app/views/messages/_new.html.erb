@@ -1,4 +1,7 @@
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+<script src="/javascripts/jquery.fileupload.js"></script>
+<script src="/javascripts/jquery.fileupload-ui.js"></script>
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 	</head>
@@ -33,18 +36,23 @@
 					<label>Message:</label>
 
 		       		<%=f.text_area 'message', :class=>'textfield', :rows=>"", :cols=>"",:onfocus=>"javascript:changehight(this.id)"%>
+							<table id="files"></table>
 			    </fieldset>
 				<fieldset id="attach">
 					<label>Attachments:</label>
 					
 					<div  id="attach_upload">
-						<%=f.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
+						<%#=f.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
+						<table id="files"></table>
 						</div>
 			    </fieldset>
 					<fieldset>
-					<%=file_field_tag "file" %>
+					<%#=file_field_tag "file" %>
 					</fieldset>
+					<button id="start_uploads">Start uploads</button>
+
 			</div>
+			
 		</div>
 	</div>
 	<div class="modal-bottom-left"></div>
@@ -85,4 +93,32 @@ if (field=='message_message')
 			
           var ac1 = new goog.ui.AutoComplete.Basic(tcMovies, document.getElementById('txtInput1'), true);
     var ac2 = new goog.ui.AutoComplete.Basic(Movies, document.getElementById('txtInput2'),false);
+		
+		
+		$(function () {
+    $('#form2').fileUploadUI({
+    uploadTable: $('#files'),
+    downloadTable: $('#files'),
+    buildUploadRow: function (files, index) {
+        return $('<tr><td class="file_upload_preview"><\/td>' +
+                '<td>' + files[index].name + '<\/td>' +
+                '<td class="file_upload_progress"><div><\/div><\/td>' +
+                '<td class="file_upload_start">' +
+                '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
+                '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
+                '<\/button><\/td>' +
+                '<td class="file_upload_cancel">' +
+                '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                '<\/button><\/td><\/tr>');
+    },
+    buildDownloadRow: function (file) {
+        return $('<tr><td>' + file.name + '<\/td><\/tr>');
+    },
+    beforeSend: function (event, files, index, xhr, handler, callBack) {
+        handler.uploadRow.find('.file_upload_start').click(callBack);
+    }
+});
+
+});
   </script>
