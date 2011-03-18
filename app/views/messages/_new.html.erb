@@ -37,18 +37,10 @@
 				<fieldset id="attach">
 					<label>Attachments:</label>
 					
-					<div class="attachment-upload">
-						<%=f.text_area 'attachments', :class=>"textfield", :rows=>"", :cols=>"", :onfocus=>"javascript:changehight(this.id)"%>
-						<div class="attachment">
-
-							<a href="#">Remove</a>
-							<span class="filename">pricing.txt</span>
-						</div>
-						<div class="attachment">
-							<a href="#">Remove</a>
-							<span class="filename">somemegalongna.txt</span>
-						</div>
-
+					<div  id="attach_upload">
+						<%=f.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
+						<%=f.file_field :file, :upload_files %>
+						
 					</div>
 			    </fieldset>
 			</div>
@@ -67,9 +59,11 @@ if (field=='message_message')
 	document.getElementById('txtarea').className="open";
 	document.getElementById('message_message').className="textarea";
 	}
-	else{
+	else
+	{
 	document.getElementById('attach').className="open";
-	document.getElementById('message_attachments').className="drag_drop";
+	document.getElementById('attach_upload').className="attachment_upload";
+	document.getElementById('message_attachments').className="drag-drop";
 	document.getElementById('message_attachments').value="drag&drop files here";
 	}
 	}
