@@ -1,8 +1,9 @@
 class Message < ActiveRecord::Base
 	has_many :comments, :as=>:commentable, :dependent=>:destroy
+	has_many :attachments ,:as => :attachable, :dependent=>:destroy
 	belongs_to :project
 	#belongs_to :user
-	 has_many :activities, :as => :resource
+	 has_many :activities, :as => :resource, :dependent=>:destroy
 	has_many :users, :through=>:activities
 	#has_many :activities, :dependent => :destroy
 	attr_accessible :subject,:project,:user,:message,:attachments,:recipient,:project_id,:user_id
