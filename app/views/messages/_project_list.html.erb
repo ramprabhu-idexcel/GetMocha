@@ -1,14 +1,14 @@
 <div class="l-panel">
 	<a onclick="addClass(this);" class="all-messages has-unread open" href="#all_messages" id="all_messages"><span class="num-unread"><%= unread_message_count%></span><span class="icon"></span>All Messages </a>
-			<a href="#" class="starred" onclick="addClass(this);"><span class="num-tasks"><%= starred_message_count%></span><span class="icon"></span>Starred </a>
+			<a href="#starred_messages" class="starred" onclick="addClass(this);"><span class="num-tasks"><%= starred_message_count%></span><span class="icon"></span>Starred </a>
 			
 	<div class="projects-list">
 	<% @projects.each do |project| %>
 	<% count= unread_project_message_count(project.id)%>
 		<%if !count.nil?%>
-		<a href="#project" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="icon"></span><span class="num-unread"><%=count%></span><%= project.name %></a>
+		<a href="#message/<%=project.id %>" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="icon"></span><span class="num-unread"><%=count%></span><%= project.name %></a>
 		<%else%>
-		<a href="#project" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
+		<a href="##message/<%=project.id %>" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
 		<%end%>
 	<% end %>
 	</div>

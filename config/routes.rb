@@ -33,6 +33,9 @@ GetMocha::Application.routes.draw do
       put 'edit_password'
       post 'create_secondary_email'
     end
+    member do
+      delete 'delete_email'
+    end
   end
    
   match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondary_email',:method=>:get
@@ -48,6 +51,8 @@ GetMocha::Application.routes.draw do
   
   resources :messages
   match 'all_messages'=>'messages#all_messages',:as=>'all_messages',:method=>:get
+  match 'starred_messages'=>'messages#starred_messages',:as=>'starred_messages',:method=>:get
+  match 'message/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

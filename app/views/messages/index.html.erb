@@ -1,5 +1,82 @@
-	<div class="l-panel-contain">
+<div class="l-panel-contain">
 	<% if @projects %>
 		<%= render :partial=>'project_list' %>
 	<% end %>
-	</div>
+</div>
+<div class="m-panel-contain">
+  <div class="m-panel" id="message_area">
+    
+  </div><!--end of m-panel-->
+</div><!--end of m-panel-contain-->
+<div class="r-panel-contain">
+
+</div><!--end of r-panel-contain-->
+<script>
+var Message=true;
+$.messages;
+
+ (function($) {
+
+            
+           var restfulApp = Backbone.Controller.extend({
+               restfulUrl: "http://localhost:3000/",
+               routes: {
+               '*message/:project_id' : 'projectMessage',
+               "*page":                    "findMessage", //This simply matches any urls that weren't caught above and assigns it to "page"
+               },
+                
+               findMessage: function( page ){
+                   if( page && (page=="all_messages" || page=="starred_messages")) {
+                       var restfulPageUrl = this.restfulUrl + page  
+                       this.loadRestfulData( restfulPageUrl );
+                   }
+               },
+               projectMessage:function(page){
+                  var path=(window.location+"").split('#')[1];
+                  var restfulPageUrl = this.restfulUrl + path  
+                  this.loadRestfulData( restfulPageUrl );               
+               },
+               loadRestfulData: function( pageUrl ){
+                   //$(".m-panel-contain").text( "loading data..." );
+                   $.ajax({
+                       url: pageUrl,
+                       success: function(data){  
+                        $.messages=data
+                        var items=[];
+
+
+                        $.each(data,function(index,val){
+                          items.push('<div class="date-bar"><a href="/sub-header-edit">'+parse_date(index)+'</a></div>')
+                          $.each(val,function(i,v){
+                          
+                          items.push('<div class="message '+(v.activity.is_read ? "" : " unread")+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" class="avatar-mini-img" src="/images/content/stuart-avatar.jpg"/>')
+                          if(v.activity.is_starred)
+                          {
+                            items.push('<a class="message-star" href="#">Star</a>');
+                          }
+                         // <div class="has-attachment"></div>
+                          var date=parse_datetime(v.activity.updated_at)
+                          items.push('</div><div class="info"><span class="name">Stuart Bowness</span><span class="message-time">'+date+'</span></div>')
+                          items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message+'</p></div><div class="clear-fix"></div></div>');
+
+                          });
+                        });
+                        
+                          result=items.join(' ')
+                          $('#message_area').html(result);
+
+                       }
+                   });
+               }
+            });
+
+           var app = new restfulApp;
+           //Initiate a new history and controller class
+           Backbone.emulateHTTP = true;
+           Backbone.emulateJSON = true
+           Backbone.history.start();
+ 
+       })(jQuery);
+       
+       
+       </script>
