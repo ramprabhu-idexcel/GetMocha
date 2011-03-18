@@ -80,22 +80,22 @@ $(document).ready(function() {
    $('#colorSelector').ColorPicker({
   	color: '#0000ff',
 	  onShow: function (colpkr) {
-    $(colpkr).fadeIn(500);
-		return false;
-	},
-	onHide: function (colpkr) {
-		$(colpkr).fadeOut(500);
-    $.ajax({
-      url:'/updates/edit_profile',
-      type:'put',
-      data:{'user[color]':$('#choose_color_value').val()}
-    });
-   	return false;
-	},
-	onChange: function (hsb, hex, rgb) {
-  	$('#choose_color').css('backgroundColor', '#' + hex);
-    $('#choose_color_value').val(hex);
-	}
+      $(colpkr).fadeIn(500);
+      return false;
+    },
+    onHide: function (colpkr) {
+      $(colpkr).fadeOut(500);
+      $.ajax({
+        url:'/updates/edit_profile',
+        type:'put',
+        data:{'user[color]':$('#choose_color_value').val()}
+      });
+      return false;
+    },
+    onChange: function (hsb, hex, rgb) {
+      $('#choose_color').css('backgroundColor', '#' + hex);
+      $('#choose_color_value').val(hex);
+    }
   });
 
      //Edit the User profile
