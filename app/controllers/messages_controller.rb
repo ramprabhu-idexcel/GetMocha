@@ -20,6 +20,7 @@ end
 
 
 	def create
+		p params["undefined"].inspect
 		errors=[]
 		if params[:message][:recipient].blank?
 			errors<<"Please enter To_email address"
@@ -36,21 +37,24 @@ end
 			end
 		else
 		@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
-		p"--------------"
+		
 			message=@message.valid?
-				
-				p @message.errors
-			 	if @message.errors[:subject][0]=="can't be blank"
-			  	errors<<"Please enter subject"
-			  elsif @message.errors[:message][0]=="can't be blank"
-					errors<<"Please enter message"
-				end
+		 	if @message.errors[:subject][0]=="can't be blank"
+		 	errors<<"Please enter subject"
+			elsif @message.errors[:message][0]=="can't be blank"
+			errors<<"Please enter message"
+			end
 			
 		if message
 		@message.save
 		@to_users=params[:message][:recipient].split(', ')
+		
+		@project=Project.find_by_name(params[:message][:project])
 		Message.send_message_to_team_members(@project,@message,@to_users)
 		Message.send_notification_to_team_members(current_user,@to_users)
+		attachment=Attachment.new(:uploaded_data => params["undefined"])
+		attachment.attachable=@message
+		attachment.save
 		render :nothing=>true
 		else
 					render :update do |page|

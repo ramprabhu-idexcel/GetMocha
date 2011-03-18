@@ -448,6 +448,16 @@ $(document).ready(function() {
     return false;
   });
   
+  $('.messow').live('click',function(){
+    var id=$(this).attr('id').split('msac')[1];
+    var primarUrl=(window.location+'').split('#')[0];
+    var secondaryUrl=(window.location+'').split('#')[1];
+    var loc=secondaryUrl.split('/')[0];
+    window.location=primarUrl+"#"+loc+"/"+id;
+    $('.message.messow.open').removeClass('open');
+    $(this).removeClass('unread');
+    $(this).addClass('open');
+  });
   
   //To upload the image
   
@@ -567,9 +577,12 @@ function message_cancel_button()
 {
 $('.add-item-modal').hide()
 }
-function message_save_button()
+	function message_save_button()
 {
   $('#form2').submit();
+$('.file_upload_start button').click();
+
+
  /*$.ajax({
        type :'post',
        url :"/messages",
@@ -580,7 +593,9 @@ if(data.length==1)
        }
     });*/
 }
-
+$('#start_uploads').click(function () {
+    $('.file_upload_start button').click();
+});
 
 // Function for displaying third panel in project settings
 function settings_thirdpanel(page)
