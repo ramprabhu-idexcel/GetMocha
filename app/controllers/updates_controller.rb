@@ -61,11 +61,22 @@ class UpdatesController < ApplicationController
    @attach=Attachment.new(:uploaded_data=>params["undefined"])
    @attach.attachable=current_user
    @attach.save
-   puts "^^^^^^^"
-   puts @attach.inspect
+   @a=Attachment.find(1)
+   puts @a.public_filename
+   render :json=>{:file_name=> @a.public_filename}.to_json
+
    
- 
- end 
+   #~ respond_to do |format|
+      #~ if @a
+         #~ puts "**************************"
+        #~ flash[:notice] = 'Person was successfully created.'
+        #~ format.xml { render :xml=>@a.public_filename,:status=>:created,:location=>"edit"}
+        
+         #~ format.json  { render :json => @a.public_filename, :status => :created, :location => "edit" }
+      #~ end
+       #~ end 
+       
+     end  
  
 end					
 					

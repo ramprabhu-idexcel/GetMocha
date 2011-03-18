@@ -6,7 +6,7 @@ class CreateAttachments < ActiveRecord::Migration
       t.string :content_type 
       t.string :filename
       t.integer :parent_id
-      t.integer :thumbnail
+      t.string :thumbnail
       t.integer :size
       t.integer :height
       t.integer :width

@@ -16,10 +16,10 @@
 		<div class="r-panel">
 			<div class="avatar-upload">
 					<div class="avatar-lg"></div>
-				<img src="images/content/avatar-lg.jpg" class="avatar-lg-img" alt="avatar"/>
+				<img src="images/content/avatar-lg.jpg"  width="69" height="69" id="default-image" class="avatar-lg-img" alt="avatar"/>
 				
 			<table id="files"></table>
-			<form id="file_upload" action="/updates/save_image" method="POST" enctype="multipart/form-data">
+			<form id="file_upload" action="/updates/save_image"  method="POST" enctype="multipart/form-data">
 		 	<div class="drag-drop">Drag and drop files here</div>
 			</form>
 			
@@ -204,26 +204,6 @@
 
 <script>
 var UserEdit=true;
-
-     $('#file_upload').fileUploadUI({
-        uploadTable: $('#files'),
-        downloadTable: $('#files'),
-        buildUploadRow: function (files, index) {
-            return $('<tr><td>' + files[index].name + '<\/td>' +
-                    '<td class="file_upload_progress"><div><\/div><\/td>' +
-                    '<td class="file_upload_cancel">' +
-                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                    '<\/button><\/td><\/tr>');
-        },
-        buildDownloadRow: function (file) {
-            return $('<tr><td>' + file.name + '<\/td><\/tr>');
-        }
-    });
-
-
-
-
 </script>
 
 
