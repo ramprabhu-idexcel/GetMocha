@@ -21,6 +21,7 @@
     goog.require('goog.dom');
     goog.require('goog.events.KeyCodes');
     goog.require('goog.ui.KeyboardShortcutHandler');
+    goog.require('goog.ui.AutoComplete.Basic');
   </script>
 <link rel="stylesheet" href="/stylesheets/demo.css">
 		<!--[if lte IE 9]>
@@ -36,11 +37,7 @@
 			<%=stylesheet_link_tag "colorpicker"%>
 		
 <script src="/javascripts/key.js"></script>
-<script src="/javascripts/jquery.js"></script>
 
-<script>
-    goog.require('goog.ui.AutoComplete.Basic');
-  </script>
 			<%= csrf_meta_tag %>
 	
 	<!--[if lt IE 7]>

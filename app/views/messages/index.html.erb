@@ -9,7 +9,10 @@
   </div><!--end of m-panel-->
 </div><!--end of m-panel-contain-->
 <div class="r-panel-contain">
-
+  <div class="r-panel" id="comment_area">
+    
+  
+  </div>
 </div><!--end of r-panel-contain-->
 <script>
 var Message=true;
@@ -25,39 +28,42 @@ $.messages;
                "*page":                    "findMessage", //This simply matches any urls that weren't caught above and assigns it to "page"
                },
                 
-               findMessage: function( page ){
-                   if( page && (page=="all_messages" || page=="starred_messages")) {
-                       var restfulPageUrl = this.restfulUrl + page  
-                       this.loadRestfulData( restfulPageUrl );
-                   }
+              findMessage: function( page ){
+                if( page=="all_messages" || page=="starred_messages") {
+                    var restfulPageUrl = this.restfulUrl + page  
+                    this.loadRestfulData( restfulPageUrl );
+                }
                },
                projectMessage:function(page){
                   var path=(window.location+"").split('#')[1];
-                  var restfulPageUrl = this.restfulUrl + path  
-                  this.loadRestfulData( restfulPageUrl );               
+                  if(/^all_messages\/[1-9]/.test(path))
+                  {
+                    var restfulPageUrl = this.restfulUrl + path  
+                    this.loadCommentData( restfulPageUrl );         
+                  }
+                  else{
+                    var restfulPageUrl = this.restfulUrl + path  
+                    this.loadRestfulData( restfulPageUrl );               
+                  }
                },
                loadRestfulData: function( pageUrl ){
-                   //$(".m-panel-contain").text( "loading data..." );
                    $.ajax({
                        url: pageUrl,
                        success: function(data){  
                         $.messages=data
                         var items=[];
-
-
                         $.each(data,function(index,val){
-                          items.push('<div class="date-bar"><a href="/sub-header-edit">'+parse_date(index)+'</a></div>')
+                          items.push('<div class="date-bar"><a href="#">'+parse_date(index)+'</a></div>');
                           $.each(val,function(i,v){
-                          
-                          items.push('<div class="message '+(v.activity.is_read ? "" : " unread")+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" class="avatar-mini-img" src="/images/content/stuart-avatar.jpg"/>')
-                          if(v.activity.is_starred)
-                          {
-                            items.push('<a class="message-star" href="#">Star</a>');
-                          }
-                         // <div class="has-attachment"></div>
-                          var date=parse_datetime(v.activity.updated_at)
-                          items.push('</div><div class="info"><span class="name">Stuart Bowness</span><span class="message-time">'+date+'</span></div>')
-                          items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message+'</p></div><div class="clear-fix"></div></div>');
+                            items.push('<div class="message messow '+(v.activity.is_read ? "" : " unread")+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" class="avatar-mini-img" src="/images/content/stuart-avatar.jpg"/>')
+                            if(v.activity.is_starred)
+                            {
+                              items.push('<a class="message-star" href="#">Star</a>');
+                            }
+                           // <div class="has-attachment"></div>
+                            var date=parse_datetime(v.activity.updated_at)
+                            items.push('</div><div class="info"><span class="name">Stuart Bowness</span><span class="message-time">'+date+'</span></div>')
+                            items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message+'</p></div><div class="clear-fix"></div></div>');
 
                           });
                         });
@@ -67,6 +73,22 @@ $.messages;
 
                        }
                    });
+               },
+               loadCommentData :function(pageUrl){
+                var comments=[]
+                  $.ajax({
+                      url: pageUrl,
+                      success: function(data){  
+                      alert('came in');
+                        comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit" href="#">Edit</a></h2>');
+                        comments.push('<p class="post-time">Posted a few seconds ago by <a href="#">'+data.message.user.name+'</a></p><hr/>');
+                        comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit" href="#">Edit</a></p></div>');
+                        comments.push('<p class="subscribers">Subscribed: Jessa Ma and <a href="/subscribed-wrap">11 others</a> | <a href="#">unsubscribe</a></p></div>');
+                      }
+                     });
+                var result=comments.join(' ');
+                $('#comment_area').html(result);
+   
                }
             });
 

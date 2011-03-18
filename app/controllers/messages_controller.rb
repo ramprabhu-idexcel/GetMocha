@@ -76,6 +76,18 @@ end
     render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
+  def show
+    activity=Activity.find_by_id(params[:activity_id])
+    message=activity.resource.to_json(:only=>[:subject,:message],:include=>{:user=>{:methods=>:name}})
+    comment_ids=activity.resource.comments.collect{|x| x.id}
+    unless comment_ids.empty?
+      activities=current_user.activities_comments(comment_ids)
+      render :json=>{:message=>message,:comments=>activities}.to_json
+    else
+      render :json=>message
+    end
+  end
+  
   private
   def unwanted_columns
     [:created_at,:is_assigned,:resource_type,:resource_id]

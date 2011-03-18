@@ -78,4 +78,16 @@ class User < ActiveRecord::Base
     User.find(:all,:conditions=>['project_users.project_id in (?) AND users.status=? AND project_users.status=?',project_memberships,true,true],:include=>:project_users)
   end
   
+  def name
+    first_name && last_name ? full_name : email
+  end
+  
+  def activities_comments(type_ids)
+    activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids])
+  end
+  
+  def json_activities_comments(type_ids)
+    activities_comments(type_ids).to_json(:only=>[:created_at,:is_starred],:include=>{:resource=>{:only=>[:comment],:include=>{:user=>{:methods=>:name}}}}) 
+  end
+  
 end

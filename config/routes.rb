@@ -54,7 +54,7 @@ GetMocha::Application.routes.draw do
   match 'all_messages'=>'messages#all_messages',:as=>'all_messages',:method=>:get
   match 'starred_messages'=>'messages#starred_messages',:as=>'starred_messages',:method=>:get
   match 'message/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
-   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
+  match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
