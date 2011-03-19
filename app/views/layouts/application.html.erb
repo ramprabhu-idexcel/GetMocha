@@ -104,39 +104,55 @@
                            short_modal('/projects/add_new');
         }
                                 
-                                if(event.identifier=='CTRL_P')
+                                if(event.identifier=='GS')
                    {
-                             short_modal1('projects/new');
+                             short_modal2('/settings');
+
+        }
+				if(event.identifier=='GP')
+                   {
+                             short_modal2('/settings-profile');
+
+        }
+					if(event.identifier=='Q')
+                   {
+                             short_modal2('/messages');
 
         }
                                 
-      if(event.identifier=='CTRL_M')
+      if(event.identifier=='SHIFT_M')
                    {
-                             short_modal2('/messages/new');
+                             short_modal1('/messages/new');
         }
-               
+               if(event.identifier=='ESC')
+                   {
+                             short_modal1('esc');
+        }
                                                  
     }
                 
         
 
    var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
-         
+      var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;   
+			 var ESC = goog.ui.KeyboardShortcutHandler.Modifiers.ESC; 
    var CTRL = goog.ui.KeyboardShortcutHandler.Modifiers.CTRL;
    var SHIFT = goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT;
 var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
-                  
+   //var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;            
          shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
-         
-         shortcutHandler.registerShortcut('CTRL_M',goog.events.KeyCodes.M, CTRL);
-
+         shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
+         shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
+             shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
 
         
          
-         shortcutHandler.registerShortcut('CTRL_P',goog.events.KeyCodes.P, CTRL);
+         shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE,
+                                                                        goog.events.KeyCodes.S);
          
          
-          
+          shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,
+                                                                        goog.events.KeyCodes.P);
 
  
 
@@ -157,43 +173,49 @@ var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
 
         });
         
-        
-        
-      function short_modal(path)
+           function short_modal(path)  //Add new project/messsage/task/tasclist
 {
-alert("hi");
   $.ajax({
        type :'post',
        url :path,
             success: function(data){
-           document.getElementById('add_new_mod').innerHTML=data;  
+						$('#add_new_mod').html(data);  
+						$('#add_new_mod').show();  
+       }
+    });
+	 }
+  function short_modal1(path)  //Add new project/messsage/task/tasclist
+{
+if (path!='esc')
+{
+  $.ajax({
+       type :'get',
+       url :path,
+            success: function(data){
+						$('#add_new_mod').html(data);  
+						$('#add_new_mod').show();  
        }
     });
 		}
-		   function short_modal1(path)
+		else
+		{
+		$('#add_new_mod').hide(); 
+		$('#add_people').hide(); 
+		}
+        }
+		   function short_modal2(path)
 {
 
-  $.ajax({
+ /* $.ajax({
        type :'get',
        url :path,
             success: function(data){
-						$('#add_new_mod').html(data);  
-						$('#add_new_mod').show();  
+						$('.task').html(data);  
+						$('.task').show();  
        }
-    });
-        }
-				   function short_modal2(path)
-{
-
-  $.ajax({
-       type :'get',
-       url :path,
-            success: function(data){
-						$('#add_new_mod').html(data);  
-						$('#add_new_mod').show();  
-       }
-    });
-        }
+    });*/
+		window.location.href=path;
+		}
 </script>
 
 
