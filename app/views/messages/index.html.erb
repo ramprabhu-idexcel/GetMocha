@@ -9,9 +9,21 @@
   </div><!--end of m-panel-->
 </div><!--end of m-panel-contain-->
 <div class="r-panel-contain">
-  <div class="r-panel" id="comment_area">
-    
+  <div class="r-panel">
   
+    <%= render 'add_comment'%>
+    
+    <div id="comment_area">
+  
+    </div>
+    
+    <div class="expand-all" style="display:none;">
+      <a href="#" id="message_expand">
+        <span class="icon"></span>
+        <span>Expand all comments</span>
+      </a>
+    </div>
+    
   </div>
 </div><!--end of r-panel-contain-->
 <script>
@@ -32,6 +44,9 @@ $.messages;
                 if( page=="all_messages" || page=="starred_messages") {
                     var restfulPageUrl = this.restfulUrl + page  
                     this.loadRestfulData( restfulPageUrl );
+                    $('.sort-by').show();
+                    $('.message_header').hide();
+                    $('#comment_area').html('');
                 }
                },
                projectMessage:function(page){
@@ -43,8 +58,11 @@ $.messages;
                   }
                   else{
                     var restfulPageUrl = this.restfulUrl + path  
-                    this.loadRestfulData( restfulPageUrl );               
+                    this.loadRestfulData( restfulPageUrl );    
+                    $('.message_header').hide();
+                    $('#comment_area').html('');                    
                   }
+                  $('.sort-by').show();
                },
                loadRestfulData: function( pageUrl ){
                    $.ajax({
@@ -64,14 +82,12 @@ $.messages;
                             var date=parse_datetime(v.activity.updated_at)
                             items.push('</div><div class="info"><span class="name">Stuart Bowness</span><span class="message-time">'+date+'</span></div>')
                             items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message+'</p></div><div class="clear-fix"></div></div>');
+                            result=items.join(' ')
+                            $('#message_area').html(result);
 
                           });
                         });
-                        
-                          result=items.join(' ')
-                          $('#message_area').html(result);
-
-                       }
+                      }
                    });
                },
                loadCommentData :function(pageUrl){
@@ -79,16 +95,22 @@ $.messages;
                   $.ajax({
                       url: pageUrl,
                       success: function(data){  
-                      alert('came in');
                         comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit" href="#">Edit</a></h2>');
-                        comments.push('<p class="post-time">Posted a few seconds ago by <a href="#">'+data.message.user.name+'</a></p><hr/>');
+                        comments.push('<p class="post-time">'+data.message.updated_at+' by <a href="#">'+data.message.name+'</a></p><hr/>');
                         comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit" href="#">Edit</a></p></div>');
                         comments.push('<p class="subscribers">Subscribed: Jessa Ma and <a href="/subscribed-wrap">11 others</a> | <a href="#">unsubscribe</a></p></div>');
+                        $.each(data.comments,function(index,comment){
+                          comments.push('<div class="prev-messages"><div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
+                          comments.push('<a class="name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
+                          comments.push('<div class="comment"><p>'+comment.comment+'</p>');
+                          comments.push('<a class="reply-link" href="#">Reply</a></div></div></div></div>');
+                        });
+                        var result=comments.join(' ');
+                        $('#comment_area').html(result);
+                        if(data.comments.length>0)
+                        $('.expand-all').show();
                       }
                      });
-                var result=comments.join(' ');
-                $('#comment_area').html(result);
-   
                }
             });
 
