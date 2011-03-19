@@ -1,8 +1,9 @@
 <div class="comment-contain" style="display:none;">
-  <%form_tag '/message/comment' do%>
+  <%form_tag '/comments' ,:id=>"add_com_msg",:remote=>true do%>
     <div class="comment-input">
+      <%=hidden_field_tag "act"%>
       <%=label_tag "Message:",nil,:class=>"hidden"%>
-      <%=text_area_tag "message",nil,:cols=>"",:rows=>"",:onfocus=>"this.select()",:id=>"comment-message",:class=>"textarea comment-message"%>
+      <%=text_area_tag "comment[comment]",nil,:cols=>"",:rows=>"",:onfocus=>"this.select()",:id=>"comment-message",:class=>"textarea comment-message"%>
       <%=clear_fix%>
     </div>
     <div class="attach-contain">
