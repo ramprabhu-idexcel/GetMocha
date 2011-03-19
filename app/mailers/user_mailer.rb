@@ -53,61 +53,37 @@ class UserMailer < ActionMailer::Base
     project=Project.find(project_id)
     user=User.find_by_email(from_address)
     if ((user && !user.is_guest) || project.is_public?)
-    #~ message=email.body("Attachment: (unnamed)") if email.body
-    #~ logger.info message.inspect
-    #~ message=message.split("Attachment: (unnamed)")
-    #~ logger.info message.inspect
-    #~ message=message.to_s
-    #~ logger.info message.inspect
-    message=email.body.to_s
+     message=email.body.to_s
      name=email.subject.to_s
      message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
      activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
-     logger.info email.has_attachments?
      if email.has_attachments?
       for attachment in email.attachments 
-       logger.info "***************************************"
-       logger.info attachment.inspect
-       logger.info "***************************************"
-       
-          #~ tempfile=File.new("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}",'w')
-    #~ tempfile.write_nonblock(attachment.body)
-
-         #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}")) 
-         #~ tempfile.close
-
-         attach=Attachment.new
-         attach.filename = attachment.filename
-         attach.content_type=attachment.content_type
-         
-         #~ attach.name = sanitize_filename(attachment.original_filename)
-         # The first condition is for a email attachment (upload.decoded.length).
-# Second condition is if web form attachment (upload.size). 
-        attach.size = defined?(attachment.decoded) ? attachment.decoded.length : attachment.size
-        attach.attachable_type="Message"
-        attach.attachable_id=message.id
-         #~ logger.info attach.inspect
-                logger.info "***************************************"
-                attach.save
-                path=attach.public_filename
-                path=path.split('attachments')
-                path=path[1].split('/')
-                path_length=path.length
-                i=1
-                temp=path[1]
-                while i<path_length do 
-                #~ system "mkdir #{Rails.root}/public/attachments/#{ch.id}"
-                 system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
-                 temp="#{path[i]}"
-                #~ logger.info "#{system "mkdir #{Rails.root}/public/attachments/0000/0006"}"
-                 i=i+1
-                end
-                 tempfile=File.new("#{Rails.root}/public/#{attach.public_filename}",'w')
-    tempfile.write_nonblock(attachment.body)
-    #~ logger.info tempfile.inspect
-                         #~ logger.info attach.inspect
-                logger.info "***************************************"
+       #~ tempfile=File.new("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}",'w')
+       #~ tempfile.write_nonblock(attachment.body)
+       #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}")) 
+       #~ tempfile.close
+       attach=Attachment.new
+       attach.filename = attachment.filename
+       attach.content_type=attachment.content_type
+       attach.size = defined?(attachment.decoded) ? attachment.decoded.length : attachment.size
+       attach.attachable_type="Message"
+       attach.attachable_id=message.id
+       attach.save
+       path=attach.public_filename
+       path=path.split('attachments')
+       path=path[1].split('/')
+       path_length=path.length
+       i=1
+       temp=path[1]
+       while i<path_length do 
+        system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
+        temp="#{path[i]}"
+        i=i+1
        end
+       tempfile=File.new("#{Rails.root}/public/#{attach.public_filename}",'w')
+       tempfile.write_nonblock(attachment.body)
+      end
      end
     end
    end
@@ -123,6 +99,34 @@ class UserMailer < ActionMailer::Base
      comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
      message.activities.each do |activity|
       activity.update_attributes(:is_read=>false)
+     end
+     if email.has_attachments?
+      for attachment in email.attachments 
+       #~ tempfile=File.new("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}",'w')
+       #~ tempfile.write_nonblock(attachment.body)
+       #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}")) 
+       #~ tempfile.close
+       attach=Attachment.new
+       attach.filename = attachment.filename
+       attach.content_type=attachment.content_type
+       attach.size = defined?(attachment.decoded) ? attachment.decoded.length : attachment.size
+       attach.attachable_type="Comment"
+       attach.attachable_id=comment.id
+       attach.save
+       path=attach.public_filename
+       path=path.split('attachments')
+       path=path[1].split('/')
+       path_length=path.length
+       i=1
+       temp=path[1]
+       while i<path_length do 
+        system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
+        temp="#{path[i]}"
+        i=i+1
+       end
+       tempfile=File.new("#{Rails.root}/public/#{attach.public_filename}",'w')
+       tempfile.write_nonblock(attachment.body)
+      end
      end
     end
    end
