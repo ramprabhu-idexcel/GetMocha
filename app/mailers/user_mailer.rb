@@ -76,6 +76,9 @@ class UserMailer < ActionMailer::Base
        path_length=path.length
        i=1
        temp=path[1]
+       if !File.exists?("#{Rails.root}/public/attachments/#{path[1]}")
+        system "mkdir #{Rails.root}/public/attachments/#{path[1]}"
+       end
        while i<path_length do 
         system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
         temp="#{path[i]}"
@@ -119,6 +122,9 @@ class UserMailer < ActionMailer::Base
        path_length=path.length
        i=1
        temp=path[1]
+       if !File.exists?("#{Rails.root}/public/attachments/#{path[1]}")
+        system "mkdir #{Rails.root}/public/attachments/#{path[1]}"
+       end
        while i<path_length do 
         system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
         temp="#{path[i]}"
