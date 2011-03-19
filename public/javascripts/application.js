@@ -531,13 +531,14 @@ $(document).ready(function() {
 
 function add_new_modal()
 {
-  $.ajax({
+  $('#add_new_mods').show()
+  /*$.ajax({
        type :'post',
        url :"/projects/add_new",
             success: function(data){
            document.getElementById('add_new_mod').innerHTML=data;  
        }
-    });
+    });*/
  
 }
 function add_new_project()
@@ -549,6 +550,7 @@ function add_new_project()
 			 $('#add_new_mod').html(data); 
        }
     });
+      $('#add_new_mods').hide()
 }
 function add_new_message()
 {
@@ -559,10 +561,12 @@ function add_new_message()
 			$('#add_new_mod').html(data); 
        }
     });
+       $('#add_new_mods').hide()
 }
 function project_cancel_button()
 {
  $('.add-item-modal').hide()
+    
 }
 
 function project_save_button()
