@@ -447,7 +447,60 @@ $(document).ready(function() {
        });
     return false;
   });
+    
+  //To upload the profile image
   
+ $('#file_upload').fileUploadUI({
+    uploadTable: $('#files'),
+    downloadTable: $('#files'),
+    buildUploadRow: function (files, index) {
+      return $('<tr><td>' + files[index].name + '<\/td>' +
+                    '<td class="file_upload_progress"><div><\/div><\/td>' +
+                    '<td class="file_upload_cancel">' +
+                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                    '<\/button><\/td><\/tr>');
+    },
+    buildDownloadRow: function (file) {
+      return $('<tr><td>' + file.name + '<\/td><\/tr>');
+    },
+    onComplete: function (event, files, index, xhr, handler) {
+      var json = handler.response;
+      $('img#default-image').attr('src',json.file_name);
+    }
+  });
+  
+  //Message page codings
+  if(typeof Message!="undefined" && Message==true)
+  {   
+    
+    //hide the message headers 
+    function hide_header(){
+      $('.message_header').hide(); 
+      $('.sort-by').hide(); 
+      $('.comment-contain').hide();
+    }
+    
+    //hide the comment header
+    function hide_comment(){
+      $('.message_header').hide();
+      $('#comment_area').html('');
+      $('.comment-contain').hide();
+    }
+    
+    //Expand all message
+    $('#message_expand').live('click',function(){
+      $('.message.message_comments').addClass('open');
+      $('.expand-all').hide();
+      return false;
+    });
+    
+    hide_header(); //hide the message headers initially
+    hide_comment(); //hide the comment header initially
+  
+  }
+  
+  //Message second panel click function  
   $('.messow').live('click',function(){
     var id=$(this).attr('id').split('msac')[1];
     var primarUrl=(window.location+'').split('#')[0];
@@ -457,68 +510,25 @@ $(document).ready(function() {
     $('.message.messow.open').removeClass('open');
     $(this).removeClass('unread');
     $(this).addClass('open');
+    $('.message_header').show(); 
   });
-  
-  //To upload the image
-  
- $('#file_upload').fileUploadUI({
-        uploadTable: $('#files'),
-        downloadTable: $('#files'),
-        buildUploadRow: function (files, index) {
-            return $('<tr><td>' + files[index].name + '<\/td>' +
-                    '<td class="file_upload_progress"><div><\/div><\/td>' +
-                    '<td class="file_upload_cancel">' +
-                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                    '<\/button><\/td><\/tr>');
-        },
-        buildDownloadRow: function (file) {
-            return $('<tr><td>' + file.name + '<\/td><\/tr>');
-        },
-       
-  onComplete: function (event, files, index, xhr, handler) {
-    var json = handler.response;
-   
-    $('img#default-image').attr('src',json.file_name);
-   
-}
-    });
     
-      
- /* $('#p_add').click(function(){
-    var a=$('#data_name').val();
-    var b=$('#data_invites').val();
-    var c=$('#data_message').val();
-    $.ajax({
-       type :'post',
-       url :"/projects",
-       data : $('#form1').serialize(),
-       success: function(){
-         $('.add-item-modal').hide();
-       }
-    });
+  //message reply link 
+  $('.reply').click(function(){
+    $('.comment-contain').slideToggle('slow');
+    return false;  
   });
   
-  $('#p_can').click(function(){
-    $('.add-item-modal').hide()
-  });
-  $('#m_add').click(function(){
-    
-    $.ajax({
-       type :'post',
-       url :"/messages",
-       data : $('#form2').serialize(),
-       success: function(){
-         $('.add-item-modal').hide();
-       }
-    });
+  //message reply link in the expanded comment
+  $('.reply-link').live('click',function(){
+    $('.comment-contain').slideToggle('slow');
+    return false;  
   });
   
-  $('#m_can').click(function(){
-    $('.add-item-modal').hide()
-  });*/
     
-});
+});//End of doc
+
+
 function add_new_modal()
 {
   $.ajax({
