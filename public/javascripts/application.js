@@ -540,6 +540,7 @@ function add_new_project()
 			 $('#add_new_mod').html(data); 
        }
     });
+      $('#add_new_mods').hide()
 }
 function add_new_message()
 {
@@ -550,10 +551,12 @@ function add_new_message()
 			$('#add_new_mod').html(data); 
        }
     });
+       $('#add_new_mods').hide()
 }
 function project_cancel_button()
 {
  $('.add-item-modal').hide()
+    
 }
 
 function project_save_button()
