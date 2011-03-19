@@ -6,7 +6,11 @@ class MessagesController < ApplicationController
 		 @projects=Project.user_active_projects(current_user.id)
 	end
 	def new
-		@users=User.find(:all,:select=>[:first_name,:email])
+		if session[:project_name]
+			@user=current_user.project_membership
+			else
+		@users=current_user.my_contacts(:all.:conditio,:select=>[:first_name,:email])
+		end
 		@projects=Project.find(:all,:select=>[:name],:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		@tcMovies=[]
 		@Movies=[]
