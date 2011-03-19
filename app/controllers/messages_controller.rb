@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
 	end
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
-		@projects=Project.find(:all,:select=>[:name])
+		@projects=Project.find(:all,:select=>[:name],:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		@tcMovies=[]
 		@Movies=[]
 		@users.each do |f|
