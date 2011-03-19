@@ -521,13 +521,14 @@ $(document).ready(function() {
 });
 function add_new_modal()
 {
-  $.ajax({
+  $('#add_new_mods').show()
+  /*$.ajax({
        type :'post',
        url :"/projects/add_new",
             success: function(data){
            document.getElementById('add_new_mod').innerHTML=data;  
        }
-    });
+    });*/
  
 }
 function add_new_project()

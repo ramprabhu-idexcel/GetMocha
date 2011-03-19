@@ -23,7 +23,7 @@
     goog.require('goog.ui.KeyboardShortcutHandler');
     goog.require('goog.ui.AutoComplete.Basic');
   </script>
-
+<link rel="stylesheet" href="/stylesheets/demo.css">
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
@@ -60,7 +60,7 @@
 	<!--<link rel="shortcut icon" href="/images/favicon.ico" />-->
 </head>
 
-<body class="tasks">
+<body class="messages">
 
 <%= render :partial=>'/layouts/header'%>
 	
@@ -75,7 +75,7 @@
 
 	<div class="clear-fix"></div>
 </div>
-<div class="modal add-item-modal" style="display:none">
+
 	<div class="modal-top-left"></div>
 <%#= render :partial =>'/projects/new'%>
 <%#= render :partial =>'/projects/add_new'%>
@@ -84,6 +84,23 @@
 	<div class="modal-bottom-right"></div>
 </div>
 <div id="add_new_mod">
+<div id="add_new_mods" class="modal add-new-modal" style="display:none">
+
+	<div class="modal-top-left"></div>
+	<div class="modal-top-center"></div>
+	<div class="modal-top-right"></div>
+	<div class="modal-body-contain">
+		<div class="modal-body">
+			<a href="#create_message" class="silver-45" onclick="javascript:add_new_message();"><span>Messages</span></a>
+			<a href="/add-task" class="silver-45"><span>Task</span></a>
+			<a href="/add-task-list" class="silver-45"><span>Task List</span></a>
+			<a href="#create_project" class="silver-45" onclick="javascript:add_new_project();"><span>Project</span></a>
+		</div>
+	</div>
+	<div class="modal-bottom-left"></div>
+	<div class="modal-bottom"></div>
+	<div class="modal-bottom-right"></div>
+</div>
 </div>
 <%=render "/layouts/name_settings"%>
  
@@ -175,14 +192,18 @@ var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
         
            function short_modal(path)  //Add new project/messsage/task/tasclist
 {
-  $.ajax({
+ /* $.ajax({
        type :'post',
        url :path,
             success: function(data){
-						$('#add_new_mod').html(data);  
-						$('#add_new_mod').show();  
+						$('#add_new_mods').html(data);  
+						$('#add_new_mods').show();  
        }
-    });
+    });*/
+		if (path!='ecs')
+		 $('#add_new_mods').show();
+		 else
+		 $('#add_new_mods').hide();
 	 }
   function short_modal1(path)  //Add new project/messsage/task/tasclist
 {
@@ -216,6 +237,14 @@ if (path!='esc')
     });*/
 		window.location.href=path;
 		}
+		/*$(document).ready(function(){
+		if ($('#settings_secondpanel').show()) 
+		{
+		$('#txtInput2').value=$(this).project_id
+		$('#txtInput2').disabled
+		}
+		
+		});*/
 </script>
 
 
