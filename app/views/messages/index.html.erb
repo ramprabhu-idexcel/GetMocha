@@ -101,7 +101,7 @@ $.messages;
                         comments.push('<p class="subscribers">Subscribed: Jessa Ma and <a href="/subscribed-wrap">11 others</a> | <a href="#">unsubscribe</a></p></div>');
                         $.each(data.comments,function(index,comment){
                           comments.push('<div class="prev-messages"><div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
-                          comments.push('<a class="name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
+                          comments.push('<a class="name message_name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
                           comments.push('<div class="comment"><p>'+comment.comment+'</p>');
                           comments.push('<a class="reply-link" href="#">Reply</a></div></div></div></div>');
                         });
