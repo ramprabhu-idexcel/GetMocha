@@ -500,7 +500,7 @@ $(document).ready(function() {
       $(this).addClass('open');
       return false;
     });
-    
+        
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
@@ -531,6 +531,27 @@ $(document).ready(function() {
     return false;  
   });
   
+  //Add message comments  
+  $('.blue-33.add_comment').live('click',function(){
+    var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+    $('#act').val(activity_id);
+    var reply="";
+    $.ajax({
+      url: '/comments',
+      type: 'post',
+      data: $('form#add_com_msg').serialize(),
+      success:function(data){
+        var comment=data.comment[0];
+        reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
+        reply+=('<a class="name message_name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
+        reply+=('<div class="comment"><p>'+comment.comment+'</p>');
+        reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+        $('.prev-messages').append(reply).show('slow');
+        $('.comment-contain').toggle('slow');
+      }
+    });
+    return false;
+   });
     
 });//End of doc
 
