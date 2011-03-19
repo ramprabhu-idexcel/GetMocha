@@ -32,7 +32,8 @@ class Message < ActiveRecord::Base
 		end
 			
 			
-	end 
+  end 
+    
 	def self.send_notification_to_team_members(user,to_users)
 		@user=user
 		to_users.each do |to_user|
@@ -41,7 +42,11 @@ class Message < ActiveRecord::Base
 		end
 	end
 
-	
+	def self.find_hash(id)
+    message=self.find_by_id(id,:select=>[:subject,:message,:project_id,:user_id,:updated_at])
+    user=message.user
+    message.attributes.merge({:name=>user.name})
+  end
 	
 
 end

@@ -6,4 +6,28 @@ module ApplicationHelper
 "(GMT+06:00) Moscow+03 - Omsk, Novosibirsk ","(GMT+06:30) Rangoon","(GMT+07:00) Bangkok","(GMT+07:00) Jakarta" ,"(GMT+08:00) Hong Kong " ,"(GMT+08:00) Manila ","(GMT+08:00) China Time - Beijing" ,"(GMT+08:00) Singapore " ,"(GMT+08:00) Taipei","(GMT+08:00) Western Time - Perth","(GMT+09:00) Seoul","(GMT+09:00) Tokyo","(GMT+09:30) Central Time - Adelaide" ,"(GMT+10:00) Eastern Time - Brisbane","(GMT+10:00) Eastern Time - Melbourne, Sydney","(GMT+11:00) Noumea " ,"(GMT+11:30) Norfolk   ","(GMT+12:00) Auckland","(GMT+12:00) Fiji ","(GMT+13:00) Enderbury" ]		
 	end	
   
+  def comment_button
+    content_tag(:div, :class=>"comment-buttons") do 
+      link_to(content_tag(:span,"Add Comment"),"#",:class=>"blue-33 add_comment")+link_to("cancel","#",:class=>"cancel_comment")
+    end
+  end
+  
+  def clear_fix
+    content_tag(:div,'',:class=>"clear-fix") 
+  end
+  
+  def find_elapsed_time(time)
+		diff=Time.now-time
+		case diff
+			when 0..59
+				"#{pluralize(diff.to_i,"second")} ago"
+			when 60..3599
+				"#{pluralize((diff/60).to_i,"minute")} ago"  
+			when 3600..86399
+				"#{pluralize((diff/3600).to_i,"hour")} ago" 
+		else
+			time_zone=find_time_zone
+			t=(time+find_current_zone_difference(time_zone)).strftime("%l:%M %p")
+		end
+	end
 end

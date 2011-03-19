@@ -80,14 +80,10 @@ end
   
   def show
     activity=Activity.find_by_id(params[:activity_id])
-    message=activity.resource.to_json(:only=>[:subject,:message],:include=>{:user=>{:methods=>:name}})
+    message=Message.find_hash(activity.resource_id)
     comment_ids=activity.resource.comments.collect{|x| x.id}
-    unless comment_ids.empty?
-      activities=current_user.activities_comments(comment_ids)
-      render :json=>{:message=>message,:comments=>activities}.to_json
-    else
-      render :json=>message
-    end
+    activities=current_user.hash_activities_comments(comment_ids)
+    render :json=>{:message=>message,:comments=>activities}.to_json
   end
   
   private

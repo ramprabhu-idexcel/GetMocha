@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :project_users
   has_many :projects,:through=>:project_users,:as=>:project_members
   has_many :project_guests
-  has_many :attachments ,:as => :attachable, :dependent=>:destroy
+  has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
  # has_many :messages
   has_many :messages, :through => :activities, :source => :resource, :source_type => 'Message'
@@ -86,8 +86,11 @@ class User < ActiveRecord::Base
     activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids])
   end
   
-  def json_activities_comments(type_ids)
-    activities_comments(type_ids).to_json(:only=>[:created_at,:is_starred],:include=>{:resource=>{:only=>[:comment],:include=>{:user=>{:methods=>:name}}}}) 
+  def hash_activities_comments(type_ids)
+    comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids],:select=>[:is_starred,:is_read,:resource_id])
+    values=[]
+    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge({:is_starred=>t.is_starred,:is_read=>t.is_read})}
+    values
   end
   
 end
