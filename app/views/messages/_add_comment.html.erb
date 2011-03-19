@@ -1,0 +1,17 @@
+<div class="comment-contain" style="display:none;">
+  <%form_tag '/message/comment' do%>
+    <div class="comment-input">
+      <%=label_tag "Message:",nil,:class=>"hidden"%>
+      <%=text_area_tag "message",nil,:cols=>"",:rows=>"",:onfocus=>"this.select()",:id=>"comment-message",:class=>"textarea comment-message"%>
+      <%=clear_fix%>
+    </div>
+    <div class="attach-contain">
+      <div class="attachment-upload">
+        <div class="drag-drop">Drag and drop files here</div>
+      </div>
+      <%=clear_fix%>
+    </div>
+    <%=comment_button%>
+  <%end%>
+  <%=clear_fix%>
+</div>
