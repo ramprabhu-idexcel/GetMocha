@@ -38,6 +38,7 @@
       var panelHeight;
       inputHeight = document.getElementsByClassName('comment-contain')[0].offsetHeight;
       panelHeight = document.getElementsByClassName('r-panel-contain')[0].offsetHeight;
+      if(document.getElementsByClassName('chat-container').length>0)
       document.getElementsByClassName('chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
    }
 
