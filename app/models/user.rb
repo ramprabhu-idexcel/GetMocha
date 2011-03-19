@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :activities
   #has_many :activities
   has_many :secondary_emails
+  has_many :comments
   
   #starred messages from all project
   def starred_messages
@@ -87,6 +88,7 @@ class User < ActiveRecord::Base
   end
   
   def hash_activities_comments(type_ids)
+    type_ids=[type_ids] unless type_ids.is_a?(Array)
     comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids],:select=>[:is_starred,:is_read,:resource_id])
     values=[]
     comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge({:is_starred=>t.is_starred,:is_read=>t.is_read})}
