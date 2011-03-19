@@ -1,5 +1,6 @@
 class UsersController <  Devise::RegistrationsController  
   before_filter :authenticate_user!,:except=>["new","create"]
+  before_filter :session_clear
   def create
     build_resource
     if resource.save
@@ -26,6 +27,10 @@ class UsersController <  Devise::RegistrationsController
       end
       #~ render_with_scope :new
     end
+  end
+  
+  def session_clear
+    session[:project_name]=nil
   end
   
   

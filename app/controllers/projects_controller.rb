@@ -58,6 +58,7 @@ class ProjectsController < ApplicationController
 		end
 	def settings_pane
 		@project=Project.find(params[:id])
+			session[:project_name]=@project.name
 		render :partial=>'settings_pane'
 		
 	end
@@ -158,6 +159,11 @@ class ProjectsController < ApplicationController
 					@invite.update_attributes(:invitation_code=>nil)
 					redirect_to new_user_registration_path
 			end
-		 end
+		end
+		
+		  def find_project_name
+    @project=Project.find_by_id(params[:project_id]) if params[:project_id]
+    session[:project_name]=@project.name if @project
+  end
 
 end

@@ -65,15 +65,17 @@ end
   end
 
   def all_messages
-    render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		session[:project_name]=nil
+		render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
   def starred_messages
-    render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		session[:project_name]=nil
+		render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
   def project_messages
-    render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
   def show

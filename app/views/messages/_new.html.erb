@@ -27,7 +27,14 @@
 			    </fieldset>
 				<fieldset>
 					<label>Project:</label>
-		       		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
+										
+					<% p session[:project_name] %>
+					<% if session[:project_name] %>
+					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
+					 <% else %>
+					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
+					 <% end %>
+		       
 			    </fieldset>
 			    <fieldset id="txtarea">
 					<label>Message:</label>
