@@ -47,6 +47,33 @@ class Message < ActiveRecord::Base
     user=message.user
     message.attributes.merge({:name=>user.name})
   end
+	 def date_formats(created_at)
+		month=created_at.month
+		day=created_at.day
+		hour=created_at.hour
+		min=created_at.min
+		year1=Time.now.year-created_at.year
+		month1=Time.now.month-created_at.month
+		day1=Time.now.day-created_at.day
+		hour1=Time.now.hour-created_at.hour
+		min1=Time.now.min-created_at.min
+	p sec1=Time.now.sec-created_at.sec
+		if year1>=1&&(month1>1||day1>30)
+		  p "#{year}/#{month}/#{day}"
+		elsif day1>1 ||hour1>23
+			p "#{month}/#{day} #{day1}day ago" if day1==1
+			p "#{month}/#{day} #{day1}days ago" if day1>1
+		elsif hour1>1||min1>59
+			p "#{hour}/#{min} #{hour1}hour ago" if hour1==1
+			p "#{hour}/#{min} #{hour1}hours ago" if hour1>1
+		elsif min1>1&&sec1>59
+			p "#{hour}/#{min} #{min1}minute ago" if min1==1
+	  	p "#{hour}/#{min} #{min1}minutes ago "if min1>1
+		elsif sec1>=0
+			p "few seconds ago"
+		
+	end
+	end
 	
 
 end
