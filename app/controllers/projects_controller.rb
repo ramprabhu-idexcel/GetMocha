@@ -48,6 +48,7 @@ class ProjectsController < ApplicationController
 		 
 	end
 	def settings
+		session[:project_name]=nil
 		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
 		@users=User.find(:all,:select=>[:first_name,:email])

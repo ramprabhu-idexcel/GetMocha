@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
 	layout 'application', :except=>['new']
 	def index
+		session[:project_name]=nil
 		 @projects=Project.user_active_projects(current_user.id)
 	end
 	def new
