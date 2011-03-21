@@ -580,6 +580,8 @@ $('#attach').fileUploadUI({
     });
     return false;
    });
+   
+   
     
     
   $('#submsg').live('click',function(){

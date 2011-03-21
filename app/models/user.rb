@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
          
   # Setup accessible (or protected) attributes for your model
   validates :first_name,:last_name,:presence=> true
-  attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status
+  attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:checkbox1
+  validates :checkbox1,:acceptance => true
   has_many :projects,:as=>:project_members
   #~ has_one :project
   has_many :project_users

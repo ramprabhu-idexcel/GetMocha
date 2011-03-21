@@ -27,8 +27,7 @@ end
 
 
 	def create
-		p params["undefined"].inspect
-		errors=[]
+	errors=[]
 		if params[:message][:recipient].blank?
 			errors<<"Please enter To_email address"
 				
@@ -59,9 +58,18 @@ end
 		@project=Project.find_by_name(params[:message][:project])
 		Message.send_message_to_team_members(@project,@message,@to_users)
 		Message.send_notification_to_team_members(current_user,@to_users,@message)
-		attachment=Attachment.new(:uploaded_data => params["undefined"])
-		attachment.attachable=@message
-		attachment.save
+		if session[:attaches_id]
+			p session[:attaches_id]=session[:attaches_id].split(",")
+			session[:attaches_id].each do |attach_id|
+				if attach_id.present?
+					attachment=Attachment.find_by_id(attach_id)
+					attachment.update_attributes(:attachable=>@message)
+				end
+			end
+		end
+		session[:attaches_id]=nil
+	#	attachment.attachable=@message
+		#attachment.save
 		render :nothing=>true
 		else
 					render :update do |page|
@@ -70,7 +78,7 @@ end
 		end
 	end
   end
-
+					
   def all_messages
 		session[:project_name]=nil
 		render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})

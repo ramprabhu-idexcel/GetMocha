@@ -1,27 +1,63 @@
-<h2>Sign up</h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<body class="signup">
+
+<div class="header">
+<%= render :partial=>'/home/header'%>
+</div>
+
+
+<div class="container-960 alpha-m content-bottom">
+	<div class="grid-260">
+		<div class="info-box">
+			<h4>Fully functional.</h4>
+			<p>No credit card required.</p>
+
+		</div>
+		<p>Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. </p>
+	</div>
+	<div class="grid-630">
+		<h1>Sign up for a free 60-day trial</h1>
+		<hr class="light-hr" />
+		
+
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
   
-  <p><%= f.label :Firstname %><br />
-  <%= f.text_field :first_name %></p>
-  
-    
-  <p><%= f.label :Lastname %><br />
-  <%= f.text_field :last_name %></p>
+<p><%= f.label :Firstname,:class=>"last"%><%= f.label :Lastname,:class=>"last" %><br />
+  <%= f.text_field :first_name,:class=>"textfield",:id=>"signup-fname"%>
+  <%= f.text_field :last_name,:class=>"textfield" %></p>
 
-  <p><%= f.label :email %><br />
-  <%= f.text_field :email %></p>
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+  <p><%= f.label :email,:class=>"last" %><%= f.label :password,:class=>"last"  %><br />
 
-  <p><%= f.submit "Sign up" %></p>
+  <%= f.text_field :email,:class=>"textfield" %>
+  <%= f.password_field :password,:class=>"textfield last"  %></p>
+	
+ <p><input type="checkbox" class="checkbox" id="agree-check" name="checkbox1" value="" /> I agree to the Mocha <a href="/terms">Terms of Use.</a>
+<%= f.submit "Sign up",:class=>"btn signup-btn" %></p>
+	
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
 
+
+	</div>
+	
+	
 <script>
 var Signup=true;
 
 </script>
+
+		
+
+	<div class="clear-fix"></div>
+</div>
+
+	<div class="push"></div>
+</div>
+
+<div class="footer">
+		<%= render :partial=>'/home/footer'%>
+</div>
+
+</body>
