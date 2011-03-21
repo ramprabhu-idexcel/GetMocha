@@ -9,24 +9,23 @@ class MessagesController < ApplicationController
 		if session[:project_name]
 			@user=current_user.project_membership
 			else
-		@users=current_user.my_contacts(:all,:conditio,:select=>[:first_name,:email])
+		@users=current_user.my_contacts
 		end
 		@projects=Project.find(:all,:select=>[:name],:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
-		@tcMovies=[]
-		@Movies=[]
-		@users.each do |f|
-		@tcMovies<<"#{f.email}"
+		 @user_emails=[]
+		 @project_names=[]
+		  @users.each do |f|
+			@user_emails<<"#{f.email}"
 	end
-	@projects.each do |g|
-		@Movies<<"#{g.name}"
+	@projects.each do |project|
+		@project_names<<"#{project.name}"
 	end
 	render :partial=>'new'
 end
 
 
 	def create
-		p params["undefined"].inspect
-		errors=[]
+	errors=[]
 		if params[:message][:recipient].blank?
 			errors<<"Please enter To_email address"
 				
@@ -56,10 +55,19 @@ end
 		
 		@project=Project.find_by_name(params[:message][:project])
 		Message.send_message_to_team_members(@project,@message,@to_users)
-		Message.send_notification_to_team_members(current_user,@to_users)
-		attachment=Attachment.new(:uploaded_data => params["undefined"])
-		attachment.attachable=@message
-		attachment.save
+		Message.send_notification_to_team_members(current_user,@to_users,@message)
+		if session[:attaches_id]
+			p session[:attaches_id]=session[:attaches_id].split(",")
+			session[:attaches_id].each do |attach_id|
+				if attach_id.present?
+					attachment=Attachment.find_by_id(attach_id)
+					attachment.update_attributes(:attachable=>@message)
+				end
+			end
+		end
+		session[:attaches_id]=nil
+	#	attachment.attachable=@message
+		#attachment.save
 		render :nothing=>true
 		else
 					render :update do |page|
@@ -68,7 +76,7 @@ end
 		end
 	end
   end
-
+					
   def all_messages
 		session[:project_name]=nil
 		render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
@@ -76,7 +84,7 @@ end
   
   def starred_messages
 		session[:project_name]=nil
-		render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		render :json=>current_user.group_starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
   def project_messages
@@ -89,6 +97,13 @@ end
     comment_ids=activity.resource.comments.collect{|x| x.id}
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
+  end
+  
+  def star_message
+    activity=Activity.find_by_id(params[:activity_id])
+    starred=!activity.is_starred
+    activity.update_attribute(:is_starred,starred)
+    render :nothing=>true
   end
   
   private

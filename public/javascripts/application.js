@@ -450,25 +450,31 @@ $(document).ready(function() {
     
   //To upload the profile image
   
- $('#file_upload').fileUploadUI({
+$('#attach').fileUploadUI({
     uploadTable: $('#files'),
     downloadTable: $('#files'),
     buildUploadRow: function (files, index) {
-      return $('<tr><td>' + files[index].name + '<\/td>' +
-                    '<td class="file_upload_progress"><div><\/div><\/td>' +
-                    '<td class="file_upload_cancel">' +
-                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                    '<\/button><\/td><\/tr>');
+        return $('<tr><td class="file_upload_preview"><\/td>' +
+                '<td>' + files[index].name + '<\/td>' +
+                '<td class="file_upload_progress"><div><\/div><\/td>' +
+                '<td class="file_upload_start">' +
+                '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
+                '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
+                '<\/button><\/td>' +
+                '<td class="file_upload_cancel">' +
+                '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                '<\/button><\/td><\/tr>');
     },
     buildDownloadRow: function (file) {
-      return $('<tr><td>' + file.name + '<\/td><\/tr>');
+        return $('<tr><td>' + file.name + '<\/td><\/tr>');
     },
-    onComplete: function (event, files, index, xhr, handler) {
-      var json = handler.response;
-      $('img#default-image').attr('src',json.file_name);
+    beforeSend: function (event, files, index, xhr, handler, callBack) {
+        handler.uploadRow.find('.file_upload_start').click(callBack);
     }
-  });
+	
+});
+
   
   //Message page codings
   if(typeof Message!="undefined" && Message==true)
@@ -501,6 +507,26 @@ $(document).ready(function() {
       return false;
     });
         
+    
+    $('.star.star_items').live('click',function(){
+      var id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url: '/star_message/'+id,
+        type: 'get'
+      });
+      return false;
+    });
+
+    $('.message-star').live('click',function(){
+      var path=$(this).attr('href');
+      $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
+      $.ajax({
+        url: path,
+        type: 'get'
+      });
+      return false;
+    });
+    
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   

@@ -166,5 +166,11 @@ class ProjectsController < ApplicationController
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
   end
+	
+	def file_download_from_email
+		attachment=Attachment.find(params[:id])
+		send_file "#{Rails.root}/public"+attachment.public_filename
+	end
+	
 
 end

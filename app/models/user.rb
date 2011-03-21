@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
     activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false]).group_by{|m| m.created_at.to_date}
   end
   
+  def group_starred_messages
+    starred_messages.group_by{|m| m.created_at.to_date}
+  end
+  
   def all_messages_count
     all_messages.count
   end
@@ -90,9 +94,9 @@ class User < ActiveRecord::Base
   
   def hash_activities_comments(type_ids)
     type_ids=[type_ids] unless type_ids.is_a?(Array)
-    comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids],:select=>[:is_starred,:is_read,:resource_id])
+    comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids],:select=>[:is_starred,:is_read,:resource_id,:id])
     values=[]
-    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge({:is_starred=>t.is_starred,:is_read=>t.is_read})}
+    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge({:is_starred=>t.is_starred,:is_read=>t.is_read,:id=>t.id})}
     values
   end
   
