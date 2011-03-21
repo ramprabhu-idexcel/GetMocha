@@ -32,10 +32,10 @@ class ProjectMailer < ActionMailer::Base
      mail(:to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha")
     @content_type="text/html"
   end
-  def message_notification(user,to_user)
+  def message_notification(user,to_user,message)
     @user = user
     @to_user = to_user
-    mail(:to=>"#{to_user}", :subject=>"#{user.first_name} posted a new message to #{to_user}")
+    mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@rfmocha.com", :subject=>"#{user.first_name} posted a new message to #{to_user}")
     @content_type="text/html"
   end
   

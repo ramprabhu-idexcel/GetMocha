@@ -34,8 +34,9 @@ class Message < ActiveRecord::Base
 			
   end 
     
-	def self.send_notification_to_team_members(user,to_users)
+	def self.send_notification_to_team_members(user,to_users,message)
 		@user=user
+		@message=message
 		to_users.each do |to_user|
 			@to_user=to_user
 		ProjectMailer.delay.message_notification(@user,@to_user)
