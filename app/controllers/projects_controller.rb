@@ -115,7 +115,13 @@ class ProjectsController < ApplicationController
 				page.alert "This Email address already taken"
 			end
 		else
+			if params[:proj_status]
+				@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
+		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
+				render :partial=>'project_list'
+			else
 			render :partial=>'settings_pane'
+			end
 		end
 		end
 		def add_new
