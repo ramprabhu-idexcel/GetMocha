@@ -20,20 +20,7 @@ $(document).ready(function() {
   if(typeof Login!="undefined" && Login==true)
   {
         
-    $("form#user_login").validate({
-      rules: {
-                'user[email]': {
-                required : true
-              }
-            },
-        messages: {
-          'user[email]': "can't be blank"
-        },
-        errorPlacement: function(error, element) {
 
-        },
-        debug:true
-      });
   
    $('#user_submit').click(function(){
       if (($('#user_email').val()=="") && ($("#user_password").val()==""))
@@ -69,6 +56,19 @@ $(document).ready(function() {
       });
     }
       return false;
+    });
+    
+    $('#forgot_pass').click(function(){
+     // $('#fpwd').submit();
+      $.ajax({
+        url:'/users/password',
+        data: $('form#fpwd').serialize(),
+        type: "POST",
+        success: function(data){
+            window.location.href="/";
+          }
+      });
+       return false;
     });
   }
   
