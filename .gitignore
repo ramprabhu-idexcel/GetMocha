@@ -4,4 +4,3 @@ log/*.log
 tmp/
 db/schema.rb
 public/attachment
-Gemfile.lock
