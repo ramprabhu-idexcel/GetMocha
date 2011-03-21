@@ -37,6 +37,11 @@ class ProjectMailer < ActionMailer::Base
     @to_user = to_user
     @message=message
     @project=message.project
+    subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])
+    @people=[]
+    subscribed_list.each do |activity| 
+       @people<<activity.user.full_name
+     end
     mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@rfmocha.com", :subject=>"#{user.first_name} posted a new message to #{to_user}")
     @content_type="text/html"
   end

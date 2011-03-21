@@ -2,7 +2,7 @@
 <% if @project.users.include? @to_user %>
 			Project: <%="#{@project.name}" %> <br/>
 			Subject: <%="#{@message.subject}" %> <br/>
-		  Author:<%= "#{@message.user.name} at #{@message.created_at}"%> <br/>
+		  Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
 
 			<%= @message.message %> <br/>
 
@@ -10,13 +10,13 @@
 					<% @message.attachments.each do |attach| %>
 						<%= attach.filename %> <br/>
 					<% end %>
-			<% end %><br/><br/>
-			
---
+			<% end %><br/>
+Subscribed: <%= @people %>			<br/><br/>
+--<br/>
 Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
 <% else %>
-		Author:<%= "#{@message.user.name} at #{@message.created_at}"%> <br/>
+		Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
 
 			<%= @message.message %> <br/>
 
@@ -24,8 +24,10 @@ Powered by GetMocha.com
 					<% @message.attachments.each do |attach| %>
 							<%= attach.filename %> <br/>
 					<% end %>
-			<% end %><br/><br/>
-			--
+			<% end %><br/>
+			Subscribed: <%= @people %>			<br/><br/>
+			--<br/>
 			Powered by GetMocha.com
 			
 <% end %>
+
