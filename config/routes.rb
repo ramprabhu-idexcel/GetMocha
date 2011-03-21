@@ -61,6 +61,8 @@ GetMocha::Application.routes.draw do
   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
   match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
   match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
+  match 'subscribe/:activity_id'=>'messages#subscribe',:as=>'subscribe_message',:method=>:get
+  match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   
   resource :comments
   resources :attachments

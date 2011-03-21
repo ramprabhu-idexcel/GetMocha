@@ -47,7 +47,7 @@ class ProjectMailer < ActionMailer::Base
     @people=[]
     if subscribed_list
     subscribed_list.each do |activity| 
-       @people<<activity.user.full_name if activity.user
+       @people<<activity.user.full_name<<"," if activity.user
      end
     end
     mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@rfmocha.com", :subject=>"#{user.first_name} posted a new message to #{to_user}")

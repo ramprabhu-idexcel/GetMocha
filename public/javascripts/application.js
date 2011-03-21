@@ -548,12 +548,14 @@ $('#attach').fileUploadUI({
   //message reply link 
   $('.reply').click(function(){
     $('.comment-contain').slideToggle('slow');
+    $('#comment-message').focus();
     return false;  
   });
   
   //message reply link in the expanded comment
   $('.reply-link').live('click',function(){
     $('.comment-contain').slideToggle('slow');
+    $('#comment-message').focus();
     return false;  
   });
   
@@ -581,6 +583,19 @@ $('#attach').fileUploadUI({
    
    
     
+    
+  $('#submsg').live('click',function(){
+    var id=$('.message.messow.open').attr('id').split('msac')[1];
+    $.ajax({
+      url:'/subscribe/'+id,
+      type: 'get'
+    });
+    var content=$(this).text();
+    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+    $(this).text(result);
+    return false;
+  });
+  
 });//End of doc
 
 

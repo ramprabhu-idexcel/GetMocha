@@ -1,6 +1,8 @@
 class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
+  before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe']
 	layout 'application', :except=>['new']
+  
 	def index
 		session[:project_name]=nil
 		 @projects=Project.user_active_projects(current_user.id)
@@ -79,34 +81,52 @@ end
 					
   def all_messages
 		session[:project_name]=nil
-		render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   
   def starred_messages
 		session[:project_name]=nil
-		render :json=>current_user.group_starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		render :json=>current_user.group_starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   
   def project_messages
-		render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		render :json=>current_user.group_project_messages(params[:project_id]).to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   
   def show
-    activity=Activity.find_by_id(params[:activity_id])
-    message=Message.find_hash(activity.resource_id)
-    comment_ids=activity.resource.comments.collect{|x| x.id}
+    @activity.update_attribute(:is_read,true)
+    msg=Message.find_by_id(@activity.resource_id)
+    message=Message.find_hash(@activity.resource_id)
+    message.merge!({:subscribed_user=>msg.display_subscribed_users,:is_subscribed=>current_user.is_message_subscribed?(msg.id),:all_subscribed=>msg.all_subscribed})
+    comment_ids=@activity.resource.comments.collect{|x| x.id}
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
   end
   
   def star_message
-    activity=Activity.find_by_id(params[:activity_id])
-    starred=!activity.is_starred
-    activity.update_attribute(:is_starred,starred)
+    starred=!@activity.is_starred
+    @activity.update_attribute(:is_starred,starred)
     render :nothing=>true
   end
   
+  def subscribe
+    subscribed=!@activity.is_subscribed
+    @activity.update_attribute(:is_subscribed,subscribed)
+    render :nothing=>true
+  end
+	
+	def unsubscribe
+		@activity.update_attribute(:is_subscribed,false)
+    render :nothing=>true
+	end
+	
+  
   private
+  
+  def find_activity
+    @activity=Activity.find_by_id(params[:activity_id]) if params[:activity_id]
+  end
+  
   def unwanted_columns
     [:created_at,:is_assigned,:resource_type,:resource_id]
   end

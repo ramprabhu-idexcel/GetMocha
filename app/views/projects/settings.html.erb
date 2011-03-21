@@ -1,5 +1,5 @@
 
-	<div class="l-panel-contain">
+	<div class="l-panel-contain" id="project_list">
 	<% if @projects %>
 		<%= render :partial=>'project_list' %>
 	<% end %>
@@ -26,6 +26,7 @@ document.getElementById('project_list_'+id).className="project";
        type :'post',
 			 url : "/projects/"+project_id+"/settings_pane",
        success: function(data){
+
 			 document.getElementById('settings_pane').innerHTML=data;
 			 }
     });
@@ -143,10 +144,11 @@ var pars = "project_id=" + proj_id +  "&proj_status="+ status;
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
+
+			 document.getElementById('project_list').innerHTML=data;
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
-			 }
+			 show_completed_projects();
     });
 }
 }
