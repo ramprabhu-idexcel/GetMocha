@@ -34,15 +34,22 @@ class ProjectMailer < ActionMailer::Base
   end
   def message_notification(user,to_user,message)
     @user = user
-    @to_user = to_user
+    if to_user.include?("?")
+      to_user = to_user.split(',')
+      to_user = @to_user[0]
+    else
+      to_user=to_user
+    end
     @existing_user=User.find_by_email(to_user)
     @message=message
     @project=message.project
     subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])
     @people=[]
+    if subscribed_list
     subscribed_list.each do |activity| 
-       @people<<activity.user.full_name
+       @people<<activity.user.full_name if activity.user
      end
+    end
     mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@rfmocha.com", :subject=>"#{user.first_name} posted a new message to #{to_user}")
     @content_type="text/html"
   end
