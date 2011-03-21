@@ -1,0 +1,7 @@
+/* All conditional Internet Explorer specific styles should go into this stylesheet - we do not support IE6, this is done via ie6update.js */ 
+
+* html .clear { height: 1% }
+
+.homepage .section-1 { padding-top:60px; }
+
+.under-cup { padding-top: 60px; margin-top: 0px; }
