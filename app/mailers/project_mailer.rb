@@ -35,6 +35,7 @@ class ProjectMailer < ActionMailer::Base
   def message_notification(user,to_user,message)
     @user = user
     @to_user = to_user
+    @existing_user=User.find_by_email(to_user)
     @message=message
     @project=message.project
     subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])

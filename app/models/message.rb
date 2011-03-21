@@ -64,8 +64,8 @@ class Message < ActiveRecord::Base
               t=(time+find_current_zone_difference(time_zone)).strftime("%l:%M %p")
           end
         end
-	end
-	end
+	
+	
 	
 
 end

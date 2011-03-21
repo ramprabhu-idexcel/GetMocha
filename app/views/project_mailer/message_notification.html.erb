@@ -1,5 +1,5 @@
 ##Type above this line to post a reply to this message## <br/>
-<% if @project.users.include? @to_user %>
+<% if  @existing_user && !@existing_user.is_guest %>
 			Project: <%="#{@project.name}" %> <br/>
 			Subject: <%="#{@message.subject}" %> <br/>
 		  Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
@@ -8,7 +8,7 @@
 
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
-						<%= attach.filename %> <br/>
+						<a href="http://localhost:3000/file_download_from_email/<%= attach.id %>"><%= "http://localhost:3000/file_download_from_email/#{attach.filename}" %><a/> <br/>
 					<% end %>
 			<% end %><br/>
 Subscribed: <%= @people %>			<br/><br/>
@@ -22,7 +22,7 @@ Powered by GetMocha.com
 
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
-							<%= attach.filename %> <br/>
+						<a href="http://localhost:3000/file_download_from_email/<%= attach.id %>"><%= "http://localhost:3000/file_download_from_email/#{attach.filename}" %><a/> <br/>
 					<% end %>
 			<% end %><br/>
 			Subscribed: <%= @people %>			<br/><br/>
