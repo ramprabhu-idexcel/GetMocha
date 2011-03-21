@@ -449,31 +449,31 @@ $(document).ready(function() {
   });
     
   //To upload the profile image
-  
-$('#attach').fileUploadUI({
-    uploadTable: $('#files'),
-    downloadTable: $('#files'),
-    buildUploadRow: function (files, index) {
-        return $('<tr><td class="file_upload_preview"><\/td>' +
-                '<td>' + files[index].name + '<\/td>' +
-                '<td class="file_upload_progress"><div><\/div><\/td>' +
-                '<td class="file_upload_start">' +
-                '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
-                '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
-                '<\/button><\/td>' +
-                '<td class="file_upload_cancel">' +
-                '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                '<\/button><\/td><\/tr>');
-    },
-    buildDownloadRow: function (file) {
-        return $('<tr><td>' + file.name + '<\/td><\/tr>');
-    },
-    beforeSend: function (event, files, index, xhr, handler, callBack) {
-        handler.uploadRow.find('.file_upload_start').click(callBack);
-    }
-	
-});
+  /*
+    $('#attach').fileUploadUI({
+        uploadTable: $('#files'),
+        downloadTable: $('#files'),
+        buildUploadRow: function (files, index) {
+            return $('<tr><td class="file_upload_preview"><\/td>' +
+                    '<td>' + files[index].name + '<\/td>' +
+                    '<td class="file_upload_progress"><div><\/div><\/td>' +
+                    '<td class="file_upload_start">' +
+                    '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
+                    '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
+                    '<\/button><\/td>' +
+                    '<td class="file_upload_cancel">' +
+                    '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                    '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                    '<\/button><\/td><\/tr>');
+        },
+        buildDownloadRow: function (file) {
+            return $('<tr><td>' + file.name + '<\/td><\/tr>');
+        },
+        beforeSend: function (event, files, index, xhr, handler, callBack) {
+            handler.uploadRow.find('.file_upload_start').click(callBack);
+        }
+      
+    });*/
 
   
   //Message page codings
@@ -503,7 +503,7 @@ $('#attach').fileUploadUI({
     
     //Expand single message
     $('.name.message_name').live('click',function(){
-      $(this).addClass('open');
+      $(this).parent('div.message-body').parent('div.message.message_comments').addClass('open');
       return false;
     });
         
@@ -524,6 +524,19 @@ $('#attach').fileUploadUI({
         url: path,
         type: 'get'
       });
+      return false;
+    });
+    
+    $('#trash_message').live('click',function(){
+      var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url: '/messages',
+        type:'delete',
+        data:{'activity_id':activity_id}
+      });
+      $('#comment_area').fadeOut('');
+      $('.comment-input').hide();
+      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
       return false;
     });
     
