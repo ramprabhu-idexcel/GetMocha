@@ -22,7 +22,7 @@
 		<% if action_name == "settings" %>
 			<li><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" style="display:none;">Invite</a></li>
 		<% else %>
-			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply"%></li>
+			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
 			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
 			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash"%></li>
 		<% end %>
