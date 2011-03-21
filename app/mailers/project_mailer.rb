@@ -35,6 +35,8 @@ class ProjectMailer < ActionMailer::Base
   def message_notification(user,to_user,message)
     @user = user
     @to_user = to_user
+    @message=message
+    @project=message.project
     mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@rfmocha.com", :subject=>"#{user.first_name} posted a new message to #{to_user}")
     @content_type="text/html"
   end
