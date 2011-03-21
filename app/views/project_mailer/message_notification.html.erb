@@ -1,28 +1,31 @@
-##Type above this line to post a reply to this message##
+##Type above this line to post a reply to this message## <br/>
 <% if @project.users.include? @to_user %>
-Project: <%="#{@project.name}%>
-Subject: <%="#{@message.subject}"%>
-Author:<%= "#{message.user.name} at #{message.created_at}"%>
+			Project: <%="#{@project.name}" %> <br/>
+			Subject: <%="#{@message.subject}" %> <br/>
+		  Author:<%= "#{@message.user.name} at #{@message.created_at}"%> <br/>
 
-<%= @message.message %>
+			<%= @message.message %> <br/>
 
-<% if @message.attachments && !@message.attachment.empty?%>
-<%@message.attachments.each do |attach|%>
-<%=attach.filename %>
-<%end%>
-<%end%>
-<%else%>
-Author:<%= "#{message.user.name} at #{message.created_at}"%>
-
-<%= @message.message %>
-
-<% if @message.attachments && !@message.attachment.empty?%>
-<%@message.attachments.each do |attach|%>
-<%=attach.filename %>
-<%end%>
-<%end%>
-<%end%>
---<br/>
+			<% if @message.attachments && !@message.attachments.empty? %>
+					<% @message.attachments.each do |attach| %>
+						<%= attach.filename %> <br/>
+					<% end %>
+			<% end %><br/><br/>
+			
+--
+Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
+<% else %>
+		Author:<%= "#{@message.user.name} at #{@message.created_at}"%> <br/>
 
+			<%= @message.message %> <br/>
 
+			<% if @message.attachments && !@message.attachments.empty? %>
+					<% @message.attachments.each do |attach| %>
+							<%= attach.filename %> <br/>
+					<% end %>
+			<% end %><br/><br/>
+			--
+			Powered by GetMocha.com
+			
+<% end %>
