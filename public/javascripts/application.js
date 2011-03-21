@@ -501,6 +501,26 @@ $(document).ready(function() {
       return false;
     });
         
+    
+    $('.star.star_items').live('click',function(){
+      var id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url: '/star_message/'+id,
+        type: 'get'
+      });
+      return false;
+    });
+
+    $('.message-star').live('click',function(){
+      var path=$(this).attr('href');
+      $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
+      $.ajax({
+        url: path,
+        type: 'get'
+      });
+      return false;
+    });
+    
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
