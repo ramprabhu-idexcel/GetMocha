@@ -108,6 +108,10 @@
       {
         short_modal1('esc');
       }
+      if(event.identifier=='R')
+      {
+      short_model3();
+      }
     }
 
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
@@ -121,6 +125,7 @@
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
+  shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -164,6 +169,10 @@
 	function short_modal2(path)
   {
 		window.location.href=path;
+  }
+  function short_model3()
+  {
+      $('.comment-contain').slideToggle('slow');
   }
 		
 </script>
