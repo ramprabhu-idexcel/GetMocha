@@ -81,22 +81,21 @@ if (field=='message_message')
 	document.getElementById('message_attachments').value="drag&drop files here";
 	}
 	}
-<%=@name=[]%>
 <%=@names=[]%>
-	<% @tcMovies.each do |f|%>
-	
-	<%@name<<f <<","%>
-		var tcMovies = "<%= @name %>";
+<%=@projects=[]%>
+	<% @user_emails.each do |f|%>
+		<%@names<<f <<","%>
+		var userEmails = "<%= @names %>";
 	<%end%>
-				tcMovies=tcMovies.split(',');
-	<% @Movies.each do |f|%>
-	    <%@names<<f <<","%>
-		var Movies = "<%= @names %>";
+				userEmails=userEmails.split(',');
+			<% @project_names.each do |f|%>
+	    <%@projects<<f <<","%>
+		var projectNames = "<%= @projects %>";
 	<%end%>
-				Movies=Movies.split(',');
+				projectNames=projectNames.split(',');
 			
-          var ac1 = new goog.ui.AutoComplete.Basic(tcMovies, document.getElementById('txtInput1'), true);
-    var ac2 = new goog.ui.AutoComplete.Basic(Movies, document.getElementById('txtInput2'),false);
+          var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('txtInput1'), true);
+    var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('txtInput2'),false);
 		
 		
 		$(function () {

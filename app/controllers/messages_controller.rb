@@ -9,16 +9,16 @@ class MessagesController < ApplicationController
 		if session[:project_name]
 			@user=current_user.project_membership
 			else
-		@users=current_user.my_contacts(:all, :select=>[:first_name,:email])
+		@users=current_user.my_contacts
 		end
 		@projects=Project.find(:all,:select=>[:name],:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
-		@tcMovies=[]
-		@Movies=[]
-		@users.each do |f|
-		@tcMovies<<"#{f.email}"
+		 @user_emails=[]
+		 @project_names=[]
+		  @users.each do |f|
+			@user_emails<<"#{f.email}"
 	end
-	@projects.each do |g|
-		@Movies<<"#{g.name}"
+	@projects.each do |project|
+		@project_names<<"#{project.name}"
 	end
 	render :partial=>'new'
 end
