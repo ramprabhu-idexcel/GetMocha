@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
-  before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe']
+  before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy']
 	layout 'application', :except=>['new']
   
 	def index
@@ -94,6 +94,7 @@ end
   end
   
   def show
+    puts "show"
     @activity.update_attribute(:is_read,true)
     msg=Message.find_by_id(@activity.resource_id)
     message=Message.find_hash(@activity.resource_id)
@@ -120,6 +121,10 @@ end
     render :nothing=>true
 	end
 	
+  def destroy
+    @activity.update_attribute(:is_delete,true)
+    render :nothing=>true
+  end
   
   private
   

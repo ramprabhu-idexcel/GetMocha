@@ -24,7 +24,7 @@
 		<% else %>
 			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
 			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
-			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash"%></li>
+			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
 		<% end %>
 		</ul>
 		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%#=current_user.full_name%></a>
