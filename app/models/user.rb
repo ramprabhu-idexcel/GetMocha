@@ -22,13 +22,19 @@ class User < ActiveRecord::Base
   has_many :secondary_emails
   has_many :comments
   
+  DEFAULT_AVATAR="/images/content/stuart-avatar.jpg"
+  
   #starred messages from all project
   def starred_messages
     activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
   end
   
   def all_messages
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false]).group_by{|m| m.created_at.to_date}
+    total_messages.group_by{|m| m.created_at.to_date}
+  end
+  
+  def total_messages
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false])
   end
   
   def group_starred_messages
@@ -36,7 +42,7 @@ class User < ActiveRecord::Base
   end
   
   def all_messages_count
-    all_messages.count
+    total_messages.count
   end
   
   #starred messages from the project
@@ -107,6 +113,10 @@ class User < ActiveRecord::Base
     values=[]
     comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge(t.attributes)}
     values
+  end
+  
+  def image_url
+    attachment ? attachment.public_filename : DEFAULT_AVATAR
   end
   
 end
