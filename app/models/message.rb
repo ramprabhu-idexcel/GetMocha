@@ -78,7 +78,7 @@ class Message < ActiveRecord::Base
       when 0
         "Subscribed: none"
       when 1
-        "#Subscribed: #{subscribed_user_names[0]}"
+        "Subscribed: #{subscribed_user_names[0]} |"
       when 2
         "Subscribed: #{subscribed_user_names.join(' and ')} |"
       else
