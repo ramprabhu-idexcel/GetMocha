@@ -1,5 +1,7 @@
 GetMocha::Application.routes.draw do
   
+  root :to => "home#index"
+
   devise_for :users, :controllers => {:registrations => "users",:sessions=>"sessions"}     
   
   devise_scope :user do
@@ -58,6 +60,13 @@ GetMocha::Application.routes.draw do
   
   resource :comments
   
+  match 'faq' =>"home#faq"
+  
+ match 'terms' =>"home#terms"
+ 
+ match 'privacy' =>"home#privacy"
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

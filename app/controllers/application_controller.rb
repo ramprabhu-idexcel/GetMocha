@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   def change_layout
     if devise_controller?
       %w{edit}.include?(action_name) ? "application" : "before_login"
+    #~ elsif controller_name=="home"
+        #~ "before_login"
     else
       "application"
     end
