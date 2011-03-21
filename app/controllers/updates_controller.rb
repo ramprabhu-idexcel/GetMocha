@@ -61,7 +61,7 @@ class UpdatesController < ApplicationController
    @attach=Attachment.new(:uploaded_data=>params["undefined"])
    @attach.attachable=current_user
    @attach.save
-   @a=Attachment.find(1)
+   @a=Attachment.find(:last)
    puts @a.public_filename
    render :json=>{:file_name=> @a.public_filename}.to_json
 

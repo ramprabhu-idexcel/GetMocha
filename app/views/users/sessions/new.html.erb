@@ -1,21 +1,76 @@
-<h2>Sign in</h2>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name),:html=>{:id=>"user_login"}) do |f| %>
-  <p><%= f.label :email %><br />
-  <%= f.text_field :email %></p>
+<body class="login">
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+<div class="header">
+<%= render :partial=>'/home/header'%>
+</div>
+
+<div class="cup-lg-c"></div>
+
+<div class="wrap under-cup content-bottom" style="position:relative;">
+	<div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
+		<h1>Forgot your password?</h1>
+
+		<form class="no-labels">
+			<input type="submit" value="Reset" class="btn login-btn">
+			<label for="login_email">Email</label>
+			<input id="login_email" type="text" class="textfield" onclick="this.value='';" onfocus="this.select()" onblur="this.value=!this.value?'Account email address':this.value;" value="Account email address">
+		</form>
+	</div>
+	
+	<div class="grid-600-c login-form">
+
+		<h1>Log in to Mocha</h1>
+		
+		<div class="clear-both"></div>
+		
+<%= form_for(resource, :as => resource_name,:class=>"no-labels",:url => session_path(resource_name),:html=>{:id=>"user_login"}) do |f| %>
 
   <% if devise_mapping.rememberable? -%>
-    <p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+	
+    <p class="remember"><%= f.check_box :remember_me,:class=>"checkbox",:id=>"agree-check" %> <%= f.label :remember_me %></p>
+
+  <p><%= f.text_field :email, :class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
+
+  <%= f.password_field :password,:class=>"textfield",:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;", :value=>"Password"  %>
+		
   <% end -%>
 
-  <p><%= f.submit "Sign in" %></p>
+  <%= f.submit "Log in",:class=>"btn login-btn" %></p>
+	
 <% end %>
+	</div>
+</div>
 
-<%= render :partial => "devise/shared/links" %>
 
 <script>
 var Login=true;
 </script>
+
+
+	<div class="push"></div>
+</div>
+
+
+<div class="footer">
+	
+	<div class="container-960">
+		<span class="copy">Copyright &copy; 2011 Mocha</span>
+
+		<ul>
+			<li><a href="/sign_in">Login</a></li>
+
+			<li><a href="#">Blog</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="/terms">Terms of Use</a></li>
+			<li><a href="/privacy">Privacy Policy</a></li>
+  <li><a href="/marketing/pass-reset" id="pass-reset">Forgot Password?</a></li>
+
+
+		</ul>
+	</div>
+
+
+</div>
+
+</body>

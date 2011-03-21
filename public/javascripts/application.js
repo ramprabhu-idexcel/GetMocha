@@ -578,6 +578,8 @@ $('#attach').fileUploadUI({
     });
     return false;
    });
+   
+   
     
 });//End of doc
 
