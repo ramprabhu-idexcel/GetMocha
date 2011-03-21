@@ -76,7 +76,7 @@ end
   
   def starred_messages
 		session[:project_name]=nil
-		render :json=>current_user.starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
+		render :json=>current_user.group_starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns}})
   end
   
   def project_messages
@@ -89,6 +89,13 @@ end
     comment_ids=activity.resource.comments.collect{|x| x.id}
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
+  end
+  
+  def star_message
+    activity=Activity.find_by_id(params[:activity_id])
+    starred=!activity.is_starred
+    activity.update_attribute(:is_starred,starred)
+    render :nothing=>true
   end
   
   private

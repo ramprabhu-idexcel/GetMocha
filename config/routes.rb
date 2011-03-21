@@ -55,6 +55,8 @@ GetMocha::Application.routes.draw do
   match 'starred_messages'=>'messages#starred_messages',:as=>'starred_messages',:method=>:get
   match 'message/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
+  match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
+  match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
   
   resource :comments
   
