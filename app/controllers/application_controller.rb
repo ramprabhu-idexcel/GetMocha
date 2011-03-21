@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  layout :change_layout
+skip_before_filter :verify_authenticity_token
+  #~ protect_from_forgery  layout :change_layout
   before_filter :find_project
   
   def change_layout

@@ -61,6 +61,7 @@ GetMocha::Application.routes.draw do
   match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
   
   resource :comments
+  resources :attachments
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
