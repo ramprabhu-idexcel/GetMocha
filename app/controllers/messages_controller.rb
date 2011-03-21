@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
-  before_filter :find_activity,:only=>['subscribe','star_message','show']
+  before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe']
 	layout 'application', :except=>['new']
   
 	def index
@@ -110,10 +110,16 @@ end
   end
   
   def subscribe
-    subscribed=!@activity.is_starred
+    subscribed=!@activity.is_subscribed
     @activity.update_attribute(:is_subscribed,subscribed)
     render :nothing=>true
   end
+	
+	def unsubscribe
+		@activity.update_attribute(:is_subscribed,false)
+    render :nothing=>true
+	end
+	
   
   private
   

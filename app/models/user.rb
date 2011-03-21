@@ -90,6 +90,9 @@ class User < ActiveRecord::Base
     Project.user_projects(self.id)
   end
   
+  def message_activity(message_id)
+    activities.find_by_resource_type_and_resource_id("Message",message_id)
+  end
   
   def my_contacts
     User.find(:all,:conditions=>['project_users.project_id in (?) AND users.status=? AND project_users.status=?',project_memberships,true,true],:include=>:project_users)
@@ -104,7 +107,7 @@ class User < ActiveRecord::Base
   end
   
   def is_message_subscribed?(message_id)
-    activity=activities.find_by_resource_type_and_resource_id("Message",message_id)
+    activity=message_activity(message_id)
     activity.is_subscribed if activity
   end
   
