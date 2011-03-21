@@ -540,6 +540,11 @@ $(document).ready(function() {
       return false;
     });
     
+    $('.project,.all-messages,.starred').click(function(){
+      $('.project.open,.all-messages,.starred').removeClass('open'); 
+      $(this).addClass('open');
+    });
+    
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
