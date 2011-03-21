@@ -41,9 +41,14 @@ class User < ActiveRecord::Base
   
   #starred messages from the project
   def project_starred_messages(project_id)
-    starred_messages.collect{|a| a.resource.project_id==project_id}
+    b=[]
+    starred_messages.collect{|a| b<<a if a.resource.project_id==project_id}
+    b
   end
   
+  def group_project_messages(project_id)
+    project_starred_messages(project_id).group_by{|m| m.created_at.to_date}
+  end 
   #starred count from all project
   def starred_count
     starred_messages.count
@@ -91,11 +96,16 @@ class User < ActiveRecord::Base
     activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids])
   end
   
+  def is_message_subscribed?(message_id)
+    activity=activities.find_by_resource_type_and_resource_id("Message",message_id)
+    activity.is_subscribed if activity
+  end
+  
   def hash_activities_comments(type_ids)
     type_ids=[type_ids] unless type_ids.is_a?(Array)
     comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?)',"Comment",type_ids],:select=>[:is_starred,:is_read,:resource_id,:id])
     values=[]
-    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge({:is_starred=>t.is_starred,:is_read=>t.is_read,:id=>t.id})}
+    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge(t.attributes)}
     values
   end
   
