@@ -558,12 +558,26 @@ $(document).ready(function() {
     var id=$(this).attr('id').split('msac')[1];
     var primarUrl=(window.location+'').split('#')[0];
     var secondaryUrl=(window.location+'').split('?')[0];
-    var loc=secondaryUrl.split('#')[1];
+    var loc=secondaryUrl.split('#')[1].split('/')[0];
     window.location=primarUrl+"#"+loc+"/"+id;
     $('.message.messow.open').removeClass('open');
+    if($(this).hasClass('unread'))
+    {
+      count=parseInt($('a#all_messages').children('span.num-unread').text());
+      if(count<1)
+      {
+      
+      }
+      else
+      {
+        $('a#all_messages').children('span.num-unread').text(count-1);
+      }
+    }
     $(this).removeClass('unread');
     $(this).addClass('open');
+    $('.sort-by-tooltip').hide();
     $('.message_header').show(); 
+    
   });
     
   //message reply link 
