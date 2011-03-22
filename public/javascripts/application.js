@@ -569,6 +569,7 @@ $(document).ready(function() {
         data:{'message[subject]' : $('#message_subject').val()}        
       });
       new_content=$('#message_subject').val();
+      $('.message.messow.open').children('.excerpt').children('h4').text(new_content);
       $(this).parent().html(new_content+'<a class="edit message_edit" href="/edit">Edit</a><div class="clear-fix"></div>');
       return false;
     });
