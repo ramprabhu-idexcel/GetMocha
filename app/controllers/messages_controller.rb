@@ -81,12 +81,12 @@ end
 					
   def all_messages
 		session[:project_name]=nil
-		render :json=>current_user.all_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   
   def starred_messages
 		session[:project_name]=nil
-		render :json=>current_user.group_starred_messages.to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   
   def project_messages
@@ -94,7 +94,6 @@ end
   end
   
   def show
-    puts "show"
     @activity.update_attribute(:is_read,true)
     msg=Message.find_by_id(@activity.resource_id)
     message=Message.find_hash(@activity.resource_id)
@@ -129,6 +128,8 @@ end
   private
   
   def find_activity
+    params[:sort_by] ||="Date"
+    params[:order] ||="Ascending"
     @activity=Activity.find_by_id(params[:activity_id]) if params[:activity_id]
   end
   
