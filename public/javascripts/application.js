@@ -598,7 +598,11 @@ $(document).ready(function() {
     $('.message_header').show(); 
     
   });
-    
+  
+  $('#all_messages, .project, .starred').click(function(){
+    $('.expand-all').hide();
+  });
+  
   //message reply link 
   $('.reply').click(function(){
     $('.comment-contain').slideToggle('slow');
