@@ -68,7 +68,14 @@ GetMocha::Application.routes.draw do
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
   
   resource :comments
-  resources :attachments
+   match '/remove_attach/:id' =>"attachments#remove_attach"
+
+  resource :comments
+  resources :attachments do
+    member do
+      get :remove_attach
+    end
+  end
   
   match 'faq' =>"home#faq"
   
