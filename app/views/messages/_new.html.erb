@@ -1,6 +1,11 @@
-
+<head>
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
+	
+    <%= javascript_include_tag 'size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload' ,'application'%>
+   
+
+
 	</head>
 	<div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
@@ -47,18 +52,19 @@
 				
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
 
-						<fieldset id="attach">
+						<fieldset id="attach" class="open">
 					<label>Attachments:</label>
 					
-					<div  id="attach_upload">
+					<div  id="attach_upload" class="attachment-upload">
 						<%#=f3.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
-						<table id="files"></table>
+						<div class="drag-drop">Drag and drop files here</div>
+						<table id="files" class="attachment"></table>
 						</div>
 						
 			    </fieldset>
-					<fieldset>
+					<!--<fieldset>
 					<%#=file_field_tag "file" %>
-					</fieldset>
+					</fieldset>-->
 					<button id="start_uploads", style="display:none;">Start uploads</button>
 		<% end %>
 			</div>
@@ -124,12 +130,13 @@ if (field=='message_message')
     },
     buildDownloadRow: function (file) {
         return $('<tr><td>' + file.name + '<\/td><\/tr>');
-    }
-  //  beforeSend: function (event, files, index, xhr, handler, callBack) {
-    //    handler.uploadRow.find('.file_upload_start').click(callBack);
-    //}
-	
-});
 
+    },
+  // beforeSend: function (event, files, index, xhr, handler, callBack) {
+  //  handler.uploadRow.find('.file_upload_start').click(callBack);
+//}
+
+});
+	
 });
   </script>

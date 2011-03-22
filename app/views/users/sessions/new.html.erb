@@ -22,26 +22,27 @@
 	</div>
 	
 	<div class="grid-600-c login-form">
-
-
-		<div class="clear-both"></div>
+	
+ 
+	<div class="clear-both"></div>
 		
 <%= form_for(resource, :as => resource_name,:class=>"no-labels",:url => session_path(resource_name),:html=>{:id=>"user_login"}) do |f| %>
 
- 		
-  <% if devise_mapping.rememberable? -%>
+   <p><h1>Log in to Mocha</h1>
+  <div id="remember_id" align="right">
+   <% if devise_mapping.rememberable? -%>
 	
-    <%= f.check_box :remember_me,:class=>"checkbox",:id=>"agree-check"%> <%= f.label :remember_me %></p>
+	 <%= f.check_box :remember_me,:class=>"checkbox",:id=>"agree-check"%> <%= f.label :remember_me_on_this_computer%></div></p><br/>
 
-  <p><%= f.text_field :email, :class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
+   <p><%= f.text_field :email, :class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
 
-  <%= f.password_field :password,:class=>"textfield",:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;", :value=>"Password" %>
+   <%= f.password_field :password,:class=>"textfield",:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;", :value=>"Password" %>
 	
-	<%end%>
+	 <%end%>
 		
-  <%= f.submit "Log in",:class=>"btn login-btn" %></p>
+   <%= f.submit "Log in",:class=>"btn login-btn" %></p>
 	
-<%end%>
+   <%end%>
 
 	</div>
 

@@ -17,8 +17,12 @@
 		<div class="r-panel">
 			<div class="avatar-upload">
 					<div class="avatar-lg"></div>
-				<img src="images/content/avatar-lg.jpg"  width="69" height="69" id="default-image" class="avatar-lg-img" alt="avatar"/>
-				
+					<%unless current_user.attachment.present?%>
+				        <img src="images/content/sample.png"  width="69" height="69" id="default-image" class="avatar-lg-img" alt="avatar"/>
+					<%else%>
+  		        	<img src="<%=current_user.attachment.public_filename%>" width="69" height="69"  id="default-image" class="avatar-lg-img" alt="avatar"/>
+				   <%end%>
+				  			 
 			<table id="files"></table>
 			<form id="file_upload" action="/updates/save_image"  method="POST" enctype="multipart/form-data">
 		 	<div class="drag-drop">Drag and drop files here</div>
@@ -206,31 +210,26 @@
 <script>
 var UserEdit=true;
 
-    $('#attach').fileUploadUI({
-        uploadTable: $('#files'),
-        downloadTable: $('#files'),
-        buildUploadRow: function (files, index) {
-            return $('<tr><td class="file_upload_preview"><\/td>' +
-                    '<td>' + files[index].name + '<\/td>' +
+    $('#file_upload').fileUploadUI({
+    uploadTable: $('#files'),
+    downloadTable: $('#files'),
+    buildUploadRow: function (files, index) {
+      return $('<tr><td>' + files[index].name + '<\/td>' +
                     '<td class="file_upload_progress"><div><\/div><\/td>' +
-                    '<td class="file_upload_start">' +
-                    '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
-                    '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
-                    '<\/button><\/td>' +
                     '<td class="file_upload_cancel">' +
                     '<button class="ui-state-default ui-corner-all" title="Cancel">' +
                     '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
                     '<\/button><\/td><\/tr>');
-        },
-        buildDownloadRow: function (file) {
-            return $('<tr><td>' + file.name + '<\/td><\/tr>');
-        },
-        beforeSend: function (event, files, index, xhr, handler, callBack) {
-            handler.uploadRow.find('.file_upload_start').click(callBack);
-        }
-      
-    });
-
+    },
+    buildDownloadRow: function (file) {
+      return $('<tr><td>' + file.name + '<\/td><\/tr>');
+    },
+    onComplete: function (event, files, index, xhr, handler) {
+      var json = handler.response;
+      $('img#default-image').attr('src',json.file_name);
+    }
+  });
+	
 
 </script>
 

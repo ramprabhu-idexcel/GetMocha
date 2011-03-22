@@ -120,6 +120,12 @@ end
     render :nothing=>true
 	end
 	
+	def unsubscribe_via_email
+		@activity=Activity.find_by_user_id_and_resource_type_and_resource_id(params[:user_id],"Message",params[:message_id])
+		@activity.update_attribute(:is_subscribed,false)
+		redirect_to "/"
+	end
+	
   def destroy
     @activity.update_attribute(:is_delete,true)
     render :nothing=>true

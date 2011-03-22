@@ -1,16 +1,54 @@
-<h2>Change your password</h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+<body class="login">
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+<div class="header">
+<%= render :partial=>'/home/header'%>
+</div>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
+<div class="cup-lg-c"></div>
 
-  <p><%= f.submit "Change my password" %></p>
-<% end %>
+<div class="wrap under-cup content-bottom" style="position:relative;">
+	<div class="grid-400-c reset-form">
+	
+		<h1>Enter a new password below</h1>
 
-<%= render :partial => "devise/shared/links" %>
+  <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html =>{ :method => :put }) do |f| %>
+ 
+   <%= f.password_field :password,:class=>"textfield"%> 
+		
+	  <%= f.submit "Reset",:class=>"btn login-btn"%></p>
+
+   <% end %>
+	 
+	</div>
+</div>	
+	
+<script>
+var Login=true;
+</script>
+
+
+	<div class="push"></div>
+</div>
+
+
+<div class="footer">
+	
+	<div class="container-960">
+		<span class="copy">Copyright &copy; 2011 Mocha</span>
+
+		<ul>
+			<li><a href="/sign_in">Login</a></li>
+
+			<li><a href="#">Blog</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="/terms">Terms of Use</a></li>
+			<li><a href="/privacy">Privacy Policy</a></li>
+  <li><span id="pass-reset-js" style="position: relative;">Forgot Password?</span></li>
+		</ul>
+	</div>
+
+
+</div>
+
+</body>
