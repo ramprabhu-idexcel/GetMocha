@@ -72,6 +72,10 @@ class Message < ActiveRecord::Base
   def self.pluralize(count, singular, plural = nil)
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
+	
+	def pluralize(count, singular, plural = nil)
+    "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
+  end
   
   def subscribed_users
     activities.find(:all,:conditions=>['is_subscribed=?',true])
@@ -90,7 +94,7 @@ class Message < ActiveRecord::Base
       when 2
         "Subscribed: #{subscribed_user_names.join(' and ')} |"
       else
-        "Subscribed: #{subscribed_user_names[0]} and <a href='#'>#{helper.pluralize(subscribed_user_names.count, "other")}</a> |"
+        "Subscribed: #{subscribed_user_names[0]} and <a href='#'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
     end
   end
   
