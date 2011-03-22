@@ -38,12 +38,14 @@
 						<span class="info"><%= @project.message_email_id %></span><br />
 						<% @project.custom_emails.each do |mail| %>
 						<% custom=CustomEmail.find(:first, :conditions=>['email=? AND verification_code IS NULL', mail]) %>
-						<% if mail.custom_type=="Message" %>
-						<span class="info"><%= mail.email %><%= custom ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
+							<% if mail.custom_type=="Message" %>
+							<span class="info"><%= mail.email %><%= custom ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>		
+							<% end %>
 						<% end %>
 						<%= text_field(:message_email, :textfield, :class=>"textfield hidden") %>
-							
+							<%unless @project.has_custom_message_id?%>
 							<a href="#add-email" class="add-email" onclick="javascript:add_message_email('<%= @project.id %>');" id="change_message_email">+ Add another email</a>
+							<%end%>
 						</div>
 				    </fieldset>
 				    <fieldset>
@@ -57,7 +59,9 @@
 						<% if mail.custom_type=="Task" %><span class="info"><%= mail.email %><%= custom ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>				<% end %>
 						<% end %>
 						 <%= text_field(:task_email, :textfield, :class=>"textfield hidden") %>
+						 <%unless @project.has_custom_task_id?%>
 							<a href="#add-email" class="add-email" onclick="javascript:add_task_email('<%= @project.id %>');" id="change_task_email">+ Add another email</a>
+								<% end %>
 				       	</div>
 				    </fieldset>
 				    <fieldset>

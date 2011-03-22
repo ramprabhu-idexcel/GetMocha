@@ -44,4 +44,12 @@ class Project < ActiveRecord::Base
 		end
 		
 	end
+	
+	def has_custom_message_id?
+		custom_emails.find_by_custom_type("Message").present?
+	end
+	
+	def has_custom_task_id?
+		custom_emails.find_by_custom_type("Task").present?
+	end
 end
