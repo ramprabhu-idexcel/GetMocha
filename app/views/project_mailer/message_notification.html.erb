@@ -9,11 +9,11 @@
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
 			<br/>
-						<a href="http://localhost:3000/file_download_from_email/<%=attach.id%>"><%= "http://localhost:3000/file_download_from_email/#{attach.filename}" %></a> <br/>
+						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{ APP_CONFIG[:site_url]} /file_download_from_email/#{attach.filename}" %></a> <br/>
 					<% end %>
 			<% end %><br/>
 Subscribed: <%= @people %>			<br/>
-			<a href="http://localhost:3000/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe</a><br/><br/>
+			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe</a><br/><br/>
 --<br/>
 Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
@@ -25,11 +25,11 @@ Powered by GetMocha.com
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
 					<br/>
-						<a href="http://localhost:3000/file_download_from_email/<%=attach.id%>"><%= "http://localhost:3000/file_download_from_email/#{attach.filename}" %></a> <br/>
+						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{ APP_CONFIG[:site_url]} /file_download_from_email/#{attach.filename}" %></a> <br/>
 					<% end %>
 			<% end %><br/>
 			Subscribed: <%= @people %>			<br/>
-			<a href="http://localhost:3000/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe</a><br/><br/>
+			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe</a><br/><br/>
 			--<br/>
 			Powered by GetMocha.com
 			
