@@ -2,11 +2,12 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+         :recoverable, :rememberable,  :confirmable,:validatable
+         #~ :validatable
          #~ :trackable,
          
   # Setup accessible (or protected) attributes for your model
-  validates :first_name,:last_name,:presence=> true
+  #~ validates :first_name,:last_name,:presence=> true
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions
   validates :terms_conditions,:acceptance => true
   has_many :projects,:as=>:project_members
@@ -26,20 +27,36 @@ class User < ActiveRecord::Base
   DEFAULT_AVATAR="/images/content/stuart-avatar.jpg"
   
   #starred messages from all project
-  def starred_messages
-    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false])
+  def starred_messages(sort_by=nil,order=nil)
+    sort_field=find_sort_field(sort_by)
+    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false],:order=>"#{sort_field} #{order}")
   end
   
-  def all_messages
-    total_messages.group_by{|m| m.created_at.to_date}
+  def all_messages(sort_by,order)
+    total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
   
-  def total_messages
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false])
+  def total_messages(sort_by,order)
+    sort_field=find_sort_field(sort_by)
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
   end
   
-  def group_starred_messages
-    starred_messages.group_by{|m| m.created_at.to_date}
+  def find_sort_field(sort)
+    sort ||="date"
+    sort.downcase!
+    sort_field=case sort
+      when "unread"
+        "is_read"
+      when "starred"
+        "is_starred"
+      else
+        "updated_at"
+    end
+    sort_field
+  end
+  
+  def group_starred_messages(sort_by,order)
+    starred_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
   
   def all_messages_count
@@ -83,7 +100,7 @@ class User < ActiveRecord::Base
   #overwrite method to login using the secondary emails
   def self.find_for_authentication(conditions={})
     login = conditions.delete(:email)
-    find(:first,:conditions=>["users.email=:value or secondary_emails.email=:value",{:value => login}],:include=>:secondary_emails)
+    find(:first,:conditions=>["(users.email=:value  or secondary_emails.email=:value) AND users.is_guest=:fal AND users.status=:valid",{:value => login,:fal=>false,:valid=>true}],:include=>:secondary_emails)
   end
   
   def project_memberships

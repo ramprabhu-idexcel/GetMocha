@@ -41,7 +41,7 @@ $.messages;
                },
                 
               findMessage: function( page ){
-                if( page=="all_messages" || page=="starred_messages") {
+                if( /all_messages/.test(page) || /starred_messages/.test(page)) {
                     var restfulPageUrl = this.restfulUrl + page  
                     this.loadRestfulData( restfulPageUrl );
                     $('.sort-by').show();
@@ -50,7 +50,8 @@ $.messages;
                 }
                },
                projectMessage:function(page){
-                  var path=(window.location+"").split('#')[1];
+                  var path=(window.location+"").split('?')[0];
+                  path=path.split('#')[1];
                   if((/^all_messages\/[1-9]/.test(path)) ||(/^starred_messages\/[1-9]/.test(path)) )
                   {
                     var restfulPageUrl = this.restfulUrl + path  
