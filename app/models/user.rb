@@ -68,9 +68,7 @@ class User < ActiveRecord::Base
     b=[]
     project_id=project_id.to_i
     total_messages.collect{|a| b<<a if a.resource.project_id==project_id}
-    puts total_messages.inspect
     b
-    
   end
   
   def group_project_messages(project_id)
@@ -142,5 +140,21 @@ class User < ActiveRecord::Base
   def image_url
     attachment ? attachment.public_filename : DEFAULT_AVATAR
   end
+  
+  def find_comments_time(time)
+		diff=Time.now-time
+		case diff
+			when 0..59
+				"#{time.strftime("%l:%M%p")} (#{pluralize(diff.to_i,"second")} ago)"
+			when 60..3599
+				"#{time.strftime("%l:%M%p")} (#{pluralize((diff/60).to_i,"minute")} ago)"  
+			when 3600..86399
+				"#{time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)" 
+      when 86400..108000
+				"#{time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)" 
+		else
+			time.strftime("%d/%m/%y")
+		end
+	end
   
 end
