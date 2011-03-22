@@ -465,6 +465,16 @@ $(document).ready(function() {
       $('.comment-contain').hide();
     }
     
+    //find the current url
+    function sort_path()
+    {
+      var path=window.location+"";
+      path= path.split('?')[0];
+      var sort_by=$('.sort.selected').text();
+      var order=$('.asc-desc.selected').children('span').attr('class');
+      window.location=path+'?sort_by='+sort_by+'&order='+order;
+    }
+    
     //Expand all message
     $('#message_expand').live('click',function(){
       $('.message.message_comments').addClass('open');
@@ -478,7 +488,7 @@ $(document).ready(function() {
       return false;
     });
         
-    
+    //Star the messages
     $('.star.star_items').live('click',function(){
       var id=$('.message.messow.open').attr('id').split('msac')[1];
       $.ajax({
@@ -487,7 +497,8 @@ $(document).ready(function() {
       });
       return false;
     });
-
+    
+    //Star the comments
     $('.message-star').live('click',function(){
       var path=$(this).attr('href');
       $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
@@ -498,6 +509,7 @@ $(document).ready(function() {
       return false;
     });
     
+    //delete the messages
     $('#trash_message').live('click',function(){
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
       $.ajax({
@@ -511,22 +523,42 @@ $(document).ready(function() {
       return false;
     });
     
+    //first panel change the class
     $('.project,.all-messages,.starred').click(function(){
       $('.project.open,.all-messages,.starred').removeClass('open'); 
       $(this).addClass('open');
     });
     
+    //display the sort message
+    $('.sort-by').click(function(){
+      $('.sort-by-tooltip').slideToggle('slow');
+      return false;
+    });
+    
+    //Message page sorting
+    $('.sort').click(function(){
+      $('.sort').removeClass('selected');
+      $(this).addClass('selected');
+      sort_path();
+    });
+    
+    $('.asc-desc').click(function(){
+      $('.asc-desc').removeClass('selected');
+      $(this).addClass('selected');
+      sort_path();
+    });
+    
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
-  }
+  }//end of message
   
   //Message second panel click function  
   $('.messow').live('click',function(){
     var id=$(this).attr('id').split('msac')[1];
     var primarUrl=(window.location+'').split('#')[0];
-    var secondaryUrl=(window.location+'').split('#')[1];
-    var loc=secondaryUrl.split('/')[0];
+    var secondaryUrl=(window.location+'').split('?')[0];
+    var loc=secondaryUrl.split('#')[1];
     window.location=primarUrl+"#"+loc+"/"+id;
     $('.message.messow.open').removeClass('open');
     $(this).removeClass('unread');
