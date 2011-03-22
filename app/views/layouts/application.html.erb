@@ -116,7 +116,11 @@
       }
 			if(event.identifier=='U')
 			{
-			 short_modal4();
+			 short_modal4('U');
+			}
+			if(event.identifier=='T')
+			{
+			 short_modal4('T');
 			}
 			 
     }
@@ -134,6 +138,7 @@
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
+	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -183,11 +188,12 @@
 if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
       $('.comment-contain').slideToggle('slow');
   }
-	function short_modal4()
+	function short_modal4(key)
 	{
 	a=$('#submsg').css('display');
-	
 	if(a=="inline")
+	{
+	if(key=="U")
 	{
 	 var id=$('.message.messow.open').attr('id').split('msac')[1];
     $.ajax({
@@ -198,6 +204,20 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
     var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
     $('#submsg').text(result);
 		return false;
+		}
+		else
+		{
+		  var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url: '/messages',
+        type:'delete',
+        data:{'activity_id':activity_id}
+      });
+      $('#comment_area').fadeOut('');
+      $('.comment-input').hide();
+      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
+		}
+		
 		}
 	}
 		
