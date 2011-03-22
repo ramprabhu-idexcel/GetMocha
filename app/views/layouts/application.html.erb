@@ -114,6 +114,11 @@
       {
       short_model3();
       }
+			if(event.identifier=='U')
+			{
+			 short_modal4();
+			}
+			 
     }
 
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
@@ -128,6 +133,7 @@
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
+	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -177,6 +183,18 @@
 if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
       $('.comment-contain').slideToggle('slow');
   }
+	function short_modal4()
+	{
+	 var id=$('.message.messow.open').attr('id').split('msac')[1];
+    $.ajax({
+      url:'/subscribe/'+id,
+      type: 'get'
+    });
+		    var content=$('#submsg').text();
+    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+    $('#submsg').text(result);
+		return false;
+	}
 		
 </script>
 
