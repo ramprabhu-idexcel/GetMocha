@@ -51,7 +51,7 @@ $.messages;
                },
                projectMessage:function(page){
                   var path=(window.location+"").split('#')[1];
-                  if(/^all_messages\/[1-9]/.test(path))
+                  if((/^all_messages\/[1-9]/.test(path)) ||(/^starred_messages\/[1-9]/.test(path)) )
                   {
                     var restfulPageUrl = this.restfulUrl + path  
                     this.loadCommentData( restfulPageUrl );         
@@ -71,7 +71,7 @@ $.messages;
                         $.messages=data
                         var items=[];
                         $.each(data,function(index,val){
-                          items.push('<div class="date-bar"><a href="#">'+parse_date(index)+'</a></div>');
+                          items.push('<div class="date-bar"><a href="#" class="date-title">'+parse_date(index)+'</a></div>');
                           $.each(val,function(i,v){
                             items.push('<div class="message messow '+(v.activity.is_read ? "" : " unread")+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "20" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
                             if(v.activity.is_starred)
