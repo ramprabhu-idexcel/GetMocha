@@ -137,7 +137,7 @@ function delete_attachment(file)
       url:'/remove_attach/'+file,
       type: 'get',
 			 success: function(file){
-			 alert(file);
+			 
 			 document.getElementById('attachment_'+file).style.display="none";
 			 }
     });
