@@ -585,6 +585,45 @@ $(document).ready(function() {
       sort_path();
     });
     
+    $('.subject_edit').live('click',function(){
+      var content=$(this).parent('h2').text().split('Edit')[0];  
+      //$(this).parent('h2').hide();
+      $(this).parent().html('<textarea class="textfield" cols="" rows="" name="message[subject]" id="message_subject" >'+content+'</textarea><a class="edit save_subject" style="display: inline;" href="#">Save</a><div class="clear-fix"></div>');
+      return false;
+    })
+    
+    $('.message_edit').live('click',function(){
+      var content=$(this).parent('p').text().split('Edit')[0];
+      $(this).parent('p').html('<textarea class="textfield" style="height: 160px;" cols="" rows="" name="message" id="message_message">'+content+'</textarea><a class="edit save_message" style="display: inline;" href="#">Save</a><div class="clear-fix"></div>')
+      return false;
+    });
+    
+    $('.save_subject').live('click',function(){
+    var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url:'messages/'+activity_id,
+        type:'put',
+        data:{'message[subject]' : $('#message_subject').val()}        
+      });
+      new_content=$('#message_subject').val();
+      $('.message.messow.open').children('.excerpt').children('h4').text(new_content);
+      $(this).parent().html(new_content+'<a class="edit message_edit" href="/edit">Edit</a><div class="clear-fix"></div>');
+      return false;
+    });
+    
+    $('.save_message').live('click',function(){
+      var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url:'messages/'+activity_id,
+        type:'put',
+        data:{'message[message]' : $('#message_message').val()}        
+      });
+      new_content=$('#message_message').val();
+      $(this).parent().html(new_content+'<a class="edit message_edit" href="#">Edit</a><div class="clear-fix"></div>');
+      return false;
+    });
+    
+    
     $('.user-name').live('click',function(){
       return false;
     });

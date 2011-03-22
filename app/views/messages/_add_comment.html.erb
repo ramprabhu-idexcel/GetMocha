@@ -1,3 +1,4 @@
+ <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
 <div class="comment-contain" style="display:none;">
   <%form_tag '/comments' ,:id=>"add_com_msg",:remote=>true do%>
     <div class="comment-input">
@@ -6,13 +7,75 @@
       <%=text_area_tag "comment[comment]",nil,:cols=>"",:rows=>"",:onfocus=>"this.select()",:id=>"comment-message",:class=>"textarea comment-message"%>
       <%=clear_fix%>
     </div>
+    <%end%>
+    <% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f4| %>
     <div class="attach-contain">
-      <div class="attachment-upload">
+      <div  id="attach_upload1" class="attachment-upload">
         <div class="drag-drop">Drag and drop files here</div>
+     </br>
+				<table id="files1"></table>
+				<div id="attachment_files1" >
+				
+				</div>
       </div>
+      <button id="start_uploads1" style="display:none">Start uploads</button>
+
       <%=clear_fix%>
     </div>
     <%=comment_button%>
   <%end%>
   <%=clear_fix%>
 </div>
+<script>
+/*$('.drag-drop').fileUploadUI({
+    uploadTable: $('#files1'),
+    downloadTable: $('#attchment_files1'),
+    buildUploadRow: function (files, index) {
+        return $('<tr><td class="file_upload_preview"><\/td>' +
+                '<td>' + files[index].name + '<\/td>' +
+                '<td class="file_upload_progress"><div><\/div><\/td>' +
+                '<td class="file_upload_start">' +
+                '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
+                '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
+                '<\/button><\/td>' +
+                '<td class="file_upload_cancel">' +
+                '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                '<\/button><\/td><\/tr>');
+    },
+    buildDownloadRow: function (file) {
+        return $('<tr><td>' + file.name + '<\/td><\/tr>');
+    },
+    beforeSend: function (event, files, index, xhr, handler, callBack) {
+        handler.uploadRow.find('.file_upload_start button').click(callBack);
+    }
+});*/
+	$(function () {
+    $('#form4').fileUploadUI({
+    uploadTable: $('#files1'),
+    downloadTable: $('#attachment_files1'),
+    buildUploadRow: function (files, index) {
+        return false;    },
+    buildDownloadRow: function (file) {
+a=file.id;
+        return $('<div id="attachment1_' + a + '" class="attachment">'+'<span class="filename">' + file.file + '</span>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a></div>');
+    }
+
+
+});
+	
+});
+
+function delete_attachment(file)
+{
+ $.ajax({
+      url:'/remove_attach/'+file,
+      type: 'get',
+			 success: function(file){
+			 
+			 document.getElementById('attachment_'+file).style.display="none";
+			 }
+    });
+
+}
+  </script>
