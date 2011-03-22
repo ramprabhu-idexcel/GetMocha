@@ -91,7 +91,18 @@ $.messages;
                    });
                },
                loadCommentData :function(pageUrl){
-                var comments=[]
+                  var comments=[];
+                  //to load the second panel
+                  if(typeof($.messages)=="undefined")
+                  {
+                    path=(window.location+"").split('#')[1].split('/')[0];
+                    change_id=(window.location+"").split('#')[1].split('/')[1];
+                    load_path=this.restfulUrl+path;
+                    this.loadRestfulData(load_path);
+                    $('div#msac'+change_id).addClass('open');
+                  }
+                  
+                  //to load the third panel
                   $.ajax({
                       url: pageUrl,
                       success: function(data){  
