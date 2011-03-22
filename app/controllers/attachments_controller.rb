@@ -22,8 +22,8 @@ class AttachmentsController < ApplicationController
 		p session[:attaches_id].split(',').delete('params[:id]')
 		p session[:attachess_id]
 		p"============="
-		render :nothing=>true
-	#	render :json=>{:file=>@attachment.filename, :id=>@attachment.id}.to_json
+	#	render :nothing=>true
+		render :json=>params[:id].to_json
 	end
 	
 	
