@@ -10,6 +10,11 @@ skip_before_filter :verify_authenticity_token
        puts "-------------------------------"
        puts controller_name
        puts action_name
+       
+       if (controller_name=="confirmations")
+         %w{show}.include?(action_name) ? "before_login" : "application"
+       end  
+       
        if ((controller_name=="registrations") || (controller_name=="sessions"))
        %w{edit}.include?(action_name) ? "application" : "before_login"
        else
