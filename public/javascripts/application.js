@@ -682,13 +682,13 @@ function message_cancel_button()
 {
 $('.add-item-modal').hide()
 }
-	function message_save_button()
+function message_save_button()
 {
-  $('#form2').submit();
-$('.file_upload_start button').click();
+  //$('#form2').submit();
+//$('.file_upload_start button').click();
 
 
- /*$.ajax({
+ $.ajax({
        type :'post',
        url :"/messages",
        data : $('#form2').serialize(),
@@ -696,7 +696,7 @@ $('.file_upload_start button').click();
 if(data.length==1)
          $('.add-item-modal').hide();
        }
-    });*/
+    });
 }
 $('#start_uploads').click(function () {
     $('.file_upload_start button').click();

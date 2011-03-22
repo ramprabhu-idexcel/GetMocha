@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
 			else
 		@users=current_user.my_contacts
 		end
-		@projects=Project.find(:all,:select=>[:name],:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		 @user_emails=[]
 		 @project_names=[]
 		  @users.each do |f|
