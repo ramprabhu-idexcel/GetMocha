@@ -14,13 +14,13 @@ class UpdatesController < ApplicationController
   end	
  
   def edit_password
-    password=params[:password]
-    confirm=params[:confirm]
-    current_user.password=password.to_i
-     current_user.password_confirmation=confirm.to_i
+    current_user.password=params[:password]
+     current_user.password_confirmation=params[:confirm]
      if (current_user.password==current_user.password_confirmation)
-          current_user.save
-     end        
+         current_user.save
+       end 
+     else
+         alert(current_user.errors)
    	end 
   
   def contacts
