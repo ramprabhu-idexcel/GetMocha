@@ -22,16 +22,15 @@
 	</div>
 	
 	<div class="grid-600-c login-form">
-
-
-		<div class="clear-both"></div>
+	
+ <p><h1>Log in to Mocha</h1>
+ 
+	<div class="clear-both"></div>
 		
 <%= form_for(resource, :as => resource_name,:class=>"no-labels",:url => session_path(resource_name),:html=>{:id=>"user_login"}) do |f| %>
-
- 		
-  <% if devise_mapping.rememberable? -%>
-	
-    <%= f.check_box :remember_me,:class=>"checkbox",:id=>"agree-check"%> <%= f.label :remember_me %></p>
+	 
+<div id="remember_id" align="right"><% if devise_mapping.rememberable? -%>
+	<%= f.check_box :remember_me,:class=>"checkbox",:id=>"agree-check"%> <%= f.label :remember_me_on_this_computer%></div></p>
 
   <p><%= f.text_field :email, :class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
 
