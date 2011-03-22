@@ -210,7 +210,16 @@
 <script>
 var UserEdit=true;
 
-    $('#file_upload').fileUploadUI({
+$('#file_upload').fileUploadUI({
+
+   initUpload: function (event, files, index, xhr, handler, callBack) {
+        var regexp = /\.(png)|(jpg)|(gif)$/i;
+         if (!regexp.test(files[index].name)) {
+            alert('ONLY IMAGES ALLOWED!');
+            return;
+        }
+        callBack();
+    },
     uploadTable: $('#files'),
     downloadTable: $('#files'),
     buildUploadRow: function (files, index) {
@@ -223,12 +232,13 @@ var UserEdit=true;
     },
     buildDownloadRow: function (file) {
       return $('<tr><td><\/td><\/tr>');
-    },
-    onComplete: function (event, files, index, xhr, handler) {
+  },
+	   onComplete: function (event, files, index, xhr, handler) {
       var json = handler.response;
       $('img#default-image').attr('src',json.file_name);
     }
   });
+    
 	
 
 </script>

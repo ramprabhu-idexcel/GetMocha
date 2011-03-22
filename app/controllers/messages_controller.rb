@@ -79,7 +79,15 @@ end
 		end
 	end
   end
-					
+	
+
+  def update
+    activity=Activity.find_by_id(params[:id])
+    message=activity.resource
+    message.update_attributes(params[:message])
+    render :nothing=>true
+  end
+  
   def all_messages
 		session[:project_name]=nil
 		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})

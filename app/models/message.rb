@@ -57,13 +57,11 @@ class Message < ActiveRecord::Base
     diff=Time.now-time
 		case diff
 			when 0..59
-				"Posted (#{pluralize(diff.to_i,"second")} ago)"
+				"Posted #{pluralize(diff.to_i,"second")} ago"
 			when 60..3599
-				"Posted (#{pluralize((diff/60).to_i,"minute")} ago)"  
+				"Posted #{pluralize((diff/60).to_i,"minute")} ago"  
 			when 3600..86399
-				"Posted (#{pluralize((diff/3600).to_i,"hour")} ago)" 
-      when 86400..108000
-				"Posted #{time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)" 
+				"Posted #{pluralize((diff/3600).to_i,"hour")} ago" 
 		else
 			"Posted on #{time.strftime("%d/%m/%y")}"
 		end
@@ -88,7 +86,7 @@ class Message < ActiveRecord::Base
   def display_subscribed_users
     case subscribed_user_names.count
       when 0
-        "Subscribed: none"
+        "Subscribed: none |"
       when 1
         "Subscribed: #{subscribed_user_names[0]} |"
       when 2
