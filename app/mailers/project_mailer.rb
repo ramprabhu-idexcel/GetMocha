@@ -34,13 +34,17 @@ class ProjectMailer < ActionMailer::Base
   end
   def message_notification(user,to_user,message)
     @user = user
-    if to_user.include?("?")
+    if to_user.include?(",")
       to_user = to_user.split(',')
-      to_user = @to_user[0]
+      to_user = to_user[0]
     else
       to_user=to_user
     end
     @existing_user=User.find_by_email(to_user)
+    logger.info "****************************"
+    logger.info to_user.inspect
+    logger.info @existing_user.inspect
+    logger.info "****************************"
     @message=message
     @project=message.project
     subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])
