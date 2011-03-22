@@ -60,7 +60,7 @@
 						<div class="drag-drop">Drag and drop files here</div>
 						<table id="files"></table>
 						<div id="attachment_files">
-						<div id="attachment" class="attachment"></div>
+				
 						</div>
 						</div>
 
@@ -118,12 +118,12 @@ if (field=='message_message')
 		$(function () {
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
-    downloadTable: $('#attachment'),
+    downloadTable: $('#attachment_files'),
     buildUploadRow: function (files, index) {
         return false;    },
     buildDownloadRow: function (file) {
 a=file.id;
-        return $('<a href="javascript:delete_attachment(a);"> Remove </a>' +'<span class="filename">' + file.file + '</span><br/>');
+        return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file + '</span></div>');
 
     }
 
@@ -133,6 +133,14 @@ a=file.id;
 });
 function delete_attachment(file)
 {
-alert(file);
+ $.ajax({
+      url:'/remove_attach/'+file,
+      type: 'get',
+			 success: function(file){
+			 
+			 document.getElementById('attachment_'+file).style.display="none";
+			 }
+    });
+
 }
   </script>
