@@ -8,6 +8,7 @@ class MessagesController < ApplicationController
 		 @projects=Project.user_active_projects(current_user.id)
 	end
 	def new
+		session[:attaches_id]=nil
 		if session[:project_name]
 			@user=current_user.project_membership
 			else

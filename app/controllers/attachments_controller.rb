@@ -10,7 +10,9 @@ class AttachmentsController < ApplicationController
 		@attachment.save
 		p @attachment.id
 		session[:attaches_id] +="#{@attachment.id},"
-		render :nothing=>true
+		@attachments=Attachment.first
+		#~ render :nothing=>true
+		render :json=>@attachment.filename.to_json
 	end
 	
 end

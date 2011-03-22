@@ -2,7 +2,7 @@
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 	
-<%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' ,'application'%>
+    <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' ,'application'%>
    
 
 
@@ -58,10 +58,14 @@
 					<div  id="attach_upload" class="attachment-upload">
 						<%#=f3.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
 						<div class="drag-drop">Drag and drop files here</div>
-						<table id="files" class="attachment"></table>
+						<table id="files"></table>
+						<div id="attachment_files">
+						<div id="attachment" class="attachment"></div>
 						</div>
-						
+						</div>
+
 			    </fieldset>
+					
 					<!--<fieldset>
 					<%#=file_field_tag "file" %>
 					</fieldset>-->
@@ -114,27 +118,15 @@ if (field=='message_message')
 		$(function () {
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
-    downloadTable: $('#files'),
+    downloadTable: $('#attachment'),
     buildUploadRow: function (files, index) {
-        return $('<tr><td class="file_upload_preview"><\/td>' +
-                '<td>' + files[index].name + '<\/td>' +
-                '<td class="file_upload_progress"><div><\/div><\/td>' +
-                '<td class="file_upload_start">' +
-                '<button class="ui-state-default ui-corner-all" title="Start Upload">' +
-                '<span class="ui-icon ui-icon-circle-arrow-e">Start Upload<\/span>' +
-                '<\/button><\/td>' +
-                '<td class="file_upload_cancel">' +
-                '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                '<\/button><\/td><\/tr>');
-    },
+        return false;    },
     buildDownloadRow: function (file) {
-        return $('<tr><td>' + file.name + '<\/td><\/tr>');
 
-    },
-  // beforeSend: function (event, files, index, xhr, handler, callBack) {
-  //  handler.uploadRow.find('.file_upload_start').click(callBack);
-//}
+        return $('<a href="#"> Remove </a>' +'<span class="filename">' + file + '</span><br/>');
+
+    }
+
 
 });
 	
