@@ -185,6 +185,10 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
   }
 	function short_modal4()
 	{
+	a=$('#submsg').css('display');
+	
+	if(a=="inline")
+	{
 	 var id=$('.message.messow.open').attr('id').split('msac')[1];
     $.ajax({
       url:'/subscribe/'+id,
@@ -194,6 +198,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
     var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
     $('#submsg').text(result);
 		return false;
+		}
 	}
 		
 </script>
