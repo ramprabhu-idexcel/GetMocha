@@ -109,6 +109,13 @@ $(document).ready(function() {
     });
     
     $('#save_firstname').click(function(){
+       if($('#txt_firstname').val()=="")
+       {
+          alert("please enter your firstname");
+       }
+         
+       else
+       {
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
@@ -125,13 +132,13 @@ $(document).ready(function() {
            }
    			}	
        });
-
     $('#txt_firstname').hide(); 
     $('#save_firstname').css('visibility','hidden');
     $('#label_first_name').show();
     $('#first_name').css('visibility','visible');
     return false;
-       
+     }
+        
    });
     
     
@@ -146,6 +153,13 @@ $(document).ready(function() {
        });
        
   	$('#save_lastname').click(function(){
+      
+         if($('#txt_lastname').val()=="")
+       {
+          alert("please enter your lastname");
+       }
+        else
+        {
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
@@ -167,6 +181,8 @@ $(document).ready(function() {
     $('#label_last_name').show();
     $('#last_name').css('visibility','visible');
     return false;
+     }
+  
    });
    
 
@@ -221,6 +237,12 @@ $(document).ready(function() {
    });
      
   	$('#save_email').click(function(){
+        if($('#txt_email').val()=="")
+       {
+          alert("pls enter your email");
+       }
+        else
+       {
         $.ajax({
          url:"/updates/edit_profile",
           type: "put",
@@ -241,6 +263,8 @@ $(document).ready(function() {
      $('#label_email').show();
     $('#email').css('visibility','visible');
      return false;
+      }   
+        
   });
    
    
@@ -348,8 +372,21 @@ $(document).ready(function() {
       });
      
   	$('#save_confirm').click(function(){
-       
-       if (($('#txt_confirm').val())!=($("#txt_password").val()))
+      
+      if(($('#txt_password').val()=="")&&($('#txt_confirm').val()=="")) 
+      {
+         alert('please enter the password & Confirm password');
+      }
+           
+      else if($('#txt_password').val()=="")
+       {
+          alert("please enter the password");
+       }
+       else if ($('#txt_confirm').val()=="")
+       {
+          alert("please enter the confirm password");
+       }
+       else if (($('#txt_confirm').val())!=($("#txt_password").val()))
         {
           alert('password & Confirm Password should be same');
         }
