@@ -12,7 +12,8 @@
 						<a href="http://localhost:3000/file_download_from_email/<%=attach.id%>"><%= "http://localhost:3000/file_download_from_email/#{attach.filename}" %></a> <br/>
 					<% end %>
 			<% end %><br/>
-Subscribed: <%= @people %>			<br/><br/>
+Subscribed: <%= @people %>			<br/>
+			<a href="http://localhost:3000/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe</a><br/><br/>
 --<br/>
 Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
@@ -28,7 +29,7 @@ Powered by GetMocha.com
 					<% end %>
 			<% end %><br/>
 			Subscribed: <%= @people %>			<br/>
-			<a href="http://localhost:3000/unsubscribe/<%=@to_user.message_activity(@message.id)%>"> Unsubscribed</a><br/>
+			<a href="http://localhost:3000/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe</a><br/><br/>
 			--<br/>
 			Powered by GetMocha.com
 			

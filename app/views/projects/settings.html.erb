@@ -150,6 +150,13 @@ var pars = "project_id=" + proj_id +  "&proj_status="+ status;
 			 show_completed_projects();
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
+
+			 
+			 document.getElementById('change_project_status').innerHTML="Edit";
+document.getElementById('project_status_select_box').className="hidden";
+			 document.getElementById('project_status_label').style.display="block";
+
+
 	
 			 }
     });

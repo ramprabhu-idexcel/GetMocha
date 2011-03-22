@@ -63,6 +63,7 @@ GetMocha::Application.routes.draw do
   match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
   match 'subscribe/:activity_id'=>'messages#subscribe',:as=>'subscribe_message',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
+  match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
   
   resource :comments
