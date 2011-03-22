@@ -9,7 +9,7 @@
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
 			<br/>
-						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{ APP_CONFIG[:site_url]} /file_download_from_email/#{attach.filename}" %></a> <br/>
+						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>
 			<% end %><br/>
 Subscribed: <%= @people %>			<br/>
@@ -25,7 +25,7 @@ Powered by GetMocha.com
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
 					<br/>
-						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{ APP_CONFIG[:site_url]} /file_download_from_email/#{attach.filename}" %></a> <br/>
+						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>
 			<% end %><br/>
 			Subscribed: <%= @people %>			<br/>
