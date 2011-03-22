@@ -16,19 +16,19 @@ class Message < ActiveRecord::Base
 	
 	def self.send_message_to_team_members(project,message,to_users)
 			@to_users=to_users
-		team_members=project.users
+			team_members=project.users
 		team_members.each do |team_member|
-			activity=message.activities.create! :user=>team_member
-			activity.update_attributes(:is_subscribed=>1) if @to_users.include? team_member.email || current_user 
+			activity=message.activities.create! :user_id=>team_member
+			activity.update_attributes(:is_subscribed=>1) if @to_users.include? team_member.email || team_member==current_user 
 		end
-		  @to_users.each do |to_user|
-			@user=User.find_by_email(to_user)
-		#	if !@user.nil?
-			#to_usr=user.create! :user.email=>to_user	
+		  @to_users.each do |to_usr|
+			@user=User.find_by_email(to_usr)
+			if !@user
+			to_usr=User.create! :email=>to_usr, :is_guest=>true, :password=>"123456"	
 			activity=message.activities.create! :user=>@user, :is_subscribed=>true
-			#else !team_members.include? to_user
-				#activity=Activity.new! :resource_type=>"Message", :user=>to_usr.id,:resource_id=>message.id, :is_subscribed=>true
-			#end 
+			else !team_members.include? @user
+			 activity=Activity.create! :resource_type=>"Message", :user_id=>@user.id,:resource_id=>message.id, :is_subscribed=>true
+			end 
 		end
 			
 			
