@@ -83,6 +83,11 @@ GetMocha::Application.routes.draw do
  match 'terms' =>"home#terms"
  
  match 'privacy' =>"home#privacy"
+ 
+ match 'help' =>"home#help"
+ 
+ match 'email' =>"home#email"
+
 
 
   # The priority is based upon order of creation:
