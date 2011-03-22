@@ -22,6 +22,10 @@ class Message < ActiveRecord::Base
 			activity.update_attributes(:is_subscribed=>1) if @to_users.include? team_member.email || team_member==current_user 
 		end
 		  @to_users.each do |to_usr|
+				if to_usr.include?(',')
+					to_usr=to_usr.split(',')
+					to_usr=to_usr[0]
+				end
 			@user=User.find_by_email(to_usr)
 			if !@user
 			to_usr=User.create! :email=>to_usr, :is_guest=>true, :password=>"123456"	
