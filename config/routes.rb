@@ -46,7 +46,8 @@ GetMocha::Application.routes.draw do
   match '/projects/verify_email/:verification_code' =>'projects#verify_email', :as => 'verify_email', :method => :post
   match '/projects/join_project/:invitation_code' =>'projects#join_project', :as => 'join_project', :method => :post
   match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
-  
+  match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
+  match  '/home/email_reply' =>'home#check_email_reply_and_save', :method => :post
   #~ match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
   #~ match '/del_people' =>'projects#remove_people', :as=>'remove_people'
   #~ match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'
