@@ -691,6 +691,7 @@ function add_new_message()
        url :"/messages/new",
             success: function(data){
 			$('#add_new_mod').html(data); 
+              $('#add_new_mod').show();
        }
     });
        $('#add_new_mods').hide()

@@ -121,7 +121,9 @@
       }
       if(event.identifier=='ESC')
       {
+			//  short_modal('esc');
         short_modal1('esc');
+				
       }
       if(event.identifier=='R')
       {
@@ -166,10 +168,10 @@
         
   function short_modal(path)  //Add new project/messsage/task/tasclist
   {
-		if (path!='ecs')
+		
       $('#add_new_mods').show();
-    else
-      $('#add_new_mods').hide();
+
+      
   }
   
   function short_modal1(path)  //Add new project/messsage/task/tasclist
@@ -189,6 +191,7 @@
     {
       $('#add_new_mod').hide(); 
       $('#add_people').hide(); 
+			$('#add_new_mods').hide();
     }
   }
   

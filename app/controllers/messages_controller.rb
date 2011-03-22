@@ -60,7 +60,7 @@ end
 		Message.send_message_to_team_members(@project,@message,@to_users)
 		Message.send_notification_to_team_members(current_user,@to_users,@message)
 		if session[:attaches_id]
-			p session[:attaches_id]=session[:attaches_id].split(",")
+			p session[:attaches_id]=session[:attaches_id]
 			session[:attaches_id].each do |attach_id|
 				if attach_id.present?
 					attachment=Attachment.find_by_id(attach_id)
