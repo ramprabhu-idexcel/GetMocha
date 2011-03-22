@@ -1,0 +1,24 @@
+development: &non_production_settings
+  site_url: http://localhost:3000
+  site_name: localhost
+  project_email: p.rfmocha.com
+  task_email: t.rfmocha.com
+  message_email: m.rfmocha.com 
+  reply_email: rfmocha.com 
+  
+production:
+  site_url: http://getmocha.com
+  site_name: getMocha
+  project_email: p.getmocha.com
+  task_email: t.getmocha.com
+  message_email: m.getmocha.com 
+  reply_email: getmocha.com 
+  
+test:
+  site_url: http://localhost:3000
+  site_name: localhost
+  project_email: p.rfmocha.com
+  task_email: t.rfmocha.com
+  message_email: m.rfmocha.com 
+  reply_email: rfmocha.com 
+  
