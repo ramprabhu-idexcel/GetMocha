@@ -52,12 +52,13 @@
 				
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
 
-						<fieldset id="attach">
+						<fieldset id="attach" class="open">
 					<label>Attachments:</label>
 					
-					<div  id="attach_upload">
+					<div  id="attach_upload" class="attachment-upload">
 						<%#=f3.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
-						<table id="files"></table>
+						<div class="drag-drop">Drag and drop files here</div>
+						<table id="files" class="attachment"></table>
 						</div>
 						
 			    </fieldset>
