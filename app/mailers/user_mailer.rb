@@ -12,9 +12,9 @@ class UserMailer < ActionMailer::Base
     if email && email.from && email.from.first
      @dest_address=email.to.first.to_s
      logger.info @dest_address
-     if @dest_address.include?("@p.rfmocha.com")
+     if @dest_address.include?("#{APP_CONFIG[:project_email]}")
        new_post_create_via_mail(email)
-     elsif @dest_address.include?("@m.rfmocha.com")
+     elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
        new_message_create_via_mail(email)
      elsif @dest_address.downcase.include?("ctzm")
        comment_for_message_via_mail(email)

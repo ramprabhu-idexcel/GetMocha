@@ -12,7 +12,7 @@ class ProjectMailer < ActionMailer::Base
   def project_completed(project, user, to_user)
     @user = user
     @to_user = to_user
-    @settings="localhost:3000/settings"
+    @settings="#{APP_CONFIG[:site_url]}/settings"
     mail(:to=>"#{to_user.email}", :subject=>"#{project.name} has been completed")
     @content_type="text/html"
   end
@@ -50,7 +50,7 @@ class ProjectMailer < ActionMailer::Base
        @people<<activity.user.full_name<<"," if activity.user
      end
     end
-    mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@rfmocha.com", :subject=>"#{user.first_name} posted a new message to #{to_user}")
+    mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}")
     @content_type="text/html"
   end
   
