@@ -12,7 +12,7 @@ class AttachmentsController < ApplicationController
 		session[:attaches_id] +="#{@attachment.id},"
 		@attachments=Attachment.first
 		#~ render :nothing=>true
-		render :json=>@attachment.filename.to_json
+		render :json=>{:file=>@attachment.filename, :id=>@attachment.id}.to_json
 	end
 	
 end

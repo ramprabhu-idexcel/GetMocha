@@ -28,7 +28,7 @@ class ProjectMailer < ActionMailer::Base
   def custom_email(user, invite)
     @user = user
     @verify_email=invite.email
-    @invite="http://localhost:3000/projects/verify_email/#{invite.verification_code}"
+    @invite="#{APP_CONFIG[:site_url]}/projects/verify_email/#{invite.verification_code}"
      mail(:to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha")
     @content_type="text/html"
   end
@@ -41,10 +41,6 @@ class ProjectMailer < ActionMailer::Base
       to_user=to_user
     end
     @existing_user=User.find_by_email(to_user)
-    logger.info "****************************"
-    logger.info to_user.inspect
-    logger.info @existing_user.inspect
-    logger.info "****************************"
     @message=message
     @project=message.project
     subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])
@@ -61,7 +57,7 @@ class ProjectMailer < ActionMailer::Base
   def invite_people(user,invite)
     @user=user
     @message=invite.message
-    @invite_link="http://localhost:3000/projects/join_project/#{invite.invitation_code}"
+    @invite_link="#{APP_CONFIG[:site_url]}/projects/join_project/#{invite.invitation_code}"
     mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com")
     @content_type="text/html"
   end
