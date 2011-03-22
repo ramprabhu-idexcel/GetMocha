@@ -122,8 +122,8 @@ if (field=='message_message')
     buildUploadRow: function (files, index) {
         return false;    },
     buildDownloadRow: function (file) {
-
-        return $('<a href="#"> Remove </a>' +'<span class="filename">' + file + '</span><br/>');
+a=file.id;
+        return $('<a href="javascript:delete_attachment(a);"> Remove </a>' +'<span class="filename">' + file.file + '</span><br/>');
 
     }
 
@@ -131,4 +131,8 @@ if (field=='message_message')
 });
 	
 });
+function delete_attachment(file)
+{
+alert(file);
+}
   </script>
