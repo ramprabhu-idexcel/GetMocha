@@ -559,6 +559,10 @@ $(document).ready(function() {
     var primarUrl=(window.location+'').split('#')[0];
     var secondaryUrl=(window.location+'').split('?')[0];
     var loc=secondaryUrl.split('#')[1].split('/')[0];
+    if(loc=="project")
+    {
+      loc=secondaryUrl.split('#')[1].split('/')[0]+'/'+secondaryUrl.split('#')[1].split('/')[1]
+    }
     window.location=primarUrl+"#"+loc+"/"+id;
     $('.message.messow.open').removeClass('open');
     //change the all message count

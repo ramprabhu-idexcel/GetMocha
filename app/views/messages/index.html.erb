@@ -50,18 +50,28 @@ $.messages;
                 }
                },
                projectMessage:function(page){
+               
                   var path=(window.location+"").split('?')[0];
                   path=path.split('#')[1];
-                  if((/^all_messages\/[1-9]/.test(path)) ||(/^starred_messages\/[1-9]/.test(path)) )
+                  if((/^all_messages\/[1-9]/.test(path)) ||(/^starred_messages\/[1-9]/.test(path)))
                   {
                     var restfulPageUrl = this.restfulUrl + path  
                     this.loadCommentData( restfulPageUrl );         
                   }
                   else{
-                    var restfulPageUrl = this.restfulUrl + path  
-                    this.loadRestfulData( restfulPageUrl );    
-                    $('.message_header').hide();
-                    $('#comment_area').html('');                    
+                    params=path.split('/')
+                    if(params.length<3)
+                    {
+                      var restfulPageUrl = this.restfulUrl + path  
+                      this.loadRestfulData( restfulPageUrl );    
+                      $('.message_header').hide();
+                      $('#comment_area').html('');  
+                    }   
+                    else
+                    {
+                      var restfulPageUrl = this.restfulUrl + path  
+                      this.loadCommentData( restfulPageUrl );     
+                    }
                   }
                   $('.sort-by').show();
                },
@@ -74,7 +84,7 @@ $.messages;
                         $.each(data,function(index,val){
                           items.push('<div class="date-bar"><a href="#" class="date-title">'+parse_date(index)+'</a></div>');
                           $.each(val,function(i,v){
-                            items.push('<div class="message messow '+(v.activity.is_read ? "" : " unread")+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "20" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
+                            items.push('<div class="message messow '+(v.activity.is_read ? "" : " unread")+' mpi'+v.activity.resource.project_id+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "20" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
                             if(v.activity.is_starred)
                             {
                               items.push('<a class="message-star" href="#">Star</a>');

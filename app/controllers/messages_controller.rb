@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 	#~ before_filter :authenticate_user!
-  before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy']
+  before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
 	layout 'application', :except=>['new']
   
 	def index
@@ -103,6 +103,12 @@ end
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
   end
+  
+  #~ def project_message_comment
+    #~ comment_ids=@activity.resource.comments.collect{|x| x.id}
+    #~ activities=current_user.hash_activities_comments(comment_ids)
+    #~ render :json=>{:message=>message,:comments=>activities}.to_json
+  #~ end
   
   def star_message
     starred=!@activity.is_starred
