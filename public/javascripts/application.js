@@ -548,6 +548,10 @@ $(document).ready(function() {
       sort_path();
     });
     
+    $('.user-name').live('click',function(){
+      return false;
+    });
+    
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   

@@ -118,7 +118,7 @@ $.messages;
                       url: pageUrl,
                       success: function(data){  
                         comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit" href="#">Edit</a></h2>');
-                        comments.push('<p class="post-time">'+data.message.updated_at+' by <a href="#">'+data.message.name+'</a></p><hr/>');
+                        comments.push('<p class="post-time">'+data.message.updated_at+' by <a href="#" class="user-name">'+data.message.name+'</a></p><hr/>');
                         comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit" href="#">Edit</a></p></div>');
                         comments.push('<p class="subscribers">'+data.message.subscribed_user+' <span id="all_subscribed" style="display:none;">'+data.message.all_subscribed+'</span><a href="#" id="submsg">'+(data.message.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
                         comments.push('<div class="prev-messages">');
