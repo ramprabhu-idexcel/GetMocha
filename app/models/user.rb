@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   has_many :secondary_emails
   has_many :comments
   
-  DEFAULT_AVATAR="/images/content/stuart-avatar.jpg"
+  DEFAULT_AVATAR="/images/1300771661_stock_person.png"
   
   #starred messages from all project
   def starred_messages(sort_by=nil,order=nil)
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
     total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
   
-  def total_messages(sort_by,order)
+  def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
   end
@@ -66,8 +66,11 @@ class User < ActiveRecord::Base
   #starred messages from the project
   def project_starred_messages(project_id)
     b=[]
-    starred_messages.collect{|a| b<<a if a.resource.project_id==project_id}
+    project_id=project_id.to_i
+    total_messages.collect{|a| b<<a if a.resource.project_id==project_id}
+    puts total_messages.inspect
     b
+    
   end
   
   def group_project_messages(project_id)
