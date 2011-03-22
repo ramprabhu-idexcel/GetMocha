@@ -60,10 +60,11 @@ class UpdatesController < ApplicationController
    puts params["undefined"].inspect
    @attach=Attachment.new(:uploaded_data=>params["undefined"])
    @attach.attachable=current_user
+   img=Attachment.find(:first,:conditions=>['attachable_id = ?',current_user.id]) 
+   img.destroy if img
    @attach.save
-   @a=Attachment.find(:last)
-   puts @a.public_filename
-   render :json=>{:file_name=> @a.public_filename}.to_json
+   puts @attach.public_filename
+   render :json=>{:file_name=> @attach.public_filename}.to_json
 
    
    #~ respond_to do |format|

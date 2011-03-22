@@ -13,8 +13,11 @@ class UsersController <  Devise::RegistrationsController
           @invite.update_attributes(:status=>true)
         end
       end
-				
+				 puts "&&&&&&&&&&&&&&&&&&&&&"
+         puts current_user
+         
       render :udpate do |page|
+        page.alert('Activation link has been sent to your account')
         page.redirect_to '/sign_in'
       end
       
