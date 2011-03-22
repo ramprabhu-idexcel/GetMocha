@@ -103,13 +103,7 @@ end
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
   end
-  
-  #~ def project_message_comment
-    #~ comment_ids=@activity.resource.comments.collect{|x| x.id}
-    #~ activities=current_user.hash_activities_comments(comment_ids)
-    #~ render :json=>{:message=>message,:comments=>activities}.to_json
-  #~ end
-  
+    
   def star_message
     starred=!@activity.is_starred
     @activity.update_attribute(:is_starred,starred)
