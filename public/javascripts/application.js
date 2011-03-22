@@ -561,20 +561,35 @@ $(document).ready(function() {
     var loc=secondaryUrl.split('#')[1].split('/')[0];
     window.location=primarUrl+"#"+loc+"/"+id;
     $('.message.messow.open').removeClass('open');
+    //change the all message count
     if($(this).hasClass('unread'))
-    {
-      count=parseInt($('a#all_messages').children('span.num-unread').text());
-      if(count<1)
+    { 
+      count=$('a#all_messages').children('span.num-unread');
+      project_id=$(this).attr('class').split('mpi')[1];
+      project_count=$('#project_list_messages'+project_id).children('span.num-unread');
+      count_val=parseInt(count.text());
+      project_val=parseInt(project_count.text());
+      if(count_val<1)
       {
-      
+        count.remove();
       }
       else
       {
-        $('a#all_messages').children('span.num-unread').text(count-1);
+        count.text(count_val-1);
+      }
+      if(project_val<1)
+      {
+        project_count.remove();
+      }
+      else
+      {
+        project_count.text(project_val-1)
       }
     }
+    //chane the read class
     $(this).removeClass('unread');
     $(this).addClass('open');
+    //hide the header and the sort drop down
     $('.sort-by-tooltip').hide();
     $('.message_header').show(); 
     
