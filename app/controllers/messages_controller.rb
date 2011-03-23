@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-	#~ before_filter :authenticate_user!
+	before_filter :authenticate_user!
   before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
 	layout 'application', :except=>['new']
   
