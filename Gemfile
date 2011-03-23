@@ -11,6 +11,7 @@ gem 'mysql2'
 gem 'devise','1.1.7'
 gem 'delayed_job'
 gem 'json'
+gem 'sanitize','2.0.1'
 # Use unicorn as the web server
 # gem 'unicorn'
 

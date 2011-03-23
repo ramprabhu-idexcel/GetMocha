@@ -7,13 +7,14 @@ def index
 end	
 
 def check_email_reply_and_save
-			logger.info("IN check_email_reply_and_save")
+		
 			logger.info "**********************************************"
-			logger.info params.inspect
-			logger.info "**********************************************"
-		logger.info(params[:html])
-		logger.info "**********************************************"
-		logger.info(params[:to])
+		
+		
+		html_content=params[:html]
+		 santized_html=Sanitize.clean(html)
+		logger.info santized_html.inspect
+		
 		logger.info "**********************************************"
 	  render :text => "success"
 end
