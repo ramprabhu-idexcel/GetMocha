@@ -52,7 +52,7 @@ skip_before_filter :verify_authenticity_token
 							mail=mail[1].split('>')
 							mail=mail[0]
 						end
-						if !mail.to_s.include?("p.rfmocha.com")
+						if !mail.to_s.include?("p.getmocha.com")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
               logger.info "******************************"
               logger.info invite.inspect
