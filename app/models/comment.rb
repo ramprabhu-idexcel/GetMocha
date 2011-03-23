@@ -10,6 +10,12 @@ class Comment < ActiveRecord::Base
       activity=self.activities.create! :user=>user
       activity.update_attribute(:is_read,true) if user.id==self.user_id
     end
+    if self.commentable_type=="Message"
+      self.commentable.subscribed_users.each do |activity|
+        user=activity.user
+        ProjectMailer.delay.message_reply(user,self)
+      end
+    end
   end
   
   def self.find_hash(id,current_user)
@@ -20,18 +26,19 @@ class Comment < ActiveRecord::Base
   end
   
   def self.find_comments_time(time,current_user)
-		diff=current_user.user_time(Time.now)-current_user.user_time(time)
+    user_time=current_user.user_time(time)
+		diff=current_user.user_time(Time.now)-user_time
 		case diff
 			when 0..59
-				"#{time.strftime("%l:%M%p")} (#{pluralize(diff.to_i,"second")} ago)"
+				"#{user_time.strftime("%l:%M%p")} (#{pluralize(diff.to_i,"second")} ago)"
 			when 60..3599
-				"#{time.strftime("%l:%M%p")} (#{pluralize((diff/60).to_i,"minute")} ago)"  
+				"#{user_time.strftime("%l:%M%p")} (#{pluralize((diff/60).to_i,"minute")} ago)"  
 			when 3600..86399
-				"#{time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)" 
+				"#{user_time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)" 
       when 86400..108000
-				"#{time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)" 
+				"#{user_time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)" 
 		else
-			time.strftime("%d/%m/%y")
+			user_time.strftime("%d/%m/%y")
 		end
 	end
   
