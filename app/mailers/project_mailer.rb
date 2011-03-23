@@ -33,7 +33,7 @@ class ProjectMailer < ActionMailer::Base
     @content_type="text/html"
   end
   def message_notification(user,to_user,message)
-    @user = user
+     @user = user
     if to_user.include?(",")
       to_user = to_user.split(',')
       to_user = to_user[0]
@@ -43,6 +43,13 @@ class ProjectMailer < ActionMailer::Base
     @existing_user=User.find_by_email(to_user)
     @message=message
     @project=message.project
+    custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
+    if custom_email
+      from=custom_email.email
+    else
+     from="mochabot@getmocha.com"
+    end
+     
     subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])
     @people=[]
     if subscribed_list
@@ -50,7 +57,7 @@ class ProjectMailer < ActionMailer::Base
        @people<<activity.user.full_name<<"," if activity.user
      end
     end
-    mail(:to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}")
+    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}")
     @content_type="text/html"
   end
   
