@@ -12,7 +12,7 @@ def check_email_reply_and_save
      @dest_address=params[:to].split(',')
 		 @dest_address=@dest_address[0]
      logger.info @dest_address
-     if @dest_address.include?("#{APP_CONFIG[:project_email]}")
+     #~ if @dest_address.include?("#{APP_CONFIG[:project_email]}")
         from_address=params[:from].to_s
 				user=User.find_by_email(from_address)
 				if user 
@@ -32,11 +32,11 @@ def check_email_reply_and_save
 						end
 					end
 				end
-			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
-       #~ new_message_create_via_mail
-			elsif @dest_address.downcase.include?("ctzm")
-       #~ comment_for_message_via_mail(email)
-     end
+			#~ elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
+       new_message_create_via_mail
+			#~ elsif @dest_address.downcase.include?("ctzm")
+       comment_for_message_via_mail(email)
+     #~ end
     end
     
 	  render :text => "success"
