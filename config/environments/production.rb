@@ -48,6 +48,13 @@ GetMocha::Application.configure do
   config.active_support.deprecation = :notify
   config.action_mailer.default_url_options = { :host => 'getmocha.com' }
   
+  
+  config.middleware.use ExceptionNotifier,
+  :email_prefix => "[Exception] ",
+  :sender_address => %{"Exception Notifier" <admin@getmocha.com>},
+  :exception_recipients => %w{priya@railsfactory.org senthilkumar@sedin.co.in c.selvakumar@sedin.co.in}
+
+  
    ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",
     :enable_starttls_auto => true,

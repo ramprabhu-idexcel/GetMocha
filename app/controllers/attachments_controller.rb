@@ -14,7 +14,7 @@ class AttachmentsController < ApplicationController
 	end
 	def remove_attach
 	@attach=Attachment.delete(params[:id])
-	 session[:attaches_id].delete(params[:id].to_i)
+	 Attachment.delete(params[:id].to_i)
 	render :json=>params[:id].to_json
 	end
 	

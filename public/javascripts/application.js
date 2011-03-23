@@ -19,7 +19,12 @@ $(document).ready(function() {
 
   if(typeof Login!="undefined" && Login==true)
   {
-       
+     
+   $('#remember_me').click(function(){
+        $('#remember_hidden_id').val("1")
+     return true;
+     });
+     
    $('#user_submit').click(function(){
       
       if (($('#user_email').val()=="") && ($("#user_password").val()==""))

@@ -141,6 +141,18 @@
 			{
 			 short_modal_down();
 			}
+			if(event.identifier=='RIGHT')
+			{
+			short_modal_right();
+			}
+			if(event.identifier=='UP')
+			{
+			short_modal_up();
+			}
+			if(event.identifier=='LEFT')
+			{
+			short_modal_left();
+			}
 			 
     }
 
@@ -184,44 +196,37 @@
 		find_loc=location1.search(/settings/);
 		if(find_loc!=-1)
 		{
-			second_panel=$('#settings_secondpanel').css('visibility');
-		//	if(second_panel=="visible")
-	//		{
-	//			alert("second panel");
-	//		}
-		//	else
-		//	{
-				
-				length=$('#active_projects').children('').length;
-				already_exists="false";
-				
-				for(i=0; i<length; i++)
-				{
-					classopen=$('#active_projects').children('')[i].className;
-					if(classopen=="project open")
-					{
-					
-					if(i==length-1)
-					already_exists=$('#active_projects').children('')[0].id;
-					else
-					already_exists=$('#active_projects').children('')[i+1].id;
-					}
-				}
-				if(already_exists=="false")
-				{
-						first_item=$('#active_projects').children('')[0].id;
-						id=first_item.split('_');
-						id=id[id.length-1];
-						settings_secondpanel(id);
-				}
-				else
-				{
-				
-				id=already_exists.split('_');
-						id=id[id.length-1];
-						settings_secondpanel(id);
-				}
-	//		}
+			settings_navigation_down('down');
+		}
+	}
+	
+	function short_modal_right()
+	{
+		location1=window.location.href;
+		find_loc=location1.search(/settings/);
+		if(find_loc!=-1)
+		{
+			settings_navigation_right();
+		}
+	}
+	
+	function short_modal_left()
+	{
+			location1=window.location.href;
+		find_loc=location1.search(/settings/);
+		if(find_loc!=-1)
+		{
+			settings_navigation_left();
+		}
+	}
+	
+	function short_modal_up()
+	{
+			location1=window.location.href;
+		find_loc=location1.search(/settings/);
+		if(find_loc!=-1)
+		{
+			settings_navigation_down('up');
 		}
 	}
         
@@ -295,6 +300,115 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 		
 		}
 	}
+		
+		function settings_navigation_down(key)
+		{
+			second_panel=$('#settings_secondpanel').css('visibility');
+			people=$('#settings_people').css('display');
+			general=$('#settings_general').css('display');
+			if(people=="block" || general=="block")
+			{
+				// for second panel navgation
+				people=$('#settings_people').css('display');
+				general=$('#settings_general').css('display');
+				if(people=="none" && general=="none")
+				{
+					settings_thirdpanel('general');
+				}
+				else if(people=="none")
+				{
+					settings_thirdpanel('people');
+				}
+				else
+				{
+					settings_thirdpanel('general');
+				}
+			}
+			else
+			{
+				//first_panel_navigation
+				active_length=$('#active_projects').children('').length;
+				length=$('.projects-list').children("").length;
+				already_exists="false";
+				for(i=0; i<length; i++)
+				{
+					classopen=$('.projects-list').children("")[i].className;
+					if(classopen=="project open")
+					{
+					
+					if(key=="down" && i==length-1)
+					 $('#completed_list').hide();
+					 else if(key=="up" && i==0)
+					 $('#completed_list').show();
+					 else if(key=="down" && i >= active_length-1)
+					 $('#completed_list').show();
+					 else if(key=="up" && i == active_length)
+					 $('#completed_list').hide();
+
+					 
+						if(key=="down" && i==length-1)
+						already_exists=$('.projects-list').children("")[0].id;
+						else if(key=="up" && i==0)
+						already_exists=$('.projects-list').children("")[length-1].id;
+						else
+						if(key=="down")
+						already_exists=$('.projects-list').children("")[i+1].id;
+						else
+						already_exists=$('.projects-list').children("")[i-1].id;
+					}
+				}
+				if(already_exists=="false")
+				{
+						first_item=$('.projects-list').children("")[0].id;
+						id=first_item.split('_');
+						id=id[id.length-1];
+						settings_secondpanel(id);
+				}
+				else
+				{
+				
+				id=already_exists.split('_');
+						id=id[id.length-1];
+						settings_secondpanel(id);
+				}
+			}
+		}
+		
+		
+		function settings_navigation_right()
+		{
+			second_panel=$('#settings_secondpanel').css('visibility');
+		  if(second_panel=="visible")
+			{
+	 			people=$('#settings_people').css('display');
+				general=$('#settings_general').css('display');
+				if(people=="none" && general=="none")
+				{
+					settings_thirdpanel('general');
+				}
+				else if(people=="none")
+				{
+				settings_thirdpanel('people');
+				}
+				else
+				{
+				settings_thirdpanel('general');
+				}
+			}
+		}
+		
+		function settings_navigation_left()
+		{
+			people=$('#settings_people').css('display');
+			general=$('#settings_general').css('display');
+			if(people=="block" || general=="block")
+			{
+				$('#settings_people').hide();
+				$('#settings_general').hide();
+				document.getElementById('people_anchor').className="m-tab alt";
+				document.getElementById('general_anchor').className="m-tab alt";
+			}
+		}
 		
 </script>
 

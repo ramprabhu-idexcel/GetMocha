@@ -58,7 +58,7 @@
         return false;    },
     buildDownloadRow: function (file) {
 a=file.id;
-        return $('<div id="attachment1_' + a + '" class="attachment">'+'<span class="filename">' + file.file + '</span>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a></div>');
+        return $('<div id="attachment1_' + a + '" class="attachment">'+'<span class="filename">' + file.file + '</span>'+'<a href="javascript:delete_attachments('+a+');"> Remove </a></div>');
     }
 
 
@@ -66,14 +66,14 @@ a=file.id;
 	
 });
 
-function delete_attachment(file)
+function delete_attachments(file)
 {
  $.ajax({
       url:'/remove_attach/'+file,
       type: 'get',
 			 success: function(file){
 			 
-			 document.getElementById('attachment_'+file).style.display="none";
+			 document.getElementById('attachment1_'+file).style.display="none";
 			 }
     });
 
