@@ -14,7 +14,8 @@ class MessagesController < ApplicationController
 		Attachment.delete(attach)
 		end
 		if session[:project_name]
-			@user=session[:project_name].users
+			project=Project.find_by_name(session[:project_name])
+			@users=project.users
 		else
 		  @users=current_user.my_contacts
 		end
