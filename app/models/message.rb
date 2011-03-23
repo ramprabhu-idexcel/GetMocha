@@ -54,6 +54,7 @@ class Message < ActiveRecord::Base
   end
   
   def self.message_created_time(time,current_user)
+    user_time=current_user.user_time(time)
     diff=current_user.user_time(Time.now)-current_user.user_time(time)
 		case diff
 			when 0..59
@@ -63,7 +64,7 @@ class Message < ActiveRecord::Base
 			when 3600..86399
 				"Posted #{pluralize((diff/3600).to_i,"hour")} ago" 
 		else
-			"Posted on #{time.strftime("%d/%m/%y")}"
+			"Posted on #{user_time.strftime("%d/%m/%y")}"
 		end
   end
         
