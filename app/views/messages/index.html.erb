@@ -34,7 +34,7 @@ $.messages;
 
             
            var restfulApp = Backbone.Controller.extend({
-               restfulUrl: "<%="#{APP_CONFIG[:site_url]}/messages/"%>",
+               restfulUrl: "<%="#{APP_CONFIG[:site_url]}/"%>",
                routes: {
                '*message/:project_id' : 'projectMessage',
                "*page":                    "findMessage", //This simply matches any urls that weren't caught above and assigns it to "page"
