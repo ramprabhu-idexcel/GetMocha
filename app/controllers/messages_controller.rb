@@ -10,16 +10,18 @@ class MessagesController < ApplicationController
 	def new
 		session[:attaches_id]=nil
 		if session[:project_name]
-			@user=current_user.project_membership
+			@user=session[:project_name].users
 			else
 		@users=current_user.my_contacts
 		end
 		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		 @user_emails=[]
 		 @project_names=[]
+		  if @users
 		  @users.each do |f|
 			@user_emails<<"#{f.email}"
-	end
+		end
+		end
 	@projects.each do |project|
 		@project_names<<"#{project.name}"
 	end
