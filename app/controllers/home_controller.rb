@@ -37,6 +37,7 @@ def check_email_reply_and_save
 							ProjectMailer.delay.invite_people(user,invite)
 						end
 					end
+					if cc_address
 					cc_address.each do |mail|
 						mail=mail.strip
 						if(mail.include?('<'))
@@ -48,6 +49,7 @@ def check_email_reply_and_save
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
 							ProjectMailer.delay.invite_people(user,invite)
 						end
+					end
 					end
 				end
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
