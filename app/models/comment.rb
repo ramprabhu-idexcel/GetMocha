@@ -19,10 +19,10 @@ class Comment < ActiveRecord::Base
   end
   
   def self.find_hash(id,current_user)
-    comment=self.find_by_id(id,:select=>[:comment,:created_at,:user_id])
+    comment=self.find_by_id(id,:select=>[:id,:comment,:created_at,:user_id])
     user=comment.user
     date=Comment.find_comments_time(comment.created_at,current_user)
-    comment.attributes.merge({:user=>comment.user.name,:created_at=>date})
+    comment.attributes.merge({:user=>comment.user.name,:created_at=>date,:attach=>comment.attach_urls})
   end
   
   def self.find_comments_time(time,current_user)
@@ -44,5 +44,13 @@ class Comment < ActiveRecord::Base
   
   def self.pluralize(count, singular, plural = nil)
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
+  end
+  
+  def attach_urls
+    a=[]
+    attachments.each do |attach|
+      a<<attach.public_filename if attach.content_type.include?("image")
+    end
+    {:attach_image=>a}
   end
 end

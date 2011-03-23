@@ -108,7 +108,7 @@ class Message < ActiveRecord::Base
   def attach_urls
     a=[]
     attachments.each do |attach|
-      a<<attach.public_filename 
+      a<<attach.public_filename if attach.content_type.include?("image")
     end
     {:attach_image=>a}
   end
