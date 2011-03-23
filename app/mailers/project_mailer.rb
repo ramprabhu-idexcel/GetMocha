@@ -62,6 +62,7 @@ class ProjectMailer < ActionMailer::Base
   end
   
   def invite_people(user,invite)
+    logger.info "------------------------------------------------------------"
     @user=user
     @message=invite.message
     logger.info @message.inspect
