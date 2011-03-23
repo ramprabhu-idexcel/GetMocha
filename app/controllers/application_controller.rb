@@ -42,7 +42,7 @@ skip_before_filter :verify_authenticity_token
 				
 				user=User.find_by_email(from_address)
 				if user 
-					message=params[:html].to_s
+					message=params[:html]
 					name=params[:subject].to_s
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
 					to_address.each do |mail|
@@ -97,7 +97,35 @@ skip_before_filter :verify_authenticity_token
 					end
 			end	
       end
-      end
+		end
+		
+		def reply_to_message_via_email
+			 from_address=params[:from].to_s
+				if(from_address.include?('<'))
+					from_address=from_address.split('<')
+					from_address=from_address[1].split('>')
+					from_address=from_address[0]
+				end
+				message_id=@dest_address.split('@')
+				message_id=message_id[0].split('ctzm')
+				message=Message.find(message_id)		
+				project=Project.find(message.project_id)
+				user=User.find_by_email(from_address)
+				content=params[:html]
+				if user
+					comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
+					message.activities.each do |activity|
+							activity.update_attributes(:is_read=>false)
+					end
+				end
+				logger.info message.inspect
+					if params[:attachments] && params[:attachments].to_i > 0
+				for count in 1..params[:attachments].to_i
+					attach=comment.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+					logger.info attach.inspect
+					end
+			end	
+			end
   
  
   protected

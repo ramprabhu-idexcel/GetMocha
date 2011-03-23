@@ -15,8 +15,7 @@ def check_email_reply_and_save
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
 				message_create_via_email
 			elsif @dest_address.downcase.include?("ctzm")
-       #~ comment_for_message_via_mail(email)
-     end
+				reply_to_message_via_email
     end
     
 	  render :text => "success"
