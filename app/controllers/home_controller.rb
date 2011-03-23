@@ -19,8 +19,7 @@ def check_email_reply_and_save
     new_project_via_email
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
 				message_create_via_email
-			else
-				logger.info "*****************"
+			elsif @dest_address.include?("ctzm")
 				reply_to_message_via_email
     end
     
