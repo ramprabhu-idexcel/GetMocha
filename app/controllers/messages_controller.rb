@@ -96,7 +96,7 @@ class MessagesController < ApplicationController
   
   def all_messages
 		session[:project_name]=nil
-		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time],:include=>{:resource=>{:only=>resource_columns,:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   
   def starred_messages
@@ -111,7 +111,7 @@ class MessagesController < ApplicationController
   def show
     @activity.update_attribute(:is_read,true)
     msg=Message.find_by_id(@activity.resource_id)
-    message=Message.find_hash(@activity.resource_id)
+    message=Message.find_hash(@activity.resource_id,current_user)
     message.merge!({:subscribed_user=>msg.display_subscribed_users,:is_subscribed=>current_user.is_message_subscribed?(msg.id),:all_subscribed=>msg.all_subscribed})
     comment_ids=@activity.resource.comments.collect{|x| x.id}
     activities=current_user.hash_activities_comments(comment_ids)
@@ -155,7 +155,7 @@ class MessagesController < ApplicationController
   end
   
   def unwanted_columns
-    [:created_at,:is_assigned,:resource_type,:resource_id]
+    [:updated_at,:created_at,:is_assigned,:resource_type,:resource_id]
   end
   
   def resource_columns
