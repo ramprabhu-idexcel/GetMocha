@@ -137,12 +137,24 @@ class User < ActiveRecord::Base
     type_ids=[type_ids] unless type_ids.is_a?(Array)
     comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
     values=[]
-    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id).merge(t.attributes)}
+    comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id,self).merge(t.attributes)}
     values
   end
   
   def image_url
     attachment ? attachment.public_filename : DEFAULT_AVATAR
   end
-   
+  
+  def user_time(time)
+    if time_zone
+      time_diff=time_zone.split(")")[0].split("GMT")[1].split(":")
+      hour=time_diff[0].to_i.hours
+      min=time_diff[1].to_i.minutes
+      total_diff=hour<0 ? hour-min : hour+min
+    else
+      total_diff=0.seconds
+    end
+    time.gmtime+total_diff.seconds
+  end
+     
 end

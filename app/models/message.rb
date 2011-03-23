@@ -47,14 +47,15 @@ class Message < ActiveRecord::Base
 		end
 	end
 
-	def self.find_hash(id)
+	def self.find_hash(id,current_user)
     message=self.find_by_id(id,:select=>[:subject,:message,:project_id,:user_id,:updated_at])
     user=message.user
-    message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at)})
+    message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at,current_user)})
   end
   
-  def self.message_created_time(time)
-    diff=Time.now-time
+  def self.message_created_time(time,current_user)
+    user_time=current_user.user_time(time)
+    diff=current_user.user_time(Time.now)-current_user.user_time(time)
 		case diff
 			when 0..59
 				"Posted #{pluralize(diff.to_i,"second")} ago"
@@ -63,7 +64,7 @@ class Message < ActiveRecord::Base
 			when 3600..86399
 				"Posted #{pluralize((diff/3600).to_i,"hour")} ago" 
 		else
-			"Posted on #{time.strftime("%d/%m/%y")}"
+			"Posted on #{user_time.strftime("%d/%m/%y")}"
 		end
   end
         

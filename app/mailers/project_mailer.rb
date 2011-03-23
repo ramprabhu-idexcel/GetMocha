@@ -72,4 +72,12 @@ class ProjectMailer < ActionMailer::Base
     mail(:to=>"#{invite.email}", :subject=>" on GetMocha.com")
     @content_type="text/html"
   end
+  
+  def message_reply(user,comment)
+    @user=user
+    @comment=comment
+    @message=comment.commentable
+    mail( :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject)
+    @content_type="text/html"
+  end
 end
