@@ -8,13 +8,15 @@ end
 
 def check_email_reply_and_save
 		 if params[:from] 
-			 logger.info params[:to].inspect
+			
      @dest_address=params[:to].split(',')
 		 @dest_address=@dest_address[0]
-     logger.info @dest_address
+     
      #~ if @dest_address.include?("#{APP_CONFIG[:project_email]}")
         from_address=params[:from].to_s
+				logger.info from_address.inspect
 				user=User.find_by_email(from_address)
+				logger.info user.inspect
 				if user 
 					message=params[:html].to_s
 					name=params[:subject].to_s
