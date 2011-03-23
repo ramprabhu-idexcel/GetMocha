@@ -825,6 +825,10 @@ $(document).ready(function() {
     $('.file_upload_start button').click();
   });
   
+  $('.create_task, .create_task_list').click(function(){
+    return false;
+  });
+  
 });//End of doc
 
 
