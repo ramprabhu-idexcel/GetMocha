@@ -42,7 +42,7 @@ skip_before_filter :verify_authenticity_token
 				
 				user=User.find_by_email(from_address)
 				if user 
-					message=params[:html].to_s
+					message=params[:html]
 					name=params[:subject].to_s
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
 					to_address.each do |mail|
@@ -54,7 +54,7 @@ skip_before_filter :verify_authenticity_token
 						end
 						if !mail.to_s.include?("p.getmocha.com")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-              ProjectMailer.invite_people(user,invite).deliver!
+              ProjectMailer.delay.invite_people(user,invite)
 						end
 					end
 					if cc_address
@@ -87,17 +87,44 @@ skip_before_filter :verify_authenticity_token
 				project=Project.find(project_id)
 				user=User.find_by_email(from_address)
 				if ((user && !user.is_guest) || project.is_public?)
-     message=params[:html]
-     name=params[:subject].to_s
-     message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
-		 activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
-		if params[:attachments] && params[:attachments].to_i > 0
-				for count in 1..params[:attachments].to_i
-					attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+					message=params[:html]
+					name=params[:subject].to_s
+					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+					activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
+				if params[:attachments] && params[:attachments].to_i > 0
+					for count in 1..params[:attachments].to_i
+						attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]) 
 					end
+				end	
+      end
+		end
+		
+		def reply_to_message_via_email
+			from_address=params[:from].to_s
+			if(from_address.include?('<'))
+				from_address=from_address.split('<')
+				from_address=from_address[1].split('>')
+				from_address=from_address[0]
+			end
+			message_id=@dest_address.split('@')
+			message_id=message_id[0].split('ctzm')
+			message_id=message_id[1]
+			message=Message.find(message_id)		
+			project=Project.find(message.project_id)
+			user=User.find_by_email(from_address)
+			content=params[:html]
+			if user
+				comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
+				message.activities.each do |activity|
+						activity.update_attributes(:is_read=>false)
+				end
+			end
+			if params[:attachments] && params[:attachments].to_i > 0
+				for count in 1..params[:attachments].to_i
+					attach=comment.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+				end
 			end	
-      end
-      end
+		end
   
  
   protected
