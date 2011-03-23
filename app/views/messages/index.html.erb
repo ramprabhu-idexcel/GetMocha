@@ -59,9 +59,14 @@ $.messages;
                     this.loadCommentData( restfulPageUrl );         
                   }
                   else{
-                    params=path.split('/')
+                    url=(window.location+"").split('?');
+                    params=path.split('/');
                     if(params.length<3)
                     {
+                      if(url.length>1)
+                      {
+                        path=path+"?"+url[1];
+                      }
                       var restfulPageUrl = this.restfulUrl + path  
                       this.loadRestfulData( restfulPageUrl );    
                       $('.message_header').hide();
