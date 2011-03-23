@@ -30,7 +30,17 @@ def check_email_reply_and_save
      message=params[:html]
      name=params[:subject].to_s
      message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+		 logger.info message.inspect
      activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
+		 logger.info activity.inspect
+		 logger.info "**************************************************************"
+		 logger.info params[:attachments].inspect
+		 	if params[:attachments] && params[:attachments].to_i > 0
+				for count in 1..params[:attachments].to_i
+					attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+					logger.info attach.inspect
+				end
+			end	
       end
 			elsif @dest_address.downcase.include?("ctzm")
        #~ comment_for_message_via_mail(email)
