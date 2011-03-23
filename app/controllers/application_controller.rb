@@ -7,10 +7,7 @@ skip_before_filter :verify_authenticity_token
   def change_layout
 
     if devise_controller?
-       puts "-------------------------------"
-       puts controller_name
-       puts action_name
-       
+           
        if (controller_name=="confirmations")
          %w{show}.include?(action_name) ? "before_login" : "application"
        end  
