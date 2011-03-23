@@ -16,31 +16,37 @@
 		<p>Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. </p>
 	</div>
 	
-	<div class="grid-630">
+		<div class="grid-630">
 		<h1>Sign up for a free 60-day trial</h1>
 		<hr class="light-hr" />
 		
-
+		<table>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  
-<p><%= f.label :Firstname,:class=>"last"%><%= f.label :Lastname,:class=>"last" %><br />
-  <%= f.text_field :first_name,:class=>"textfield",:id=>"signup-fname"%>
-  <%= f.text_field :last_name,:class=>"textfield" %></p>
+		
+		<tr><td><%=f.label "First_Name",:class=>"last"%></td><td><%=f.label "Last_Name",:class=>"last" %></td></tr>
 
+	 <tr><td><%=f.text_field :first_name,:class=>"textfield",:id=>"signup-fname",:height=>"10",:width=>"20"%></td>
+	 
+    <td><%= f.text_field :last_name,:class=>"textfield last",:id=>"signup-lname" %></td></tr>
 
-  <p><%= f.label :email,:class=>"last" %><%= f.label :password,:class=>"last"  %><br />
-
-  <%= f.text_field :email,:class=>"textfield" %>
-  <%= f.password_field :password,:class=>"textfield last"  %></p>
+						
+	<tr><td><%= f.label "Email_Address",:class=>"last" %></td><td><%= f.label "Password",:class=>"last"  %></td></tr>
 	
- <p><%=f.check_box "terms_conditions",:class=>"checkbox"%> I agree to the Mocha <a href="/terms">Terms of Use.</a>
-<%= f.submit "Sign up",:class=>"btn signup-btn" %></p>
+		
+	<tr><td><%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com" %></td>
 	
-<% end %>
+  <td><%= f.password_field :password,:class=>"textfield last"  %></td></tr>
+	</table>
 
+	<hr class="light-hr" />
 
+	 <%=f.check_box "terms_conditions",:class=>"checkbox"%> I agree to the Mocha <a href="/terms">Terms of Use.</a>
+   <%= f.submit "Sign up",:class=>"btn signup-btn"%>
+	
+	
+  <%end%>
 
-	</div>
+	</div>	
 	
 	
 <script>
