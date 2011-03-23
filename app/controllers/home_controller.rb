@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 layout "before_login"
-  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save']
+  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy']
 	protect_from_forgery  :except=>:check_email_reply_and_save
 def index
 	redirect_to '/messages' if current_user
