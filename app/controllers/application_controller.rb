@@ -107,8 +107,11 @@ skip_before_filter :verify_authenticity_token
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
+				logger.info @dest_address.inspect
 				message_id=@dest_address.split('@')
+				logger.info message_id.inspect
 				message_id=message_id[0].split('ctzm')
+				logger.info message_id.inspect
 				message=Message.find(message_id)		
 				project=Project.find(message.project_id)
 				user=User.find_by_email(from_address)
