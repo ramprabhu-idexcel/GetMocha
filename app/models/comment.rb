@@ -12,15 +12,15 @@ class Comment < ActiveRecord::Base
     end
   end
   
-  def self.find_hash(id)
+  def self.find_hash(id,current_user)
     comment=self.find_by_id(id,:select=>[:comment,:created_at,:user_id])
     user=comment.user
-    date=Comment.find_comments_time(comment.created_at)
+    date=Comment.find_comments_time(comment.created_at,current_user)
     comment.attributes.merge({:user=>comment.user.name,:created_at=>date})
   end
   
-  def self.find_comments_time(time)
-		diff=Time.now-time
+  def self.find_comments_time(time,current_user)
+		diff=current_user.user_time(Time.now)-current_user.user_time(time)
 		case diff
 			when 0..59
 				"#{time.strftime("%l:%M%p")} (#{pluralize(diff.to_i,"second")} ago)"
