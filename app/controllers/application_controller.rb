@@ -56,7 +56,7 @@ skip_before_filter :verify_authenticity_token
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
               logger.info "******************************"
               logger.info invite.inspect
-							ProjectMailer.delay.invite_people(user,invite)
+							ProjectMailer.invite_people(user,invite).deliver!
 						end
 					end
 					if cc_address
@@ -67,7 +67,7 @@ skip_before_filter :verify_authenticity_token
 							mail=mail[1].split('>')
 							mail=mail[0]
 						end
-						if !mail.to_s.include?("p.rfmocha.com")
+						if !mail.to_s.include?("p.getmocha.com")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
 							ProjectMailer.delay.invite_people(user,invite)
 						end
