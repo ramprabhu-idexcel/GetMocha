@@ -14,7 +14,7 @@ def check_email_reply_and_save
      
      #~ if @dest_address.include?("#{APP_CONFIG[:project_email]}")
         from_address=params[:from].to_s
-				if(from_address.include?('<')
+				if(from_address.include?('<'))
 					from_address=from_address.split('<')
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
