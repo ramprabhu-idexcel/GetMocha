@@ -44,7 +44,11 @@ class MessagesController < ApplicationController
 			errors<<"Please enter valid email"
 			
 		end
-		@project=Project.find_by_name(params[:message][:project])
+		if !session[:project_name].nil?
+		  @project=Project.find_by_name(session[:project_name])
+		else
+		  @project=Project.find_by_name(params[:message][:project])
+		end
 		if !@project
 				render :update do |page|
 				page.alert "Please enter existing projects only"
@@ -60,17 +64,12 @@ class MessagesController < ApplicationController
 			end
 	
 			if message
-				@message.save
-				@to_users=params[:message][:recipient].split(', ')
-				@project=Project.find_by_name(params[:message][:project])
-				Message.send_message_to_team_members(@project,@message,@to_users)
-				Message.send_notification_to_team_members(current_user,@to_users,@message)
-				if message
 					@message.save
 					@to_users=params[:message][:recipient].split(', ')
-					@project=Project.find_by_name(params[:message][:project])
+					#@project=Project.find_by_name(params[:message][:project])
 					Message.send_message_to_team_members(@project,@message,@to_users)
 					Message.send_notification_to_team_members(current_user,@to_users,@message)
+					if !session[:attaches_id].nil?
 					attachment=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
 					attachment.each do |attach|
 					attach.update_attributes(:attachable=>@message)
@@ -85,7 +84,7 @@ class MessagesController < ApplicationController
 				page.alert errors.join("\n")
 				end
 		 end
-	 end
+end
 	end
   def update
     activity=Activity.find_by_id(params[:id])
