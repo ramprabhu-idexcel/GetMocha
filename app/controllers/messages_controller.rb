@@ -9,6 +9,10 @@ class MessagesController < ApplicationController
 	end
 	def new
 		session[:attaches_id]=nil
+		attachs=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
+		attachs.each do |attach|
+		attachs.delete(attach)
+		end
 		if session[:project_name]
 			@user=session[:project_name].users
 			else
@@ -61,14 +65,18 @@ end
 		@project=Project.find_by_name(params[:message][:project])
 		Message.send_message_to_team_members(@project,@message,@to_users)
 		Message.send_notification_to_team_members(current_user,@to_users,@message)
-		if session[:attaches_id]
-			p session[:attaches_id]=session[:attaches_id]
-			session[:attaches_id].each do |attach_id|
-				if attach_id.present?
-					attachment=Attachment.find_by_id(attach_id)
-					attachment.update_attributes(:attachable=>@message)
-				end
-			end
+		if message
+		@message.save
+		@to_users=params[:message][:recipient].split(', ')
+		
+		@project=Project.find_by_name(params[:message][:project])
+		Message.send_message_to_team_members(@project,@message,@to_users)
+		Message.send_notification_to_team_members(current_user,@to_users,@message)
+		attachment=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
+			attachment.each do |attach|
+				attach.update_attributes(:attachable=>@message)
+			
+
 		end
 		session[:attaches_id]=nil
 	#	attachment.attachable=@message

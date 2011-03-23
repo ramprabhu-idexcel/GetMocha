@@ -8,7 +8,7 @@ class AttachmentsController < ApplicationController
 		session[:attaches_id] ||= []
 		@attachment=Attachment.new(:uploaded_data => params["undefined"])
 		@attachment.save
-			session[:attaches_id] << @attachment.id
+		p	session[:attaches_id] << @attachment.id
 			#~ render :nothing=>true
 		render :json=>{:file=>@attachment.filename, :id=>@attachment.id}.to_json
 	end
