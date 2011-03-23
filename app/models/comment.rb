@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
 	belongs_to :commentable, :polymorphic => true
 	belongs_to :user
-	belongs_to :attachable, :polymorphic => true
+	has_many :attachments,:as => :attachable, :dependent=>:destroy
   has_many :activities, :as => :resource, :dependent=>:destroy
   after_create :add_in_activity
   
