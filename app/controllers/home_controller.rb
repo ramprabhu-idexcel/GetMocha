@@ -37,7 +37,7 @@ def check_email_reply_and_save
 		 logger.info params[:attachments].inspect
 		 	if params[:attachments] && params[:attachments].to_i > 0
 				for count in 1..params[:attachments].to_i
-					attach=@comment.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+					attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]) 
 					logger.info attach.inspect
 				end
 			end	
