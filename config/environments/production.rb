@@ -46,4 +46,14 @@ GetMocha::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+   ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :enable_starttls_auto => true,
+    :port => 587,
+    :authentication => :plain,
+    :user_name => "ramprabu.n@railsbuddies.com",
+    :password => 'ramprabu123'
+  }
+
 end
