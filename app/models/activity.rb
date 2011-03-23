@@ -18,4 +18,8 @@ class Activity < ActiveRecord::Base
     diff=current_user.user_time(Time.now.gmtime)-user_time
     (0..86399).member?(diff) ? user_time.strftime("%I:%M %p") : user_time.strftime("%d/%m/%y")
   end
+  
+  def has_attachment
+    !resource.attachments.empty?
+  end
 end

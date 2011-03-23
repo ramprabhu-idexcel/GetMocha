@@ -48,9 +48,9 @@ class Message < ActiveRecord::Base
 	end
 
 	def self.find_hash(id,current_user)
-    message=self.find_by_id(id,:select=>[:subject,:message,:project_id,:user_id,:updated_at])
+    message=self.find_by_id(id,:select=>[:id,:subject,:message,:project_id,:user_id,:updated_at])
     user=message.user
-    message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at,current_user)})
+    message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at,current_user),:attach=>message.attach_urls})
   end
   
   def self.message_created_time(time,current_user)
@@ -99,6 +99,18 @@ class Message < ActiveRecord::Base
   
   def all_subscribed
     "#{subscribed_user_names.join(',')} | "
+  end
+  
+  def has_attachments
+    !attachments.empty?
+  end
+  
+  def attach_urls
+    a=[]
+    attachments.each do |attach|
+      a<<attach.public_filename 
+    end
+    {:attach_image=>a}
   end
     
 end

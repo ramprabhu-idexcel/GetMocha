@@ -731,6 +731,10 @@ $(document).ready(function() {
       close_comment_area();
       return false;
     });
+
+    $('.date-title').live('click',function(){
+      return false;
+    });
       
     //subscribe/unsubscribe message
     $('#submsg').live('click',function(){
