@@ -28,10 +28,16 @@ def check_email_reply_and_save
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
 					to_address.each do |mail|
 						logger.info mail.inspect
-						#~ if !mail.to_s.include?("p.rfmocha.com")
-							#~ invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-							#~ ProjectMailer.delay.invite_people(user,invite)
-						#~ end
+						mail=mail.strip
+						if(mail.include?('<'))
+							mail=mail.split('<')
+							mail=mail[1].split('>')
+							mail=mail[0]
+						end
+						if !mail.to_s.include?("p.rfmocha.com")
+							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+							ProjectMailer.delay.invite_people(user,invite)
+						end
 					end
 					#~ params[:cc].each do |mail|
 						#~ if !mail.to_s.include?("p.rfmocha.com")
