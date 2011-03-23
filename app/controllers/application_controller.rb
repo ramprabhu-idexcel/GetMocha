@@ -39,7 +39,7 @@ skip_before_filter :verify_authenticity_token
 				end
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
-				logger.info cc_address.inspect if params[:cc]
+				
 				user=User.find_by_email(from_address)
 				if user 
 					message=params[:html].to_s
@@ -54,6 +54,8 @@ skip_before_filter :verify_authenticity_token
 						end
 						if !mail.to_s.include?("p.rfmocha.com")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+              logger.info "******************************"
+              logger.info invite.inspect
 							ProjectMailer.delay.invite_people(user,invite)
 						end
 					end
