@@ -512,6 +512,11 @@ $(document).ready(function() {
       $('.comment-contain').hide();
     }
     
+    function close_comment_area()
+    {
+      $('.comment-contain').toggle('slow');
+      $('#comment-message').val('');
+    }
     //find the current url
     function sort_path()
     {
@@ -639,111 +644,117 @@ $(document).ready(function() {
       return false;
     });
     
+    
+    
+    $('.messow').live('click',function(){
+      var id=$(this).attr('id').split('msac')[1];
+      var primarUrl=(window.location+'').split('#')[0];
+      var secondaryUrl=(window.location+'').split('?')[0];
+      var loc=secondaryUrl.split('#')[1].split('/')[0];
+      if(loc=="project")
+      {
+        loc=secondaryUrl.split('#')[1].split('/')[0]+'/'+secondaryUrl.split('#')[1].split('/')[1]
+      }
+      window.location=primarUrl+"#"+loc+"/"+id;
+      $('.message.messow.open').removeClass('open');
+      //change the all message count
+      if($(this).hasClass('unread'))
+      { 
+        count=$('a#all_messages').children('span.num-unread');
+        project_id=$(this).attr('class').split('mpi')[1];
+        project_count=$('#project_list_messages'+project_id).children('span.num-unread');
+        count_val=parseInt(count.text());
+        project_val=parseInt(project_count.text());
+        if(count_val<1)
+        {
+          count.remove();
+        }
+        else
+        {
+          count.text(count_val-1);
+        }
+        if(project_val<1)
+        {
+          project_count.remove();
+        }
+        else
+        {
+          project_count.text(project_val-1)
+        }
+      }
+      //chane the read class
+      $(this).removeClass('unread');
+      $(this).addClass('open');
+      //hide the header and the sort drop down
+      $('.sort-by-tooltip').hide();
+      $('.message_header').show(); 
+      
+    });
+  
+    $('#all_messages, .project, .starred').click(function(){
+      $('.expand-all').hide();
+    });
+    
+    //message reply link and reply in the comment
+    $('.reply, .reply-link').click(function(){
+      $('.comment-contain').slideToggle('slow',function(){
+        $('#comment-message').focus();
+      });
+      return false;  
+    });
+    
+  
+    //Add message comments  
+    $('.blue-33.add_comment').live('click',function(){
+      var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+      $('#act').val(activity_id);
+      var reply="";
+      $.ajax({
+        url: '/comments',
+        type: 'post',
+        data: $('form#add_com_msg').serialize(),
+        success:function(data){
+          var comment=data.comment[0];
+          reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
+          reply+=('<a class="name message_name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
+          reply+=('<div class="comment"><p>'+comment.comment+'</p>');
+          reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+          $('.prev-messages').append(reply).show('slow');
+          close_comment_area();
+        }
+      });
+      return false;
+    });
+   
+    //Cancel link in add new comment
+    $('.cancel_comment').live('click',function(){
+      close_comment_area();
+      return false;
+    });
+      
+    //subscribe/unsubscribe message
+    $('#submsg').live('click',function(){
+      var id=$('.message.messow.open').attr('id').split('msac')[1];
+      $.ajax({
+        url:'/subscribe/'+id,
+        type: 'get'
+      });
+      var content=$(this).text();
+      var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+      $(this).text(result);
+      return false;
+    });
+    
+    
+    
+    
     hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
   }//end of message
   
   //Message second panel click function  
-  $('.messow').live('click',function(){
-    var id=$(this).attr('id').split('msac')[1];
-    var primarUrl=(window.location+'').split('#')[0];
-    var secondaryUrl=(window.location+'').split('?')[0];
-    var loc=secondaryUrl.split('#')[1].split('/')[0];
-    if(loc=="project")
-    {
-      loc=secondaryUrl.split('#')[1].split('/')[0]+'/'+secondaryUrl.split('#')[1].split('/')[1]
-    }
-    window.location=primarUrl+"#"+loc+"/"+id;
-    $('.message.messow.open').removeClass('open');
-    //change the all message count
-    if($(this).hasClass('unread'))
-    { 
-      count=$('a#all_messages').children('span.num-unread');
-      project_id=$(this).attr('class').split('mpi')[1];
-      project_count=$('#project_list_messages'+project_id).children('span.num-unread');
-      count_val=parseInt(count.text());
-      project_val=parseInt(project_count.text());
-      if(count_val<1)
-      {
-        count.remove();
-      }
-      else
-      {
-        count.text(count_val-1);
-      }
-      if(project_val<1)
-      {
-        project_count.remove();
-      }
-      else
-      {
-        project_count.text(project_val-1)
-      }
-    }
-    //chane the read class
-    $(this).removeClass('unread');
-    $(this).addClass('open');
-    //hide the header and the sort drop down
-    $('.sort-by-tooltip').hide();
-    $('.message_header').show(); 
-    
-  });
-  
-  $('#all_messages, .project, .starred').click(function(){
-    $('.expand-all').hide();
-  });
-  
-  //message reply link 
-  $('.reply').click(function(){
-    $('.comment-contain').slideToggle('slow');
-    $('#comment-message').focus();
-    return false;  
-  });
-  
-  //message reply link in the expanded comment
-  $('.reply-link').live('click',function(){
-    $('.comment-contain').slideToggle('slow');
-    $('#comment-message').focus();
-    return false;  
-  });
-  
-  //Add message comments  
-  $('.blue-33.add_comment').live('click',function(){
-    var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
-    $('#act').val(activity_id);
-    var reply="";
-    $.ajax({
-      url: '/comments',
-      type: 'post',
-      data: $('form#add_com_msg').serialize(),
-      success:function(data){
-        var comment=data.comment[0];
-        reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
-        reply+=('<a class="name message_name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
-        reply+=('<div class="comment"><p>'+comment.comment+'</p>');
-        reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
-        $('.prev-messages').append(reply).show('slow');
-        $('.comment-contain').toggle('slow');
-      }
-    });
-    return false;
-   });
-   
-   
-    
-    
-  $('#submsg').live('click',function(){
-    var id=$('.message.messow.open').attr('id').split('msac')[1];
-    $.ajax({
-      url:'/subscribe/'+id,
-      type: 'get'
-    });
-    var content=$(this).text();
-    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
-    $(this).text(result);
-    return false;
-  });
+
   
   //drop down
   $('#add-new').click(function(){
