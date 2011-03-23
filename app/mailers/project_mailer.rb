@@ -68,7 +68,8 @@ class ProjectMailer < ActionMailer::Base
     logger.info @message.inspect
     logger.info @message.class
     @invite_link="#{APP_CONFIG[:site_url]}/projects/join_project/#{invite.invitation_code}"
-    mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com")
+ #   mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com")
+    mail(:to=>"#{invite.email}", :subject=>" on GetMocha.com")
     @content_type="text/html"
   end
 end
