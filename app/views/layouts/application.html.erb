@@ -137,6 +137,10 @@
 			{
 			 short_modal4('T');
 			}
+			if(event.identifier=='DOWN')
+			{
+			 short_modal_down();
+			}
 			 
     }
 
@@ -146,6 +150,10 @@
   var CTRL = goog.ui.KeyboardShortcutHandler.Modifiers.CTRL;
   var SHIFT = goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT;
   var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
+	 var UP= goog.ui.KeyboardShortcutHandler.Modifiers.UP;
+	 var DOWN= goog.ui.KeyboardShortcutHandler.Modifiers.DOWN;
+	 var LEFT= goog.ui.KeyboardShortcutHandler.Modifiers.LEFT;
+	 var RIGHT= goog.ui.KeyboardShortcutHandler.Modifiers.RIGHT;
    //var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;            
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
@@ -157,6 +165,10 @@
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
+	shortcutHandler.registerShortcut('UP',goog.events.KeyCodes.UP);
+	shortcutHandler.registerShortcut('DOWN',goog.events.KeyCodes.DOWN);
+	shortcutHandler.registerShortcut('LEFT',goog.events.KeyCodes.LEFT);
+	shortcutHandler.registerShortcut('RIGHT',goog.events.KeyCodes.RIGHT);
   goog.events.listen(shortcutHandler,goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,showTriggered);
   $(document).ready(function(){
     $('a.menutext').click(function(){
@@ -165,6 +177,53 @@
       return false;
     });
   });
+	
+	function short_modal_down()
+	{
+		location1=window.location.href;
+		find_loc=location1.search(/settings/);
+		if(find_loc!=-1)
+		{
+			second_panel=$('#settings_secondpanel').css('visibility');
+		//	if(second_panel=="visible")
+	//		{
+	//			alert("second panel");
+	//		}
+		//	else
+		//	{
+				
+				length=$('#active_projects').children('').length;
+				already_exists="false";
+				
+				for(i=0; i<length; i++)
+				{
+					classopen=$('#active_projects').children('')[i].className;
+					if(classopen=="project open")
+					{
+					
+					if(i==length-1)
+					already_exists=$('#active_projects').children('')[0].id;
+					else
+					already_exists=$('#active_projects').children('')[i+1].id;
+					}
+				}
+				if(already_exists=="false")
+				{
+						first_item=$('#active_projects').children('')[0].id;
+						id=first_item.split('_');
+						id=id[id.length-1];
+						settings_secondpanel(id);
+				}
+				else
+				{
+				
+				id=already_exists.split('_');
+						id=id[id.length-1];
+						settings_secondpanel(id);
+				}
+	//		}
+		}
+	}
         
   function short_modal(path)  //Add new project/messsage/task/tasclist
   {
