@@ -19,6 +19,7 @@ def check_email_reply_and_save
 				end
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
+				logger.info cc_address.inspect if params[:cc]
 				user=User.find_by_email(from_address)
 				if user 
 					message=params[:html].to_s
