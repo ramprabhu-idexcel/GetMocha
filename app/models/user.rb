@@ -38,7 +38,11 @@ class User < ActiveRecord::Base
   
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
+    if sort_field=="is_starred"
+      activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true],:order=>"created_at #{order}")
+    else
+      activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
+    end
   end
   
   def find_sort_field(sort)
@@ -64,15 +68,15 @@ class User < ActiveRecord::Base
   end
   
   #starred messages from the project
-  def project_starred_messages(project_id)
+  def project_starred_messages(project_id,sort_by,order)
     b=[]
     project_id=project_id.to_i
-    total_messages.collect{|a| b<<a if a.resource.project_id==project_id}
+    total_messages(sort_by,order).collect{|a| b<<a if a.resource.project_id==project_id}
     b
   end
   
-  def group_project_messages(project_id)
-    project_starred_messages(project_id).group_by{|m| m.created_at.to_date}
+  def group_project_messages(project_id,sort_by=nil,order=nil)
+    project_starred_messages(project_id,sort_by,order).group_by{|m| m.created_at.to_date}
   end 
   #starred count from all project
   def starred_count
