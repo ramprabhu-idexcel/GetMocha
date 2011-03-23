@@ -9,10 +9,11 @@ end
 def check_email_reply_and_save
 		 if params[:from] 
 			 logger.info params[:to].inspect
-     @dest_address=params[:to].first.to_s
+     @dest_address=params[:to].split(',')
+		 @dest_address=@dest_address[0]
      logger.info @dest_address
      if @dest_address.include?("#{APP_CONFIG[:project_email]}")
-       new_project_create_via_mail(email)
+       new_project_create_via_mail
      elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
        #~ new_message_create_via_mail
      elsif @dest_address.downcase.include?("ctzm")
