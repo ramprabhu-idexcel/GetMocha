@@ -11,7 +11,7 @@ def check_email_reply_and_save
 			
      @dest_address=params[:to].split(',')
 		 @dest_address=@dest_address[0]
-     
+     logger.info @dest_address.inspect
      #~ if @dest_address.include?("#{APP_CONFIG[:project_email]}")
         from_address=params[:from].to_s
 				if(from_address.include?('<'))
@@ -19,25 +19,26 @@ def check_email_reply_and_save
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
-				
+				to_address=params[:to].split(',')
 				user=User.find_by_email(from_address)
-				logger.info user.inspect
+				logger.info "***************************"
 				if user 
 					message=params[:html].to_s
 					name=params[:subject].to_s
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
-					params[:to].each do |mail|
-						if !mail.to_s.include?("p.rfmocha.com")
-							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-							ProjectMailer.delay.invite_people(user,invite)
-						end
+					to_address.each do |mail|
+						logger.info mail.inspect
+						#~ if !mail.to_s.include?("p.rfmocha.com")
+							#~ invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+							#~ ProjectMailer.delay.invite_people(user,invite)
+						#~ end
 					end
-					params[:cc].each do |mail|
-						if !mail.to_s.include?("p.rfmocha.com")
-							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-							ProjectMailer.delay.invite_people(user,invite)
-						end
-					end
+					#~ params[:cc].each do |mail|
+						#~ if !mail.to_s.include?("p.rfmocha.com")
+							#~ invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+							#~ ProjectMailer.delay.invite_people(user,invite)
+						#~ end
+					#~ end
 				end
 			#~ elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
        #~ new_message_create_via_mail
