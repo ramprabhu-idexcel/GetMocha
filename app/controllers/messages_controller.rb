@@ -5,32 +5,32 @@ class MessagesController < ApplicationController
   
 	def index
 		session[:project_name]=nil
-		 @projects=Project.user_active_projects(current_user.id)
+		@projects=Project.user_active_projects(current_user.id)
 	end
 	def new
 		session[:attaches_id]=nil
 		attachs=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
 		attachs.each do |attach|
-		attachs.delete(attach)
+		Attachment.delete(attach)
 		end
 		if session[:project_name]
 			@user=session[:project_name].users
-			else
-		@users=current_user.my_contacts
+		else
+		  @users=current_user.my_contacts
 		end
 		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
-		 @user_emails=[]
-		 @project_names=[]
-		  if @users
+		@user_emails=[]
+		@project_names=[]
+		if @users
 		  @users.each do |f|
 			@user_emails<<"#{f.email}"
+		  end
 		end
-		end
-	@projects.each do |project|
+	  @projects.each do |project|
 		@project_names<<"#{project.name}"
-	end
-	render :partial=>'new'
-end
+	  end
+	  render :partial=>'new'
+  end
 
 
 	def create
@@ -38,59 +38,54 @@ end
 		if params[:message][:recipient].blank?
 			errors<<"Please enter To_email address"
 				
-				elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+		elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 				
 			errors<<"Please enter valid email"
 			
 		end
 		@project=Project.find_by_name(params[:message][:project])
-				if !@project
-						render :update do |page|
+		if !@project
+				render :update do |page|
 				page.alert "Please enter existing projects only"
-			end
+				end
 		else
-		@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
-		
+			@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
+
 			message=@message.valid?
-		 	if @message.errors[:subject][0]=="can't be blank"
-		 	errors<<"Please enter subject"
+			if @message.errors[:subject][0]=="can't be blank"
+				errors<<"Please enter subject"
 			elsif @message.errors[:message][0]=="can't be blank"
-			errors<<"Please enter message"
+				errors<<"Please enter message"
 			end
-			
-		if message
-		@message.save
-		@to_users=params[:message][:recipient].split(', ')
-		
-		@project=Project.find_by_name(params[:message][:project])
-		Message.send_message_to_team_members(@project,@message,@to_users)
-		Message.send_notification_to_team_members(current_user,@to_users,@message)
-		if message
-		@message.save
-		@to_users=params[:message][:recipient].split(', ')
-		
-		@project=Project.find_by_name(params[:message][:project])
-		Message.send_message_to_team_members(@project,@message,@to_users)
-		Message.send_notification_to_team_members(current_user,@to_users,@message)
-		attachment=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
-			attachment.each do |attach|
-				attach.update_attributes(:attachable=>@message)
-			
-
-		end
-		session[:attaches_id]=nil
-	#	attachment.attachable=@message
-		#attachment.save
-		render :nothing=>true
-		else
-					render :update do |page|
-				page.alert errors.join("\n")
-			end
-		end
-	end
-  end
 	
-
+			if message
+				@message.save
+				@to_users=params[:message][:recipient].split(', ')
+				@project=Project.find_by_name(params[:message][:project])
+				Message.send_message_to_team_members(@project,@message,@to_users)
+				Message.send_notification_to_team_members(current_user,@to_users,@message)
+				if message
+					@message.save
+					@to_users=params[:message][:recipient].split(', ')
+					@project=Project.find_by_name(params[:message][:project])
+					Message.send_message_to_team_members(@project,@message,@to_users)
+					Message.send_notification_to_team_members(current_user,@to_users,@message)
+					attachment=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
+					attachment.each do |attach|
+					attach.update_attributes(:attachable=>@message)
+				end
+			end
+				session[:attaches_id]=nil
+				#	attachment.attachable=@message
+				#attachment.save
+				render :nothing=>true
+			else
+				render :update do |page|
+				page.alert errors.join("\n")
+				end
+		 end
+	 end
+	end
   def update
     activity=Activity.find_by_id(params[:id])
     message=activity.resource
