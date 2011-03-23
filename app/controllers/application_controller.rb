@@ -30,6 +30,49 @@ skip_before_filter :verify_authenticity_token
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
   end
+  def new_project_via_email
+      from_address=params[:from].to_s
+				if(from_address.include?('<'))
+					from_address=from_address.split('<')
+					from_address=from_address[1].split('>')
+					from_address=from_address[0]
+				end
+				to_address=params[:to].split(',')
+				cc_address=params[:cc].split(',') if params[:cc]
+				logger.info cc_address.inspect if params[:cc]
+				user=User.find_by_email(from_address)
+				if user 
+					message=params[:html].to_s
+					name=params[:subject].to_s
+					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
+					to_address.each do |mail|
+						mail=mail.strip
+						if(mail.include?('<'))
+							mail=mail.split('<')
+							mail=mail[1].split('>')
+							mail=mail[0]
+						end
+						if !mail.to_s.include?("p.rfmocha.com")
+							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+							ProjectMailer.delay.invite_people(user,invite)
+						end
+					end
+					if cc_address
+					cc_address.each do |mail|
+						mail=mail.strip
+						if(mail.include?('<'))
+							mail=mail.split('<')
+							mail=mail[1].split('>')
+							mail=mail[0]
+						end
+						if !mail.to_s.include?("p.rfmocha.com")
+							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+							ProjectMailer.delay.invite_people(user,invite)
+						end
+					end
+					end
+				end
+        end
   
  
   protected
