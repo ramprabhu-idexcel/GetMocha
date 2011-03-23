@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
 	after_create :create_email_ids
 	
   def self.user_projects(user_id)
-    find(:all,:conditions=>['project_users.user_id=?',user_id],:include=>:project_users)
+    find(:all,:conditions=>['project_users.user_id=? AND project_users.status=?',user_id,true],:include=>:project_users)
   end
 	
 	def self.user_active_projects(user_id)

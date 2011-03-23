@@ -11,6 +11,12 @@ gem 'mysql2'
 gem 'devise','1.1.7'
 gem 'delayed_job'
 gem 'json'
+gem 'sanitize','2.0.1'
+
+gem 'devise_ldap_authenticatable'
+gem 'exception_notification_rails3', :require => 'exception_notifier'
+
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

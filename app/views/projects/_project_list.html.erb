@@ -1,6 +1,6 @@
 <div class="l-panel">
 	<div class="sub-header">Project Settings</div>
-	<div class="projects-list">
+	<div class="projects-list" id="active_projects">
 	<% @projects.each do |project| %>
 		<a href="#project" class="project" onclick="javascript:settings_secondpanel('<%= project.id %>');" id="project_list_<%= project.id %>"><span class="icon"></span><%= project.name %></a>
 		<!--<a href="/settings-general" class="project open" onclick="addClass(this);"><span class="icon"></span>Simple Station</a>-->

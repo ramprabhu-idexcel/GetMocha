@@ -8,13 +8,13 @@ class AttachmentsController < ApplicationController
 		session[:attaches_id] ||= []
 		@attachment=Attachment.new(:uploaded_data => params["undefined"])
 		@attachment.save
-			session[:attaches_id] << @attachment.id
+		p	session[:attaches_id] << @attachment.id
 			#~ render :nothing=>true
 		render :json=>{:file=>@attachment.filename, :id=>@attachment.id}.to_json
 	end
 	def remove_attach
 	@attach=Attachment.delete(params[:id])
-	 session[:attaches_id].delete(params[:id].to_i)
+	 Attachment.delete(params[:id].to_i)
 	render :json=>params[:id].to_json
 	end
 	

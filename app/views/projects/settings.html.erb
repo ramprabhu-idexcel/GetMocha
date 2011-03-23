@@ -22,6 +22,13 @@ document.getElementById('project_list_'+id).className="project open";
 else
 document.getElementById('project_list_'+id).className="project";
 <% end %>
+<% @completed_projects.each do |p| %>
+var id=<%= p.id %>;
+if(id==project_id)
+document.getElementById('project_list_'+id).className="project open";
+else
+document.getElementById('project_list_'+id).className="project";
+<% end %>
   $.ajax({
        type :'post',
 			 url : "/projects/"+project_id+"/settings_pane",

@@ -745,7 +745,7 @@ $(document).ready(function() {
 
 function add_new_modal()
 {
-  $('#add_new_mods').show()
+   $('#add_new_mods').slideToggle('fast');
   /*$.ajax({
        type :'post',
        url :"/projects/add_new",
@@ -762,6 +762,7 @@ function add_new_project()
        url :"/projects/new",
             success: function(data){
 			 $('#add_new_mod').html(data); 
+              $('#add_new_mod').show();
        }
     });
       $('#add_new_mods').hide()
