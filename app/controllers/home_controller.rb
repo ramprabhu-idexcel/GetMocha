@@ -33,9 +33,9 @@ def check_email_reply_and_save
 					end
 				end
 			#~ elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
-       new_message_create_via_mail
+       #~ new_message_create_via_mail
 			#~ elsif @dest_address.downcase.include?("ctzm")
-       comment_for_message_via_mail(email)
+       #~ comment_for_message_via_mail(email)
      #~ end
     end
     
