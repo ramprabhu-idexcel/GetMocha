@@ -327,27 +327,39 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			else
 			{
 				//first_panel_navigation
-				length=$('#active_projects').children('').length;
+				active_length=$('#active_projects').children('').length;
+				length=$('.projects-list').children("").length;
 				already_exists="false";
 				for(i=0; i<length; i++)
 				{
-					classopen=$('#active_projects').children('')[i].className;
+					classopen=$('.projects-list').children("")[i].className;
 					if(classopen=="project open")
 					{
+					
+					if(key=="down" && i==length-1)
+					 $('#completed_list').hide();
+					 else if(key=="up" && i==0)
+					 $('#completed_list').show();
+					 else if(key=="down" && i >= active_length-1)
+					 $('#completed_list').show();
+					 else if(key=="up" && i == active_length)
+					 $('#completed_list').hide();
+
+					 
 						if(key=="down" && i==length-1)
-						already_exists=$('#active_projects').children('')[0].id;
+						already_exists=$('.projects-list').children("")[0].id;
 						else if(key=="up" && i==0)
-						already_exists=$('#active_projects').children('')[length-1].id;
+						already_exists=$('.projects-list').children("")[length-1].id;
 						else
 						if(key=="down")
-						already_exists=$('#active_projects').children('')[i+1].id;
+						already_exists=$('.projects-list').children("")[i+1].id;
 						else
-						already_exists=$('#active_projects').children('')[i-1].id;
+						already_exists=$('.projects-list').children("")[i-1].id;
 					}
 				}
 				if(already_exists=="false")
 				{
-						first_item=$('#active_projects').children('')[0].id;
+						first_item=$('.projects-list').children("")[0].id;
 						id=first_item.split('_');
 						id=id[id.length-1];
 						settings_secondpanel(id);
