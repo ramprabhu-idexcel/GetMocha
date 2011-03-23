@@ -24,7 +24,7 @@ GetMocha::Application.routes.draw do
         get 'invite_people_settings'
       end
       member do
-        post 'settings_pane'
+        get 'settings_pane'
       end
     
   end
@@ -67,6 +67,7 @@ GetMocha::Application.routes.draw do
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
+  
   
   resource :comments
    match '/remove_attach/:id' =>"attachments#remove_attach"
