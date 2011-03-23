@@ -62,10 +62,22 @@ class ProjectMailer < ActionMailer::Base
   end
   
   def invite_people(user,invite)
+    logger.info "------------------------------------------------------------"
     @user=user
     @message=invite.message
+    logger.info @message.inspect
+    logger.info @message.class
     @invite_link="#{APP_CONFIG[:site_url]}/projects/join_project/#{invite.invitation_code}"
-    mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com")
+ #   mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com")
+    mail(:to=>"#{invite.email}", :subject=>" on GetMocha.com")
+    @content_type="text/html"
+  end
+  
+  def message_reply(user,comment)
+    @user=user
+    @comment=comment
+    @message=comment.commentable
+    mail( :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject)
     @content_type="text/html"
   end
 end

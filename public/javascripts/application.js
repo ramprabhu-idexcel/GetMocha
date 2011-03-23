@@ -745,92 +745,104 @@ $(document).ready(function() {
     return false;
   });
   
-});//End of doc
+  //drop down
+  $('#add-new').click(function(){
+    $('#add_new_mods').slideToggle('fast');
+    return false;
+  });
+  
+  //add new message modal
+  
+  $('.create_message').live('click',function(){
+    $.ajax({
+      type :'get',
+      url :"/messages/new",
+      success: function(data){
+        $('#add_new_mod').html(data); 
+        $('#add_new_mod').show();
+      }
+    });
+    $('#add_new_mods').hide();
+    return false;
+  });
 
-
-function add_new_modal()
-{
-   $('#add_new_mods').slideToggle('fast');
-  /*$.ajax({
-       type :'post',
-       url :"/projects/add_new",
-            success: function(data){
-           document.getElementById('add_new_mod').innerHTML=data;  
-       }
-    });*/
- 
-}
-function add_new_project()
-{
-  $.ajax({
-       type :'get',
-       url :"/projects/new",
-            success: function(data){
+  //show create project pop-up
+  $('.create_project').live('click',function(){
+    $.ajax({
+      type :'get',
+      url :"/projects/new",
+      success: function(data){
 			 $('#add_new_mod').html(data); 
-              $('#add_new_mod').show();
-       }
+        $('#add_new_mod').show();
+      }
     });
-      $('#add_new_mods').hide()
-}
-function add_new_message()
-{
-  $.ajax({
-       type :'get',
-       url :"/messages/new",
-            success: function(data){
-			$('#add_new_mod').html(data); 
-              $('#add_new_mod').show();
-       }
-    });
-       $('#add_new_mods').hide()
-}
-function project_cancel_button()
-{
- $('.add-item-modal').hide()
-    
-}
-
-function project_save_button()
-{
-var a=$('#data_name').val();
+    $('#add_new_mods').hide()
+    return false;
+  });
+  
+  //cancel message modal
+  $('#m_can').live('click',function(){
+    $('.add-item-modal').hide();
+    return false;
+  });
+  
+  //Cancel project modal
+  $('#p_can').live('click',function(){
+    $('.add-item-modal').hide();
+    return false;
+  });
+  
+  //Save project
+  $('#p_add').live('click',function(){
+    var a=$('#data_name').val();
     var b=$('#data_invites').val();
     var c=$('#data_message').val();
     $.ajax({
-       type :'post',
-       url :"/projects",
-       data : $('#form1').serialize(),
-       success: function(data){
-if(data.length==1)
-         $('.add-item-modal').hide();
-       },
-	failure: function(){
-alert("hi");
-}
+      type :'post',
+      url :"/projects",
+      data : $('#form1').serialize(),
+      success: function(data){
+        if(data.length==1)
+        $('.add-item-modal').hide();
+      },
+      failure: function(){
+        alert("Error");
+      }
     });
-}
-function message_cancel_button()
-{
-$('.add-item-modal').hide()
-}
-function message_save_button()
-{
-  //$('#form2').submit();
-//$('.file_upload_start button').click();
-
-
- $.ajax({
-       type :'post',
-       url :"/messages",
-       data : $('#form2').serialize(),
-       success: function(data){
-if(data.length==1)
-         $('.add-item-modal').hide();
-       }
+    return false;
+  });
+  
+  //Message save button
+  $('#m_add').live('click',function(){
+    $.ajax({
+      type :'post',
+      url :"/messages",
+      data : $('#form2').serialize(),
+      success: function(data){
+        if(data.length==1)
+        $('.add-item-modal').hide();
+      }
     });
-}
-$('#start_uploads').click(function () {
+    return false;
+  });
+  
+  $('#start_uploads').live('click',function () {
     $('.file_upload_start button').click();
-});
+  });
+  
+  $('.create_task, .create_task_list').click(function(){
+    return false;
+  });
+  
+});//End of doc
+
+
+
+
+
+
+
+
 
 /* $('#attach').fileUploadUI({
         uploadTable: $('#files'),

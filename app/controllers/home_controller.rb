@@ -8,32 +8,30 @@ end
 
 def check_email_reply_and_save
 		 if params[:from] 
-			 logger.info params[:to].inspect
      @dest_address=params[:to].split(',')
 		 @dest_address=@dest_address[0]
-     logger.info @dest_address
      if @dest_address.include?("#{APP_CONFIG[:project_email]}")
-        from_address=params[:from].to_s
-				user=User.find_by_email(from_address)
-				if user 
-					message=params[:html].to_s
-					name=params[:subject].to_s
-					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
-					params[:to].each do |mail|
-						if !mail.to_s.include?("p.rfmocha.com")
-							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-							ProjectMailer.delay.invite_people(user,invite)
-						end
-					end
-					params[:cc].each do |mail|
-						if !mail.to_s.include?("p.rfmocha.com")
-							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-							ProjectMailer.delay.invite_people(user,invite)
-						end
-					end
-				end
+    new_project_via_email
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
-       #~ new_message_create_via_mail
+				 from_address=params[:from].to_s
+				if(from_address.include?('<'))
+					from_address=from_address.split('<')
+					from_address=from_address[1].split('>')
+					from_address=from_address[0]
+				end
+        project_id=@dest_address
+				project_id=project_id.split('@')
+				project_id=project_id[0].split('-').last
+				project=Project.find(project_id)
+				user=User.find_by_email(from_address)
+				logger.info project.inspect
+				logger.info user.inspect
+				if ((user && !user.is_guest) || project.is_public?)
+     message=params[:html]
+     name=params[:subject].to_s
+     message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+     activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
+      end
 			elsif @dest_address.downcase.include?("ctzm")
        #~ comment_for_message_via_mail(email)
      end
@@ -42,27 +40,4 @@ def check_email_reply_and_save
 	  render :text => "success"
 	end
 	
-	  def new_post_create_via_mail
-    from_address=params[:from].to_s
-    user=User.find_by_email(from_address)
-    if user 
-     message=params[:html].to_s
-     name=params[:subject].to_s
-     project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
-     params[:to].each do |mail|
-      if !mail.to_s.include?("p.rfmocha.com")
-       invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-       ProjectMailer.delay.invite_people(user,invite)
-      end
-     end
-     params[:cc].each do |mail|
-      if !mail.to_s.include?("p.rfmocha.com")
-       invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-       ProjectMailer.delay.invite_people(user,invite)
-      end
-     end
-    end
-   end
-   
-
 end
