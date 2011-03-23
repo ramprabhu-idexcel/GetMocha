@@ -1,5 +1,7 @@
-<p>Welcome <%= @resource.email %>!</p>
 
-<p>You can confirm your account through the link below:</p>
+ Please verify the email address: [<%= @resource.email %>] that you entered on GetMocha.com by clicking the following link:
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+
+
+

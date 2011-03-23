@@ -26,7 +26,7 @@ $(document).ready(function() {
      });
      
    $('#user_submit').click(function(){
-      
+             
       if (($('#user_email').val()=="") && ($("#user_password").val()==""))
        {
             alert("Email and Password can't be blank");
@@ -391,6 +391,11 @@ $(document).ready(function() {
        {
           alert("please enter the confirm password");
        }
+       else if(($('#txt_password').val().length) < 6)
+       {
+          alert('password & confirm password should be minimum 6 characters');
+       }
+             
        else if (($('#txt_confirm').val())!=($("#txt_password").val()))
         {
           alert('password & Confirm Password should be same');
