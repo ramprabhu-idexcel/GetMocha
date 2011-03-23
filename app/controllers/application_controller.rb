@@ -54,7 +54,7 @@ skip_before_filter :verify_authenticity_token
 						end
 						if !mail.to_s.include?("p.getmocha.com")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-              ProjectMailer.invite_people(user,invite).deliver!
+              ProjectMailer.delay.invite_people(user,invite)
 						end
 					end
 					if cc_address
