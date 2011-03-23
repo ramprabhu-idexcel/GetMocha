@@ -54,9 +54,7 @@ skip_before_filter :verify_authenticity_token
 						end
 						if !mail.to_s.include?("p.getmocha.com")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-              logger.info "******************************"
-              logger.info invite.inspect
-							ProjectMailer.invite_people(user,invite).deliver!
+              ProjectMailer.invite_people(user,invite).deliver!
 						end
 					end
 					if cc_address
@@ -74,7 +72,32 @@ skip_before_filter :verify_authenticity_token
 					end
 					end
 				end
-        end
+      end
+      
+      def message_create_via_email
+         from_address=params[:from].to_s
+				if(from_address.include?('<'))
+					from_address=from_address.split('<')
+					from_address=from_address[1].split('>')
+					from_address=from_address[0]
+				end
+        project_id=@dest_address
+				project_id=project_id.split('@')
+				project_id=project_id[0].split('-').last
+				project=Project.find(project_id)
+				user=User.find_by_email(from_address)
+				if ((user && !user.is_guest) || project.is_public?)
+     message=params[:html]
+     name=params[:subject].to_s
+     message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+		 activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
+		if params[:attachments] && params[:attachments].to_i > 0
+				for count in 1..params[:attachments].to_i
+					attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+					end
+			end	
+      end
+      end
   
  
   protected
