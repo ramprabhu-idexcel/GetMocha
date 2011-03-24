@@ -13,7 +13,7 @@
 
  <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => { :method => :post,:id=>"fpwd" }) do |f| %>
  
-	  <%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address" %> 
+	  <%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address" %> 
 		
 	  <%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
 
@@ -38,7 +38,7 @@
 				 
               <%= f.submit "Log in",:class=>"btn login-btn" %>
 		   
-					  	 <%= f.text_field :email, :class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
+					  	 <%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
 																					
          <%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %>
 							

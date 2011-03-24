@@ -11,8 +11,7 @@ class CreateProjects < ActiveRecord::Migration
     end
     add_index "projects", :user_id
   end
- 
-  def self.down
+   def self.down
     drop_table :projects
   end
 end
