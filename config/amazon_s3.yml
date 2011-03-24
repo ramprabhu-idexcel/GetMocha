@@ -1,8 +1,8 @@
 development:
-  bucket_name: appname_development
-  access_key_id: 
-  secret_access_key: 
-  distribution_domain: XXXX.cloudfront.net
+  bucket_name: getmocha-development
+  access_key_id: AKIAJQ575MT55SYOALSA
+  secret_access_key: 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
+  #~ distribution_domain: XXXX.cloudfront.net
 
 test:
   bucket_name: appname_test
@@ -11,7 +11,7 @@ test:
   distribution_domain: XXXX.cloudfront.net
 
 production:
-  bucket_name: appname
-  access_key_id: 
-  secret_access_key: 
-  distribution_domain: XXXX.cloudfront.net
+  bucket_name: getmocha-production
+  access_key_id: AKIAJQ575MT55SYOALSA
+  secret_access_key: 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
+  #~ distribution_domain: XXXX.cloudfront.net

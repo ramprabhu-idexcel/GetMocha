@@ -49,10 +49,14 @@ class MessagesController < ApplicationController
 		else
 		  @project=Project.find_by_name(params[:message][:project])
 		end
-		if !@project
-				render :update do |page|
-				page.alert "Please enter existing projects only"
-				end
+	if !@project
+			 render :update do |page|
+			 if session[:project_name].nil?&&params[:message][:project].blank?
+			 page.alert "Please Enter the Project name"
+			 elsif !params[:message][:project].blank?
+			 page.alert "Please enter existing projects only" 
+			 end
+		   end
 		else
 			@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
 
@@ -79,8 +83,8 @@ class MessagesController < ApplicationController
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message
 				#attachment.save
-        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id)
-				render :json=>@message.attributes.merge({:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url})
+        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
+				render :json=>@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url})
 			else
 				render :update do |page|
 				page.alert errors.join("\n")
