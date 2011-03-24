@@ -161,6 +161,14 @@
 			{
 			short_modal_down('A')
 			}
+			if(event.identifier=='S')
+			{
+			short_modal_down('S')
+			}
+			if(event.identifier=='X')
+			{
+			short_modal_down('X')
+			}
 			 
     }
 
@@ -184,6 +192,8 @@
 	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T)
 	shortcutHandler.registerShortcut('A',goog.events.KeyCodes.A)
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z)
+	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
+	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -316,7 +326,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			second_panel=$('#settings_secondpanel').css('visibility');
 			people=$('#settings_people').css('display');
 			general=$('#settings_general').css('display');
-			if((people=="block" || general=="block") && (key=="down" || key=="up"))
+			if((people=="block" || general=="block") && (key=="down" || key=="up") ||( key=="S" || key=="X"))
 			{
 				// for second panel navgation
 				people=$('#settings_people').css('display');
