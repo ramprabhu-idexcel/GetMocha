@@ -125,9 +125,16 @@ skip_before_filter :verify_authenticity_token
 				content=content.split("---")
 				content = content[0...content.length-1].join("---")
 			end
+			logger.info content.inspect
 		  if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
-				 #~ content = Sanitize.clean(content, Sanitize::Config::BASIC)
-		  end	 
+				 content = Sanitize.clean(content, Sanitize::Config::BASIC)
+			end	 
+			logger.info content.inspect
+			if content.include?("\240")
+				content=content.split("\240").join
+				logger.info "***********************************************"
+			end
+			logger.info content.inspect
 			if user
 				comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
 				message.activities.each do |activity|
