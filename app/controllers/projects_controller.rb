@@ -183,6 +183,9 @@ class ProjectsController < ApplicationController
 				send_data(s3_file.value,:url_based_filename=>true,:filename=>attachment.filename,:type=>attachment.content_type)			
 		end		
 	end
+	  def s3_connect
+    Base.establish_connection!(:access_key_id => S3_CONFIG[:access_key_id],:secret_access_key => S3_CONFIG[:secret_access_key])
+  end
 	
 
 end
