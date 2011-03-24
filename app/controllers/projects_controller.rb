@@ -1,8 +1,10 @@
+	require 'aws/s3'
 class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!
 	layout "application", :except=>['new']
-	require 'aws/s3'
+
+	  include AWS::S3
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
 		  @user_emails=[]
