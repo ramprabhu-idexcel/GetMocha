@@ -113,26 +113,21 @@ skip_before_filter :verify_authenticity_token
 			project=Project.find(message.project_id)
 			user=User.find_by_email(from_address)
 			content1=params[:html].split("##Type above this line to post a reply to this message##")
-					 logger.info(content1)
-					content=content1[0]
-					content_f = content.split("wrote:")[0]
-					content2=content_f.split("On")
-					content = content2[0...content2.length-1].join("On")
-					if content.include?("gmail_quote")
-					content=content.split('<div class="gmail_quote">')[0]
-					end
-					if content.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
-						content=content.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
-						content=content.split("---")
-						content = content[0...content.length-1].join("---")
-					end
-					logger.info "---------------------------------------------------------"	
-           logger.info(content)					
-					 logger.info "---------------------------------------------------------"
-					 if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
-						 content = Sanitize.clean(content, Sanitize::Config::BASIC)
-					 end	 
-					 logger.info content.inspect
+			content=content1[0]
+			content_f = content.split("wrote:")[0]
+			content2=content_f.split("On")
+			content = content2[0...content2.length-1].join("On")
+			if content.include?("gmail_quote")
+				content=content.split('<div class="gmail_quote">')[0]
+			end
+			if content.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
+				content=content.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
+				content=content.split("---")
+				content = content[0...content.length-1].join("---")
+			end
+		  if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
+				 content = Sanitize.clean(content, Sanitize::Config::BASIC)
+		  end	 
 			if user
 				comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
 				message.activities.each do |activity|
