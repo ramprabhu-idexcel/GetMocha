@@ -1,5 +1,5 @@
 class ProjectMailer < ActionMailer::Base
-  default :from => "mochabot@getmocha.com", :except=>['message_notification']
+  default :from => "mochabot@getmocha.com", :except=>['message_notification','message_reply']
     def project_renamed(user,old_project,new_project,to_user)
       @user = user
       @old_project=old_project
@@ -40,7 +40,7 @@ class ProjectMailer < ActionMailer::Base
     @message=message
     @project=message.project
     custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
-    if custom_email
+    if custom_email.empty?
       from=custom_email.email
     else
      from="mochabot@getmocha.com"
@@ -65,8 +65,14 @@ class ProjectMailer < ActionMailer::Base
   def message_reply(user,comment)
     @user=user
     @comment=comment
+     custom_email=@comment.commentable.project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
+    if custom_email.empty?
+      from=custom_email.email
+    else
+     from="mochabot@getmocha.com"
+    end
     @message=comment.commentable
-    mail( :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject)
+    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject)
     @content_type="text/html"
   end
 end
