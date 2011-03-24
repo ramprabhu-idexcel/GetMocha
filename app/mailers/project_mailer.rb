@@ -1,5 +1,5 @@
 class ProjectMailer < ActionMailer::Base
-  default :from => "mochabot@getmocha.com"
+  default :from => "mochabot@getmocha.com", :except=>['message_notification']
     def project_renamed(user,old_project,new_project,to_user)
       @user = user
       @old_project=old_project
