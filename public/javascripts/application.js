@@ -425,6 +425,7 @@ $(document).ready(function() {
         $('#my_profile').hide();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').show();
+        $('#people_settings_popup').show();
         return false;
       });
       

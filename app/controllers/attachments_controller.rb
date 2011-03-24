@@ -1,3 +1,4 @@
+#require 'home/kiruba/Desktop/GetMocha/vendor/plugins/attachment_fu/lib/technoweenie/attachment_fu.rb'
 class AttachmentsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	def new
@@ -8,7 +9,8 @@ class AttachmentsController < ApplicationController
 		session[:attaches_id] ||= []
 		@attachment=Attachment.new(:uploaded_data => params["undefined"])
 		@attachment.save
-		p	session[:attaches_id] << @attachment.id
+		session[:attaches_id] << @attachment.id
+		#@attachment.after_process_attachment
 			#~ render :nothing=>true
 		render :json=>{:file=>@attachment.filename, :id=>@attachment.id}.to_json
 	end

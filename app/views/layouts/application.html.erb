@@ -139,7 +139,7 @@
 			}
 			if(event.identifier=='DOWN')
 			{
-			 short_modal_down();
+			 short_modal_down('down');
 			}
 			if(event.identifier=='RIGHT')
 			{
@@ -152,6 +152,22 @@
 			if(event.identifier=='LEFT')
 			{
 			short_modal_left();
+			}
+			if(event.identifier=='Z')
+			{
+			short_modal_down('Z')
+			}
+			if(event.identifier=='A')
+			{
+			short_modal_down('A')
+			}
+			if(event.identifier=='S')
+			{
+			short_modal_down('S')
+			}
+			if(event.identifier=='X')
+			{
+			short_modal_down('X')
 			}
 			 
     }
@@ -174,6 +190,10 @@
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
 	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T)
+	shortcutHandler.registerShortcut('A',goog.events.KeyCodes.A)
+	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z)
+	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
+	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -190,13 +210,13 @@
     });
   });
 	
-	function short_modal_down()
+	function short_modal_down(key)
 	{
 		location1=window.location.href;
 		find_loc=location1.search(/settings/);
 		if(find_loc!=-1)
 		{
-			settings_navigation_down('down');
+			settings_navigation_down(key);
 		}
 	}
 	
@@ -306,7 +326,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			second_panel=$('#settings_secondpanel').css('visibility');
 			people=$('#settings_people').css('display');
 			general=$('#settings_general').css('display');
-			if(people=="block" || general=="block")
+			if((people=="block" || general=="block") && (key=="down" || key=="up") ||( key=="S" || key=="X"))
 			{
 				// for second panel navgation
 				people=$('#settings_people').css('display');
@@ -335,23 +355,22 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 					classopen=$('.projects-list').children("")[i].className;
 					if(classopen=="project open")
 					{
-					
-					if(key=="down" && i==length-1)
+					if((key=="down" || key=="Z") && (i==length-1))
 					 $('#completed_list').hide();
-					 else if(key=="up" && i==0)
+					 else if((key=="up" || key=="A") && (i==0))
 					 $('#completed_list').show();
-					 else if(key=="down" && i >= active_length-1)
+					 else if((key=="down" || key=="Z") && (i >= active_length-1))
 					 $('#completed_list').show();
-					 else if(key=="up" && i == active_length)
+					 else if((key=="up" || key=="A") && (i == active_length))
 					 $('#completed_list').hide();
 
 					 
-						if(key=="down" && i==length-1)
+						if((key=="down" || key=="Z") && (i==length-1))
 						already_exists=$('.projects-list').children("")[0].id;
-						else if(key=="up" && i==0)
+						else if((key=="up" || key=="A") && (i==0))
 						already_exists=$('.projects-list').children("")[length-1].id;
 						else
-						if(key=="down")
+						if(key=="down" || key=="Z")
 						already_exists=$('.projects-list').children("")[i+1].id;
 						else
 						already_exists=$('.projects-list').children("")[i-1].id;

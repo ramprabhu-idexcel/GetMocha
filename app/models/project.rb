@@ -24,11 +24,11 @@ class Project < ActiveRecord::Base
   end
 	
 	def self.user_active_projects(user_id)
-    find(:all,:conditions=>['project_users.user_id=? AND projects.status!=?',user_id,3],:include=>:project_users)
+    find(:all,:conditions=>['project_users.user_id=? AND projects.status!=? AND project_users.status=?',user_id,3,true],:include=>:project_users)
   end
 	
 	def self.user_completed_projects(user_id)
-    find(:all,:conditions=>['project_users.user_id=? AND projects.status=?',user_id,3],:include=>:project_users)
+    find(:all,:conditions=>['project_users.user_id=? AND projects.status=? AND project_users.status=?',user_id,3,true],:include=>:project_users)
   end
   
 	def  create_email_ids
