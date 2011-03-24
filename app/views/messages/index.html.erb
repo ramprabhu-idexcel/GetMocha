@@ -5,25 +5,19 @@
 </div>
 <div class="m-panel-contain">
   <div class="m-panel" id="message_area">
-    
-  </div><!--end of m-panel-->
+	</div><!--end of m-panel-->
 </div><!--end of m-panel-contain-->
 <div class="r-panel-contain">
   <div class="r-panel">
-  
-    <%= render 'add_comment'%>
-    
-    <div id="comment_area">
-  
-    </div>
-    
+   <%= render 'add_comment'%>
+     <div id="comment_area">
+      </div>
     <div class="expand-all" style="display:none;">
       <a href="#" id="message_expand">
         <span class="icon"></span>
         <span>Expand all comments</span>
       </a>
     </div>
-    
   </div>
 </div><!--end of r-panel-contain-->
 <script>
@@ -32,8 +26,7 @@ $.messages;
 
  (function($) {
 
-            
-           var restfulApp = Backbone.Controller.extend({
+            var restfulApp = Backbone.Controller.extend({
                restfulUrl: "<%="#{APP_CONFIG[:site_url]}/"%>",
                routes: {
                '*message/:project_id' : 'projectMessage',

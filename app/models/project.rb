@@ -30,11 +30,9 @@ class Project < ActiveRecord::Base
 	def self.user_completed_projects(user_id)
     find(:all,:conditions=>['project_users.user_id=? AND projects.status=? AND project_users.status=?',user_id,3,true],:include=>:project_users)
   end
-  
-	def  create_email_ids
+  def  create_email_ids
 		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
 	end
-	
 	def is_member?(user_id)
 		member=Project.find(:first, :conditions=>['project_users.user_id=? AND project_users.status=?', user_id,true], :include=>:project_users)
 		!member.present?
