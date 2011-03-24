@@ -72,7 +72,7 @@ class Message < ActiveRecord::Base
   end
   
   def subscribed_user_names
-    subscribed_users.collect{|a| a.user.name}.sort if !subscribed_users.blank?
+    subscribed_users.collect{|a| a.user.name}.sort
   end
   
   def display_subscribed_users
