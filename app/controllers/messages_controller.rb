@@ -49,10 +49,14 @@ class MessagesController < ApplicationController
 		else
 		  @project=Project.find_by_name(params[:message][:project])
 		end
-		if !@project
-				render :update do |page|
-				page.alert "Please enter existing projects only"
-				end
+	if !@project
+			 render :update do |page|
+			 if session[:project_name].nil?&&params[:message][:project].blank?
+			 page.alert "Please Enter the Project name"
+			 elsif !params[:message][:project].blank?
+			 page.alert "Please enter existing projects only" 
+			 end
+		   end
 		else
 			@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
 
