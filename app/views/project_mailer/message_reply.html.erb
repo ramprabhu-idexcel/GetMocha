@@ -3,8 +3,8 @@
 
     <%= @comment.comment %> <br/>
 
-    <% if @message.attachments && !@message.attachments.empty? %>
-			<% @message.attachments.each do |attach| %>
+    <% if @comment.attachments && !@comment.attachments.empty? %>
+			<% @comment.attachments.each do |attach| %>
 			<br/>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%=attach.filename%></a> <br/>
 					<% end %>
