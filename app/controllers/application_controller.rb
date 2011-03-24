@@ -126,7 +126,7 @@ skip_before_filter :verify_authenticity_token
 				content = content[0...content.length-1].join("---")
 			end
 		  if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
-				 content = Sanitize.clean(content, Sanitize::Config::BASIC)
+				 #~ content = Sanitize.clean(content, Sanitize::Config::BASIC)
 		  end	 
 			if user
 				comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
