@@ -1,16 +1,14 @@
  <%= javascript_include_tag 'colorpicker','jquery.fileupload-ui','jquery.fileupload'%>
 <div class="l-panel-contain">
-		<div class="l-panel">
-		  
-			<div class="sub-header">Personal Settings</div>
-			<a href="/settings-profile" class="my-account open" onclick="addClass(this);"><span class="icon"></span>My Account</a>
-		</div>
+	<div class="l-panel">
+	<div class="sub-header">Personal Settings</div>
+	<a href="/settings-profile" class="my-account open" onclick="addClass(this);"><span class="icon"></span>My Account</a>
+	</div>
 	</div>
 	<div class="m-panel-contain">
 		<div class="m-panel">
 			<a href="#" class="m-tab open" id="myprofile1">My Profile</a>
 			<a href="#" class="m-tab alt" id="mycontact1">My Contacts</a>
-
 		</div>
 	</div>
 	<div class="r-panel-contain" id="my_profile">
@@ -22,13 +20,11 @@
 					<%else%>
   		        	<img src="<%=current_user.attachment.public_filename%>" width="69" height="69"  id="default-image" class="avatar-lg-img" alt="avatar"/>
 				   <%end%>
-				  			 
-			<table id="files" ></table>
+  		<table id="files" ></table>
 			<form id="file_upload" action="/updates/save_image"  method="POST" enctype="multipart/form-data">
 		 	<div class="drag-drop">Drag and drop files here</div>
 			</form>
-			
-				<div class="clear-fix"></div>
+			<div class="clear-fix"></div>
 			</div>
 				<div class="user-info" id="user_information">
 				<form action="">
@@ -104,8 +100,7 @@
 				      	   <a href="#" class="add-email" id="add_new_email">+ Add another email</a>
 				       	</div>
 				     </fieldset>
-						 
-				    <fieldset>
+						 <fieldset>
 						<div class="label-contain">
 							   <p><%= label_tag "Password:"%><br /></p>
 						 </div>
@@ -115,7 +110,6 @@
 							     <%=link_to "Edit","#",:class=>"edit",:id=>"password",:style=>"visibility:hidden;"%>
  		       	</div>
 				    </fieldset>
-						
 						 <fieldset>
 							<div class="label-contain" id="confirm" style="display:none;">
 						      	<p><%= label_tag "Confirm:"%><br /></p>
@@ -126,7 +120,6 @@
 							       <%=link_to "Save","#",:class=>"edit",:id=>"save_confirm",:style=>"visibility:hidden;"%>
 						  </div>
 						</fieldset>
-						
 						<fieldset>
 						<div class="label-contain">
 							<p><%= label_tag "Phone:"%><br /></p>
@@ -184,8 +177,7 @@
 			</div>
 		</div>
 	</div>
-  
-  <div class="r-panel-contain" id="my_contacts" style="display:none;">
+    <div class="r-panel-contain" id="my_contacts" style="display:none;">
 		<div class="r-panel">
 			<div class="user-list">
       <%current_user.my_contacts.each do |user|%>
@@ -193,8 +185,7 @@
 					<div class="left-icons">
 						<div class="avatar-mini"></div>
 			  		        	<img src="<%=user.image_url%>" class="avatar-mini-img" alt="avatar" width= "21" height="20"></img>
-
-            </div>
+           </div>
 					<div class="info">
 						<span class="position"><%=user.title%></span>
 						<span class="name"><%=user.full_name%></span>
@@ -207,12 +198,9 @@
 			</div>
 		</div>
 	</div>
-
 <script>
 var UserEdit=true;
-
 $('#file_upload').fileUploadUI({
-
    initUpload: function (event, files, index, xhr, handler, callBack) {
         var regexp = /\.(png)|(jpg)|(gif)$/i;
          if (!regexp.test(files[index].name)) {
@@ -239,9 +227,6 @@ $('#file_upload').fileUploadUI({
       $('img#default-image').attr('src',json.file_name);
     }
   });
-    
-	
-
 </script>
 
 

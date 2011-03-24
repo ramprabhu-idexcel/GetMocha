@@ -7,8 +7,6 @@ class UserMailer < ActionMailer::Base
    end
    # Method added for postfix functionality
    def receive(email)
-    
-  
     if email && email.from && email.from.first
      @dest_address=email.to.first.to_s
      logger.info @dest_address
@@ -19,14 +17,12 @@ class UserMailer < ActionMailer::Base
      elsif @dest_address.downcase.include?("ctzm")
        comment_for_message_via_mail(email)
      end
-    end
-    
-   end
-   
-   def new_post_create_via_mail(email)
+     end
+     end
+     def new_post_create_via_mail(email)
     from_address=email.from.first.to_s
     user=User.find_by_email(from_address)
-    if user 
+    if user
      message=email.body.to_s
      name=email.subject.to_s
      project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
@@ -41,11 +37,10 @@ class UserMailer < ActionMailer::Base
        invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
        ProjectMailer.delay.invite_people(user,invite)
       end
-     end
-    end
-   end
-   
-   def new_message_create_via_mail(email)
+      end
+      end
+      end
+      def new_message_create_via_mail(email)
     from_address=email.from.first.to_s
     project_id=email.to.first.to_s
     project_id=project_id.split('@')
@@ -58,10 +53,10 @@ class UserMailer < ActionMailer::Base
      message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
      activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
      if email.has_attachments?
-      for attachment in email.attachments 
+      for attachment in email.attachments
        #~ tempfile=File.new("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}",'w')
        #~ tempfile.write_nonblock(attachment.body)
-       #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}")) 
+       #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}"))
        #~ tempfile.close
        attach=Attachment.new
        attach.filename = attachment.filename
@@ -79,19 +74,18 @@ class UserMailer < ActionMailer::Base
        if !File.exists?("#{Rails.root}/public/attachments/#{path[1]}")
         system "mkdir #{Rails.root}/public/attachments/#{path[1]}"
        end
-       while i<path_length do 
+       while i<path_length do
         system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
         temp="#{path[i]}"
         i=i+1
-       end
-       tempfile=File.new("#{Rails.root}/public/#{attach.public_filename}",'w')
-       tempfile.write_nonblock(attachment.body)
-      end
-     end
-    end
-   end
-   
-   def comment_for_message_via_mail(email)
+        end
+        tempfile=File.new("#{Rails.root}/public/#{attach.public_filename}",'w')
+        tempfile.write_nonblock(attachment.body)
+        end
+        end
+        end
+        end
+        def comment_for_message_via_mail(email)
     from_address=email.from.first.to_s
     message_id=email.to.first.gsub(/[a-z]+/, "")
     user=User.find_by_email(from_address)
@@ -104,10 +98,10 @@ class UserMailer < ActionMailer::Base
       activity.update_attributes(:is_read=>false)
      end
      if email.has_attachments?
-      for attachment in email.attachments 
+      for attachment in email.attachments
        #~ tempfile=File.new("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}",'w')
        #~ tempfile.write_nonblock(attachment.body)
-       #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}")) 
+       #~ a=Attachment.new(:uploaded_data => File.open("#{Rails.root}/tmp/attachment_fu/#{attachment.filename}"))
        #~ tempfile.close
        attach=Attachment.new
        attach.filename = attachment.filename
@@ -125,16 +119,15 @@ class UserMailer < ActionMailer::Base
        if !File.exists?("#{Rails.root}/public/attachments/#{path[1]}")
         system "mkdir #{Rails.root}/public/attachments/#{path[1]}"
        end
-       while i<path_length do 
+       while i<path_length do
         system "mkdir #{Rails.root}/public/attachments/0000/#{temp}"
         temp="#{path[i]}"
         i=i+1
-       end
+        end
        tempfile=File.new("#{Rails.root}/public/#{attach.public_filename}",'w')
        tempfile.write_nonblock(attachment.body)
       end
      end
     end
+    end
    end
-   
-end

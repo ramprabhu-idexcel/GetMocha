@@ -1,36 +1,29 @@
-
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 <%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1', :name=>"forms1"} do |f|%>
 <div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
-		<a class="save-btn" id="p_add" href="#project_create" >Save</a> 
+		<a class="save-btn" id="p_add" href="#project_create" >Save</a>
 		<a class="cancel-btn" id="p_can" href="#project_cancel" >Cancel</a>
 		Add New Project
-	</div>
+		</div>
 	<div class="modal-top-right"></div>
 	<div class="modal-body-contain">
 		<div class="modal-body">
-
 			<div class="modal-input">
-			
-				<fieldset>
+			<fieldset>
 					<label>Name:</label>
-				
-							<%=text_field  :project, 'name', :class=>"textfield", :id=>"txtInput1" %>
+						<%=text_field  :project, 'name', :class=>"textfield", :id=>"txtInput1" %>
 				</fieldset>
 				<fieldset>
 					<label>Invite:</label>
-					
-					 <%=text_field :invite, 'email', :class=>"textfield", :id=>"txtInput2"%>
+  				 <%=text_field :invite, 'email', :class=>"textfield", :id=>"txtInput2"%>
 				</fieldset>
 				<fieldset id="ellaborate">
 					<label>Message:</label>
-					
 				 <%=text_area :invite,:message, :class=>'textfield', :rows=>"1", :cols=>"30", :onfocus=>"javascript:resizing()"%>
 				</fieldset>
-			
 			</div>
 		</div>
 	</div>
@@ -41,18 +34,15 @@
 <%end%>
 <script>
 function resizing(){
-
 	document.getElementById('ellaborate').className="open";
 	document.getElementById('invite_message').className="textarea";
 	}
 
 <%=@emails=[]%>
 	<% @user_emails.each do |f|%>
-	
-	<%@emails<<f <<","%>
+	   <%@emails<<f <<","%>
 		var userEmails= "<%= @emails %>";
 	<%end%>
-
 				userEmails=userEmails.split(',');
 			  var ac2 = new goog.ui.AutoComplete.Basic(
       userEmails, document.getElementById('txtInput2'), false);
