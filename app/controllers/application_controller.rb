@@ -42,7 +42,7 @@ skip_before_filter :verify_authenticity_token
 				
 				user=User.find_by_email(from_address)
 				if user 
-					message=params[:html]
+					message=params[:text]
 					name=params[:subject].to_s
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
 					to_address.each do |mail|
@@ -112,7 +112,25 @@ skip_before_filter :verify_authenticity_token
 			message=Message.find(message_id)		
 			project=Project.find(message.project_id)
 			user=User.find_by_email(from_address)
-			content=params[:html]
+			content1=params[:html].split("##Type above this line to post a reply to this message##")
+			content=content1[0]
+			content_f = content.split("wrote:")[0]
+			content2=content_f.split("On")
+			content = content2[0...content2.length-1].join("On")
+			if content.include?("gmail_quote")
+				content=content.split('<div class="gmail_quote">')[0]
+			end
+			if content.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
+				content=content.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
+				content=content.split("---")
+				content = content[0...content.length-1].join("---")
+			end
+			if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
+				 content = Sanitize.clean(content, Sanitize::Config::BASIC)
+			end	 
+			if content.include?("\240")
+				content=content.split("\240").join
+			end
 			if user
 				comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
 				message.activities.each do |activity|
