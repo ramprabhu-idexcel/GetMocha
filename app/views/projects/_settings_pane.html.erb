@@ -37,7 +37,7 @@
 						<div class="info-right">
 						<span class="info"><%= @project.message_email_id %></span><br />
 						<% @project.custom_emails.each do |mail| %>
-						<% custom=CustomEmail.find(:first, :conditions=>['email=? AND verification_code IS NULL', mail]) %>
+						<% custom=CustomEmail.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"]) %>
 							<% if mail.custom_type=="Message" %>
 							<span class="info"><%= mail.email %><%= custom ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= @project.id %>');">Delete</a>		<br/>		
 							<% end %>
