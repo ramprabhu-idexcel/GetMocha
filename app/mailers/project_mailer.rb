@@ -40,7 +40,7 @@ class ProjectMailer < ActionMailer::Base
     @message=message
     @project=message.project
     custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
-    if custom_email.empty?
+    if custom_email && !custom_email.blank?
       from=custom_email.email
     else
      from="mochabot@getmocha.com"
@@ -66,7 +66,7 @@ class ProjectMailer < ActionMailer::Base
     @user=user
     @comment=comment
      custom_email=@comment.commentable.project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
-    if custom_email.empty?
+    if custom_email && !custom_email.blank?
       from=custom_email.email
     else
      from="mochabot@getmocha.com"
