@@ -6,12 +6,12 @@ GetMocha::Application.routes.draw do
   
   devise_scope :user do
     root :to => "devise/registrations#edit"
-    get "sign_in", :to => "devise/sessions#new",:as=>"new_user_session"
+    get "signin", :to => "devise/sessions#new",:as=>"new_user_session"
     get "logout",:to=>"devise/sessions#destroy",:as=>"destroy_user_session"
     get "forgot_password",:to=>"devise/passwords#new",:as=>"new_user_password"
     get "resend_confirmation",:to=>"devise/confirmations#new",:as=>"new_user_confirmation"
     get "change_password",:to=>"devise/passwords#edit",:as=>"edit_user_password"
-    get "sign_up",:to=>"devise/registrations#new",:as=>"new_user_registration"
+    get "signup",:to=>"devise/registrations#new",:as=>"new_user_registration"
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
     get "create" ,:to=>"devise/projects#create"
   end

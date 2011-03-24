@@ -16,7 +16,7 @@ class UsersController <  Devise::RegistrationsController
          
       render :udpate do |page|
         page.alert('Activation link has been sent to your account')
-        page.redirect_to '/sign_in'
+        page.redirect_to '/signin'
       end
       
     else

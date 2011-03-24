@@ -44,7 +44,7 @@ $(document).ready(function() {
       {       
      
       $.ajax({
-        url:'/users/sign_in',
+        url:'/users/signin',
         data: $('form#user_login').serialize(),
         type: "POST",
         success: function(data){

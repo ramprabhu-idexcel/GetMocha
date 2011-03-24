@@ -5,7 +5,7 @@ class ConfirmationController < Devise::ConfirmationsController
 
     if resource.errors.empty?
       set_flash_message :notice, :confirmed
-			 redirect_to   "/sign_in"
+			 redirect_to   "/signin"
     else
         render_with_scope :new
 			end
