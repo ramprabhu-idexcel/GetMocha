@@ -47,13 +47,14 @@ GetMocha::Application.configure do
   :email_prefix => "[Exception] ",
   :sender_address => %{"Exception Notifier" <admin@getmocha.com>},
   :exception_recipients => %w{priya@railsfactory.org senthilkumar@sedin.co.in c.selvakumar@sedin.co.in}
-   ActionMailer::Base.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :enable_starttls_auto => true,
-    :port => 587,
-    :authentication => :plain,
-    :user_name => "ramprabu.n@railsbuddies.com",
-    :password => 'ramprabu123'
+ActionMailer::Base.delivery_method = :smtp  
+ActionMailer::Base.smtp_settings = {
+  :address => "smtp.sendgrid.net",
+  :port => '25',
+  :domain => "reply.getmocha.com",
+  :authentication => :plain,
+  :user_name => "jesse@catalystfactory.com",
+  :password => "railsfactory"
   }
 
 end
