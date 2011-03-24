@@ -2,7 +2,7 @@ GetMocha::Application.routes.draw do
   
   root :to => "home#index"
 
-  devise_for :users, :controllers => {:registrations => "users",:sessions=>"sessions"}     
+  devise_for :users, :controllers => {:registrations => "users",:sessions=>"sessions",:confirmations=>"confirmation"}     
   
   devise_scope :user do
     root :to => "devise/registrations#edit"
