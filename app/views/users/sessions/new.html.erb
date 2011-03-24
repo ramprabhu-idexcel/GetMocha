@@ -1,60 +1,33 @@
-
 <body class="login">
-
 <div class="header">
 <%= render :partial=>'/home/header'%>
 </div>
-
 <div class="cup-lg-c"></div>
-
 <div class="wrap under-cup content-bottom" style="position:relative;">
-	<div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
-		<h1>Forgot your password?</h1>
-
- <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => { :method => :post,:id=>"fpwd" }) do |f| %>
- 
-	  <%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address" %> 
-		
-	  <%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
-
-   <% end %>
-	 
-	</div>
-	
-		 	 
-		 	<div class="grid-600-c login-form">
-	
-   <% if devise_mapping.rememberable? -%>
-	
-	 <p class="remember"><%=check_box_tag :remember_me,:class=>"checkbox",:id=>"agree_check"%>Remember me on this computer </p><%end%>
-		 	 
-		<h1>Log in to Mocha</h1>
-		
-				<div class="clear-both"></div>
-				          
-         <%= form_for(resource, :as => resource_name,:class=>"no-labels",:url => session_path(resource_name),:html=>{:id=>"user_login"}) do |f| %>
-				 
-				 <%= f.hidden_field :remember_me,:id=>"remember_hidden_id",:value=>0%>
-				 
-              <%= f.submit "Log in",:class=>"btn login-btn" %>
-		   
-					  	 <%= f.text_field :email, :class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
-																					
-         <%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %>
-							
-							<%end%>
-							
-								</div>
+<div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
+<h1>Forgot your password?</h1>
+<%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => { :method => :post,:id=>"fpwd" }) do |f| %>
+<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address" %>
+<%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
+<% end %>
 </div>
-
-
-
+<div class="grid-600-c login-form">
+<% if devise_mapping.rememberable? -%>
+<p class="remember"><%=check_box_tag :remember_me,:class=>"checkbox",:id=>"agree_check"%>Remember me on this computer </p><%end%>
+<h1>Log in to Mocha</h1>
+<div class="clear-both"></div>
+<%= form_for(resource, :as => resource_name,:class=>"no-labels",:url => session_path(resource_name),:html=>{:id=>"user_login"}) do |f| %>
+<%= f.hidden_field :remember_me,:id=>"remember_hidden_id",:value=>0%>
+<%= f.submit "Log in",:class=>"btn login-btn" %>
+<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
+<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %>
+<%end%>
+</div>
+</div>
 <script>
 var Login=true;
 </script>
-
-
-	<div class="push"></div>
+<div class="push"></div>
 </div>
 
 
@@ -64,7 +37,7 @@ var Login=true;
 		<span class="copy">Copyright &copy; 2011 Mocha</span>
 
 		<ul>
-			<li><a href="/sign_in">Login</a></li>
+			<li><a href="/signin">Login</a></li>
 
 			<li><a href="#">Blog</a></li>
 			<li><a href="/faq">FAQ</a></li>
