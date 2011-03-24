@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!
 	layout "application", :except=>['new']
-	
+	require 'aws/s3'
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
 		  @user_emails=[]
@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
 				errors<<"Please enter valid email addresses for invite"
 			end
 		end
-		if project && invites
+		if (project && (!params[:invite][:email].blank? && !invites))
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
@@ -175,7 +175,13 @@ class ProjectsController < ApplicationController
 	
 	def file_download_from_email
 		attachment=Attachment.find(params[:id])
-		send_file "#{Rails.root}/public"+attachment.public_filename
+				if RAILS_ENV=="development"  
+				send_file "#{RAILS_ROOT}/public"+attachment.public_filename
+		else
+				s3_connect
+				s3_file=S3Object.find(attachment.public_filename.split("/#{S3_CONFIG[:bucket_name]}/")[1],"#{S3_CONFIG[:bucket_name]}")
+				send_data(s3_file.value,:url_based_filename=>true,:filename=>attachment.filename,:type=>attachment.content_type)			
+		end		
 	end
 	
 
