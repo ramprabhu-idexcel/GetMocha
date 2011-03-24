@@ -213,10 +213,19 @@
 	function short_modal_down(key)
 	{
 		location1=window.location.href;
+		find_loc=location1.search(/settings-profile/);
+		if(find_loc!=-1)
+		{
+		  if(key!="A" && key!="Z")
+			profile_navigation_down(key);
+		}
+		else
+		{
 		find_loc=location1.search(/settings/);
 		if(find_loc!=-1)
 		{
 			settings_navigation_down(key);
+		}
 		}
 	}
 	
@@ -243,10 +252,18 @@
 	function short_modal_up()
 	{
 			location1=window.location.href;
+		find_loc=location1.search(/settings-profile/);
+		if(find_loc!=-1)
+		{
+			profile_navigation_down('up');
+		}
+		else
+		{
 		find_loc=location1.search(/settings/);
 		if(find_loc!=-1)
 		{
 			settings_navigation_down('up');
+		}
 		}
 	}
         
@@ -427,6 +444,34 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				document.getElementById('people_anchor').className="m-tab alt";
 				document.getElementById('general_anchor').className="m-tab alt";
 			}
+		}
+		
+		function profile_navigation_down(key)
+		{
+			profile=$('#my_profile').css('display');
+			contacts=$('#my_contacts').css('display');
+				if(profile=="none" && contacts=="none")
+				{
+					 $('#mycontact1').toggleClass('open')
+        $('#my_profile').show();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').hide();
+				}
+				else if(profile=="none")
+				{
+									 $('#mycontact1').toggleClass('open')
+        $('#my_profile').show();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').hide();
+				}
+				else
+				{
+$('#mycontact1').toggleClass('open')
+        $('#my_profile').hide();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').show();
+        $('#people_settings_popup').show();
+				}
 		}
 		
 </script>
