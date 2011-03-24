@@ -17,17 +17,18 @@ class Message < ActiveRecord::Base
   
   def add_in_activity(to_users)
     to_users=to_users.split(',') unless to_users.is_a?(Array)
-    self.project.users.each do |user|
+      self.project.users.each do |user|
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_read=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
     end
     to_users.each do |email|
-      u=User.find_by_email(email)
-      u= User.create(:email=>email,:is_guest=>true, :password=>"123456") unless u
-      activity=self.activities.create(:is_subscribed=>true,:is_delete=>true,:user=>u) if self.project.is_member?(u.id)
+      if email.present?
+        u=User.find_by_email(email)
+        u= User.create(:email=>email,:is_guest=>true, :password=>"123456") unless u
+        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
+      end
     end
   end
-    
     
 	def self.send_notification_to_team_members(user,to_users,message)
 		@user=user
