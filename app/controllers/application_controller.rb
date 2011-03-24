@@ -100,6 +100,7 @@ skip_before_filter :verify_authenticity_token
 		end
 		
 		def reply_to_message_via_email
+			logger.info params[:html].inspect
 			from_address=params[:from].to_s
 			if(from_address.include?('<'))
 				from_address=from_address.split('<')
