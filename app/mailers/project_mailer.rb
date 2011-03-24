@@ -73,6 +73,6 @@ class ProjectMailer < ActionMailer::Base
     end
     @message=comment.commentable
     mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject)
-    @content_type="text/html"
+    @content_type="multipart/alternative"
   end
 end
