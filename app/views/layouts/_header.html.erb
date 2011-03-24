@@ -9,19 +9,21 @@
 		
 		<a href="#add_new" class="add-new" id="add-new"></a>
 	</div>
-	
 	<div class="m-header">
-	<% if action_name !="settings" %>
-     <%=link_to 'Sort by','#sort',:class=>"sort-by"%>
+	<% if action_name !="settings"%>
+	<%if controller_name!="registrations" && action_name !="edit" %>
+	       <%=link_to 'Sort by','#sort',:class=>"sort-by"%>
+		<% end %>
 	<% end %>
 	</div>
 
 	
 	<div class="r-header">
 		<ul>
+		<%=p action_name%>
 		<% if action_name == "settings" %>
-			<li><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" style="display:none;">Invite</a></li>
-		<% else %>
+	 			<li><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" style="display:none;">Invite</a></li>
+			<% elsif controller_name!="registration"&&action_name != "edit"  %>
 			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
 			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
 			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
