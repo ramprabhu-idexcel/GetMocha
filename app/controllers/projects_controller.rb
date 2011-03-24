@@ -30,8 +30,10 @@ class ProjectsController < ApplicationController
 				 if !invites
 				errors<<"Please enter valid email addresses for invite"
 			end
+			else
+				invites=true
 		end
-		if (project && (!params[:invite][:email].blank? && !invites))
+		if project && invites
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
