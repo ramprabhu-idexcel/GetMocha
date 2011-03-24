@@ -21,7 +21,7 @@
 	<div class="r-header">
 		<ul>
 		<%=p action_name%>
-		<% if action_name == "settings" %>
+		<% if action_name == "settings" || controller_name=="registrations" && action_name =="edit" %>
 	 			<li><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" style="display:none;">Invite</a></li>
 			<% elsif controller_name!="registration"&&action_name != "edit"  %>
 			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
