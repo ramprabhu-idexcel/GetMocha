@@ -2,7 +2,7 @@ $.messages;
  (function($) {
 
            var restfulApp = Backbone.Controller.extend({
-               restfulUrl: "http://localhost:3000/",
+               restfulUrl: $.host,
                routes: {
                '*message/:project_id' : 'projectMessage',
                "*page":                    "findMessage", //This simply matches any urls that weren't caught above and assigns it to "page"
