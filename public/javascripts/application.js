@@ -1010,3 +1010,9 @@ function parse_date(date)
   var parsed_date=day_names[day]+", "+month_names[month]+", "+dat+", "+year;
   return parsed_date;
 }
+
+function get_filename(path)
+{
+pos=path.lastIndexOf("/")
+return path.substring(pos+1);
+}

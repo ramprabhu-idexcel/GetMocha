@@ -106,11 +106,12 @@ class Message < ActiveRecord::Base
   end
   
   def attach_urls
-    a=[]
+    images=[]
+    documents=[]
     attachments.each do |attach|
-      a<<attach.public_filename if attach.content_type.include?("image")
+      attach.content_type && attach.content_type.include?("image") ? images<<attach.public_filename : documents<<attach.public_filename
     end
-    {:attach_image=>a}
+    {:attached_images=>images,:attached_documents=>documents}
   end
     
 end
