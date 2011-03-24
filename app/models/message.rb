@@ -14,29 +14,43 @@ class Message < ActiveRecord::Base
                     #:length     => { :within => 6..250 }
 	validates :message, :presence   => true
 	
-	def self.send_message_to_team_members(project,message,to_users)
-			@to_users=to_users
-			team_members=project.users
-		team_members.each do |team_member|
-			activity=message.activities.create! :user_id=>team_member
-			activity.update_attributes(:is_subscribed=>1) if @to_users.include? team_member.email || team_member==current_user 
-		end
-		  @to_users.each do |to_usr|
-				if to_usr.include?(',')
-					to_usr=to_usr.split(',')
-					to_usr=to_usr[0]
-				end
-			@user=User.find_by_email(to_usr)
-			if !@user
-			to_usr=User.create! :email=>to_usr, :is_guest=>true, :password=>"123456"	
-			activity=message.activities.create! :user=>@user, :is_subscribed=>true
-			else !team_members.include? @user
-			 activity=Activity.create! :resource_type=>"Message", :user_id=>@user.id,:resource_id=>message.id, :is_subscribed=>true
-			end 
-		end
+	#~ def self.send_message_to_team_members(project,message,to_users)
+			#~ @to_users=to_users
+			#~ team_members=project.users
+		#~ team_members.each do |team_member|
+			#~ activity=message.activities.create! :user_id=>team_member
+			#~ activity.update_attributes(:is_subscribed=>1) if @to_users.include? team_member.email || team_member==current_user 
+		#~ end
+		  #~ @to_users.each do |to_usr|
+				#~ if to_usr.include?(',')
+					#~ to_usr=to_usr.split(',')
+					#~ to_usr=to_usr[0]
+				#~ end
+			#~ @user=User.find_by_email(to_usr)
+			#~ if !@user
+			#~ to_usr=User.create! :email=>to_usr, :is_guest=>true, :password=>"123456"	
+			#~ activity=message.activities.create! :user=>@user, :is_subscribed=>true
+			#~ else !team_members.include? @user
+			 #~ activity=Activity.create! :resource_type=>"Message", :user_id=>@user.id,:resource_id=>message.id, :is_subscribed=>true
+			#~ end 
+		#~ end
 			
 			
-  end 
+  #~ end 
+  
+  def add_in_activity(to_users)
+    to_users=to_users.split(',') unless to_users.is_a?(Array)
+    self.project.users.each do |user|
+      activity=self.activities.create! :user=>user
+      activity.update_attributes(:is_read=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
+    end
+    to_users.each do |email|
+      u=User.find_by_email(email)
+      u= User.create(:email=>email,:is_guest=>true, :password=>"123456") unless u
+      activity=self.activities.create(:is_subscribed=>true,:is_delete=>true,:user=>u) if self.project.is_member?(u.id)
+    end
+  end
+    
     
 	def self.send_notification_to_team_members(user,to_users,message)
 		@user=user
@@ -106,11 +120,12 @@ class Message < ActiveRecord::Base
   end
   
   def attach_urls
-    a=[]
+    images=[]
+    documents=[]
     attachments.each do |attach|
-      a<<attach.public_filename if attach.content_type.include?("image")
+      attach.content_type && attach.content_type.include?("image") ? images<<attach.public_filename : documents<<attach.public_filename
     end
-    {:attach_image=>a}
+    {:attached_images=>images,:attached_documents=>documents}
   end
     
 end

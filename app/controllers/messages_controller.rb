@@ -67,7 +67,8 @@ class MessagesController < ApplicationController
 					@message.save
 					@to_users=params[:message][:recipient].split(', ')
 					#@project=Project.find_by_name(params[:message][:project])
-					Message.send_message_to_team_members(@project,@message,@to_users)
+					#~ Message.send_message_to_team_members(@project,@message,@to_users)
+          @message.add_in_activity(@to_users)
 					Message.send_notification_to_team_members(current_user,@to_users,@message)
 					if !session[:attaches_id].nil?
 					attachment=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
@@ -78,7 +79,8 @@ class MessagesController < ApplicationController
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message
 				#attachment.save
-				render :nothing=>true
+        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id)
+				render :json=>@message.attributes.merge({:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url})
 			else
 				render :update do |page|
 				page.alert errors.join("\n")

@@ -123,16 +123,30 @@ $.messages;
                         comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit subject_edit" href="#">Edit</a></h2>');
                         comments.push('<p class="post-time">'+data.message.updated_date+' by <a href="#" class="user-name">'+data.message.name+'</a></p><hr/>');
                         comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit message_edit" href="#">Edit</a></p></div>');
-                        if(data.message.attach.attach_image.length>0)
+                        
+                        //Document attachment
+                        if(data.message.attach.attached_images.length>0)
+                        {
+                          comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
+                          $.each(data.message.attach.attached_documents,function(index,value){
+                            comments.push('<p><a href="'+value+'">'+get_filename(value)+'</a></p>');
+                          });
+                          comments.push('</div>')
+                        }
+                        
+                        //Image attachments
+                        if(data.message.attach.attached_images.length>0)
                         {
                           comments.push('<div class="attachments">');
-                          $.each(data.message.attach.attach_image,function(index,value){
-                            comments.push('<div class="attachment-thumb-frame"><img alt="attachment" src="'+value+'" width="75" height="75"/></div>');
+                          $.each(data.message.attach.attached_images,function(index,value){
+                            comments.push('<div class="attachment-thumb-frame"><a href="'+value+'"><img alt="attachment" src="'+value+'" width="75" height="75"/></a></div>');
                           });
                           comments.push('<div class="clear-fix"></div>')
                           comments.push('</div>');
                         }
+                       
                         comments.push('<p class="subscribers">'+data.message.subscribed_user+' <span id="all_subscribed" style="display:none;">'+data.message.all_subscribed+'</span><a href="#" id="submsg">'+(data.message.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
+                        //Comments
                         comments.push('<div class="prev-messages">');
                         $.each(data.comments,function(index,comment){
                           comments.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="/star_message/'+comment.id+'">Star</a>');
