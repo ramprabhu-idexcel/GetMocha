@@ -14,29 +14,6 @@ class Message < ActiveRecord::Base
                     #:length     => { :within => 6..250 }
 	validates :message, :presence   => true
 	
-	#~ def self.send_message_to_team_members(project,message,to_users)
-			#~ @to_users=to_users
-			#~ team_members=project.users
-		#~ team_members.each do |team_member|
-			#~ activity=message.activities.create! :user_id=>team_member
-			#~ activity.update_attributes(:is_subscribed=>1) if @to_users.include? team_member.email || team_member==current_user 
-		#~ end
-		  #~ @to_users.each do |to_usr|
-				#~ if to_usr.include?(',')
-					#~ to_usr=to_usr.split(',')
-					#~ to_usr=to_usr[0]
-				#~ end
-			#~ @user=User.find_by_email(to_usr)
-			#~ if !@user
-			#~ to_usr=User.create! :email=>to_usr, :is_guest=>true, :password=>"123456"	
-			#~ activity=message.activities.create! :user=>@user, :is_subscribed=>true
-			#~ else !team_members.include? @user
-			 #~ activity=Activity.create! :resource_type=>"Message", :user_id=>@user.id,:resource_id=>message.id, :is_subscribed=>true
-			#~ end 
-		#~ end
-			
-			
-  #~ end 
   
   def add_in_activity(to_users)
     to_users=to_users.split(',') unless to_users.is_a?(Array)
@@ -127,7 +104,19 @@ class Message < ActiveRecord::Base
     end
     {:attached_images=>images,:attached_documents=>documents}
   end
-    
+  
+  def date_header(user=nil)
+    user=self.user if user.nil?
+    time=user.user_time(updated_at)
+    time.strftime("%A, %B, %d, %Y")
+  end
+  
+  def message_date(user=nil)
+    user=self.user if user.nil?
+    time=user.user_time(updated_at)
+    time.strftime("%I:%M %P")
+  end
+  
 end
 
 
