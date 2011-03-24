@@ -4,16 +4,13 @@ Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
   config.mailer_sender = "mochabot@getmocha.com"
-
   # Configure the class responsible to send e-mails.
   config.mailer = "Devise::Mailer"
-
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/active_record'
-
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -21,32 +18,25 @@ Devise.setup do |config|
   # parameters are used only when authenticating and not when retrieving from
   # session. If you need permissions, you should implement that in a before filter.
   # config.authentication_keys = [ :email ]
-
   # Tell if authentication through request.params is enabled. True by default.
   # config.params_authenticatable = true
-
   # Tell if authentication through HTTP Basic Auth is enabled. False by default.
   #~ config.http_authenticatable = true
-
   # Set this to true to use Basic Auth for AJAX requests.  True by default.
   config.http_authenticatable_on_xhr = false
   # The realm used in Http Basic Authentication
   config.http_authentication_realm = "GetMocha"
-
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
   config.stretches = 10
-
   # Define which will be the encryption algorithm. Devise also supports encryptors
   # from others authentication tools as :clearance_sha1, :authlogic_sha512 (then
   # you should set stretches above to 20 for default behavior) and :restful_authentication_sha1
   # (then you should set stretches to 10, and copy REST_AUTH_SITE_KEY to pepper)
   config.encryptor = :bcrypt
-
   # Setup a pepper to generate the encrypted password.
   config.pepper = "be98c278c1928ded5df900922ac7139ae642feb481976e8b8d003fb56655e371caae6a3bd41315011bdfbb36e455ad3a335a5635484a045ae105f51a17a6d671"
-
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
   # he will be able to access your application without confirming. Default is nil.
