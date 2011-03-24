@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def last_created_message(message_id)
+    activities.find(:last,:conditions=>['resource_type=? AND resource_id AND is_delete=?',"Message",message_id,false])
+  end
+  
   def find_sort_field(sort)
     sort ||="date"
     sort.downcase!
