@@ -20,18 +20,13 @@
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
-
-    <%= javascript_include_tag 'size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload' ,'application'%>
+   <%= javascript_include_tag 'size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload' ,'application'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> 
-
-
-	
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 	<!--[if lt IE 7]>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
 	<![endif]-->
-
 	<!--[if IE 6]>
 	<script type="text/javascript">
 		// Load jQuery if not already loaded
@@ -43,11 +38,8 @@
 	</script>
 	<script src="/scripts/third-party/ieupdate/ie6update.js" type="text/javascript"></script>
 	<![endif]-->
-
-	
-	<!--<link rel="shortcut icon" href="/images/favicon.ico" />-->
+ <!--<link rel="shortcut icon" href="/images/favicon.ico" />-->
 </head>
-
 <body class="messages">
 <%= render :partial=>'/layouts/header'%>
 <div class="clear-fix"></div>
@@ -55,7 +47,6 @@
   <%=yield%>
 	<div class="clear-fix"></div>
 </div>
-
 <div class="sort-by-tooltip" style="display:none;">
 	<div class="sort-by-top"></div>
 	<ul>
@@ -68,7 +59,6 @@
 		<li class="asc-desc selected"><span class="desc">Descending</span></li>
 	</ul>
 </div>
-
 <div id="add_new_mods" class="modal add-new-modal" style="display:none">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center"></div>
@@ -88,17 +78,10 @@
 <div id="add_new_mod">
 </div>
 <%=render "/layouts/name_settings"%>
- 
 </body>
-
-
-  
-       
-
-
 <script>
-    function showTriggered(event) 
-    {
+    function showTriggered(event)
+		 {
       if(event.identifier=='ENTER')
       {
         short_modal('/projects/add_new');
@@ -123,8 +106,7 @@
       {
 			//  short_modal('esc');
         short_modal1('esc');
-				
-      }
+	    }
       if(event.identifier=='R')
       {
       short_model3();
@@ -169,12 +151,10 @@
 			{
 			short_modal_down('X')
 			}
-			 
     }
-
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
-  var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;   
-  var ESC = goog.ui.KeyboardShortcutHandler.Modifiers.ESC; 
+  var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
+  var ESC = goog.ui.KeyboardShortcutHandler.Modifiers.ESC;
   var CTRL = goog.ui.KeyboardShortcutHandler.Modifiers.CTRL;
   var SHIFT = goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT;
   var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
@@ -182,7 +162,7 @@
 	 var DOWN= goog.ui.KeyboardShortcutHandler.Modifiers.DOWN;
 	 var LEFT= goog.ui.KeyboardShortcutHandler.Modifiers.LEFT;
 	 var RIGHT= goog.ui.KeyboardShortcutHandler.Modifiers.RIGHT;
-   //var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;            
+   //var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
@@ -195,7 +175,7 @@
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
 	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
-  shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);        
+  shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
 	shortcutHandler.registerShortcut('UP',goog.events.KeyCodes.UP);
 	shortcutHandler.registerShortcut('DOWN',goog.events.KeyCodes.DOWN);
@@ -209,7 +189,6 @@
       return false;
     });
   });
-	
 	function short_modal_down(key)
 	{
 		location1=window.location.href;
@@ -226,19 +205,8 @@
 		{
 			settings_navigation_down(key);
 		}
-		else
-		{
-		
-		find_loc=location1.search(/messages/)
-		
-		if(find_loc!=-1)
-		{
-			messages_navigation_down(key);
-		}
-		}
 		}
 	}
-	
 	function short_modal_right()
 	{
 		location1=window.location.href;
@@ -248,7 +216,6 @@
 			settings_navigation_right();
 		}
 	}
-	
 	function short_modal_left()
 	{
 			location1=window.location.href;
@@ -258,7 +225,6 @@
 			settings_navigation_left();
 		}
 	}
-	
 	function short_modal_up()
 	{
 			location1=window.location.href;
@@ -274,25 +240,12 @@
 		{
 			settings_navigation_down('up');
 		}
-		else
-		{
-		find_loc=location1.search(/messages/)
-		if(find_loc!=-1)
-		{
-			messages_navigation_down('up');
-		}
-		}
 		}
 	}
-        
   function short_modal(path)  //Add new project/messsage/task/tasclist
   {
-		
       $('#add_new_mods').show();
-
-      
-  }
-  
+ }
   function short_modal1(path)  //Add new project/messsage/task/tasclist
   {
     if (path!='esc')
@@ -301,19 +254,18 @@
         type :'get',
         url :path,
         success: function(data){
-          $('#add_new_mod').html(data);  
-          $('#add_new_mod').show();  
+          $('#add_new_mod').html(data);
+          $('#add_new_mod').show();
          }
       });
     }
     else
     {
-      $('#add_new_mod').hide(); 
-      $('#add_people').hide(); 
+      $('#add_new_mod').hide();
+      $('#add_people').hide();
 			$('#add_new_mods').hide();
     }
   }
-  
 	function short_modal2(path)
   {
 		window.location.href=path;
@@ -352,11 +304,9 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
       $('.comment-input').hide();
       $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
 		}
-		
 		}
 	}
-		
-		function settings_navigation_down(key)
+	function settings_navigation_down(key)
 		{
 			second_panel=$('#settings_secondpanel').css('visibility');
 			people=$('#settings_people').css('display');
@@ -398,9 +348,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 					 $('#completed_list').show();
 					 else if((key=="up" || key=="A") && (i == active_length))
 					 $('#completed_list').hide();
-
-					 
-						if((key=="down" || key=="Z") && (i==length-1))
+  					if((key=="down" || key=="Z") && (i==length-1))
 						already_exists=$('.projects-list').children("")[0].id;
 						else if((key=="up" || key=="A") && (i==0))
 						already_exists=$('.projects-list').children("")[length-1].id;
@@ -420,16 +368,13 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				}
 				else
 				{
-				
 				id=already_exists.split('_');
 						id=id[id.length-1];
 						settings_secondpanel(id);
 				}
 			}
 		}
-		
-		
-		function settings_navigation_right()
+  	function settings_navigation_right()
 		{
 			second_panel=$('#settings_secondpanel').css('visibility');
 		  if(second_panel=="visible")
@@ -450,7 +395,6 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				}
 			}
 		}
-		
 		function settings_navigation_left()
 		{
 			people=$('#settings_people').css('display');
@@ -463,8 +407,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				document.getElementById('general_anchor').className="m-tab alt";
 			}
 		}
-		
-		function profile_navigation_down(key)
+  	function profile_navigation_down(key)
 		{
 			profile=$('#my_profile').css('display');
 			contacts=$('#my_contacts').css('display');
@@ -491,123 +434,5 @@ $('#mycontact1').toggleClass('open')
         $('#people_settings_popup').show();
 				}
 		}
-		
-		function messages_navigation_down(key)
-		{
-		class=$('#comment_area').children('').length;
-		if(class==0)
-		{
-			//first panel
-			all_messages=document.getElementById('all_messages').className;
-			if(all_messages=="all-messages has-unread open")
-			all_messages="true"
-			
-			star=document.getElementById('starred_messages').className;
-			if(star=="starred open")
-			star="true";
-			already_exists="false";
-			length=$('.projects-list').children('').length
-			open="false";
-			get_all_messages="false";
-			old_one="false";
-			for(i=0; i<length; i++)
-			{
-			class=$('.projects-list').children('')[i].className;
-			if(class=="project open")
-			open="true"
-			open_id=$('.projects-list').children('')[i].id;
-			if(star=="true")
-			{
-			  if(key=="down")
-				already_exists=$('.projects-list').children('')[0].id;
-				else
-				{
-				window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-								document.getElementById('starred_messages').className="starred";
-				}
-			}
-			else if(open=="true" && i<length-1 && class=="project open")
-			{
-			  if(key=="down")
-				already_exists=$('.projects-list').children('')[i+1].id;
-				else if(i!=0)
-				already_exists=$('.projects-list').children('')[i-1].id;
-				old_id=$('.projects-list').children('')[i].id;
-				old_one="true"
-			}
-		
-			else
-			{
-			get_all_messages=="true"
-
-
-			}
-			}
-			
-			if(already_exists!="false")
-			{
-				//open_id=open_id.split('_')[2];
-				//open_id=open_id.split('messages')[1];
-					window.location=$('#'+already_exists).attr('href');
-					document.getElementById(already_exists).className="project open";
-					
-					if(old_one=="true")
-					{
-					
-					document.getElementById(old_id).className="project";
-					}
-					else
-								document.getElementById('starred_messages').className="starred";
-			}
-			else
-			{
-				if(all_messages=="true" && key=="down")
-				{
-					window.location=$('.starred').attr('href');
-					document.getElementById('starred_messages').className="starred open";
-					document.getElementById('all_messages').className="all-messages has-unread";
-				}
-				else if(all_messages=="true" && key=="up")
-				{
-					first=$('.projects-list').children('')[length-1].id;
-					window.location=$('#'+first).attr('href');
-					document.getElementById(first).className="project open";
-					document.getElementById('all_messages').className="all-messages has-unread";
-				}
-				else if(open=="true" && key=="down")
-				{
-					window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-					first=$('.projects-list').children('')[length-1].id;
-					document.getElementById(first).className="project";
-				}
-				else if(open=="true" && key=="up")
-				{
-						window.location=$('.starred').attr('href');
-					document.getElementById('starred_messages').className="starred open";
-					first=$('.projects-list').children('')[0].id;
-					document.getElementById(first).className="project";
-				}
-				else if(star=="true")
-				{
-					//	window.location=$('#project_list_messages'+open_id).attr('href');
-				}
-				else
-				{
-					window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-					
-				}
-			}
-		}
-		else
-		{
-			
-		}
-		}
-		
 </script>
-
 </html>
-

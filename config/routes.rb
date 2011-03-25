@@ -1,6 +1,6 @@
 GetMocha::Application.routes.draw do
     root :to => "home#index"
-    devise_for :users,:controllers =>{:registrations =>"users",:sessions=>"sessions",:confirmations=>"confirmation",:passwords=>"passwords"}
+    devise_for :users,:controllers =>{:registrations =>"users",:sessions=>"sessions",:confirmations=>"confirmation"}
     devise_scope :user do
     root :to => "devise/registrations#edit"
     get "signin", :to => "devise/sessions#new",:as=>"new_user_session"

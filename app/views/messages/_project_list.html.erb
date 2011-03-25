@@ -1,15 +1,29 @@
 <div class="l-panel" id= "projectslist">
-<%unread=unread_message_count.zero?%>
-	<a onclick="addClass(this);" class="all-messages <%=raw unread ? "" : "has-unread"%>" href="#all_messages" id="all_messages"><%=raw unread ? "" : "<span class='num-unread'>#{unread_message_count}</span>"%><span class="icon"></span>All Messages </a>
-  <a href="#starred_messages" class="starred" ><%=raw starred_message_count.zero? ? "" : "<span class='num-tasks'>#{starred_message_count}</span>"%><span class='icon'></span>Starred </a>			
+	<%if ! unread_message_count.nil? &&  unread_message_count!=0%>
+	<a onclick="addClass(this);" class="all-messages has-unread" href="#all_messages" id="all_messages"><span class="num-unread"><%= unread_message_count%></span><span class="icon"></span>All Messages </a>
+			<a href="#starred_messages" class="starred" onclick="addClass(this);"><span class="num-tasks"><%= starred_message_count%></span><span class="icon"></span>Starred </a>
+			<%else%>
+			<a onclick="addClass(this);" class="all-messages has-unread" href="#all_messages" id="all_messages">All Messages </a>
+			<a href="#starred_messages" class="starred" onclick="addClass(this);">Starred </a>
+			<%end%>
 	<div class="projects-list">
 	<% @projects.each do |project| %>
-	<% count= project.project_unread_message_count(current_user.id)%>
-		<%unless count==0%>
-      <a href="#project/<%=project.id %>" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="icon"></span><span class="num-unread"><%=count%></span><%= project.name %></a>
+	<% count= unread_project_message_count(project.id)%>
+		<%if !count.nil? && count!=0%>
+		<a href="#project/<%=project.id %>" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="icon"></span><span class="num-unread"><%=count%></span><%= project.name %></a>
 		<%else%>
-      <a href="#project/<%=project.id %>" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
-    <%end%>
+		<a href="#project/<%=project.id %>" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
+				<%end%>
 	<% end %>
 	</div>
 </div>
+
+
+<!--
+<a href="#" class="project has-unread" onclick="addClass(this);">
+<span class="num-unread">5</span>
+<span class="icon"/>
+Apple
+</a>
+
+-->
