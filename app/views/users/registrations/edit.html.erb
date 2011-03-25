@@ -16,7 +16,7 @@
 			<div class="avatar-upload">
 					<div class="avatar-lg"></div>
 					<%unless current_user.attachment.present?%>
-				        <img src="images/content/sample.png"  width="69" height="69" id="default-image" class="avatar-lg-img" alt="avatar"/>
+				        <img src="/images/content/sample.png"  width="69" height="69" id="default-image" class="avatar-lg-img" alt="avatar"/>
 					<%else%>
   		        	<img src="<%=current_user.attachment.public_filename%>" width="69" height="69"  id="default-image" class="avatar-lg-img" alt="avatar"/>
 				   <%end%>
