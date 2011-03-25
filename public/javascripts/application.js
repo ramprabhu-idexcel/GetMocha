@@ -729,8 +729,12 @@ $(document).ready(function() {
         type: 'post',
         data: $('form#add_com_msg').serialize(),
         success:function(data){
+          attach=data.attach;
           var comment=data.comment[0];
           reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
+          if(attach==false)
+          reply+=('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
+          else
           reply+=('<a class="name message_name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
           reply+=('<div class="comment"><p>'+comment.comment+'</p>');
           reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
