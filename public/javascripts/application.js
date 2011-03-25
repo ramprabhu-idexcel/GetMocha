@@ -823,6 +823,8 @@ $(document).ready(function() {
       success: function(data){
         if(data.length==1)
         $('.add-item-modal').hide();
+        document.getElementById('messages_projects_list').innerHTML=data;
+        $('.add-item-modal').hide();
       },
       failure: function(){
         alert("Error");

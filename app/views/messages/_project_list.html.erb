@@ -1,4 +1,4 @@
-<div class="l-panel">
+<div class="l-panel" id= "projectslist">
 	<%if ! unread_message_count.nil? &&  unread_message_count!=0%>
 	<a onclick="addClass(this);" class="all-messages has-unread" href="#all_messages" id="all_messages"><span class="num-unread"><%= unread_message_count%></span><span class="icon"></span>All Messages </a>
 			<a href="#starred_messages" class="starred" onclick="addClass(this);"><span class="num-tasks"><%= starred_message_count%></span><span class="icon"></span>Starred </a>
@@ -14,7 +14,7 @@
 		<a href="#project/<%=project.id %>" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="icon"></span><span class="num-unread"><%=count%></span><%= project.name %></a>
 		<%else%>
 		<a href="#project/<%=project.id %>" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
-		<%end%>
+				<%end%>
 	<% end %>
 	</div>
 </div>
