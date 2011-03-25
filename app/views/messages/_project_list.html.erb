@@ -1,6 +1,5 @@
 <div class="l-panel" id= "projectslist">
 <%unread=unread_message_count.zero?%>
-<%puts unread%>
 	<a onclick="addClass(this);" class="all-messages <%=raw unread ? "" : "has-unread"%>" href="#all_messages" id="all_messages"><%=raw unread ? "" : "<span class='num-unread'>#{unread_message_count}</span>"%><span class="icon"></span>All Messages </a>
   <a href="#starred_messages" class="starred" ><%=raw starred_message_count.zero? ? "" : "<span class='num-tasks'>#{starred_message_count}</span>"%><span class='icon'></span>Starred </a>			
 	<div class="projects-list">
