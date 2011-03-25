@@ -40,7 +40,8 @@ class ProjectsController < ApplicationController
 		  @invite.project_id=@project.id
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
-		  end
+    end
+      @projects=current_user.user_active_projects
 			 	render :partial=>"messages/project_list"
 		else
 			render :update do |page|
@@ -50,8 +51,8 @@ class ProjectsController < ApplicationController
 	end
 	def settings
 		session[:project_name]=nil
-		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
-		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
+		@projects=current_user.user_active_projects
+    @completed_projects=current_user.completed_projects
 		@users=User.find(:all,:select=>[:first_name,:email])
 		  @user_emails=[]
 		  @users.each do |f|
@@ -116,7 +117,7 @@ class ProjectsController < ApplicationController
 			end
 		else
 			if params[:proj_status]
-				@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
+				@projects=current_user.user_active_projects
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
 				render :partial=>'project_list'
 			else

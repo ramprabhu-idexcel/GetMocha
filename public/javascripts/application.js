@@ -549,7 +549,11 @@ $(document).ready(function() {
       var id=$('.message.messow.open').attr('id').split('msac')[1];
       $.ajax({
         url: '/star_message/'+id,
-        type: 'get'
+        type: 'get',
+        sucess:function(data)
+        {
+          $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
+        }
       });
       return false;
     });
@@ -560,7 +564,11 @@ $(document).ready(function() {
       $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
       $.ajax({
         url: path,
-        type: 'get'
+        type: 'get',
+        sucess:function(data)
+        {
+          $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
+        }
       });
       return false;
     });

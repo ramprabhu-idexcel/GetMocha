@@ -74,6 +74,10 @@
   def group_starred_messages(sort_by,order)
     (starred_messages(sort_by,order)+starred_message_comments(sort_by,order)).uniq.group_by{|m| m.updated_at.to_date}
   end
+  #count of all starred messages
+  def starred_messages_count
+    starred_messages.count+starred_comments.count
+  end
   def all_messages_count
     total_messages.count
   end
@@ -94,6 +98,12 @@
   #starred count of the individual project
   def project_starred_count(project_id)
     project_starred_messages(project_id).count
+  end
+  def user_active_projects
+    projects.find(:all,:conditions=>['projects.status!=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
+  end
+  def completed_projects
+    projects.find(:all,:conditions=>['projects.status=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
   end
   def full_name
     "#{first_name} #{last_name}"

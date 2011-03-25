@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
 	layout 'application', :except=>['new']
  	def index
 		session[:project_name]=nil
-		@projects=Project.user_active_projects(current_user.id)
+		@projects=current_user.user_active_projects
 	end
 	def new
 		session[:attaches_id]=nil
@@ -113,7 +113,7 @@ end
   def star_message
     starred=!@activity.is_starred
     @activity.update_attribute(:is_starred,starred)
-    render :nothing=>true
+    render :json=>{:count=>current_user.starred_messages_count}
   end
   def subscribe
     subscribed=!@activity.is_subscribed
