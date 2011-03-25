@@ -42,8 +42,10 @@ class ProjectsController < ApplicationController
 		  @invite.project_id=@project.id
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
-		  end
-			render :nothing=>true
+		end
+		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
+			 	render :partial=>"messages/project_list"
+					
 		else
 			render :update do |page|
 				page.alert errors.join("\n")
