@@ -39,7 +39,7 @@ class Message < ActiveRecord::Base
     to_users.each do |email|
       if email.present?
         u=User.find_by_email(email)
-        u= User.create(:email=>email,:is_guest=>true, :password=>"123456") unless u
+        u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
         self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
       end
     end

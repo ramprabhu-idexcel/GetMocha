@@ -1,6 +1,11 @@
 require 'digest/sha1'
 class Encrypt
-  def self.verification_code
-    Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  class<<self
+    def verification_code
+      Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+    end
+    def default_password
+      ActiveSupport::SecureRandom.base64(6)
+    end
   end
 end
