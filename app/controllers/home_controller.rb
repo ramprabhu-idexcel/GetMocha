@@ -27,8 +27,4 @@ def check_email_reply_and_save
 	
 end
 
-  def images
-				
-  end		
-
-end
+  	
