@@ -37,7 +37,7 @@ def change_layout
 				if user 
 					message=params[:text]
 					name=params[:subject].to_s
-					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
+					project=Project.create(:user_id=>user.id, :name=>name)
 					to_address.each do |mail|
 						mail=mail.strip
 						if(mail.include?('<'))

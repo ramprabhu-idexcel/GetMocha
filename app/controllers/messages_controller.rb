@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   
 	def index
 		session[:project_name]=nil
-		@projects=Project.user_active_projects(current_user.id)
+		@projects=current_user.user_active_projects
 	end
 	def new
 		session[:attaches_id]=nil

@@ -5,32 +5,33 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable,  :confirmable,:validatable
          #~ :validatable
          #~ :trackable,
-  # Setup accessible (or protected) attributes for your model
+
   validates :first_name,:last_name,:presence=> true
   validates :terms_conditions,:acceptance => true
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions,:is_guest
   has_many :projects,:as=>:project_members
-  #~ has_one :project
   has_many :project_users
   has_many :projects,:through=>:project_users,:as=>:project_members
   has_many :project_guests
   has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
- # has_many :messages
   has_many :messages, :through => :activities, :source => :resource, :source_type => 'Message'
   has_many :activities
-  #has_many :activities
   has_many :secondary_emails
   has_many :comments
+  
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
-    #starred messages from all project
+  
+  #starred messages from all project
   def starred_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false],:order=>"#{sort_field} #{order}")
   end
+  
   def all_messages(sort_by,order)
     total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
+  
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     if sort_field=="is_starred"
@@ -39,9 +40,11 @@ class User < ActiveRecord::Base
       activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
     end
   end
+  
   def last_created_message(message_id)
     activities.find(:last,:conditions=>['resource_type=? AND resource_id AND is_delete=?',"Message",message_id,false])
   end
+  
   def find_sort_field(sort)
     sort ||="date"
     sort.downcase!
@@ -55,65 +58,85 @@ class User < ActiveRecord::Base
     end
     sort_field
   end
+  
   def group_starred_messages(sort_by,order)
     starred_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
- def all_messages_count
+  
+  def all_messages_count
     total_messages.count
   end
+  
   #starred messages from the project
- def project_starred_messages(project_id,sort_by,order)
+  def project_starred_messages(project_id,sort_by,order)
     b=[]
     project_id=project_id.to_i
     total_messages(sort_by,order).collect{|a| b<<a if a.resource.project_id==project_id}
     b
   end
- def group_project_messages(project_id,sort_by=nil,order=nil)
+  
+  def group_project_messages(project_id,sort_by=nil,order=nil)
    project_starred_messages(project_id,sort_by,order).group_by{|m| m.created_at.to_date}
- end 
- #starred count from all project
- def starred_count
+  end 
+ 
+  #starred count from all project
+  def starred_count
     starred_messages.count
- end
+  end
+  
   #starred count of the individual project
   def project_starred_count(project_id)
     project_starred_messages(project_id).count
   end
+  
   #membership in the active projects
   def active_projects
     
+  end
+  
+  def user_active_projects
+    projects.find(:all,:conditions=>['projects.status!=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
   end
     #membership in the completed projects
   def completed_projects
     
   end
+  
   def full_name
     "#{first_name} #{last_name}"
   end
-   #overwrite method to login using the secondary emails
+  
+  #overwrite method to login using the secondary emails
   def self.find_for_authentication(conditions={})
     login = conditions.delete(:email)
     find(:first,:conditions=>["(users.email=:value  or secondary_emails.email=:value) AND users.is_guest=:fal AND users.status=:valid",{:value => login,:fal=>false,:valid=>true}],:include=>:secondary_emails)
   end
-    def project_memberships
+  
+  def project_memberships
     Project.user_projects(self.id)
   end
-   def message_activity(message_id)
+  
+  def message_activity(message_id)
     activities.find_by_resource_type_and_resource_id("Message",message_id)
   end
+  
   def my_contacts
     User.find(:all,:conditions=>['project_users.project_id in (?) AND users.status=? AND project_users.status=?',project_memberships,true,true],:include=>:project_users)
   end
+  
   def name
     first_name && last_name ? full_name : email
   end
+  
   def activities_comments(type_ids)
     activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false])
   end
+  
   def is_message_subscribed?(message_id)
     activity=message_activity(message_id)
     activity.is_subscribed if activity
   end
+  
   def hash_activities_comments(type_ids)
     type_ids=[type_ids] unless type_ids.is_a?(Array)
     comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
@@ -121,9 +144,11 @@ class User < ActiveRecord::Base
     comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id,self).merge(t.attributes)}
     values
   end
+  
   def image_url
     attachment ? attachment.public_filename : DEFAULT_AVATAR
   end
+  
   def user_time(time)
     if time_zone
       time_diff=time_zone.split(")")[0].split("GMT")[1].split(":")
