@@ -71,6 +71,8 @@ GetMocha::Application.routes.draw do
   match 'privacy' =>"home#privacy"
   match 'help' =>"home#help"
   match 'email' =>"home#email"
+  match '/home/images'=>"home#images"
+   match '*a', :to => 'errors#routing'
 
 
 
