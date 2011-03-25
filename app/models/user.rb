@@ -30,6 +30,14 @@
   def not_an_secondary
     SecondaryEmail.find_by_email(self.email).nil? ? true : errors.add(:email,"Sorry! The Email you entered is already in use.")
   end
+  def confirmation_required?
+    !confirmed? && !self.is_guest
+  end
+  #overwrite method to login using the secondary emails
+  def self.find_for_authentication(conditions={})
+    login = conditions.delete(:email)
+    find(:first,:conditions=>["(users.email=:value  or secondary_emails.email=:value) AND users.is_guest=:fal AND users.status=:valid",{:value => login,:fal=>false,:valid=>true}],:include=>:secondary_emails)
+  end
   #starred messages from all project
   def starred_message_comments(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
@@ -111,11 +119,6 @@
   end
   def full_name
     "#{first_name} #{last_name}"
-  end
-  #overwrite method to login using the secondary emails
-  def self.find_for_authentication(conditions={})
-    login = conditions.delete(:email)
-    find(:first,:conditions=>["(users.email=:value  or secondary_emails.email=:value) AND users.is_guest=:fal AND users.status=:valid",{:value => login,:fal=>false,:valid=>true}],:include=>:secondary_emails)
   end
   def project_memberships
     Project.user_projects(self.id)
