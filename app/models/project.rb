@@ -45,7 +45,7 @@ class Project < ActiveRecord::Base
 	def has_custom_task_id?
 		custom_emails.find_by_custom_type("Task").present?
 	end
-  
+
   def project_unread_message(user_id)
     activities.find(:all,:conditions=>['activities.user_id=? AND is_read=? AND is_delete=?',user_id,false,false])
   end

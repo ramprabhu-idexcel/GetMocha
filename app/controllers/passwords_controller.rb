@@ -12,10 +12,8 @@ class PasswordsController < Devise::PasswordsController
       errors=[]
       resource.errors.each_full{|msg| errors<< msg }
       render :json=>{:failure=>errors.join("\n")}.to_json
-    end 
-			  
-    end   
-
     end
+	  end
+   end
     end
 end

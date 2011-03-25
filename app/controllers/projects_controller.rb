@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
 	  @user_emails=[]
 	  @users.each do |f|
 			@user_emails<<"#{f.email}"
+			p @user_emails
 		end
 		render :partial => 'new'
 		end
