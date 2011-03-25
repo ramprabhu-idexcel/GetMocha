@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+		class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
@@ -58,47 +58,45 @@ class User < ActiveRecord::Base
   def group_starred_messages(sort_by,order)
     starred_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
- def all_messages_count
+  def all_messages_count
     total_messages.count
   end
   #starred messages from the project
- def project_starred_messages(project_id,sort_by,order)
+  def project_starred_messages(project_id,sort_by,order)
     b=[]
     project_id=project_id.to_i
     total_messages(sort_by,order).collect{|a| b<<a if a.resource.project_id==project_id}
     b
   end
- def group_project_messages(project_id,sort_by=nil,order=nil)
-   project_starred_messages(project_id,sort_by,order).group_by{|m| m.created_at.to_date}
- end 
+  def group_project_messages(project_id,sort_by=nil,order=nil)
+    project_starred_messages(project_id,sort_by,order).group_by{|m| m.created_at.to_date}
+  end
  #starred count from all project
- def starred_count
+  def starred_count
     starred_messages.count
- end
+  end
   #starred count of the individual project
   def project_starred_count(project_id)
     project_starred_messages(project_id).count
   end
   #membership in the active projects
-  def active_projects
-    
-  end
-    #membership in the completed projects
-  def completed_projects
-    
-  end
+  #~ def active_projects
+  #~ end
+  #membership in the completed projects
+  #~ def completed_projects
+  #~ end
   def full_name
     "#{first_name} #{last_name}"
   end
-   #overwrite method to login using the secondary emails
+  #overwrite method to login using the secondary emails
   def self.find_for_authentication(conditions={})
     login = conditions.delete(:email)
     find(:first,:conditions=>["(users.email=:value  or secondary_emails.email=:value) AND users.is_guest=:fal AND users.status=:valid",{:value => login,:fal=>false,:valid=>true}],:include=>:secondary_emails)
   end
-    def project_memberships
+  def project_memberships
     Project.user_projects(self.id)
   end
-   def message_activity(message_id)
+  def message_activity(message_id)
     activities.find_by_resource_type_and_resource_id("Message",message_id)
   end
   def my_contacts
@@ -135,4 +133,4 @@ class User < ActiveRecord::Base
     end
     time.gmtime+total_diff.seconds
   end
- end
+end

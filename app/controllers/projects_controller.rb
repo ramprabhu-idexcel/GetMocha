@@ -1,19 +1,17 @@
-	require 'aws/s3'
+			require 'aws/s3'
 class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!
 	layout "application", :except=>['new']
-
 	  include AWS::S3
 	def new
 		@users=User.find(:all,:select=>[:first_name,:email])
-		  @user_emails=[]
-		  @users.each do |f|
+	  @user_emails=[]
+	  @users.each do |f|
 			@user_emails<<"#{f.email}"
 		end
 		render :partial => 'new'
 		end
-	
 		def create		
 		invite_users=params[:invite][:email].split(',')
 		@project=Project.new(params[:project])
@@ -21,15 +19,15 @@ class ProjectsController < ApplicationController
 		project=@project.valid?
 		errors=[]
 		if @project.errors[:name][0]=="can't be blank"
-				errors<<"Please enter project name"
-				elsif !@project.errors[:name][0].nil?
-					errors<<@project.errors[:name][0]
-				end
-				if !params[:invite][:email].blank?
-				 invites=params[:invite][:email].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
-				 if !invites
+			errors<<"Please enter project name"
+		elsif !@project.errors[:name][0].nil?
+			errors<<@project.errors[:name][0]
+		end
+		if !params[:invite][:email].blank?
+    	 invites=params[:invite][:email].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+			 if !invites
 				errors<<"Please enter valid email addresses for invite"
-			end
+    		end
 			else
 				invites=true
 		end
@@ -42,16 +40,13 @@ class ProjectsController < ApplicationController
 		  @invite.project_id=@project.id
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
-		end
-		@projects=Project.find(:all, :conditions=>['status!=? AND user_id=?', 3, current_user.id])
+		  end
 			 	render :partial=>"messages/project_list"
-					
 		else
 			render :update do |page|
 				page.alert errors.join("\n")
 			end
 		end
-		 
 	end
 	def settings
 		session[:project_name]=nil
@@ -67,8 +62,7 @@ class ProjectsController < ApplicationController
 		@project=Project.find(params[:id])
 			session[:project_name]=@project.name
 		render :partial=>'settings_pane'
-		
-	end
+  end
 	def remove_people
 		@project=Project.find(params[:project_id])
 		@user=User.find(params[:user])
@@ -130,68 +124,63 @@ class ProjectsController < ApplicationController
 			end
 		end
 		end
-		def add_new
-			render :partial=>'add_new'
+	def add_new
+		render :partial=>'add_new'
 		end
-		
-		def verify_email
-			@custom=CustomEmail.find_by_verification_code(params[:verification_code])
-			@custom.update_attributes(:verification_code=>nil)
-			redirect_to '/settings'
-		end
-		def invite_people_settings
-			@invite=Invitation.new(:project_id=>params[:project_id], :name=>params[:name], :email=>params[:email], :message=>params[:message])
-			@invite.save
-			@project=Project.find(params[:project_id])
-			if @invite.valid?
-				ProjectMailer.delay.invite_people(current_user,@invite)
-				render :nothing=>true
-			else
-				errors=[]
-				if params[:email].blank?
-					errors<<"Please enter email address"
-				elsif	@invite.errors[:email][0]=="is too short (minimum is 6 characters)"
-					errors<<"Please enter email minimum 6 characters"
-				elsif @invite.errors[:email][0]=="is invalid"
-					errors<<"Please enter valid email address"
-				end
-				render :update do |page|
-					page.alert errors
-				end
+	def verify_email
+		@custom=CustomEmail.find_by_verification_code(params[:verification_code])
+		@custom.update_attributes(:verification_code=>nil)
+		redirect_to '/settings'
+	end
+	def invite_people_settings
+		@invite=Invitation.new(:project_id=>params[:project_id], :name=>params[:name], :email=>params[:email], :message=>params[:message])
+		@invite.save
+		@project=Project.find(params[:project_id])
+		if @invite.valid?
+			ProjectMailer.delay.invite_people(current_user,@invite)
+			render :nothing=>true
+		else
+			errors=[]
+			if params[:email].blank?
+				errors<<"Please enter email address"
+			elsif	@invite.errors[:email][0]=="is too short (minimum is 6 characters)"
+				errors<<"Please enter email minimum 6 characters"
+			elsif @invite.errors[:email][0]=="is invalid"
+				errors<<"Please enter valid email address"
+			end
+			render :update do |page|
+				page.alert errors
 			end
 		end
-				def join_project
-			@invite=Invitation.find_by_invitation_code(params[:invitation_code])
-			@user=User.find_by_email(@invite.email)
-			if @user
-				@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
-				@project_user.save
-				@invite.update_attributes(:invitation_code=>nil, :status=>true)
-				redirect_to "/"
-			else
-					@invite.update_attributes(:invitation_code=>nil)
-					redirect_to new_user_registration_path
-			end
+	end
+ def join_project
+		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
+		@user=User.find_by_email(@invite.email)
+		if @user
+			@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
+			@project_user.save
+			@invite.update_attributes(:invitation_code=>nil, :status=>true)
+			redirect_to "/"
+		else
+			@invite.update_attributes(:invitation_code=>nil)
+			redirect_to new_user_registration_path
 		end
-		
-		  def find_project_name
+		end
+	def find_project_name
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
   end
-	
 	def file_download_from_email
 		attachment=Attachment.find(params[:id])
-				if RAILS_ENV=="development"  
-				send_file "#{RAILS_ROOT}/public"+attachment.public_filename
+		if RAILS_ENV=="development"
+		send_file "#{RAILS_ROOT}/public"+attachment.public_filename
 		else
-				s3_connect
-				s3_file=S3Object.find(attachment.public_filename.split("/#{S3_CONFIG[:bucket_name]}/")[1],"#{S3_CONFIG[:bucket_name]}")
-				send_data(s3_file.value,:url_based_filename=>true,:filename=>attachment.filename,:type=>attachment.content_type)			
+			s3_connect
+			s3_file=S3Object.find(attachment.public_filename.split("/#{S3_CONFIG[:bucket_name]}/")[1],"#{S3_CONFIG[:bucket_name]}")
+			send_data(s3_file.value,:url_based_filename=>true,:filename=>attachment.filename,:type=>attachment.content_type)			
 		end		
 	end
 	  def s3_connect
     Base.establish_connection!(:access_key_id => S3_CONFIG[:access_key_id],:secret_access_key => S3_CONFIG[:secret_access_key])
   end
-	
-
 end

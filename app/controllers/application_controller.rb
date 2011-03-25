@@ -6,23 +6,20 @@ before_filter :find_project
 layout :change_layout
 def change_layout
 	if devise_controller?
-		if(controller_name=="passwords")
-           "before_login" 
-		 end
 		if (controller_name=="confirmations")
          %w{show}.include?(action_name) ? "before_login" : "application"
-       end         
+       end
        if ((controller_name=="registrations") || (controller_name=="sessions"))
        %w{edit}.include?(action_name) ? "application" : "before_login"
        else
         %w{edit}.include?(action_name) ? "before_login" : "application"
-       end     
+       end
      elsif controller_name=="home"
 			 "before_login"
      else
       "application"
      end
-  end 
+  end
   def find_project
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
@@ -37,10 +34,10 @@ def change_layout
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
 				user=User.find_by_email(from_address)
-				if user 
+				if user
 					message=params[:text]
 					name=params[:subject].to_s
-					project=Project.create(:user_id=>user.id, :name=>name)
+					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
 					to_address.each do |mail|
 						mail=mail.strip
 						if(mail.include?('<'))
@@ -88,7 +85,7 @@ def change_layout
 					activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
 				if params[:attachments] && params[:attachments].to_i > 0
 					for count in 1..params[:attachments].to_i
-						attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+						attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
 					end
 				end	
       end
@@ -121,7 +118,7 @@ def change_layout
 			end
 			if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
 				 content = Sanitize.clean(content, Sanitize::Config::BASIC)
-			end	 
+			end
 			if content.include?("\240")
 				content=content.split("\240").join
 			end
@@ -133,9 +130,9 @@ def change_layout
 			end
 			if params[:attachments] && params[:attachments].to_i > 0
 				for count in 1..params[:attachments].to_i
-					attach=comment.attachments.create(:uploaded_data => params["attachment#{count}"]) 
+					attach=comment.attachments.create(:uploaded_data => params["attachment#{count}"])
 				end
-			end	
+			end
 		end
   protected
   def http_authenticate
@@ -144,6 +141,4 @@ def change_layout
     end
     warden.custom_failure! if performed?
   end
-	
-	
 end
