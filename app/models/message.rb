@@ -44,8 +44,7 @@ class Message < ActiveRecord::Base
       end
     end
   end
-    
-	def self.send_notification_to_team_members(user,to_users,message)
+ 	def self.send_notification_to_team_members(user,to_users,message)
 		@user=user
 		@message=message
 		to_users.each do |to_user|
@@ -53,13 +52,11 @@ class Message < ActiveRecord::Base
 		ProjectMailer.delay.message_notification(@user,@to_user,@message)
 		end
 	end
-  
-	def self.find_hash(id,current_user)
+  def self.find_hash(id,current_user)
     message=self.find_by_id(id,:select=>[:id,:subject,:message,:project_id,:user_id,:updated_at])
     user=message.user
     message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at,current_user),:attach=>message.attach_urls})
   end
-  
 	def self.message_created_time(time,current_user)
     user_time=current_user.user_time(time)
     diff=current_user.user_time(Time.now)-current_user.user_time(time)
@@ -74,27 +71,21 @@ class Message < ActiveRecord::Base
         "Posted on #{user_time.strftime("%d/%m/%y")}"
     end
   end
-	
 	def self.pluralize(count, singular, plural = nil)
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
-	
 	def pluralize(count, singular, plural = nil)
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
-  
-	def subscribed_users
+ 	def subscribed_users
     activities.find(:all,:conditions=>['is_subscribed=?',true])
   end
-  
 	def subscribed_user_names
     subscribed_users.collect{|a| a.user.name}.sort
   end
-  
   def subscribed_user_names
     subscribed_users.collect{|a| a.user.name if a.user}.sort
   end
-	
 	def display_subscribed_users
     case subscribed_user_names.count
       when 0
@@ -107,16 +98,13 @@ class Message < ActiveRecord::Base
         "Subscribed: #{subscribed_user_names[0]} and <a href='#'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
     end
   end
-  
 	def all_subscribed
     "#{subscribed_user_names.join(',')} | "
   end
-  
-	def has_attachments
+  def has_attachments
     !attachments.empty?
   end
-  
-	def attach_urls
+  def attach_urls
     images=[]
     documents=[]
     attachments.each do |attach|
@@ -124,26 +112,14 @@ class Message < ActiveRecord::Base
     end
     {:attached_images=>images,:attached_documents=>documents}
   end
-    
   def date_header(user=nil)
     user=self.user if user.nil?
     time=user.user_time(updated_at)
     time.strftime("%A, %B, %d, %Y")
   end
-  
   def message_date(user=nil)
     user=self.user if user.nil?
     time=user.user_time(updated_at)
     time.strftime("%I:%M %P")
   end
-  
 end
-
-
-
-	
-	
-
-
-
-	

@@ -7,7 +7,7 @@
 	<% end %>
 	</div>
 	<% if @completed_projects %>
-		<div class="expand-completed"><div><span  onclick="javascript:show_completed_projects();">Show Completed</span><span class="icon"></span></div></div>
+		<div class="expand-completed"><span  onclick="javascript:show_completed_projects();">Show Completed</span><span class="icon"></span></div>
 	
 	<div class="projects-list" id="completed_list" style="display:none";>
 	<% @completed_projects.each do |project| %>

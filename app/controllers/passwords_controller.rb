@@ -5,15 +5,17 @@ class PasswordsController < Devise::PasswordsController
   # PUT /resource/password
   def update
    self.resource = resource_class.reset_password_by_token(params[:user])
-      
-    if resource.errors.empty?
+     if resource.errors.empty?
       set_flash_message :notice, :updated
       sign_in_and_redirect(resource_name, resource)
     else
       errors=[]
-      resource.errors.each_full{|msg| errors<< msg } 
+      resource.errors.each_full{|msg| errors<< msg }
       render :json=>{:failure=>errors.join("\n")}.to_json
     end 
 			  
     end   
+
+    end
+    end
 end

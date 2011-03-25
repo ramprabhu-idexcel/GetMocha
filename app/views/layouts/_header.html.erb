@@ -29,7 +29,7 @@
 			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
 		<% end %>
 		</ul>
-		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name if current_user%></a>
+		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
     <%=link_to '',project_settings_path,:class=>"settings"%>
 	</div>
 </div>

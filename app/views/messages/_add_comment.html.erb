@@ -72,10 +72,8 @@ function delete_attachments(file)
       url:'/remove_attach/'+file,
       type: 'get',
 			 success: function(file){
-			 
 			 document.getElementById('attachment1_'+file).style.display="none";
 			 }
     });
-
 }
   </script>

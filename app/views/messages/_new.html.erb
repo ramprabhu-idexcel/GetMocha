@@ -1,74 +1,54 @@
 <head>
   <link rel="stylesheet" href="/stylesheets/demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
-	
-    <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
-   
-
-
-	</head>
+   <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
+</head>
 	<div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
-		<a class="save-btn" id="m_add" href="#message_create" >Save</a> 
+		<a class="save-btn" id="m_add" href="#message_create" >Save</a>
 		<a class="cancel-btn" id="m_can" href="#message_cancel" >Cancel</a>
 		Add New Message
 	</div>
 	<div class="modal-top-right"></div>
 	<div class="modal-body-contain">
-
 		<div class="modal-body">
 			<div class="modal-input">
 <%form_for :message, :url=>({ :controller => "messages", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true,:id=>"form2"}) do |f|%>
 				<fieldset>
 					<label>To:</label>
 							<%=f.text_field  'recipient', :class=>"textfield", :id=>"txtInput1" %>
-		       		
-			    </fieldset>
+		    </fieldset>
 			    <fieldset>
 					<label>Subject:</label>
-
 		       		<%=f.text_field 'subject', :class=>"textfield"%>
 			    </fieldset>
 				<fieldset>
 					<label>Project:</label>
-										
 					<% p session[:project_name] %>
 					<% if session[:project_name] %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
 					 <% else %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
 					 <% end %>
-		       
 			    </fieldset>
 			    <fieldset id="txtarea">
 					<label>Message:</label>
-
 		       		<%=f.text_area 'message', :class=>'textfield', :rows=>"", :cols=>"",:onfocus=>"javascript:changehight(this.id)"%>
 							<table id="files"></table>
 			    </fieldset>
-
 				<% end %>
-				
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
-
 						<fieldset id="attach" class="open">
 					<label>Attachments:</label>
-					
 					<div  id="attach_upload" class="attachment-upload">
 						<%#=f3.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
 						<div class="drag-drop">Drag and drop files here</div>
 						<table id="files"></table>
 						<div id="attachment_files">
-				
 						</div>
 						</div>
-
-			    </fieldset>
-					
-					<!--<fieldset>
-					<%#=file_field_tag "file" %>
-					</fieldset>-->
+		    </fieldset>
 					<button id="start_uploads", style="display:none;">Start uploads</button>
 		<% end %>
 			</div>
@@ -78,8 +58,6 @@
 	<div class="modal-bottom-left"></div>
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
-
-
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
 function changehight(id)
@@ -98,24 +76,21 @@ if (field=='message_message')
 	document.getElementById('message_attachments').value="drag&drop files here";
 	}
 	}
-<%=@names=[]%>
-<%=@projects=[]%>
+<%=names=[]%>
+<%=projects=[]%>
 	<% @user_emails.each do |f|%>
-		<%@names<<f <<","%>
-		var userEmails = "<%= @names %>";
+		<%names<<f <<","%>
+		var userEmails = "<%= names %>";
 	<%end%>
 				userEmails=userEmails.split(',');
 			<% @project_names.each do |f|%>
-	    <%@projects<<f <<","%>
-		var projectNames = "<%= @projects %>";
+	    <%projects<<f <<","%>
+		var projectNames = "<%= projects %>";
 	<%end%>
 				projectNames=projectNames.split(',');
-			
-          var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('txtInput1'), true);
+         var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('txtInput1'), true);
     var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('txtInput2'),false);
-		
-		
-		$(function () {
+	$(function () {
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
     downloadTable: $('#attachment_files'),
@@ -125,10 +100,7 @@ if (field=='message_message')
 a=file.id;
         return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file + '</span></div>');
     }
-
-
 });
-	
 });
 function delete_attachment(file)
 {
@@ -136,10 +108,8 @@ function delete_attachment(file)
       url:'/remove_attach/'+file,
       type: 'get',
 			 success: function(file){
-			 
 			 document.getElementById('attachment_'+file).style.display="none";
 			 }
     });
-
 }
-  </script>
+</script>

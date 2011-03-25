@@ -5,25 +5,24 @@ layout "before_login"
 def index
 	redirect_to '/messages' if current_user
 end	
-
 def check_email_reply_and_save
-		 if params[:from] 
-     @dest_address=params[:to].split(',')
-		 @dest_address=@dest_address[0]
-		 if @dest_address.include?('<')
-			 @dest_address=@dest_address.split('<')
-			 @dest_address=@dest_address[1].split('>')
-			 @dest_address=@dest_address[0]
-		 end
-     if @dest_address.include?("#{APP_CONFIG[:project_email]}")
-    new_project_via_email
+	  if params[:from]
+	  @dest_address=params[:to].split(',')
+	  @dest_address=@dest_address[0]
+			if @dest_address.include?('<')
+				@dest_address=@dest_address.split('<')
+				@dest_address=@dest_address[1].split('>')
+				@dest_address=@dest_address[0]
+			end
+			if @dest_address.include?("#{APP_CONFIG[:project_email]}")
+				new_project_via_email
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
 				message_create_via_email
 			elsif @dest_address.include?("ctzm")
 				reply_to_message_via_email
-    end
-    
-	  render :text => "success"
+			end
+			render :text => "success"
+	  end
 	end
 	
 end
@@ -31,4 +30,5 @@ end
   def images
 				
   end		
+
 end

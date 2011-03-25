@@ -5,7 +5,6 @@ class Hash
     self
   end
 end
-
 #~ class Time
   #~ def self.find_comments_time(time)
 		#~ diff=Time.now-time
@@ -13,11 +12,11 @@ end
 			#~ when 0..59
 				#~ "#{time.strftime("%l:%M%p")} (#{pluralize(diff.to_i,"second")} ago)"
 			#~ when 60..3599
-				#~ "#{time.strftime("%l:%M%p")} (#{pluralize((diff/60).to_i,"minute")} ago)"  
+				#~ "#{time.strftime("%l:%M%p")} (#{pluralize((diff/60).to_i,"minute")} ago)"
 			#~ when 3600..86399
-				#~ "#{time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)" 
+			#~ "#{time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)"
       #~ when 86400..108000
-				#~ "#{time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)" 
+				#~ "#{time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)"
 		#~ else
 			#~ time.strftime("%d/%m/%y")
 		#~ end

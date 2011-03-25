@@ -27,15 +27,15 @@ class Comment < ActiveRecord::Base
 		diff=current_user.user_time(Time.now)-user_time
 		case diff
       when 0..59
-      "#{user_time.strftime("%l:%M%p")} (#{pluralize(diff.to_i,"second")} ago)"
+       "#{user_time.strftime("%l:%M%p")}(#{pluralize(diff.to_i,"second")} ago)"
       when 60..3599
-      "#{user_time.strftime("%l:%M%p")}(#{pluralize((diff/60).to_i,"minute")}ago)"
+       "#{user_time.strftime("%l:%M%p")}(#{pluralize((diff/60).to_i,"minute")}ago)"
       when 3600..86399
-      "#{user_time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)" 
+       "#{user_time.strftime("%l:%M%p")}(#{pluralize((diff/3600).to_i,"hour")} ago)"
       when 86400..108000
-      "#{user_time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)" 
+       "#{user_time.strftime("%b %d")}(#{pluralize((diff/3600).to_i,"day")} ago)"
       else
-      user_time.strftime("%d/%m/%y")
+        user_time.strftime("%d/%m/%y")
       end
 	end
   def self.pluralize(count, singular, plural = nil)

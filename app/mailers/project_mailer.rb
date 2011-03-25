@@ -11,9 +11,8 @@ class ProjectMailer < ActionMailer::Base
     @user = user
     @to_user = to_user
     @settings="#{APP_CONFIG[:site_url]}/settings"
-    mail(:to=>"#{to_user.email}", :subject=>"#{project.name} has been completed")
-    @content_type="text/html"
-  end
+    mail(:to=>"#{to_user.email}", :subject=>"#{project.name} has been completed",:content_type="text/html")
+   end
   def project_activated(project, user, to_user)
     @user = user
     @to_user = to_user
@@ -25,8 +24,7 @@ class ProjectMailer < ActionMailer::Base
     @user = user
     @verify_email=invite.email
     @invite="#{APP_CONFIG[:site_url]}/projects/verify_email/#{invite.verification_code}"
-     mail(:to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha")
-    @content_type="text/html"
+     mail(:to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha",:content_type="text/html")
   end
   def message_notification(user,to_user,message)
      @user = user
@@ -52,13 +50,13 @@ class ProjectMailer < ActionMailer::Base
       @people<<activity.user.full_name<<"," if activity.user
      end
     end
-    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}",:content_type=>"text/html")
+    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}", :content_type="text/html")
   end
   def invite_people(user,invite)
     @user=user
     @message=invite.message
     @invite_link="#{APP_CONFIG[:site_url]}/projects/join_project/#{invite.invitation_code}"
-    mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com",:content_type=>"text/html")
+    mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com", @content_type="text/html")
   end
   def message_reply(user,comment)
     @user=user
@@ -70,6 +68,6 @@ class ProjectMailer < ActionMailer::Base
      from="mochabot@getmocha.com"
     end
     @message=comment.commentable
-    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject,:content_type=>"text/html")
+    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject,:content_type="multipart/html")
   end
 end

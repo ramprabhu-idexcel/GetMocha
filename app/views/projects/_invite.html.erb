@@ -40,11 +40,11 @@
 	document.getElementById('ellaborates').className="open";
 	document.getElementById('message').className="textarea";
 	}
-<%=@emails=[]%>
+<%=emails=[]%>
 	<% @user_emails.each do |f|%>
 	
-	<%@emails<<f <<","%>
-		var userEmails= "<%= @emails %>";
+	<%emails<<f <<","%>
+		var userEmails= "<%= emails %>";
 	<%end%>
 
 				userEmails=userEmails.split(',');
