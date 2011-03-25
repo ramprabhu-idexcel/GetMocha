@@ -6,6 +6,9 @@ before_filter :find_project
 layout :change_layout
 def change_layout
 	if devise_controller?
+		if(controller_name=="passwords")
+           "before_login" 
+		 end
 		if (controller_name=="confirmations")
          %w{show}.include?(action_name) ? "before_login" : "application"
        end         
@@ -141,4 +144,6 @@ def change_layout
     end
     warden.custom_failure! if performed?
   end
+	
+	
 end

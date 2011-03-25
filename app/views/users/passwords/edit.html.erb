@@ -1,70 +1,59 @@
 <body class="login">
-
 <div class="header">
-	<%= render :partial=>'/home/header'%>
-	</div>
-
-	
-	<div class="header-highlight"></div>
-	<div class="header-bottom"></div>
-	<div class="pages"></div>
+<%= render :partial=>'/home/header'%>
 </div>
-
-
 <div class="cup-lg-c"></div>
-
 <div class="wrap under-cup content-bottom" style="position:relative;">
-	<div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
-		<h1>Change your password</h1>
+<div class="grid-400-c reset-form">
 
-		<form class="no-labels">
-			<label for="old_pass">Old Password</label>
-			<input id="old_pass" type="text" class="textfield" onclick="this.value='';" onfocus="this.select()" onblur="this.value=!this.value?'Old Password':this.value;" value="Old Password"><br />
-			<label for="new_pass">New Password</label>
-			<input id="new_pass" type="text" class="textfield" onclick="this.value='';" onfocus="this.select()" onblur="this.value=!this.value?'New Password':this.value;" value="New Password"><br />
-			<label for="new_pass_c">Confirm</label>
-			<input id="new_pass_c" type="text" class="textfield" onclick="this.value='';" onfocus="this.select()" onblur="this.value=!this.value?'Confirm':this.value;" value="Confirm"><br />
-
-			
-			<input type="submit" value="Reset" class="btn pass-reset-btn">
-		</form>
-		<div class="clear-both"></div>
-	</div>
-	
-	<div class="grid-600-c login-form">
-		<p class="remember"><input type="checkbox" class="checkbox" id="agree-check" value="" /> Remember me on this computer</p>
-		<h1>Log in to Mocha</h1>
-
-		<div class="clear-both"></div>
-		<form class="no-labels">
-			<input type="submit" value="Log in" class="btn login-btn">
-			<label for="login_email">Email</label>
-			<input id="login_email" type="text" class="textfield" onclick="this.value='';" onfocus="this.select()" onblur="this.value=!this.value?'Email Address':this.value;" value="Email Address">
-			<label for="login_pass">Password</label>
-			<input id="login_pass" type="password" class="textfield" onclick="this.value='';" onfocus="this.select()" onblur="this.value=!this.value?'Password':this.value;" value="Password">
-		</form>
-
-	</div>
+ <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => {:method => :put,:id=>"reset_password" }) do |f| %>
+ <%= f.hidden_field :reset_password_token %>
+ <%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %><br/>
+<%= f.password_field :password_confirmation,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %><br/>
+  <%= f.submit "Reset",:class=>"btn pass-reset-btn",:id=>"forgot_password"%><br/>
+ <% end %>
 </div>
 
-	<div class="push"></div>
+<div class="push"></div>
 </div>
-
 <div class="footer">
 	<div class="container-960">
 		<span class="copy">Copyright &copy; 2011 Mocha</span>
 		<ul>
-
-			<li><a href="/marketing/login">Login</a></li>
+			<li><a href="/signin">Login</a></li>
 			<li><a href="#">Blog</a></li>
-			<li><a href="/marketing/faq">FAQ</a></li>
-			<li><a href="/marketing/terms">Terms of Use</a></li>
-			<li><a href="/marketing/privacy">Privacy Policy</a></li>
-			<li><a href="/marketing/pass-reset" id="pass-reset">Forgot Password?</a></li>
-
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="/terms">Terms of Use</a></li>
+			<li><a href="/privacy">Privacy Policy</a></li>
+  <li><span id="pass-reset-js" style="position: relative;">Forgot Password?</span></li>
 		</ul>
 	</div>
 </div>
-
 </body>
-</html>
+
+
+<script>
+  $('#forgot_password').click(function(){
+     // $('#fpwd').submit();
+		 var reset_token=window.location.href.split('?')[1];
+		 var reset=reset_token.split('=')[1]
+		 var pcn=$('#user_password_confirmation').val() ;
+		 var pwd=$('#user_password').val();                                                 
+		    if(($('#user_password_confirmation').val())!=($('#user_password').val()))
+				{
+				   alert('password and confirm password should be same');
+				 }
+			  else 
+					 {
+		    $.ajax({
+				data: $('#reset_password').serialize(),
+		    type: "PUT",
+        url:"/users/password",
+				 success: function(data){
+				     window.location.href="/messages";
+						}
+	        });
+				 }
+     return false;   
+     });
+</script>
