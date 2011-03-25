@@ -550,7 +550,7 @@ $(document).ready(function() {
       $.ajax({
         url: '/star_message/'+id,
         type: 'get',
-        sucess:function(data)
+        success:function(data)
         {
           $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
         }
@@ -565,7 +565,7 @@ $(document).ready(function() {
       $.ajax({
         url: path,
         type: 'get',
-        sucess:function(data)
+        success:function(data)
         {
           $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
         }
