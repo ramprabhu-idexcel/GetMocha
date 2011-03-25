@@ -4,7 +4,7 @@
 			Subject: <%="#{@message.subject}" %> <br/>
 		  Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
 
-			<%= @message.message %> <br/>
+			<%= raw @message.message %> <br/>
 
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
@@ -20,7 +20,7 @@ Powered by GetMocha.com
 <% else %>
 		Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
 
-			<%= @message.message %> <br/>
+			<%= raw @message.message %> <br/>
 
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>

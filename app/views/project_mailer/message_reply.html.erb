@@ -1,7 +1,7 @@
 ##Type above this line to post a reply to this message## <br/>
     Author: <%= "#{@comment.user.name} at  #{@comment.created_at.strftime('%I:%M %p')} on #{@comment.created_at.strftime('%B %d, %Y') } "%> <br/>
 
-    <%= @comment.comment %> <br/>
+    <%= raw @comment.comment %> <br/>
 
     <% if @comment.attachments && !@comment.attachments.empty? %>
 			<% @comment.attachments.each do |attach| %>
