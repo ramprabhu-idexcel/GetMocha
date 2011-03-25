@@ -575,7 +575,7 @@ $(document).ready(function() {
     
     $('.message-star.secpan').live('click',function(){
       return false;
-    }
+    });
     //delete the messages
     $('#trash_message').live('click',function(){
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
