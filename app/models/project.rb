@@ -5,8 +5,8 @@ class Project < ActiveRecord::Base
 	has_many :project_guests
 	has_many :users, :through=> :project_users
   has_many :guests,:through=>:project_guests,:source => :user
-	has_many :activities, :dependent => :destroy
 	has_many :messages
+  has_many :activities, :through => :messages, :dependent=>:destroy
   has_many :tasklists
 	has_many :tasks
 	has_many :comments#, :through=>:activities
@@ -51,4 +51,12 @@ class Project < ActiveRecord::Base
 	def has_custom_task_id?
 		custom_emails.find_by_custom_type("Task").present?
 	end
+  
+  def project_unread_message(user_id)
+    activities.find(:all,:conditions=>['activities.user_id=? AND is_read=? AND is_delete=?',user_id,false,false])
+  end
+  
+  def project_unread_message_count(user_id)
+    project_unread_message(user_id).count
+  end
 end

@@ -181,7 +181,7 @@ class ProjectsController < ApplicationController
 	def file_download_from_email
 		attachment=Attachment.find(params[:id])
     if Rails.env.development?
-				send_file "#{Rails.root}/public"+attachment.public_filename
+      send_file "#{Rails.root}/public"+attachment.public_filename
 		else
       s3_connect
       s3_file=S3Object.find(attachment.public_filename.split("/#{S3_CONFIG[:bucket_name]}/")[1],"#{S3_CONFIG[:bucket_name]}")

@@ -94,10 +94,12 @@ class User < ActiveRecord::Base
     
   end
   
+  #membership in the active projects
   def user_active_projects
     projects.find(:all,:conditions=>['projects.status!=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
   end
-    #membership in the completed projects
+  
+  #membership in the completed projects
   def completed_projects
     projects.find(:all,:conditions=>['projects.status=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
   end
@@ -160,4 +162,5 @@ class User < ActiveRecord::Base
     end
     time.gmtime+total_diff.seconds
   end
+
  end
