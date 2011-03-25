@@ -1,7 +1,7 @@
 <div class="l-panel" id= "projectslist">
 	<%if ! unread_message_count.nil? &&  unread_message_count!=0%>
 	<a onclick="addClass(this);" class="all-messages has-unread" href="#all_messages" id="all_messages"><span class="num-unread"><%= unread_message_count%></span><span class="icon"></span>All Messages </a>
-			<a href="#starred_messages" class="starred starred_count"><span class="num-tasks"><%= current_user.starred_messages_count%></span><span class="icon"></span>Starred </a>
+			<a href="#starred_messages" class="starred starred_count" id="starred_messages"><span class="num-tasks"><%= current_user.starred_messages_count%></span><span class="icon"></span>Starred </a>
 			<%else%>
 			<a onclick="addClass(this);" class="all-messages has-unread" href="#all_messages" id="all_messages">All Messages </a>
 			<a href="#starred_messages" class="starred starred_count" ><span class="num-tasks"><%= current_user.starred_messages_count%></span><span class="icon"></span>Starred </a>
