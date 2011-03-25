@@ -190,6 +190,7 @@
     });
   });
 	
+	// For the keys A,Z,down,S,X
 		function short_modal_down(key)
 	{
 		location1=window.location.href;
@@ -218,7 +219,7 @@
 		}
 		}
 	}
-	
+	// For right arrow
 	function short_modal_right()
 	{
 		location1=window.location.href;
@@ -237,6 +238,7 @@
 		}
 	}
 	
+	//for left arrow
 	function short_modal_left()
 	{
 			location1=window.location.href;
@@ -255,6 +257,7 @@
 		}
 	}
 	
+	// for up arrow
 	function short_modal_up()
 	{
 			location1=window.location.href;
@@ -352,6 +355,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 		}
 	}
 		
+		//for settings page navigation
 		function settings_navigation_down(key)
 		{
 			second_panel=$('#settings_secondpanel').css('visibility');
@@ -424,7 +428,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			}
 		}
 		
-		
+		//for settings page navigation for right arrow
 		function settings_navigation_right()
 		{
 			second_panel=$('#settings_secondpanel').css('visibility');
@@ -447,6 +451,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			}
 		}
 		
+		//for settings page navigation for left arrow
 		function settings_navigation_left()
 		{
 			people=$('#settings_people').css('display');
@@ -460,6 +465,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			}
 		}
 		
+		// for profile page navigation
 		function profile_navigation_down(key)
 		{
 			profile=$('#my_profile').css('display');
@@ -488,6 +494,7 @@ $('#mycontact1').toggleClass('open')
 				}
 		}
 		
+		// for messages page navigation
 		function messages_navigation_down(key)
 		{
 		class=$('#comment_area').children('').length;
@@ -611,7 +618,7 @@ $('#mycontact1').toggleClass('open')
 		}
 		}
 		
-		
+		//for messages navigation right arrow
 		function messages_navigation_right()
 		{
 		  already_exists="false"
@@ -643,6 +650,7 @@ $('#mycontact1').toggleClass('open')
 			}
 		}
 		
+		//for messages navigation left arrow
 		function messages_navigation_left()
 		{
 		length=$('#message_area').children('').length;
@@ -660,7 +668,7 @@ $('#mycontact1').toggleClass('open')
 					$('.message_header').hide();
 		}
 		
-		
+		//for messages second panel navigation
 		function messages_second_panel_navigation(key)
 		{
 			  already_exists="false"
@@ -750,6 +758,7 @@ $('#mycontact1').toggleClass('open')
 			}
 		}
 		
+		//for displaying the message header
 		function show_header()
 		{
 
