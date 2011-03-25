@@ -226,6 +226,16 @@
 		{
 			settings_navigation_down(key);
 		}
+		else
+		{
+		
+		find_loc=location1.search(/messages/)
+		
+		if(find_loc!=-1)
+		{
+			messages_navigation_down(key);
+		}
+		}
 		}
 	}
 	
@@ -263,6 +273,14 @@
 		if(find_loc!=-1)
 		{
 			settings_navigation_down('up');
+		}
+		else
+		{
+		find_loc=location1.search(/messages/)
+		if(find_loc!=-1)
+		{
+			messages_navigation_down('up');
+		}
 		}
 		}
 	}
@@ -472,6 +490,99 @@ $('#mycontact1').toggleClass('open')
         $('#my_contacts').show();
         $('#people_settings_popup').show();
 				}
+		}
+		
+		function messages_navigation_down(key)
+		{
+		class=$('#comment_area').children('').length;
+		if(class==0)
+		{
+			//first panel
+			all_messages=document.getElementById('all_messages').className;
+			if(all_messages=="all-messages has-unread open")
+			all_messages="true"
+			
+			star=document.getElementById('starred_messages').className;
+			if(star=="starred open")
+			star="true";
+			already_exists="false";
+			length=$('.projects-list').children('').length
+			open="false";
+			get_all_messages="false";
+			old_one="false";
+			for(i=0; i<length; i++)
+			{
+			class=$('.projects-list').children('')[i].className;
+			if(class=="project open")
+			open="true"
+			open_id=$('.projects-list').children('')[i].id;
+			if(star=="true")
+			{
+			
+			already_exists=$('.projects-list').children('')[0].id;
+			}
+			else if(open=="true" && i<length-1 && class=="project open")
+			{
+				already_exists=$('.projects-list').children('')[i+1].id;
+				old_id=$('.projects-list').children('')[i].id;
+				old_one="true"
+			}
+		
+			else
+			{
+			get_all_messages=="true"
+
+
+			}
+			}
+			
+			if(already_exists!="false")
+			{
+				//open_id=open_id.split('_')[2];
+				//open_id=open_id.split('messages')[1];
+					window.location=$('#'+already_exists).attr('href');
+					document.getElementById(already_exists).className="project open";
+					
+					if(old_one=="true")
+					{
+					
+					document.getElementById(old_id).className="project";
+					}
+					else
+								document.getElementById('starred_messages').className="starred";
+			}
+			else
+			{
+				if(all_messages=="true")
+				{
+					window.location=$('.starred').attr('href');
+					document.getElementById('starred_messages').className="starred open";
+					document.getElementById('all_messages').className="all-messages has-unread";
+				}
+				else if(open=="true")
+				{
+					
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+					first=$('.projects-list').children('')[length-1].id;
+					document.getElementById(first).className="project";
+				}
+				else if(star=="true")
+				{
+					//	window.location=$('#project_list_messages'+open_id).attr('href');
+				}
+				else
+				{
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+					
+				}
+			}
+		}
+		else
+		{
+			
+		}
 		}
 		
 </script>
