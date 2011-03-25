@@ -550,7 +550,7 @@ $(document).ready(function() {
       $.ajax({
         url: '/star_message/'+id,
         type: 'get',
-        sucess:function(data)
+        success:function(data)
         {
           $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
         }
@@ -559,13 +559,13 @@ $(document).ready(function() {
     });
     
     //Star the comments
-    $('.message-star').live('click',function(){
+    $('.message-star.star_comment').live('click',function(){
       var path=$(this).attr('href');
       $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
       $.ajax({
         url: path,
         type: 'get',
-        sucess:function(data)
+        success:function(data)
         {
           $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
         }
@@ -573,6 +573,9 @@ $(document).ready(function() {
       return false;
     });
     
+    $('.message-star.secpan').live('click',function(){
+      return false;
+    });
     //delete the messages
     $('#trash_message').live('click',function(){
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];

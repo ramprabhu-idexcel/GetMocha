@@ -189,7 +189,8 @@
       return false;
     });
   });
-	function short_modal_down(key)
+	
+		function short_modal_down(key)
 	{
 		location1=window.location.href;
 		find_loc=location1.search(/settings-profile/);
@@ -205,8 +206,19 @@
 		{
 			settings_navigation_down(key);
 		}
+		else
+		{
+		
+		find_loc=location1.search(/messages/)
+		
+		if(find_loc!=-1)
+		{
+			messages_navigation_down(key);
+		}
+		}
 		}
 	}
+	
 	function short_modal_right()
 	{
 		location1=window.location.href;
@@ -215,7 +227,16 @@
 		{
 			settings_navigation_right();
 		}
+		else
+		{
+		find_loc=location1.search(/messages/);
+		if(find_loc!=-1)
+		{
+			messages_navigation_right();
+		}
+		}
 	}
+	
 	function short_modal_left()
 	{
 			location1=window.location.href;
@@ -224,7 +245,16 @@
 		{
 			settings_navigation_left();
 		}
+		else
+		{
+		find_loc=location1.search(/messages/);
+		if(find_loc!=-1)
+		{
+			messages_navigation_left();
+		}
+		}
 	}
+	
 	function short_modal_up()
 	{
 			location1=window.location.href;
@@ -240,12 +270,25 @@
 		{
 			settings_navigation_down('up');
 		}
+		else
+		{
+		find_loc=location1.search(/messages/)
+		if(find_loc!=-1)
+		{
+			messages_navigation_down('up');
+		}
+		}
 		}
 	}
+        
   function short_modal(path)  //Add new project/messsage/task/tasclist
   {
+		
       $('#add_new_mods').show();
- }
+
+      
+  }
+  
   function short_modal1(path)  //Add new project/messsage/task/tasclist
   {
     if (path!='esc')
@@ -254,18 +297,19 @@
         type :'get',
         url :path,
         success: function(data){
-          $('#add_new_mod').html(data);
-          $('#add_new_mod').show();
+          $('#add_new_mod').html(data);  
+          $('#add_new_mod').show();  
          }
       });
     }
     else
     {
-      $('#add_new_mod').hide();
-      $('#add_people').hide();
+      $('#add_new_mod').hide(); 
+      $('#add_people').hide(); 
 			$('#add_new_mods').hide();
     }
   }
+  
 	function short_modal2(path)
   {
 		window.location.href=path;
@@ -304,9 +348,11 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
       $('.comment-input').hide();
       $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
 		}
+		
 		}
 	}
-	function settings_navigation_down(key)
+		
+		function settings_navigation_down(key)
 		{
 			second_panel=$('#settings_secondpanel').css('visibility');
 			people=$('#settings_people').css('display');
@@ -348,7 +394,9 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 					 $('#completed_list').show();
 					 else if((key=="up" || key=="A") && (i == active_length))
 					 $('#completed_list').hide();
-  					if((key=="down" || key=="Z") && (i==length-1))
+
+					 
+						if((key=="down" || key=="Z") && (i==length-1))
 						already_exists=$('.projects-list').children("")[0].id;
 						else if((key=="up" || key=="A") && (i==0))
 						already_exists=$('.projects-list').children("")[length-1].id;
@@ -368,13 +416,16 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				}
 				else
 				{
+				
 				id=already_exists.split('_');
 						id=id[id.length-1];
 						settings_secondpanel(id);
 				}
 			}
 		}
-  	function settings_navigation_right()
+		
+		
+		function settings_navigation_right()
 		{
 			second_panel=$('#settings_secondpanel').css('visibility');
 		  if(second_panel=="visible")
@@ -395,6 +446,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				}
 			}
 		}
+		
 		function settings_navigation_left()
 		{
 			people=$('#settings_people').css('display');
@@ -407,7 +459,8 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				document.getElementById('general_anchor').className="m-tab alt";
 			}
 		}
-  	function profile_navigation_down(key)
+		
+		function profile_navigation_down(key)
 		{
 			profile=$('#my_profile').css('display');
 			contacts=$('#my_contacts').css('display');
@@ -434,5 +487,212 @@ $('#mycontact1').toggleClass('open')
         $('#people_settings_popup').show();
 				}
 		}
+		
+		function messages_navigation_down(key)
+		{
+		class=$('#comment_area').children('').length;
+		class_hide=$('#comment_area').css('display');
+		if(class==0 || class_hide=="none")
+		{
+			//first panel
+			all_messages=document.getElementById('all_messages').className;
+			if(all_messages=="all-messages has-unread open")
+			all_messages="true"
+			
+			star=document.getElementById('starred_messages').className;
+			if(star=="starred open")
+			star="true";
+			already_exists="false";
+			length=$('.projects-list').children('').length
+			open="false";
+			get_all_messages="false";
+			old_one="false";
+			for(i=0; i<length; i++)
+			{
+			class=$('.projects-list').children('')[i].className;
+			if(class=="project open")
+			open="true"
+			open_id=$('.projects-list').children('')[i].id;
+			if(star=="true")
+			{
+			  if(key=="down")
+				already_exists=$('.projects-list').children('')[0].id;
+				else
+				{
+				window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+								document.getElementById('starred_messages').className="starred";
+				}
+			}
+			else if(open=="true" && i<length-1 && class=="project open")
+			{
+			  if(key=="down")
+				already_exists=$('.projects-list').children('')[i+1].id;
+				else if(i!=0)
+				already_exists=$('.projects-list').children('')[i-1].id;
+				old_id=$('.projects-list').children('')[i].id;
+				old_one="true"
+			}
+		
+			else
+			{
+			get_all_messages=="true"
+
+
+			}
+			}
+			
+			if(already_exists!="false")
+			{
+				//open_id=open_id.split('_')[2];
+				//open_id=open_id.split('messages')[1];
+					window.location=$('#'+already_exists).attr('href');
+					document.getElementById(already_exists).className="project open";
+					
+					if(old_one=="true")
+					{
+					
+					document.getElementById(old_id).className="project";
+					}
+					else
+								document.getElementById('starred_messages').className="starred";
+			}
+			else
+			{
+				if(all_messages=="true" && key=="down")
+				{
+					window.location=$('.starred').attr('href');
+					document.getElementById('starred_messages').className="starred open";
+					document.getElementById('all_messages').className="all-messages has-unread";
+				}
+				else if(all_messages=="true" && key=="up")
+				{
+					first=$('.projects-list').children('')[length-1].id;
+					window.location=$('#'+first).attr('href');
+					document.getElementById(first).className="project open";
+					document.getElementById('all_messages').className="all-messages has-unread";
+				}
+				else if(open=="true" && key=="down")
+				{
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+					first=$('.projects-list').children('')[length-1].id;
+					document.getElementById(first).className="project";
+				}
+				else if(open=="true" && key=="up")
+				{
+						window.location=$('.starred').attr('href');
+					document.getElementById('starred_messages').className="starred open";
+					first=$('.projects-list').children('')[0].id;
+					document.getElementById(first).className="project";
+				}
+				else if(star=="true")
+				{
+					//	window.location=$('#project_list_messages'+open_id).attr('href');
+				}
+				else
+				{
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+					
+				}
+			}
+		}
+		else
+		{
+		messages_second_panel_navigation(key);
+		}
+		}
+		
+		
+		function messages_navigation_right()
+		{
+		  already_exists="false"
+			length=$('#message_area').children('').length;
+			exit="false";
+			for(i=0; i<length; i++)
+			{
+				firstclass=$('#message_area').children('')[i].className;
+				if(firstclass!="date-bar" && exit=="false")
+				{
+					already_exists=$('#message_area').children('')[i].id;
+					already_exists=already_exists.split('msac')[1];
+					loc=window.location.href;
+					window.location=loc+"/"+already_exists;
+					exit="true"
+					$('#message_area').children('')[i].className="message messow  mpi2 open";
+				}
+			}
+		}
+		
+		function messages_navigation_left()
+		{
+		length=$('#message_area').children('').length;
+			exit="false";
+			for(i=0; i<length; i++)
+			{
+				firstclass=$('#message_area').children('')[i].className;
+				if(firstclass=="message messow  mpi2 open")
+				{
+					$('#message_area').children('')[i].className="message messow  mpi2";
+				}
+			}
+			$('#comment_area').hide();
+		}
+		
+		
+		function messages_second_panel_navigation(key)
+		{
+			  already_exists="false"
+				exit="false";
+			length=$('#message_area').children('').length;
+			
+			for(i=0; i<length; i++)
+			{
+				firstclass=$('#message_area').children('')[i].className;
+				if(firstclass=="message messow  mpi2 open")
+				{
+					already_exists=$('#message_area').children('')[i+1].className;
+					
+					if(already_exists!="date-bar" && exit=="false" && key=="down")
+					{
+						already_exists=$('#message_area').children('')[i+1].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i+1].className="message messow  mpi2 open";
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i-1].className="message messow  mpi2";
+						else
+						$('#message_area').children('')[i].className="message messow  mpi2";
+						exit="true"
+					}
+					else if(exit=="false" && key=="down")
+					{
+					already_exists=$('#message_area').children('')[i+2].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i+2].className="message messow  mpi2 open";
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i-2].className="message messow  mpi2";
+						else
+						$('#message_area').children('')[i].className="message messow  mpi2";
+						exit="true"
+					}
+				}
+			}
+		}
+		
 </script>
+
 </html>
+

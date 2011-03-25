@@ -8,6 +8,7 @@
   # Setup accessible (or protected) attributes for your model
   validates :first_name,:last_name,:presence=> true,:if=>:not_guest
   validates :terms_conditions,:acceptance => true,:if=>:not_guest
+  validates :email,:presence => true, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i},:if=>:not_an_secondary
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions,:is_guest
   has_many :projects,:as=>:project_members
   #~ has_one :project
@@ -25,6 +26,9 @@
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
   def not_guest
     self.is_guest ? false : true
+  end
+  def not_an_secondary
+    SecondaryEmail.find_by_email(self.email).nil? ? true : errors.add(:email,"Sorry! The Email you entered is already in use.")
   end
   #starred messages from all project
   def starred_message_comments(sort_by=nil,order=nil)
