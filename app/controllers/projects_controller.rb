@@ -50,7 +50,7 @@ class ProjectsController < ApplicationController
 	def settings
 		session[:project_name]=nil
 		@projects=current_user.user_active_projects
-		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
+		@completed_projects=current_user.completed_projects
 		@users=User.find(:all,:select=>[:first_name,:email])
     @user_emails=[]
     @users.each do |f|

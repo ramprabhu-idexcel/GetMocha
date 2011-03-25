@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   end
     #membership in the completed projects
   def completed_projects
-    
+    projects.find(:all,:conditions=>['projects.status=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
   end
   
   def full_name
