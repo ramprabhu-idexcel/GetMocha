@@ -59,7 +59,7 @@ $.messages;
                           $.each(val,function(i,v){
                             items.push('<div class="message messow '+(v.activity.is_read ? "" : " unread")+' mpi'+v.activity.resource.project_id+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "20" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
                             if(v.activity.is_starred)
-                            items.push('<a class="message-star" href="#">Star</a>');
+                            items.push('<a class="message-star secpan" href="#">Star</a>');
                             if(v.activity.has_attachment)
                             items.push('<div class="has-attachment"></div>');
                             items.push('</div><div class="info"><span class="name">'+v.activity.resource.user.name+'</span><span class="message-time">'+v.activity.created_time+'</span></div>')
@@ -116,7 +116,7 @@ $.messages;
                         //Comments
                         comments.push('<div class="prev-messages">');
                         $.each(data.comments,function(index,comment){
-                          comments.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="/star_message/'+comment.id+'">Star</a>');
+                          comments.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
                           comments.push('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
                           comments.push('<div class="comment"><p>'+comment.comment+'</p>');
                           if(comment.attach.attach_image.length>0)
