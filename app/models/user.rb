@@ -6,8 +6,8 @@
          #~ :validatable
          #~ :trackable,
   # Setup accessible (or protected) attributes for your model
-  validates :first_name,:last_name,:presence=> true
-  validates :terms_conditions,:acceptance => true
+  validates :first_name,:last_name,:presence=> true,:if=>:not_guest
+  validates :terms_conditions,:acceptance => true,:if=>:not_guest
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions,:is_guest
   has_many :projects,:as=>:project_members
   #~ has_one :project
@@ -23,10 +23,26 @@
   has_many :secondary_emails
   has_many :comments
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
-    #starred messages from all project
+  def not_guest
+    self.is_guest ? false : true
+  end
+  #starred messages from all project
+  def starred_message_comments(sort_by=nil,order=nil)
+    sort_field=find_sort_field(sort_by)
+    message=[]
+    starred_comments.each do |act|
+      puts act.resource.commentable.id.inspect
+      message<<last_created_message(act.resource.commentable.id)
+    end
+    message.uniq
+  end
   def starred_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false],:order=>"#{sort_field} #{order}")
+  end
+  def starred_comments(sort_by=nil,order=nil)
+    sort_field=find_sort_field(sort_by)
+    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false],:order=>"#{sort_field} #{order}")
   end
   def all_messages(sort_by,order)
     total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
@@ -40,7 +56,7 @@
     end
   end
   def last_created_message(message_id)
-    activities.find(:last,:conditions=>['resource_type=? AND resource_id AND is_delete=?',"Message",message_id,false])
+    activities.find(:last,:conditions=>['resource_type=? AND resource_id=? AND is_delete=?',"Message",message_id,false])
   end
   def find_sort_field(sort)
     sort ||="date"
@@ -56,7 +72,7 @@
     sort_field
   end
   def group_starred_messages(sort_by,order)
-    starred_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
+    (starred_messages(sort_by,order)+starred_message_comments(sort_by,order)).uniq.group_by{|m| m.updated_at.to_date}
   end
   def all_messages_count
     total_messages.count
@@ -79,12 +95,6 @@
   def project_starred_count(project_id)
     project_starred_messages(project_id).count
   end
-  #membership in the active projects
-  #~ def active_projects
-  #~ end
-  #membership in the completed projects
-  #~ def completed_projects
-  #~ end
   def full_name
     "#{first_name} #{last_name}"
   end
