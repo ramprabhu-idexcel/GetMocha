@@ -699,6 +699,44 @@ $('#mycontact1').toggleClass('open')
 						$('#message_area').children('')[i].className="message messow  mpi2";
 						exit="true"
 					}
+					if(key=="up")
+					{
+					already_exists=$('#message_area').children('')[i-1].className;
+					 if(already_exists!="date-bar" && exit=="false" && key=="up")
+					{
+						already_exists=$('#message_area').children('')[i-1].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i-1].className="message messow  mpi2 open";
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i+1].className="message messow  mpi2";
+						else
+						$('#message_area').children('')[i].className="message messow  mpi2";
+						exit="true"
+					}
+					else if(exit=="false" && key=="up")
+					{
+					already_exists=$('#message_area').children('')[i-2].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i-2].className="message messow  mpi2 open";
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i+2].className="message messow  mpi2";
+						else
+						$('#message_area').children('')[i].className="message messow  mpi2";
+						exit="true"
+					}
+					}
 				}
 			}
 		}
