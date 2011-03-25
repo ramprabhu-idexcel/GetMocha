@@ -492,6 +492,7 @@ $('#mycontact1').toggleClass('open')
 		{
 		class=$('#comment_area').children('').length;
 		class_hide=$('#comment_area').css('display');
+		
 		if(class==0 || class_hide=="none")
 		{
 			//first panel
@@ -617,8 +618,16 @@ $('#mycontact1').toggleClass('open')
 				{
 					already_exists=$('#message_area').children('')[i].id;
 					already_exists=already_exists.split('msac')[1];
-					loc=window.location.href;
+					a=window.location.href;
+					a=a.search('/'+already_exists);
+					
+					loc=window.location.href.split(already_exists)[0];
+					
+					if(a==-1)
 					window.location=loc+"/"+already_exists;
+					else
+					window.location=loc+already_exists;
+					$('#comment_area').show();
 					exit="true"
 					$('#message_area').children('')[i].className="message messow  mpi2 open";
 				}
