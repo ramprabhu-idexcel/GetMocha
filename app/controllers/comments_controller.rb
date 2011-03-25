@@ -22,7 +22,11 @@ class CommentsController < ApplicationController
         end
       end
  	    session[:attaches_id]=nil
-			render :json=>{:comment=>current_user.hash_activities_comments(comment.id)}.to_json
+      if comment.attachments.blank?
+			render :json=>{:comment=>current_user.hash_activities_comments(comment.id),:attach=>false}.to_json
+      else
+        render :json=>{:comment=>current_user.hash_activities_comments(comment.id),:attach=>true}.to_json
+      end
     end
   end
 end
