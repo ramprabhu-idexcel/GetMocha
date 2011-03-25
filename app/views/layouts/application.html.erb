@@ -518,12 +518,21 @@ $('#mycontact1').toggleClass('open')
 			open_id=$('.projects-list').children('')[i].id;
 			if(star=="true")
 			{
-			
-			already_exists=$('.projects-list').children('')[0].id;
+			  if(key=="down")
+				already_exists=$('.projects-list').children('')[0].id;
+				else
+				{
+				window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+								document.getElementById('starred_messages').className="starred";
+				}
 			}
 			else if(open=="true" && i<length-1 && class=="project open")
 			{
+			  if(key=="down")
 				already_exists=$('.projects-list').children('')[i+1].id;
+				else if(i!=0)
+				already_exists=$('.projects-list').children('')[i-1].id;
 				old_id=$('.projects-list').children('')[i].id;
 				old_one="true"
 			}
@@ -553,18 +562,31 @@ $('#mycontact1').toggleClass('open')
 			}
 			else
 			{
-				if(all_messages=="true")
+				if(all_messages=="true" && key=="down")
 				{
 					window.location=$('.starred').attr('href');
 					document.getElementById('starred_messages').className="starred open";
 					document.getElementById('all_messages').className="all-messages has-unread";
 				}
-				else if(open=="true")
+				else if(all_messages=="true" && key=="up")
 				{
-					
+					first=$('.projects-list').children('')[length-1].id;
+					window.location=$('#'+first).attr('href');
+					document.getElementById(first).className="project open";
+					document.getElementById('all_messages').className="all-messages has-unread";
+				}
+				else if(open=="true" && key=="down")
+				{
 					window.location=$('#all_messages').attr('href');
 					document.getElementById('all_messages').className="all-messages has-unread open";
 					first=$('.projects-list').children('')[length-1].id;
+					document.getElementById(first).className="project";
+				}
+				else if(open=="true" && key=="up")
+				{
+						window.location=$('.starred').attr('href');
+					document.getElementById('starred_messages').className="starred open";
+					first=$('.projects-list').children('')[0].id;
 					document.getElementById(first).className="project";
 				}
 				else if(star=="true")
