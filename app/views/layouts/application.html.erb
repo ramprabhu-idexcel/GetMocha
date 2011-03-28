@@ -521,8 +521,7 @@ $('#mycontact1').toggleClass('open')
 				already_exists=$('.projects-list').children('')[0].id;
 				else if(exit1!="true")
 				{
-				
-				window.location=$('#all_messages').attr('href');
+					window.location=$('#all_messages').attr('href');
 					document.getElementById('all_messages').className="all-messages has-unread open";
 								document.getElementById('starred_messages').className="starred";
 								exit1="true"
@@ -593,8 +592,9 @@ $('#mycontact1').toggleClass('open')
 					document.getElementById(first).className="project";
 				}
 
-				else if((open=="true" && (key=="up" || key=="A") && exit1=="false" && i<length))
+				else if((open=="true" && (key=="up" || key=="A") && exit1=="false"))
 				{
+				
 					window.location=$('.starred').attr('href');
 					document.getElementById('starred_messages').className="starred open";
 					first=$('.projects-list').children('')[0].id;
