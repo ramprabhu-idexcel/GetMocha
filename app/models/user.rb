@@ -24,6 +24,7 @@
   has_many :secondary_emails
   has_many :comments
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
+  named_scope :all_users, :select=>'email',:order => 'id'
   def not_guest
     self.is_guest ? false : true
   end
@@ -165,5 +166,16 @@
       total_diff=0.seconds
     end
     time.gmtime+total_diff.seconds
+  end
+  
+  def guest_message_activities
+    activities.find(:all,:conditions=>['resource_type=?',"Message"])
+  end
+  
+  def guest_update_message(project_id)
+    activites=[]
+    project_id=project_id.to_i
+    guest_message_activities.collect{|a| activites<<a if a.resource.project_id==project_id}
+    activites.update_all(:is_delete,false)
   end
 end
