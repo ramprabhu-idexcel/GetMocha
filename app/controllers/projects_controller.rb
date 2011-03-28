@@ -61,6 +61,7 @@ class ProjectsController < ApplicationController
 		end
 		end
 	def settings_pane
+		session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
 			session[:project_name]=@project.name
 		render :partial=>'settings_pane'
