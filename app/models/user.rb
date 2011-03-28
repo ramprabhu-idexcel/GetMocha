@@ -10,11 +10,12 @@
   validates :terms_conditions,:acceptance => true,:if=>:not_guest
   validates :email,:presence => true, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i},:if=>:not_an_secondary
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions,:is_guest
+  has_many :project_guests,:foreign_key=>'guest_id'
   has_many :projects,:as=>:project_members
   #~ has_one :project
   has_many :project_users
   has_many :projects,:through=>:project_users,:as=>:project_members
-  has_many :project_guests
+  
   has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
  # has_many :messages
@@ -130,6 +131,12 @@
   def my_contacts
     User.find(:all,:conditions=>['project_users.project_id in (?) AND users.status=? AND project_users.status=?',project_memberships,true,true],:include=>:project_users)
   end
+  def self.members_in_project(project_id)
+    find(:all,:conditions=>['project_users.project_id=? AND project_users.status=?',project_id,true],:include=>:project_users)
+  end  
+  def self.members_as_guest(project_id)
+    find(:all,:conditions=>['project_guests.project_id=? AND project_guests.status=?',project_id,true],:include=>:project_guests)
+  end 
   def name
     first_name && last_name ? full_name : email
   end
@@ -160,5 +167,16 @@
       total_diff=0.seconds
     end
     time.gmtime+total_diff.seconds
+  end
+  
+  def guest_message_activities
+    activities.find(:all,:conditions=>['resource_type=?',"Message"])
+  end
+  
+  def guest_update_message(project_id)
+    activites=[]
+    project_id=project_id.to_i
+    guest_message_activities.collect{|a| activites<<a if a.resource.project_id==project_id}
+    activites.update_all(:is_delete,false)
   end
 end

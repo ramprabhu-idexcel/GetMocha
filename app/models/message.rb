@@ -38,9 +38,10 @@ class Message < ActiveRecord::Base
     end
     to_users.each do |email|
       if email.present?
-        u=User.find_by_email(email)
+        u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
         self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
+        ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)
       end
     end
   end
@@ -121,5 +122,9 @@ class Message < ActiveRecord::Base
     user=self.user if user.nil?
     time=user.user_time(updated_at)
     time.strftime("%I:%M %P")
+  end
+  
+  def message_trucate
+    message.truncate(80)
   end
 end
