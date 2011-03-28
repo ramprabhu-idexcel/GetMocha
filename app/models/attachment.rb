@@ -38,27 +38,23 @@ end
               logger.info(img_part)
               img_part = img.crop(Magick::CenterGravity,size,size)
             end
-          
             img_part=img_part.resize(file.image_width,file.image_width)
             if RAILS_ENV=="development"
               img_part.write(save_path)
             else
               file_path="#{Rails.root}/public/#{file.filename}"
               img_part.write(file_path)
-              
-             end 
-          end 
-        end 
+            end
+          end
+        end
       end
     end
   end
-  
 	def create_event
 		if self.project_id
-			Event.create_event(self,self.project_id,nil) 
+			Event.create_event(self,self.project_id,nil)
 		end
-	end	
-
+	end
   def image_width
     case self.thumbnail
       when "small"
@@ -69,14 +65,11 @@ end
         91
       when "big"
       461
-    end    
+    end
   end
-  
-
-	def find_thumbnail(name)
+  def find_thumbnail(name)
     image=Attachment.find_by_parent_id_and_thumbnail(id,name)
   end
-
 end
 
 

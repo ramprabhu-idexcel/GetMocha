@@ -15,20 +15,28 @@ class Activity < ActiveRecord::Base
   def has_attachment
     !resource.attachments.empty?
   end
-  def activity_starred_messages(sort_by,order)
-    find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false],:order=>"#{sort_field} #{order}")
+  #~ def activity_starred_messages(sort_by,order)
+    #~ find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false],:order=>"#{sort_field} #{order}")
+  #~ end
+  #~ def activity_starred_comments(sort_by,order)
+    #~ find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false],:order=>"#{sort_field} #{order}")
+  #~ end
+  #~ def order_by_date(order)
+    #~ find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true],:order=>"created_at #{order}")
+  #~ end
+  #~ def sort_by_order(sort_by,order)
+    #~ find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
+  #~ end
+  #~ def activity_last_created(message_id)
+    #~ find(:last,:conditions=>['resource_type=? AND resource_id=? AND is_delete=?',"Message",message_id,false])
+  #~ end
+  #~ def activity_guest_message
+    #~ find(:all,:conditions=>['resource_type=?',"Message"])
+  #~ end
+  def activities_comment_hash(type_ids)
+    find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
   end
-  def activity_starred_comments(sort_by,order)
-    find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false],:order=>"#{sort_field} #{order}")
-  end
-  def order_by_date(order)
-    find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true],:order=>"created_at #{order}")
-  end
-  def sort_by_order(sort_by,order)
-    find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
-  end
-  def activity_last_created(message_id)
-    find(:last,:conditions=>['resource_type=? AND resource_id=? AND is_delete=?',"Message",message_id,false])
-  end
-    
+  #~ def activity_comments(type_ids)
+    #~ find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false])
+  #~ end
 end
