@@ -1067,3 +1067,24 @@ function get_date()
   var date=d.getDate();
   return year+'-'+month+'-'+date;
 }
+
+function from_date(date_string)
+{
+  // date string format Friday, March, 25, 2011
+  d=date_string.split(',');
+  month=find_month(d[1]);
+  date=$.trim(d[2]);
+  year=$.trim(d[3]);
+  return year+'-'+month+'-'+date;
+
+}
+
+function find_month(month)
+{
+  month=$.trim(month);
+  var month_names = ['January','Febraury','March','April','May','June','July','August','September','October','November','December'];
+  month_number=month_names.indexOf(month)+1;
+  if(month_number<10)
+    month_number="0"+month_number;
+  return month_number;
+}
