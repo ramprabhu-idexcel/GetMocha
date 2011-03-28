@@ -24,6 +24,7 @@
   has_many :secondary_emails
   has_many :comments
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
+  named_scope :all_users, :select=>'email',:order => 'id'
   def not_guest
     self.is_guest ? false : true
   end

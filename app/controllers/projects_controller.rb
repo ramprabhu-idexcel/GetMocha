@@ -1,15 +1,14 @@
-			require 'aws/s3'
+ require 'aws/s3'
 class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!
 	layout "application", :except=>['new']
 	  include AWS::S3
 	def new
-		@users=User.find(:all,:select=>[:first_name,:email])
+		@users=User.all_users
 	  @user_emails=[]
 	  @users.each do |f|
 			@user_emails<<"#{f.email}"
-			p @user_emails
 		end
 		render :partial => 'new'
 		end
@@ -54,7 +53,7 @@ class ProjectsController < ApplicationController
 		session[:project_name]=nil
 		@projects=current_user.user_active_projects
     @completed_projects=current_user.completed_projects
-		@users=User.find(:all,:select=>[:first_name,:email])
+		@users=User.all_users
 		  @user_emails=[]
 		  @users.each do |f|
 			@user_emails<<"#{f.email}"

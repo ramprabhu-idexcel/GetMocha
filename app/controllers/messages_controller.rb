@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
 	end
 	def new
 		session[:attaches_id]=nil
-		attachs=Attachment.attach_ids
+		attachs=Attachment.recent_attachments
 		attachs.each do |attach|
 		Attachment.delete(attach)
 		end
@@ -67,7 +67,7 @@ class MessagesController < ApplicationController
           @message.add_in_activity(@to_users)
 					Message.send_notification_to_team_members(current_user,@to_users,@message)
 					if !session[:attaches_id].nil?
-					attachment=Attachment.attachable_ids
+					attachment=Attachment.recent_attachments
 					attachment.each do |attach|
 					attach.update_attributes(:attachable=>@message)
 				end

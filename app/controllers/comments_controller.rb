@@ -9,13 +9,13 @@ class CommentsController < ApplicationController
     if comment.valid?
       comment.save
       if !session[:attaches_id].nil?
-				attachment=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
+				attachment=Attachment.recent_attachments
 				attachment.each do |attach|
 					attach.update_attributes(:attachable=>comment)
 				end
 			end
       session[:attaches_id]=nil
-		  attachs=Attachment.find(:all ,:conditions=>['attachable_id IS NULL'])
+		  attachs=Attachment.recent_attachments
       if !attachs.nil?
 		    attachs.each do |attach|
 		      Attachment.delete(attach)

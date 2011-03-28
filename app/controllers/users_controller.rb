@@ -12,7 +12,7 @@ class UsersController <  Devise::RegistrationsController
     if resource.save
       resource.send_confirmation_instructions if user
       set_flash_message :notice, :signed_up
-      invitations=Invitation.find(:all, :conditions=>['invitation_code is NULL AND status=? AND email=?', false, resource.email])
+      invitations=Invitation.resource_email
       invitations.each do |invite|
         ProjectUser.create(:project_id=>invite.project_id, :user_id=>resource.id, :status=>true)
         invite.update_attributes(:status=>true)
