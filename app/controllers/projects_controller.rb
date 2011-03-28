@@ -163,12 +163,15 @@ class ProjectsController < ApplicationController
     project=@invite.project
 		if @user && @user.is_guest == false
       project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
-			@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
-			@project_user.save
+			#~ @project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
+			#~ @project_user.save
       @user.guest_update_message(@invite.project_id)
 			@invite.update_attributes(:invitation_code=>nil, :status=>true)
 			redirect_to "/"
 		else
+			
+      project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
+			@user.guest_update_message(@invite.project_id)
 			@invite.update_attributes(:invitation_code=>nil)
 			redirect_to new_user_registration_path
 		end
