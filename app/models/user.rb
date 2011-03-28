@@ -171,9 +171,7 @@
     activities.find(:all,:conditions=>['resource_type=?',"Message"])
   end
   def guest_update_message(project_id)
-    activites=[]
     project_id=project_id.to_i
-    guest_message_activities.collect{|a| activites<<a if a.resource.project_id==project_id}
-    activites.update_all(:is_delete,false)
+    guest_message_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
   end
 end
