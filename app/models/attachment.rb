@@ -1,14 +1,14 @@
 require 'aws/s3'
 class Attachment < ActiveRecord::Base
   include AWS::S3
-  belongs_to :attachable, :polymorphic => true	
-
+  belongs_to :attachable, :polymorphic => true        
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
     if RAILS_ENV=="development"
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+
 end
 
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
@@ -16,7 +16,7 @@ end
   #~ after_save :resize_image_for_thumbnail
   def resize_image_for_thumbnail
     #~ p self.thumbnails
-      if self.content_type.split('/')[0]=="image"	
+      if self.content_type.split('/')[0]=="image"        
       if self.thumbnail.nil?
         self.thumbnails.each do |file|
           fixed_width=200
@@ -55,7 +55,7 @@ end
               img_part.write(file_path)
             end
           end
-    def image_width
+     def image_width
    case self.thumbnail
       when "small"
         75
@@ -66,10 +66,8 @@ end
       when "big"
       461
     end
- end
+    end
     def find_thumbnail(name)
-   image=Attachment.find_by_parent_id_and_thumbnail(id,name)
+    image=Attachment.find_by_parent_id_and_thumbnail(id,name)
   end
 end
-
-
