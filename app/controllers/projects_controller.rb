@@ -51,7 +51,6 @@ class ProjectsController < ApplicationController
 	end
 	def settings
 		session[:project_name]=nil
-
 		@projects=current_user.user_active_projects
     @completed_projects=current_user.completed_projects
 		@users=User.all_users

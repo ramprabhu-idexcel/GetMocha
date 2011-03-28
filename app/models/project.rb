@@ -62,4 +62,10 @@ class Project < ActiveRecord::Base
 	def guest_object(user_id)
     project_guests.find_by_guest_id(user_id)
   end
+	def all_active_projects
+    find(:all,:conditions=>['projects.status!=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
+  end
+  def all_completed_projects
+    find(:all,:conditions=>['projects.status=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
+  end
 end

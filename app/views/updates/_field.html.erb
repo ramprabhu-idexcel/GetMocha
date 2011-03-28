@@ -1,5 +1,6 @@
 <div class="info-right">
-  <span class="info_email"><%=@secondary_email.email%>&nbsp;(unverified)
-  <%=text_field_tag "val[data]",@secondary_email.email,:style=>"display:none;",:class=>"edit_secondary"%>
+<%secondary_email=@secondary_email%>
+  <span class="info_email"><%=secondary_email.email%>&nbsp;(unverified)
+  <%=text_field_tag "val[data]",secondary_email.email,:style=>"display:none;",:class=>"edit_secondary"%>
   <%=link_to "Delete",delete_email_update_path(@secondary_email),:class=>"edit delete",:id=>"delete_email"%></span>
 </div>
