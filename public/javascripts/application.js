@@ -649,6 +649,10 @@ $(document).ready(function() {
         data:{'message[message]' : $('#message_message').val()}        
       });
       new_content=$('#message_message').val();
+      if(new_content.length>77)
+      {
+        new_content=new_content.substring(0,77)+"...";
+      }
       $('.message.messow.open').children('.excerpt').children('p').text(new_content);
       $(this).parent().html(new_content+'<a class="edit message_edit" href="#">Edit</a><div class="clear-fix"></div>');
       return false;
