@@ -65,7 +65,7 @@ $.messages;
                       if(v.activity.has_attachment)
                       items.push('<div class="has-attachment"></div>');
                       items.push('</div><div class="info"><span class="name">'+v.activity.resource.user.name+'</span><span class="message-time">'+v.activity.created_time+'</span></div>')
-                      items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message+'</p></div><div class="clear-fix"></div></div>');
+                      items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message_trucate+'</p></div><div class="clear-fix"></div></div>');
                       result=items.join(' ')
                       $('#message_area').html(result);
 
