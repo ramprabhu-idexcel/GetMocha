@@ -18,7 +18,7 @@
 					<%unless current_user.attachment.present?%>
 				        <img src="/images/content/sample.png"  width="69" height="69" id="default-image" class="avatar-lg-img" alt="avatar"/>
 					<%else%>
-  		        	<img src="<%=current_user.attachment.public_filename%>" width="69" height="69"  id="default-image" class="avatar-lg-img" alt="avatar"/>
+  		        	<img src="<%=current_user.attachment.public_filename(:profile) %>"  id="default-image" class="avatar-lg-img" alt="avatar"/>
 				   <%end%>
   		<table id="files" ></table>
 			<form id="file_upload" action="/updates/save_image"  method="POST" enctype="multipart/form-data">
@@ -184,7 +184,7 @@
 				<div class="user">
 					<div class="left-icons">
 						<div class="avatar-mini"></div>
-			  		        	<img src="<%=user.image_url%>" class="avatar-mini-img" alt="avatar" width= "21" height="20"></img>
+			  		        	<img src="<%=user.image_url%>" class="avatar-mini-img" alt="avatar"></img>
            </div>
 					<div class="info">
 						<span class="position"><%=user.title%></span>

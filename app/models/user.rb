@@ -154,7 +154,7 @@
     values
   end
   def image_url
-    attachment ? attachment.public_filename : DEFAULT_AVATAR
+    attachment ? attachment.public_filename(:small) : DEFAULT_AVATAR
   end
   def user_time(time)
     if time_zone
