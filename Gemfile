@@ -14,6 +14,7 @@ gem 'json'
 gem 'sanitize','2.0.1'
 gem 'aws-s3','0.6.2'
 gem 'rmagick','2.13.1'
+gem 'rack','1.2.2'
 
 
 gem 'devise_ldap_authenticatable'
