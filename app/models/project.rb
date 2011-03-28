@@ -47,7 +47,7 @@ class Project < ActiveRecord::Base
 	end
 
   def project_unread_message(user_id)
-    activities.find(:all,:conditions=>['activities.user_id=? AND is_read=? AND is_delete=?',user_id,false,false])
+    activities.where('activities.user_id=? AND is_read=? AND is_delete=?',user_id,false,false)
   end
 
   def project_unread_message_count(user_id)

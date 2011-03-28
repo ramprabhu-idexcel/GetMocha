@@ -79,7 +79,7 @@ class Message < ActiveRecord::Base
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
  	def subscribed_users
-    activities.find(:all,:conditions=>['is_subscribed=?',true])
+    activities.where('is_subscribed=?',true)
   end
 	def subscribed_user_names
     subscribed_users.collect{|a| a.user.name}.sort

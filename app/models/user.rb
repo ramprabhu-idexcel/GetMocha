@@ -51,11 +51,11 @@
   end
   def starred_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
-    activities.activity_starred_messages(sort_field,order)
+    activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false).order("#{sort_field} #{order}")
   end
   def starred_comments(sort_field,order)
     sort_field=find_sort_field(sort_by)
-    activities.activity_starred_comments(sort_field,order)
+    activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false).order("#{sort_field} #{order}")
   end
   def all_messages(sort_by,order)
     total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
@@ -63,13 +63,13 @@
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     if sort_field=="is_starred"
-      activities.order_by_date(order)
+      activities.where('resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true).order("created_at #{order}")
     else
-      activities.sort_by_order(sort_field,order)
+      activities.where('resource_type=? AND is_delete=?',"Message",false).order("#{sort_field} #{order}")
     end
   end
   def last_created_message(message_id)
-    activities.activity_last_created(message_id)
+    activities.where('resource_type=? AND resource_id=? AND is_delete=?',"Message",message_id,false)
   end
   def find_sort_field(sort)
     sort ||="date"
@@ -140,7 +140,7 @@
     first_name && last_name ? full_name : email
   end
   def activities_comments(type_ids)
-    activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false])
+    activities.where('resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false)
   end
   def is_message_subscribed?(message_id)
     activity=message_activity(message_id)
@@ -168,7 +168,7 @@
     time.gmtime+total_diff.seconds
   end
   def guest_message_activities
-    activities.find(:all,:conditions=>['resource_type=?',"Message"])
+    activities.where('resource_type=?',"Message")
   end
   def guest_update_message(project_id)
     project_id=project_id.to_i
