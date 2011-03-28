@@ -1053,6 +1053,17 @@ function parse_date(date)
 
 function get_filename(path)
 {
-pos=path.lastIndexOf("/")
-return path.substring(pos+1);
+  pos=path.lastIndexOf("/")
+  return path.substring(pos+1);
+}
+
+function get_date()
+{
+  var d=Date.today();
+  var year=d.getFullYear();
+  var month=parseInt(d.getMonth()+1);
+  if(month<10)
+    month="0"+month;
+  var date=d.getDate();
+  return year+'-'+month+'-'+date;
 }
