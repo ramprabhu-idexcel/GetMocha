@@ -15,7 +15,6 @@
   #~ has_one :project
   has_many :project_users
   has_many :projects,:through=>:project_users,:as=>:project_members
-  
   has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
  # has_many :messages
@@ -132,10 +131,10 @@
   end
   def self.members_in_project(project_id)
     find(:all,:conditions=>['project_users.project_id=? AND project_users.status=?',project_id,true],:include=>:project_users)
-  end  
+  end
   def self.members_as_guest(project_id)
     find(:all,:conditions=>['project_guests.project_id=? AND project_guests.status=?',project_id,true],:include=>:project_guests)
-  end 
+  end
   def name
     first_name && last_name ? full_name : email
   end

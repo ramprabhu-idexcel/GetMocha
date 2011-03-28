@@ -7,8 +7,8 @@ class UsersController <  Devise::RegistrationsController
     if user
       resource=user
       params[:user][:is_guest]=false
-      resource.attributes=params[:user]      
-    end
+      resource.attributes=params[:user]
+      end
     if resource.save
       resource.send_confirmation_instructions if user
       set_flash_message :notice, :signed_up

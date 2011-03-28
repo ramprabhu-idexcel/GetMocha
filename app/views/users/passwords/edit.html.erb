@@ -40,25 +40,25 @@
      // $('#fpwd').submit();
 		 var reset_token=window.location.href.split('?')[1];
 		 var reset=reset_token.split('=')[1]
-		 var pcn=$('#user_password_confirmation').val() ;
-		 var pwd=$('#user_password').val();                                                 
-		    if(($('#user_password_confirmation').val())!=($('#user_password').val()))
-				{
+		 var pcn=$('#user_password_confirmation').val();
+		 var pwd=$('#user_password').val();
+		 if(($('#user_password_confirmation').val())!=($('#user_password').val()))
+		 {
 				   alert('password and confirm password should be same');
 				 }
-			  else 
-					 {
-		    $.ajax({
-				data: $('#reset_password').serialize(),
-		    type: "PUT",
-        url:"/users/password",
+				 else
+				 {
+				 $.ajax({
+				 data: $('#reset_password').serialize(),
+				 type: "PUT",
+				 url:"/users/password",
 				 success: function(data){
-				    window.location.href="/messages";
-						}
-	        });
+				 window.location.href="/messages";
 				 }
-     return false;   
-     });
+				 });
+				 }
+				 return false;
+				 });
 </script>
 </body>
 
