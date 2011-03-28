@@ -1,14 +1,13 @@
 require 'aws/s3'
 class Attachment < ActiveRecord::Base
   include AWS::S3
-  belongs_to :attachable, :polymorphic => true        
+  belongs_to :attachable, :polymorphic => true
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
     if RAILS_ENV=="development"
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
-
 end
 
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
@@ -16,8 +15,8 @@ end
   #~ after_save :resize_image_for_thumbnail
   def resize_image_for_thumbnail
     #~ p self.thumbnails
-      if self.content_type.split('/')[0]=="image"        
-      if self.thumbnail.nil?
+      if self.content_type.split('/')[0]=="image"
+        if self.thumbnail.nil?
         self.thumbnails.each do |file|
           fixed_width=200
           unless file.thumbnail=="big"

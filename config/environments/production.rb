@@ -36,7 +36,7 @@ GetMocha::Application.configure do
   config.middleware.use ExceptionNotifier,
   :email_prefix => "[Exception] ",
   :sender_address => %{"Exception Notifier" <admin@getmocha.com>},
-  :exception_recipients => %w{priya@railsfactory.org senthilkumar@sedin.co.in c.selvakumar@sedin.co.in}
+  :exception_recipients => %w{priya@railsfactory.org senthilkumar@sedin.co.in c.selvakumar@sedin.co.in kirubakaran@sedin.co.in ramprabu.n@railsbuddies.com}
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
   :address => "smtp.sendgrid.net",
