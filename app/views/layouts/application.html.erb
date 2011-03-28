@@ -283,37 +283,31 @@
 		}
 		}
 	}
-        
-  function short_modal(path)  //Add new project/messsage/task/tasclist
-  {
-		
-      $('#add_new_mods').show();
-
-      
-  }
-  
-  function short_modal1(path)  //Add new project/messsage/task/tasclist
-  {
+	function short_modal(path)  //Add new project/messsage/task/tasclist
+  {		
+     $('#add_new_mods').show();
+   }
+	 function short_modal1(path)  //Add new project/messsage/task/tasclist
+	 {
     if (path!='esc')
     {
       $.ajax({
         type :'get',
         url :path,
         success: function(data){
-          $('#add_new_mod').html(data);  
-          $('#add_new_mod').show();  
-         }
-      });
-    }
+          $('#add_new_mod').html(data);
+					$('#add_new_mod').show();
+					}
+					});
+					}
     else
     {
-      $('#add_new_mod').hide(); 
-      $('#add_people').hide(); 
-			$('#add_new_mods').hide();
-    }
-  }
-  
-	function short_modal2(path)
+		$('#add_new_mod').hide();
+		$('#add_people').hide();
+		$('#add_new_mods').hide();
+		}
+		}
+		function short_modal2(path)
   {
 		window.location.href=path;
   }
@@ -398,9 +392,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 					 $('#completed_list').show();
 					 else if((key=="up" || key=="A") && (i == active_length))
 					 $('#completed_list').hide();
-
-					 
-						if((key=="down" || key=="Z") && (i==length-1))
+					 if((key=="down" || key=="Z") && (i==length-1))
 						already_exists=$('.projects-list').children("")[0].id;
 						else if((key=="up" || key=="A") && (i==0))
 						already_exists=$('.projects-list').children("")[length-1].id;

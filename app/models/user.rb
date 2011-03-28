@@ -15,7 +15,6 @@
   #~ has_one :project
   has_many :project_users
   has_many :projects,:through=>:project_users,:as=>:project_members
-  
   has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
  # has_many :messages
@@ -25,6 +24,7 @@
   has_many :secondary_emails
   has_many :comments
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
+  named_scope :all_users, :select=>'email',:order => 'id'
   def not_guest
     self.is_guest ? false : true
   end
@@ -132,10 +132,10 @@
   end
   def self.members_in_project(project_id)
     find(:all,:conditions=>['project_users.project_id=? AND project_users.status=?',project_id,true],:include=>:project_users)
-  end  
+  end
   def self.members_as_guest(project_id)
     find(:all,:conditions=>['project_guests.project_id=? AND project_guests.status=?',project_id,true],:include=>:project_guests)
-  end 
+  end
   def name
     first_name && last_name ? full_name : email
   end
@@ -166,5 +166,16 @@
       total_diff=0.seconds
     end
     time.gmtime+total_diff.seconds
+  end
+  
+  def guest_message_activities
+    activities.find(:all,:conditions=>['resource_type=?',"Message"])
+  end
+  
+  def guest_update_message(project_id)
+    activites=[]
+    project_id=project_id.to_i
+    guest_message_activities.collect{|a| activites<<a if a.resource.project_id==project_id}
+    activites.update_all(:is_delete,false)
   end
 end

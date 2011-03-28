@@ -53,8 +53,15 @@ class Project < ActiveRecord::Base
   def project_unread_message_count(user_id)
     project_unread_message(user_id).count
   end
-  
-  def project_member?(user_id)
+	def project_member?(user_id)
     project_guests.find_by_guest_id_and_status(user_id,true).present? || project_users.find_by_user_id_and_status(user_id,true).present?
+  end
+  
+  def is_a_guest?(user_id)
+    guest_object(user_id).present?
+  end
+  
+  def guest_object(user_id)
+    project_guests.find_by_guest_id(user_id)
   end
 end

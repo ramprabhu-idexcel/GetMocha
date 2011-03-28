@@ -123,4 +123,8 @@ class Message < ActiveRecord::Base
     time=user.user_time(updated_at)
     time.strftime("%I:%M %P")
   end
+  
+  def message_trucate
+    message.truncate(80)
+  end
 end
