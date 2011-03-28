@@ -14,6 +14,4 @@ class PasswordsController < Devise::PasswordsController
       render :json=>{:failure=>errors.join("\n")}.to_json
     end
 	  end
-   end
-    end
-end
+  end
