@@ -102,7 +102,7 @@
     b
   end
   def group_project_messages(project_id,sort_by=nil,order=nil)
-    project_starred_messages(project_id,sort_by,order).group_by{|m| m.created_at.to_date}
+    project_starred_messages(project_id,sort_by,order).group_by{|m| m.updated_at.to_date}
   end
  #starred count from all project
   def starred_count
