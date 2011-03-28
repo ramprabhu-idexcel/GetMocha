@@ -1,39 +1,29 @@
-##Type above this line to post a reply to this message## <br/>
 <html>
 <body>
-<%messages=@message%>
-<% if  @existing_user && !@existing_user.is_guest %>
+ <% if  @existing_user && !@existing_user.is_guest %>
 			Project: <%="#{@project.name}" %> <br/>
-
-			Subject: <%="#{messages.subject}" %> <br/>
-	    Author: <%= messages.author%> <br/>
-			<%= messages.message %> <br/>
-
-			<% if messages.attachments && !messages.attachments.empty? %>
-					<% messages.attachments.each do |attach| %>
-			<br/>
+			<%=raw @message.msg_notification%><br/>
+			<% @message.attachments.each do |attach| %>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>
-			<% end %><br/>
+		<br/>
 Subscribed: <%= @people %>			<br/>
-			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= messages.id %>"> Unsubscribe from this message </a>to stop recieving email notifications about this message thread<br/><br/>
+			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe from this  message </a>to stop recieving email notifications about this message thread<br/><br/>
 --<br/>
-Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
+Post new message to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
 <% else %>
-		   Author: <%= messages.author%> <br/>
-			<%= messages.message %> <br/>
-			<% if messages.attachments && !messages.attachments.empty? %>
-					<% messages.attachments.each do |attach| %>
+		   Author: <%= @message.author%> <br/>
+			<%= @message.message %> <br/>
+					<% @message.attachments.each do |attach| %>
 					<br/>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>
-			<% end %><br/>
+			<br/>
 			Subscribed: <%= @people %>			<br/>
-			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= messages.id %>"> Unsubscribe from this message </a>to stop recieving email notifications about this message thread<br/><br/>
+			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= @message.id %>"> Unsubscribe from this message </a>to stop recieving email notifications about this message thread<br/><br/>
 			--<br/>
 			Powered by GetMocha.com
-			
-<% end %>
+	<% end %>
 </body>
 </html>

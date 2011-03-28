@@ -126,7 +126,14 @@ class Message < ActiveRecord::Base
 	def message_trucate
     message.truncate(80)
   end
-	def author
+def author
 	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
-  end
+end
+def msg_notification
+	"Subject:#{self.subject} </br> Author: #{self.author} </br> message:#{self.message}"
+end
+def comment_notify
+		"Author:#{self.author} </br> comment:#{self.comment}"
+end	
+	
 end

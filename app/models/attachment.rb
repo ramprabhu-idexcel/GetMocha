@@ -2,14 +2,15 @@ require 'aws/s3'
 class Attachment < ActiveRecord::Base
   include AWS::S3
   belongs_to :attachable, :polymorphic => true	
-
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
     if RAILS_ENV=="development"
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+
 end
+
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
   #~ after_save :resize_image_for_thumbnail
@@ -37,13 +38,28 @@ end
             else
               logger.info(img_part)
               img_part = img.crop(Magick::CenterGravity,size,size)
+<<<<<<< HEAD
             end
+=======
+              end
+>>>>>>> 122ffe4a78a0f250c37ac9af7c2ca4fee0c7d24a
             img_part=img_part.resize(file.image_width,file.image_width)
+
+            file_path="#{Rails.root}/public/#{file.filename}"
+            img_part.write(file_path)
+            end
+          end
+          end
+          end
+          end
+    def create_event
+
             if RAILS_ENV=="development"
               img_part.write(save_path)
             else
               file_path="#{Rails.root}/public/#{file.filename}"
               img_part.write(file_path)
+<<<<<<< HEAD
             end
           end
         end
@@ -56,6 +72,15 @@ end
 		end
 	end
   def image_width
+=======
+              
+             end 
+          end 
+  
+  
+	
+     def image_width
+>>>>>>> 122ffe4a78a0f250c37ac9af7c2ca4fee0c7d24a
     case self.thumbnail
       when "small"
         75
@@ -66,8 +91,13 @@ end
       when "big"
       461
     end
+<<<<<<< HEAD
   end
   def find_thumbnail(name)
+=======
+    end
+    def find_thumbnail(name)
+>>>>>>> 122ffe4a78a0f250c37ac9af7c2ca4fee0c7d24a
     image=Attachment.find_by_parent_id_and_thumbnail(id,name)
   end
 end

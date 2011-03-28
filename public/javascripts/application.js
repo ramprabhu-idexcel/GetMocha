@@ -296,7 +296,10 @@ $(document).ready(function() {
          success:function(data){
           if(data.success!="undefined")
            {
-              $('#label_phone').text(data.success)
+if(data.success.length=="0")
+              $('#label_phone').text("-");
+else
+              $('#label_phone').text(data.success);
              $('#label_phone').css('visibility','visible');
              }
            else
@@ -334,6 +337,9 @@ $(document).ready(function() {
          success:function(data){
           if(data.success!="undefined")
            {
+if(data.success.length=="0")
+              $('#label_mobile').text("-");
+else
               $('#label_mobile').text(data.success)
                $('#label_mobile').css('visibility','visible');
              }
