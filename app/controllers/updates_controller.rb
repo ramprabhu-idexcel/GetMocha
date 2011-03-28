@@ -52,7 +52,7 @@ class UpdatesController < ApplicationController
    img=current_user.attachment
    img.destroy if img
    @attach.save
-   render :json=>{:file_name=> @attach.public_filename}.to_json
+   render :json=>{:file_name=> @attach.public_filename(:profile)}.to_json
    #~ respond_to do |format|
       #~ if @a
          #~ puts "**************************"

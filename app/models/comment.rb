@@ -42,10 +42,11 @@ class Comment < ActiveRecord::Base
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
   def attach_urls
-    a=[]
+    images=[]
+    documents=[]
     attachments.each do |attach|
-      a<<attach.public_filename if attach.content_type.include?("image")
+      attach.content_type && attach.content_type.include?("image") ? images<<attach.public_filename(:message) : documents<<attach.public_filename
     end
-    {:attach_image=>a}
-  end
+    {:attach_image=>images,:attached_documents=>documents}
+    end
 end

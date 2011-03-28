@@ -51,11 +51,11 @@
   end
   def starred_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
-    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false],:order=>"#{sort_field} #{order}")
+    activities.activity_starred_messages(sort_field,order)
   end
-  def starred_comments(sort_by=nil,order=nil)
+  def starred_comments(sort_field,order)
     sort_field=find_sort_field(sort_by)
-    activities.find(:all,:conditions=>['resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false],:order=>"#{sort_field} #{order}")
+    activities.activity_starred_comments(sort_field,order)
   end
   def all_messages(sort_by,order)
     total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
@@ -63,13 +63,13 @@
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     if sort_field=="is_starred"
-      activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true],:order=>"created_at #{order}")
+      activities.order_by_date(order)
     else
-      activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Message",false],:order=>"#{sort_field} #{order}")
+      activities.sort_by_order(sort_field,order)
     end
   end
   def last_created_message(message_id)
-    activities.find(:last,:conditions=>['resource_type=? AND resource_id=? AND is_delete=?',"Message",message_id,false])
+    activities.activity_last_created(message_id)
   end
   def find_sort_field(sort)
     sort ||="date"
@@ -113,10 +113,10 @@
     project_starred_messages(project_id).count
   end
   def user_active_projects
-    projects.find(:all,:conditions=>['projects.status!=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
+    projects.where("projects.status!=? AND project_users.status=?",ProjectStatus::COMPLETED,true).includes(:project_users)
   end
   def completed_projects
-    projects.find(:all,:conditions=>['projects.status=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
+    projects.where("projects.status=? AND project_users.status=?",ProjectStatus::COMPLETED,true).includes(:project_users)
   end
   def full_name
     "#{first_name} #{last_name}"
@@ -154,7 +154,7 @@
     values
   end
   def image_url
-    attachment ? attachment.public_filename : DEFAULT_AVATAR
+    attachment ? attachment.public_filename(:small) : DEFAULT_AVATAR
   end
   def user_time(time)
     if time_zone

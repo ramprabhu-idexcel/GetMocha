@@ -4,7 +4,14 @@ class Attachment < ActiveRecord::Base
   belongs_to :attachable, :polymorphic => true	
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
+    if RAILS_ENV=="development"
+  has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+  else
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+<<<<<<< HEAD
+=======
+end
+>>>>>>> b043fea05d501ae8b2f2320fb92e9ff121c85107
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
   #~ after_save :resize_image_for_thumbnail
@@ -17,13 +24,13 @@ class Attachment < ActiveRecord::Base
           unless file.thumbnail=="big"
             width=file.parent.width
             height=file.parent.height
-            #~ if RAILS_ENV=="development"
-              #~ full_path = File.join(Rails.root, 'public/', file.parent.public_filename)
-              #~ save_path = File.join(Rails.root, 'public/', file.public_filename)
-            #~ else
+            if RAILS_ENV=="development"
+              full_path = File.join(Rails.root, 'public/', file.parent.public_filename)
+              save_path = File.join(Rails.root, 'public/', file.public_filename)
+            else
               full_path = file.parent.public_filename
               save_path = file.public_filename
-            #~ end
+            end
             size= height<width ? height : width
             img = Magick::Image.read(full_path).first
             if fixed_width>size
@@ -34,6 +41,7 @@ class Attachment < ActiveRecord::Base
               img_part = img.crop(Magick::CenterGravity,size,size)
               end
             img_part=img_part.resize(file.image_width,file.image_width)
+<<<<<<< HEAD
             file_path="#{Rails.root}/public/#{file.filename}"
             img_part.write(file_path)
             end
@@ -42,6 +50,22 @@ class Attachment < ActiveRecord::Base
           end
           end
     def create_event
+=======
+            if RAILS_ENV=="development"
+              img_part.write(save_path)
+            else
+              file_path="#{Rails.root}/public/#{file.filename}"
+              img_part.write(file_path)
+              
+             end 
+          end 
+        end 
+      end
+    end
+  end
+  
+	def create_event
+>>>>>>> b043fea05d501ae8b2f2320fb92e9ff121c85107
 		if self.project_id
 			Event.create_event(self,self.project_id,nil)
       end

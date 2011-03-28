@@ -109,7 +109,7 @@ class Message < ActiveRecord::Base
     images=[]
     documents=[]
     attachments.each do |attach|
-      attach.content_type && attach.content_type.include?("image") ? images<<attach.public_filename : documents<<attach.public_filename
+      attach.content_type && attach.content_type.include?("image") ? images<<attach.public_filename(:message) : documents<<attach.public_filename
     end
     {:attached_images=>images,:attached_documents=>documents}
   end

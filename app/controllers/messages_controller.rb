@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
 	layout 'application', :except=>['new']
  	def index
 		session[:project_name]=nil
-		session[:project_selected]=nil
+		#~ session[:project_selected]=nil
 		@projects=current_user.user_active_projects
 	end
 	def new
