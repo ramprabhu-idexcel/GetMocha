@@ -2,7 +2,7 @@
 <% if  @existing_user && !@existing_user.is_guest %>
 			Project: <%="#{@project.name}" %> <br/>
 			Subject: <%="#{@message.subject}" %> <br/>
-		  Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
+	    Author: <%= @message.author%> <br/>
 
 			<%= @message.message %> <br/>
 
@@ -18,10 +18,8 @@ Subscribed: <%= @people %>			<br/>
 Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
 <% else %>
-		Author: <%= "#{@message.user.name} at  #{@message.created_at.strftime('%I:%M %p')} on #{@message.created_at.strftime('%B %d, %Y') } "%> <br/>
-
+	    Author: <%= @message.author%> <br/>
 			<%= @message.message %> <br/>
-
 			<% if @message.attachments && !@message.attachments.empty? %>
 					<% @message.attachments.each do |attach| %>
 					<br/>
