@@ -1,9 +1,7 @@
-require "rubygems"
-require 'RMagick'
 require 'aws/s3'
 class Attachment < ActiveRecord::Base
   include AWS::S3
-  belongs_to :attachable, :polymorphic => true	
+  belongs_to :attachable, :polymorphic => true        
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
     if RAILS_ENV=="development"
@@ -18,7 +16,7 @@ end
   #~ after_save :resize_image_for_thumbnail
   def resize_image_for_thumbnail
     #~ p self.thumbnails
-      if self.content_type.split('/')[0]=="image"	
+      if self.content_type.split('/')[0]=="image"        
       if self.thumbnail.nil?
         self.thumbnails.each do |file|
           fixed_width=200
@@ -40,13 +38,8 @@ end
             else
               logger.info(img_part)
               img_part = img.crop(Magick::CenterGravity,size,size)
-
-            end
-
               end
-
             img_part=img_part.resize(file.image_width,file.image_width)
-
             file_path="#{Rails.root}/public/#{file.filename}"
             img_part.write(file_path)
             end
@@ -55,22 +48,15 @@ end
           end
           end
     def create_event
-
             if RAILS_ENV=="development"
               img_part.write(save_path)
             else
               file_path="#{Rails.root}/public/#{file.filename}"
               img_part.write(file_path)
-
             end
           end
-  
-
-  
-	
      def image_width
-
-    case self.thumbnail
+   case self.thumbnail
       when "small"
         75
       when "message"
@@ -80,13 +66,8 @@ end
       when "big"
       461
     end
-
-  end
-  
+    end
     def find_thumbnail(name)
-
     image=Attachment.find_by_parent_id_and_thumbnail(id,name)
   end
 end
-
-

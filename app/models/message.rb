@@ -135,5 +135,4 @@ end
 def comment_notify
 		"Author:#{self.author} </br> comment:#{self.comment}"
 end	
-	
 end
