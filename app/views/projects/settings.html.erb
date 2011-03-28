@@ -11,9 +11,9 @@
 	<span>
 
 <script>
-a='<%=  session[:project_selected] %>';
-if(a)
-settings_secondpanel(a);
+existing_project='<%=  session[:project_selected] %>';
+if(existing_project)
+settings_secondpanel(existing_project);
 // Function for displaying second panel in project settings
 function settings_secondpanel(project_id)
 {
