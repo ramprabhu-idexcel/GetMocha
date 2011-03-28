@@ -8,10 +8,9 @@ class Attachment < ActiveRecord::Base
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
   has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
-<<<<<<< HEAD
-=======
+
 end
->>>>>>> b043fea05d501ae8b2f2320fb92e9ff121c85107
+
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
   #~ after_save :resize_image_for_thumbnail
@@ -41,7 +40,7 @@ end
               img_part = img.crop(Magick::CenterGravity,size,size)
               end
             img_part=img_part.resize(file.image_width,file.image_width)
-<<<<<<< HEAD
+
             file_path="#{Rails.root}/public/#{file.filename}"
             img_part.write(file_path)
             end
@@ -50,7 +49,7 @@ end
           end
           end
     def create_event
-=======
+
             if RAILS_ENV=="development"
               img_part.write(save_path)
             else
@@ -59,17 +58,9 @@ end
               
              end 
           end 
-        end 
-      end
-    end
-  end
   
-	def create_event
->>>>>>> b043fea05d501ae8b2f2320fb92e9ff121c85107
-		if self.project_id
-			Event.create_event(self,self.project_id,nil)
-      end
-      end
+  
+	
      def image_width
     case self.thumbnail
       when "small"
