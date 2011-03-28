@@ -1,3 +1,5 @@
+require "rubygems"
+require 'RMagick'
 require 'aws/s3'
 class Attachment < ActiveRecord::Base
   include AWS::S3
@@ -38,11 +40,11 @@ end
             else
               logger.info(img_part)
               img_part = img.crop(Magick::CenterGravity,size,size)
-<<<<<<< HEAD
+
             end
-=======
+
               end
->>>>>>> 122ffe4a78a0f250c37ac9af7c2ca4fee0c7d24a
+
             img_part=img_part.resize(file.image_width,file.image_width)
 
             file_path="#{Rails.root}/public/#{file.filename}"
@@ -59,28 +61,15 @@ end
             else
               file_path="#{Rails.root}/public/#{file.filename}"
               img_part.write(file_path)
-<<<<<<< HEAD
+
             end
           end
-        end
-      end
-    end
-  end
-	def create_event
-		if self.project_id
-			Event.create_event(self,self.project_id,nil)
-		end
-	end
-  def image_width
-=======
-              
-             end 
-          end 
   
+
   
 	
      def image_width
->>>>>>> 122ffe4a78a0f250c37ac9af7c2ca4fee0c7d24a
+
     case self.thumbnail
       when "small"
         75
@@ -91,13 +80,11 @@ end
       when "big"
       461
     end
-<<<<<<< HEAD
+
   end
-  def find_thumbnail(name)
-=======
-    end
+  
     def find_thumbnail(name)
->>>>>>> 122ffe4a78a0f250c37ac9af7c2ca4fee0c7d24a
+
     image=Attachment.find_by_parent_id_and_thumbnail(id,name)
   end
 end
