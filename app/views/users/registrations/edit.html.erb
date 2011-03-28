@@ -126,7 +126,7 @@
 						</div>
 						<div class="info-right">
 						<%unless current_user.phone.present?%>
-				 		<span class="info_phone" id="label_phone" style="visibility:hidden">*****</span>
+				 		<span class="info_phone" id="label_phone">-</span>
 						<%else%>
 					 <span class="info_phone" id="label_phone" ><%=current_user.phone%></span>
 						<%end%>
@@ -143,7 +143,7 @@
 						<%if current_user.mobile.present?%>
 						<span class="info_mobile" id="label_mobile" ><%=current_user.mobile%></span>
 						<%else%>
-						<span class="info_mobile" id="label_mobile" style="visibility:hidden">*****</span>
+						<span class="info_mobile" id="label_mobile">-</span>
 						 <%end%>
 						 	 <%=text_field :val,:data,:class=>"textfield",:id =>"txt_mobile",:value=>current_user.mobile,:style=>"display:none;"%>
                <%=link_to "Edit","#",:class=>"edit",:id=>"mobile",:style=>"visibility:hidden;"%>
