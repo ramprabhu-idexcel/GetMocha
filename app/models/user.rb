@@ -49,11 +49,11 @@
     end
     message.uniq
   end
-  def starred_messages(sort_by=nil,order=nil)
+  def self.starred_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false).order("#{sort_field} #{order}")
   end
-  def starred_comments(sort_field,order)
+  def self.starred_comments(sort_field,order)
     sort_field=find_sort_field(sort_by)
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false).order("#{sort_field} #{order}")
   end
