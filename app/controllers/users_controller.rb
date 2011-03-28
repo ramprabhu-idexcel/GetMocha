@@ -32,5 +32,6 @@ class UsersController <  Devise::RegistrationsController
   end
   def session_clear
     session[:project_name]=nil
+    session[:project_selected]=nil
   end
 end

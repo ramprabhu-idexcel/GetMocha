@@ -4,9 +4,9 @@
 <%messages{}=@message%>
 <% if  @existing_user && !@existing_user.is_guest %>
 			Project: <%="#{@project.name}" %> <br/>
-			Subject: <%="#{messages.subject}" %> <br/>
-		  Author: <%= "#{messages.user.name} at  #{messages.created_at.strftime('%I:%M %p')} on #{messages.created_at.strftime('%B %d, %Y') } "%> <br/>
 
+			Subject: <%="#{@message.subject}" %> <br/>
+	    Author: <%= @message.author%> <br/>
 			<%= messages.message %> <br/>
 
 			<% if messages.attachments && !messages.attachments.empty? %>
@@ -21,12 +21,10 @@ Subscribed: <%= @people %>			<br/>
 Post new messages to this project via email: <%= "#{@project.message_email_id} or custom email" %><br/>
 Powered by GetMocha.com
 <% else %>
-		Author: <%= "#{messages.user.name} at  #{messages.created_at.strftime('%I:%M %p')} on #{messages.created_at.strftime('%B %d, %Y') } "%> <br/>
-
-			<%= messages.message %> <br/>
-
-			<% if messages.attachments && !messages.attachments.empty? %>
-					<% messages.attachments.each do |attach| %>
+		   Author: <%= @message.author%> <br/>
+			<%= @message.message %> <br/>
+			<% if @message.attachments && !@message.attachments.empty? %>
+					<% @message.attachments.each do |attach| %>
 					<br/>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>

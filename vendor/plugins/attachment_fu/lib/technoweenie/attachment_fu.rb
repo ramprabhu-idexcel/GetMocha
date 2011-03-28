@@ -451,6 +451,7 @@ module Technoweenie # :nodoc:
         # Cleans up after processing.  Thumbnails are created, the attachment is stored to the backend, and the temp_paths are cleared.
         def after_process_attachment
           if @saved_attachment
+
             if respond_to?(:process_attachment_with_processing) && thumbnailable? && !attachment_options[:thumbnails].blank? && parent_id.nil?
               temp_file = temp_path || create_temp_file
               attachment_options[:thumbnails].each { |suffix, size| create_or_update_thumbnail(temp_file, suffix, *size) }
@@ -476,21 +477,21 @@ module Technoweenie # :nodoc:
         if ActiveSupport.const_defined?(:Callbacks)
           # Rails 2.1 and beyond!
           def callback_with_args(method, arg = self)
-            notify(method)
+            #~ notify(method)
 
-            result = run_callbacks(method, { :object => arg }) { |result, object| result == false }
+            #~ result = run_callbacks(method, { :object => arg }) { |result, object| result == false }
 
-            if result != false && respond_to_without_attributes?(method)
-              result = send(method)
-            end
+            #~ if result != false && respond_to_without_attributes?(method)
+              #~ result = send(method)
+            #~ end
 
-            result
+            #~ result
           end
 
-          def run_callbacks(kind, options = {}, &block)
-            options.reverse_merge!( :object => self )
-            self.class.send("#{kind}_callback_chain").run(options[:object], options, &block)
-          end
+          #~ def run_callbacks(kind, options = {}, &block)
+            #~ options.reverse_merge!( :object => self )
+            #~ self.class.send("#{kind}_callback_chain").run(options[:object], options, &block)
+          #~ end
         else
           # Rails 2.0
           def callback_with_args(method, arg = self)
