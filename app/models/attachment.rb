@@ -1,3 +1,5 @@
+require "rubygems"
+require 'RMagick'
 require 'aws/s3'
 class Attachment < ActiveRecord::Base
   include AWS::S3
