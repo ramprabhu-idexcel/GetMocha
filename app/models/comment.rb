@@ -4,7 +4,6 @@ class Comment < ActiveRecord::Base
 	has_many :attachments,:as => :attachable, :dependent=>:destroy
   has_many :activities, :as => :resource, :dependent=>:destroy
   after_create :add_in_activity
-  named_scope :recent_attachments, :condition=>['attachable_id IS NULL']
   def add_in_activity
     self.commentable.project.users.each do |user|
       activity=self.activities.create! :user=>user

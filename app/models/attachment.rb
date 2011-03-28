@@ -7,4 +7,6 @@ class Attachment < ActiveRecord::Base
   has_attachment :storage => :s3, :path_prefix => 'public/attachments'
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
+ # named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
+
  end

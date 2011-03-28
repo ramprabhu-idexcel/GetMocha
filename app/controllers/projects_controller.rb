@@ -159,7 +159,7 @@ class ProjectsController < ApplicationController
 		@user=User.find_by_email(@invite.email)
     project=@invite.project
 		if @user
-      project.guest_object(@user.id).delete if project.is_a_guest?(user_id)
+      project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
 			@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
 			@project_user.save
       @user.guest_update_message(@invite.project_id)
