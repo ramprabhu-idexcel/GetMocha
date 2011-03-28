@@ -49,7 +49,7 @@ class UpdatesController < ApplicationController
  def save_image
    @attach=Attachment.new(:uploaded_data=>params["undefined"])
    @attach.attachable=current_user
-   img=Attachment.user_attachments
+   img=current_user.attachment
    img.destroy if img
    @attach.save
    render :json=>{:file_name=> @attach.public_filename}.to_json
