@@ -61,6 +61,7 @@ class ProjectsController < ApplicationController
 		end
 		end
 	def settings_pane
+		session[:project_selected]=nil
 		session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
 			session[:project_name]=@project.name
@@ -160,7 +161,7 @@ class ProjectsController < ApplicationController
 		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
 		@user=User.find_by_email(@invite.email)
     project=@invite.project
-		if @user
+		if @user && @user.is_guest == false
       project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
 			@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
 			@project_user.save
