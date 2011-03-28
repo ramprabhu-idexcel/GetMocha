@@ -155,19 +155,22 @@ class ProjectsController < ApplicationController
 			end
 		end
 	end
- def join_project
+  def join_project
 		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
 		@user=User.find_by_email(@invite.email)
+    project=@invite.project
 		if @user
+      project.guest_object(@user.id).delete if project.is_a_guest?(user_id)
 			@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
 			@project_user.save
+      @user.guest_update_message(@invite.project_id)
 			@invite.update_attributes(:invitation_code=>nil, :status=>true)
 			redirect_to "/"
 		else
 			@invite.update_attributes(:invitation_code=>nil)
 			redirect_to new_user_registration_path
 		end
-		end
+  end
 	def find_project_name
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project

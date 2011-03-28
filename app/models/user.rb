@@ -167,4 +167,15 @@
     end
     time.gmtime+total_diff.seconds
   end
+  
+  def guest_message_activities
+    activities.find(:all,:conditions=>['resource_type=?',"Message"])
+  end
+  
+  def guest_update_message(project_id)
+    activites=[]
+    project_id=project_id.to_i
+    guest_message_activities.collect{|a| activites<<a if a.resource.project_id==project_id}
+    activites.update_all(:is_delete,false)
+  end
 end
