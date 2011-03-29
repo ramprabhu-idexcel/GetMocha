@@ -14,7 +14,10 @@ class UsersController <  Devise::RegistrationsController
       set_flash_message :notice, :signed_up
       invitations=Invitation.resource_email(resource)
       invitations.each do |invite|
-        ProjectUser.create(:project_id=>invite.project_id, :user_id=>resource.id, :status=>true)
+        proj_user=ProjectUser.find_by_project_id_and_user_id(invite.project_id, resource.id)
+        if !proj_user
+          ProjectUser.create(:project_id=>invite.project_id, :user_id=>resource.id, :status=>true)
+        end
         invite.update_attributes(:status=>true)
       end
       render :udpate do |page|

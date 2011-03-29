@@ -832,6 +832,7 @@ else
       {
          alert('please enter the password & Confirm password');
       }
+<<<<<<< HEAD:public/javascripts/application.js
       else if($('#txt_password').val()=="")
        {
           alert("please enter the password");
@@ -848,6 +849,42 @@ else
        else if (($('#txt_confirm').val())!=($("#txt_password").val()))
         {
           alert('password & Confirm Password should be same');
+=======
+    });
+    $('#add_new_mods').hide()
+    return false;
+  });
+  
+  //cancel message modal
+  $('#m_can').live('click',function(){
+    $('.add-item-modal').hide();
+    return false;
+  });
+  
+  //Cancel project modal
+  $('#p_can').live('click',function(){
+    $('.add-item-modal').hide();
+    return false;
+  });
+  
+  //Save project
+  $('#p_add').live('click',function(){
+    var a=$('#data_name').val();
+    var b=$('#data_invites').val();
+    var c=$('#data_message').val();
+    $.ajax({
+      type :'post',
+      url :"/projects",
+      data : $('#form1').serialize(),
+      success: function(data){
+        a=data.search(/alert/);
+      	if(a!=0 && a!=6){
+         $('.add-item-modal').hide();
+	if(window.location.href='/settings')
+         document.getElementById('projects_list').innerHTML=data;
+        else
+         document.getElementById('messages_projects_list').innerHTML=data;
+>>>>>>> 03e49e02a7a9ccc8588ecbc0f013f8876ff5d11b:public/javascripts/application.js
         }
       else
       {

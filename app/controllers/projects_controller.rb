@@ -158,21 +158,24 @@ class ProjectsController < ApplicationController
 	end
   def join_project
 		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
-		@user=User.find_by_email(@invite.email)
-    project=@invite.project
-		if @user && @user.is_guest == false
-      project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
-			#~ @project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
-			#~ @project_user.save
-      @user.guest_update_message(@invite.project_id)
-			@invite.update_attributes(:invitation_code=>nil, :status=>true)
-			redirect_to "/"
-		else
-			
-      project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
-			@user.guest_update_message(@invite.project_id)
-			@invite.update_attributes(:invitation_code=>nil)
-			redirect_to new_user_registration_path
+		if @invite
+			@user=User.find_by_email(@invite.email)
+			project=@invite.project
+			if @user && @user.is_guest == false
+				project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
+				@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
+				@project_user.save
+				@user.guest_update_message(@invite.project_id)
+				@invite.update_attributes(:invitation_code=>nil, :status=>true)
+				redirect_to "/"
+			else
+				if @user
+					project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
+					@user.guest_update_message(@invite.project_id)
+				end
+				@invite.update_attributes(:invitation_code=>nil)
+				redirect_to new_user_registration_path
+			end
 		end
   end
 	def find_project_name
