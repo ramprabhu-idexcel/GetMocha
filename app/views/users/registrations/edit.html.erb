@@ -200,6 +200,36 @@
 	</div>
 <script>
 var UserEdit=true;
+
+
+ $('#title').css('visibility','visible');
+ $('#first_name').css('visibility','visible');
+ $('#last_name').css('visibility','visible');
+ $('#email').css('visibility','visible');
+ $('#password').css('visibility','visible');
+ $('#phone').css('visibility','visible');
+ $('#mobile').css('visibility','visible');
+  $('#colorSelector').ColorPicker({
+    color: '#0000ff',
+    onShow: function (colpkr) {
+      $(colpkr).fadeIn(500);
+      return false;
+    },
+    onHide: function (colpkr) {
+      $(colpkr).fadeOut(500);
+      $.ajax({
+        url:'/updates/edit_profile',
+        type:'put',
+        data:{'user[color]':$('#choose_color_value').val()}
+      });
+      return false;
+    },
+    onChange: function (hsb, hex, rgb) {
+      $('#choose_color').css('backgroundColor', '#' + hex);
+      $('#choose_color_value').val(hex);
+    }
+  });
+
 $('#file_upload').fileUploadUI({
    initUpload: function (event, files, index, xhr, handler, callBack) {
         var regexp = /\.(png)|(jpg)|(gif)$/i;
