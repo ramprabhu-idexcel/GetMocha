@@ -525,6 +525,10 @@ $(document).ready(function() {
   
    /************************************************Edit the User profile*****************************************/
   
+  $('.my-account.open').live('click',function(){
+    return false;
+  });
+  
   $('#mycontact1').live('click',function(){
     $('#mycontact1').toggleClass('open')
     $('#my_profile').hide();
