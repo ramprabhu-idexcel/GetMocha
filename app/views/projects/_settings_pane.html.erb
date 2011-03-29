@@ -91,7 +91,7 @@
 								<div class="avatar-mini"></div>
 								  	<img src="<%=proj_user.user.image_url%>" class="avatar-mini-img" alt="avatar"></img>
 								<span class="name"><%= proj_user.user.full_name %></span>
-								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%#= proj_user.user.id %>,<%= project.id %>);">[x]</a>
+								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_user.user.id %>,<%= project.id %>);">[x]</a>
 								<div class="clear-fix"></div>
 							</div>
 						<% end %>
