@@ -13,7 +13,7 @@ gem 'delayed_job'
 gem 'json'
 gem 'sanitize','2.0.1'
 gem 'aws-s3','0.6.2'
-gem 'rmagick'
+gem 'rmagick','2.8.0'
 gem 'rack','1.2.2'
 
 
