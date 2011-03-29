@@ -848,10 +848,8 @@ else
       url :"/projects",
       data : $('#form1').serialize(),
       success: function(data){
-alert(data);
         a=data.search(/alert/);
-        alert(a);
-	if(a!=0){
+      	if(a!=0 && a!=6){
          $('.add-item-modal').hide();
          document.getElementById('messages_projects_list').innerHTML=data;
         }
