@@ -376,6 +376,8 @@ $(document).ready(function() {
           reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
           $('.prev-messages').append(reply).show('slow');
           close_comment_area();
+          if($('.message.message_comments').length>9)
+            $('.expand-all').show();
         }
       });
       return false;
