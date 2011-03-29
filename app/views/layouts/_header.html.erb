@@ -20,16 +20,12 @@
 	
 	<div class="r-header">
 		<ul>
-		<%=p action_name%>
-		<% if action_name == "settings" || controller_name=="registrations" && action_name =="edit" %>
-	 			<li><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" style="display:none;">Invite</a></li>
-			<% elsif controller_name!="registration"&&action_name != "edit"  %>
+      <li class="settings_header" style="display:none;"><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" >Invite</a></li>
 			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
 			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
 			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
-		<% end %>
 		</ul>
 		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
-    <%=link_to '',project_settings_path,:class=>"settings"%>
+    <%=link_to '','#project-settings',:class=>"settings project-settings"%>
 	</div>
 </div>

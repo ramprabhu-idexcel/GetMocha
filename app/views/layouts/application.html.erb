@@ -87,7 +87,7 @@
       }
       if(event.identifier=='GS')
       {
-        short_modal2('/settings');
+         project_settings();
       }
       if(event.identifier=='GP')
       {
@@ -316,6 +316,12 @@
       $('#container').html(data);
     });
     $('.account-dropdown').hide();
+  }
+  function project_settings(){
+    $.get('/settings', function(data) {
+      $('#container').html(data);
+    });
+    $('.message_header').hide();
   }
   function short_model3()
   {
