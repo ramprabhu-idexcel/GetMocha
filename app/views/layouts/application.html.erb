@@ -91,7 +91,7 @@
       }
       if(event.identifier=='GP')
       {
-        short_modal2('/settings-profile');
+        settings_profile();
       }
       if(event.identifier=='Q')
       {
@@ -306,9 +306,16 @@
 		$('#add_new_mods').hide();
 		}
 		}
-		function short_modal2(path)
+  function short_modal2(path)
   {
 		window.location.href=path;
+  }
+  function settings_profile()
+  {
+    $.get('/settings-profile', function(data) {
+      $('#container').html(data);
+    });
+    $('.account-dropdown').hide();
   }
   function short_model3()
   {
