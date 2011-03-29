@@ -93,7 +93,7 @@ layout :change_layout
 					else
 						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
 					end
-					ProjectGuest.create(:guest_id=>u.id,:project_id=>project.id) 
+					ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id) if guest
 				end
 				if ((user && !user.is_guest && proj_user) || project.is_public?)
 					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
