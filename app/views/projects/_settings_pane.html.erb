@@ -105,7 +105,7 @@
 					  <% if proj_guest.status? %>
 							<div class="person">
 								<div class="avatar-mini"></div>
-								<span class="name"><%= proj_guest.guest.full_name %></span>
+								<span class="name"><%= proj_guest.guest.image_url %></span>
 								<span class="name"><%= proj_guest.guest.email %></span>
 								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_guest.guest.id %>,<%= project.id %>);">[x]</a>
 								<div class="clear-fix"></div>
