@@ -656,12 +656,13 @@ else
         data:{'message[message]' : $('#message_message').val()}        
       });
       new_content=$('#message_message').val();
-//      if(new_content.length>77)
-  //    {
-        new_content=new_content;
-    //  }
+      message_content=$('#message_message').val();
+      if(new_content.length>77)
+      {
+        new_content=new_content.substring(0,77)+"...";
+      }
       $('.message.messow.open').children('.excerpt').children('p').text(new_content);
-      $(this).parent().html(new_content+'<a class="edit message_edit" href="#">Edit</a><div class="clear-fix"></div>');
+      $(this).parent().html(message_content+'<a class="edit message_edit" href="#">Edit</a><div class="clear-fix"></div>');
       return false;
     });
     
@@ -866,11 +867,16 @@ else
       url :"/messages",
       data : $('#form2').serialize(),
       success: function(data){
+      new_content=$('#message_message').val();
+      if(new_content.length>77)
+      {
+        new_content=new_content.substring(0,77)+"...";
+      }
         message='';
         message+='<div id="msac'+data.activity_id+'" class="message messow mpi'+data.project_id+'">';
         message+='<div class="left-icons"><div class="avatar-mini"></div><img width="20" height="21" src="'+data.user_image+'" class="avatar-mini-img" alt="avatar"/></div>';
         message+='<div class="info"><span class="name">'+data.name+'</span><span class="message-time">'+data.message_date+'</span></div> ';
-        message+='<div class="excerpt"><h4>'+data.subject+'</h4><p>'+data.message+'</p></div><div class="clear-fix"></div></div>';
+        message+='<div class="excerpt"><h4>'+data.subject+'</h4><p>'+new_content+'</p></div><div class="clear-fix"></div></div>';
         header=$('a.date-title:contains("'+data.date_header+'")');
         if(header)
         {
