@@ -347,7 +347,14 @@ $(document).ready(function() {
     });
     
     //message reply link and reply in the comment
-    $('.reply, .reply-link').click(function(){
+    $('.reply').click(function(){
+      $('.comment-contain').slideToggle('slow',function(){
+        $('#comment-message').focus();
+      });
+      return false;  
+    });
+    
+    $('.reply-link').live('click',function(){
       $('.comment-contain').slideToggle('slow',function(){
         $('#comment-message').focus();
       });
@@ -376,6 +383,8 @@ $(document).ready(function() {
           reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
           $('.prev-messages').append(reply).show('slow');
           close_comment_area();
+          if($('.message.message_comments').length>9)
+            $('.expand-all').show();
         }
       });
       return false;

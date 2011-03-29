@@ -139,8 +139,10 @@ $.messages;
                   comments.push('</div>');
                   var result=comments.join(' ');
                   $('#comment_area').html(result);
-                  if(data.comments.length>0)
+                  if(data.comments.length>9)
                   $('.expand-all').show();
+                  else
+                   $('.expand-all').hide();
                 }
                });
          }
