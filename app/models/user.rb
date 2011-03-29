@@ -84,7 +84,7 @@
     end
     sort_field
   end
-  def group_starred_messages(sort_by,order)
+  def group_starred_messages(sort_by=nil,order=nil)
     (starred_messages(sort_by,order)+starred_message_comments(sort_by,order)).uniq.group_by{|m| m.updated_at.to_date}
   end
   #count of all starred messages
