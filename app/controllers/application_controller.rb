@@ -109,7 +109,7 @@ layout :change_layout
 			if message
 			message.project.users.each do |user|
       activity=message.activities.create! :user=>user 
-       activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id || to_users.include?(user.email)
+       activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 		 end
 		 end
 			logger.info message.inspect if message
