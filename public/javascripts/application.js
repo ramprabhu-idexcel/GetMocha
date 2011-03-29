@@ -535,6 +535,7 @@ $(document).ready(function() {
       $('#container').html(data);
     });
     $('.account-dropdown').hide();
+    $('.settings_header').hide();
     return false;
   });
   
