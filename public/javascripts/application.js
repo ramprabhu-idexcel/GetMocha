@@ -848,8 +848,7 @@ else
       url :"/projects",
       data : $('#form1').serialize(),
       success: function(data){
-        a=data.search("try");
-alert(a);
+        a=data.search("try")
 	if(a!=0){
          $('.add-item-modal').hide();
          document.getElementById('messages_projects_list').innerHTML=data;
