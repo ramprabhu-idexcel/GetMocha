@@ -9,9 +9,12 @@
     </div>
     <%end%>
     <% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f4| %>
-    <div class="attach-contain">
+        <div class="attach-contain">
       <div  id="attach_upload1" class="attachment-upload">
         <div class="drag-drop">Drag and drop files here</div>
+        <div id="loader" style="display:none;">
+	           <img src="/images/spinner.gif" />
+       </div>
      </br>
 				<table id="files1"></table>
 				<div id="attachment_files1" >
@@ -22,7 +25,7 @@
 
       <%=clear_fix%>
     </div>
-    <%=comment_button%>
+    <%=comment_button %>
   <%end%>
   <%=clear_fix%>
 </div>
@@ -54,18 +57,20 @@
     $('#form4').fileUploadUI({
     uploadTable: $('#files1'),
     downloadTable: $('#attachment_files1'),
+    onProgress: function(event, files, index, xhr, handler){
+		$('#loader').show();
+		},
     buildUploadRow: function (files, index) {
         return false;    },
     buildDownloadRow: function (file) {
 a=file.id;
         return $('<div id="attachment1_' + a + '" class="attachment">'+'<span class="filename">' + file.file + '</span>'+'<a href="javascript:delete_attachments('+a+');"> Remove </a></div>');
-    }
-
-
+    },
+			onComplete:function (event, files, index, xhr, handler) {
+    $('#loader').hide();
+}
 });
-	
 });
-
 function delete_attachments(file)
 {
  $.ajax({
@@ -76,4 +81,7 @@ function delete_attachments(file)
 			 }
     });
 }
+$('.comment-buttons').click(function(){
+ $('.attachment').remove();
+ });
   </script>

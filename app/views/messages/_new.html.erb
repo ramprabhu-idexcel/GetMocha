@@ -40,6 +40,9 @@
 				<% end %>
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
 						<fieldset id="attach" class="open">
+						<div id="loader" style="display:none;">
+	           <img src="/images/spinner.gif" />
+       </div>
 					<label>Attachments:</label>
 					<div  id="attach_upload" class="attachment-upload">
 						<%#=f3.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
@@ -93,11 +96,13 @@ if (field=='message_message')
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
     downloadTable: $('#attachment_files'),
+			onProgress: function(event, files, index, xhr, handler){
+		$('#loader').show();
+		},
     buildUploadRow: function (files, index) {
         return false;    },
     buildDownloadRow: function (file) {
 a=file.id;
-
 var original=file.file
 var b=original.lastIndexOf('.')
 var c=original.substring(b)
@@ -108,7 +113,10 @@ if(d.length > 12)
    var file1=e.concat(c)
  }
  	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file1 + '</span></div>');
-    }
+    },
+			onComplete:function (event, files, index, xhr, handler) {
+    $('#loader').hide();
+}
 });
 });
 function delete_attachment(file)
