@@ -181,6 +181,7 @@
 		<div class="r-panel">
 			<div class="user-list">
       <%current_user.my_contacts.each do |user|%>
+			 <% if user!=current_user%>
 				<div class="user">
 					<div class="left-icons">
 						<div class="avatar-mini"></div>
@@ -195,6 +196,7 @@
 					<div class="clear-fix"></div>
 				</div>
       <%end%>
+			<%end%>
 			</div>
 		</div>
 	</div>
