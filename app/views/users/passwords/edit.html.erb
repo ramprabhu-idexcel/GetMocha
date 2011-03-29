@@ -4,21 +4,37 @@
 	<%= render :partial=>'/home/header'%>
 </div>
 
-
+			
 <div class="cup-lg-c"></div>
 
 <div class="wrap under-cup content-bottom" style="position:relative;">
-	
 <div class="grid-400-c reset-form">
+	<h1>Change your password</h1>
  <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => {:method => :put,:id=>"reset_password" }) do |f| %>
     <%= f.hidden_field :reset_password_token %>
-    <%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %><br/>
-    <%= f.password_field :password_confirmation,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %><br/>
-    <%= f.submit "Reset",:class=>"btn pass-reset-btn",:id=>"forgot_password"%><br/>
+    <%= f.text_field :password,:class=>"textfield",:id=>"password_pwd",:onfocus=>"pass()",:onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %><br/>
+   <%= f.password_field :password,:class=>"textfield",:id=>"pass_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;" %>
+  <%= f.text_field :password_confirmation,:class=>"textfield",:id=>"password_confirm",:onfocus=>"confirm_pass()",:onblur=>"this.value=!this.value?'Confirm':this.value;",:value=>"Confirm"%>
+		   <%= f.password_field :password_confirmation,:class=>"textfield",:id=>"confirm_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;"%><br/>
+	    <%= f.submit "Reset",:class=>"btn pass-reset-btn",:id=>"forgot_password"%><br/>
   <% end %>
 	<div class="push"></div>
 </div>
 </div>
+
+<script>
+function pass()
+{
+$('#password_pwd').hide();
+$('#pass_pwd').show();
+}
+function confirm_pass()
+{
+$('#password_confirm').hide();
+$('#confirm_pwd').show();
+}
+
+</script>
 
 <div class="footer">
 	<div class="container-960">
@@ -42,7 +58,15 @@
 		 var reset=reset_token.split('=')[1]
 		 var pcn=$('#user_password_confirmation').val();
 		 var pwd=$('#user_password').val();
-		 if(($('#user_password_confirmation').val())!=($('#user_password').val()))
+		 if(($('#pass_pwd').val().length) < 6)
+       {
+          alert('password should be minimum 6 characters');
+       }
+		 else if(($('#confirm_pwd').val().length) < 6)
+       {
+          alert('confirm password should be minimum 6 characters');
+       }
+		 	else if(($('#pass_pwd').val())!=($('#confirm_pwd').val()))
 		 {
 				   alert('password and confirm password should be same');
 				 }
