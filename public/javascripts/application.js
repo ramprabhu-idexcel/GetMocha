@@ -545,6 +545,7 @@ $(document).ready(function() {
     });
     $('.account-dropdown').hide();
     $('.settings_header').hide();
+     $('body').attr('class','settings');
     return false;
   });
   
@@ -553,6 +554,7 @@ $(document).ready(function() {
       $('#container').html(data);
     });
     $('.message_header').hide();
+    $('body').attr('class','settings');
   });
   
    /************************************************Edit the User profile*****************************************/
