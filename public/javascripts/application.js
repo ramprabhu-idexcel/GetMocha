@@ -174,6 +174,24 @@ $(document).ready(function() {
       return false;
     });
     
+    //Star the messages from the second panel
+    
+    $('.message-star.secpan').live('click',function(){
+      var parent_div=$(this).parent().parent();
+      var id=parent_div.attr('id').split('msac')[1];
+      $(this).toggle();
+      $.ajax({
+        url: '/star_message/'+id,
+        type: 'get',
+        success:function(data)
+        { 
+          $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
+        }
+      });
+      if($('#starred_messages').hasClass('open'))
+        parent_div.remove();
+      return false;
+    });
     //Star the comments
     $('.message-star.star_comment').live('click',function(){
       var path=$(this).attr('href');
@@ -189,9 +207,6 @@ $(document).ready(function() {
       return false;
     });
     
-    $('.message-star.secpan').live('click',function(){
-      return false;
-    });
     //delete the messages
     $('#trash_message').live('click',function(){
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
