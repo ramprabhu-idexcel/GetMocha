@@ -3,5 +3,5 @@ db/*.sqlite3
 log/*.log
 tmp/
 db/schema.rb
-public/attachment
+public/attachments/
 Gemfile.lock
