@@ -538,6 +538,13 @@ $(document).ready(function() {
     return false;
   });
   
+  $('.settings.project-settings').live('click',function(){
+    $.get('/settings', function(data) {
+      $('#container').html(data);
+    });
+    $('.message_header').hide();
+  });
+  
    /************************************************Edit the User profile*****************************************/
   
   $('.my-account.open').live('click',function(){
@@ -969,24 +976,7 @@ else
     });*/
 
 
-// Function for displaying third panel in project settings
-function settings_thirdpanel(page)
-{
-if(page=="people")
-{
-document.getElementById('people_anchor').className="m-tab alt open";
-document.getElementById('general_anchor').className="m-tab alt";
-document.getElementById('settings_general').style.display="none";
-document.getElementById('settings_people').style.display="block";
-}
-else
-{
-document.getElementById('general_anchor').className="m-tab alt open";
-document.getElementById('people_anchor').className="m-tab alt";
-document.getElementById('settings_people').style.display="none";
-document.getElementById('settings_general').style.display="block";
-}
-}
+
 
 function remove_people_settings(id, proj_id)
 {
