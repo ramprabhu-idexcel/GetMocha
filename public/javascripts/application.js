@@ -553,11 +553,12 @@ else
     //Star the messages
     $('.star.star_items').live('click',function(){
       var id=$('.message.messow.open').attr('id').split('msac')[1];
+      $('#msac'+id).children('div.left-icons').children('a.message-star.secpan').toggle();
       $.ajax({
         url: '/star_message/'+id,
         type: 'get',
         success:function(data)
-        {
+        { 
           $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
         }
       });
