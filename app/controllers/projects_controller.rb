@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
 		render :partial=>'settings_pane'
   end
 	def remove_people
-		@project=Project.find(params[:project_id])
+		#~ @project=Project.find(params[:project_id])
 		@user=User.find(params[:user])
 		@proj_user=ProjectUser.find_by_project_id_and_status_and_user_id(@project.id,true,@user.id)
 		if @proj_user
@@ -79,7 +79,7 @@ class ProjectsController < ApplicationController
 		render :partial=>'settings_pane'
 	end
 	def update_proj_settings
-		@project=Project.find(params[:project_id])
+		#~ @project=Project.find(params[:project_id])
 		if params[:checked]
 			checked=params[:checked]=="false" ? true : false
 			@project.update_attributes(:is_public=>checked)

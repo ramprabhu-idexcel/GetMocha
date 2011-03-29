@@ -97,7 +97,17 @@ if (field=='message_message')
         return false;    },
     buildDownloadRow: function (file) {
 a=file.id;
-        return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file + '</span></div>');
+
+var original=file.file
+var b=original.lastIndexOf('.')
+var c=original.substring(b)
+var d=original.split(c)[0]
+if(d.length > 12)
+{
+   var e=d.substring(original,10)
+   var file1=e.concat(c)
+ }
+ 	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file1 + '</span></div>');
     }
 });
 });
