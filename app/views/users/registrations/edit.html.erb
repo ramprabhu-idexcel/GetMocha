@@ -263,6 +263,7 @@ $('#file_upload').fileUploadUI({
 	   onComplete: function (event, files, index, xhr, handler) {
       var json = handler.response;
       $('img#default-image').attr('src',json.file_name);
+			$('#loader').hide();
     }
   });
 </script>
