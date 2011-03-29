@@ -73,7 +73,7 @@ class ProjectsController < ApplicationController
 		if @proj_user
 			@proj_user.update_attributes(:status=>false)
 		else
-			@guest_user=ProjectGuest.find_by_project_id_and_status_and_user_id(@project.id,true,@user.id)
+			@guest_user=ProjectGuest.find_by_project_id_and_status_and_guest_id(@project.id,true,@user.id)
 			@guest_user.update_attributes(:status=>false)
 		end
 		render :partial=>'settings_pane'
