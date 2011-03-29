@@ -33,9 +33,9 @@ class Activity < ActiveRecord::Base
   #~ def activity_guest_message
     #~ find(:all,:conditions=>['resource_type=?',"Message"])
   #~ end
-  def activities_comment_hash(type_ids)
-    find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
-  end
+  #~ def activities_comment_hash(type_ids)
+    #~ find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
+  #~ end
   #~ def activity_comments(type_ids)
     #~ find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false])
   #~ end

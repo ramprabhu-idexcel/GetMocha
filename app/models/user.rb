@@ -43,7 +43,7 @@
   def starred_message_comments(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     message=[]
-    starred_comments.each do |act|
+    starred_comments(nil,nil).each do |act|
       puts act.resource.commentable.id.inspect
       message<<last_created_message(act.resource.commentable.id)
     end
@@ -53,7 +53,7 @@
     sort_field=find_sort_field(sort_by)
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false).order("#{sort_field} #{order}")
   end
-  def starred_comments(sort_field,order)
+  def starred_comments(sort_by,order)
     sort_field=find_sort_field(sort_by)
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false).order("#{sort_field} #{order}")
   end
@@ -89,7 +89,7 @@
   end
   #count of all starred messages
   def starred_messages_count
-    starred_messages.count+starred_comments.count
+    starred_messages(nil,nil).count+starred_comments(nil,nil).count
   end
   def all_messages_count
     total_messages.count
