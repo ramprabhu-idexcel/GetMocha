@@ -849,7 +849,7 @@ else
       data : $('#form1').serialize(),
       success: function(data){
 alert(data);
-        a=data.search(/try/);
+        a=data.search(/alert/);
         alert(a);
 	if(a!=0){
          $('.add-item-modal').hide();
