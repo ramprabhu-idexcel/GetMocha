@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
 		end
 		if project && invites
 			@project.save
-			@p_user=ProjectUsers.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
+			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
 			invite_users.each do |invite_user|
 			@invite=Invitation.new(:email=>invite_user,:message=>params[:invite][:message])

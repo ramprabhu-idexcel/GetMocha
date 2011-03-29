@@ -848,10 +848,11 @@ else
       url :"/projects",
       data : $('#form1').serialize(),
       success: function(data){
-        if(data.length==1)
-        $('.add-item-modal').hide();
-        document.getElementById('messages_projects_list').innerHTML=data;
-        $('.add-item-modal').hide();
+        a=data.search("try")
+	if(a!=0){
+         $('.add-item-modal').hide();
+         document.getElementById('messages_projects_list').innerHTML=data;
+        }
       },
       failure: function(){
         alert("Error");
