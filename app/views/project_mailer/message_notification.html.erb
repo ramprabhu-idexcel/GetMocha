@@ -2,7 +2,7 @@
 <body>
  <% if  @existing_user && !@existing_user.is_guest %>
 			Project: <%="#{@project.name}" %> <br/>
-			<%=raw @message.msg_notification%><br/>
+			<%= raw @message.msg_notification %><br/>
 			<% @message.attachments.each do |attach| %>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>

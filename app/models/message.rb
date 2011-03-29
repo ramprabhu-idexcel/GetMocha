@@ -130,9 +130,9 @@ def author
 	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
 end
 def msg_notification
-	"Subject:#{self.subject} </br> Author: #{self.author} </br> message:#{self.message}"
+	"Subject: #{self.subject} <br/> Author: #{self.author} <br/> Message: #{self.message}"
 end
 def comment_notify
-		"Author:#{self.author} </br> comment:#{self.comment}"
+		"Author: #{self.author} <br/> Comment: #{self.comment}"
 end	
 end
