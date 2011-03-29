@@ -86,7 +86,7 @@ layout :change_layout
 				message=params[:html]
 				name=params[:subject].to_s
 				if ((!proj_user || !user)  &&  project.is_public? )
-					guest=User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password)  if !user
+					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
 					message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
 					message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) 
 					ProjectGuest.create(:guest_id=>u.id,:project_id=>project.id) 
