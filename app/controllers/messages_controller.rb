@@ -116,7 +116,9 @@ end
   end
   def star_message
     starred=!@activity.is_starred
+		updateds=@activity.updated_at
     @activity.update_attribute(:is_starred,starred)
+    @activity.update_attribute(:updated_at,updateds)
     render :json=>{:count=>current_user.starred_messages_count}
   end
   def subscribe
@@ -142,7 +144,8 @@ end
     params[:sort_by] ||="Date"
     params[:order] ||="Ascending"
     @activity=Activity.find_by_id(params[:activity_id]) if params[:activity_id]
-  end
+		p @activity.inspect
+	end
   def unwanted_columns
     [:updated_at,:created_at,:is_assigned,:resource_type,:resource_id]
   end
