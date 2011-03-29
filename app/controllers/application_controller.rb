@@ -79,9 +79,23 @@ layout :change_layout
 				project_id=project_id[0].split('-').last
 				project=Project.find(project_id)
 				user=User.find_by_email(from_address)
-				if ((user && !user.is_guest) || project.is_public?)
-					message=params[:html]
-					name=params[:subject].to_s
+				proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
+				proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
+				logger.info user.inspect if user
+				logger.info proj_user.inspect if proj_user
+				message=params[:html]
+				name=params[:subject].to_s
+				if ((!proj_user || !user)  &&  project.is_public? )
+					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
+					message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
+					if user
+						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
+					else
+						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
+					end
+					ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id) if guest
+				end
+				if ((user && !user.is_guest && proj_user) || project.is_public?)
 					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 					activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
 				if params[:attachments] && params[:attachments].to_i > 0
@@ -90,7 +104,9 @@ layout :change_layout
 					end
 				end	
       end
+			logger.info message.inspect if message
 		end
+		
 	def reply_to_message_via_email
 			from_address=params[:from].to_s
 			if(from_address.include?('<'))
