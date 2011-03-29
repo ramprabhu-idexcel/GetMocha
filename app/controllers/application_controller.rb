@@ -80,7 +80,7 @@ layout :change_layout
 				project=Project.find(project_id)
 				user=User.find_by_email(from_address)
 				proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
-				proj_user=ProjectGuest.find_by_project_id_and_user_id(project.id, user.id) if !proj_user && user
+				proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
 				logger.info user.inspect if user
 				logger.info proj_user.inspect if proj_user
 				message=params[:html]
