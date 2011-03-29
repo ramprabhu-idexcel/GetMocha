@@ -4,21 +4,20 @@ skip_before_filter :verify_authenticity_token
 before_filter :http_authenticate
 before_filter :find_project
 layout :change_layout
-def change_layout
-	if devise_controller?
-		if (controller_name=="confirmations")
-         %w{show}.include?(action_name) ? "before_login" : "application"
-       end
-       if ((controller_name=="registrations") || (controller_name=="sessions"))
-       %w{edit}.include?(action_name) ? "application" : "before_login"
-       else
-        %w{edit}.include?(action_name) ? "before_login" : "application"
-       end
-     elsif controller_name=="home"
-			 "before_login"
-     else
+  def change_layout
+    if devise_controller?
+      if (controller_name=="confirmations")
+           %w{show}.include?(action_name) ? "before_login" : "application"
+      elsif controller_name=="registrations"
+         %w{edit}.include?(action_name) ? false : "before_login"
+      else
+          %w{edit}.include?(action_name) ? "before_login" : "application"
+      end
+    elsif controller_name=="home"
+      "before_login"
+    else
       "application"
-     end
+    end
   end
   def find_project
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
