@@ -7,7 +7,7 @@ class Attachment < ActiveRecord::Base
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
   if Rails.env.development?
-    has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+    has_attachment :size => 1.megabyte..2.megabytes,:resize=>"500x500>",:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"70x70",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
     has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   end

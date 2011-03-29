@@ -13,7 +13,7 @@ module MessagesHelper
 		messages=project.messages
 		unread=[]
 		messages.each do |message|
-			unread1=message.activities.find(:first,:conditions=>['user_id=? && is_read=?',current_user.id,false]).
+			unread1=message.activities.find(:first,:conditions=>['user_id=? && is_read=?',current_user.id,false])
 			unread<<unread1 if unread1
 			end
 		unread.count
