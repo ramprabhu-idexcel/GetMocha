@@ -2,7 +2,7 @@
 class ProjectsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	 before_filter :authenticate_user!, :except=>['join_project']
-	layout "application", :except=>['new']
+	layout "application", :except=>['new','settings']
 	  include AWS::S3
 	def new
 		@users=User.all_users
