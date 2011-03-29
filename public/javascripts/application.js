@@ -853,6 +853,7 @@ else
          $('.add-item-modal').hide();
 	if(window.location.href='/settings')
          document.getElementById('projects_list').innerHTML=data;
+        else
          document.getElementById('messages_projects_list').innerHTML=data;
         }
       },
