@@ -68,4 +68,58 @@ class Project < ActiveRecord::Base
   def all_completed_projects
     find(:all,:conditions=>['projects.status=? AND project_users.status=?',ProjectStatus::COMPLETED,true],:include=>:project_users)
   end
+		def invite_people_settings
+		@invite=Invitation.new(:project_id=>params[:project_id], :name=>params[:name], :email=>params[:email], :message=>params[:message])
+		@invite.save
+		@project=Project.find(params[:project_id])
+		if @invite.valid?
+			ProjectMailer.delay.invite_people(current_user,@invite)
+			render :nothing=>true
+		else
+			errors=[]
+			if params[:email].blank?
+				errors<<"Please enter email address"
+			elsif	@invite.errors[:email][0]=="is too short (minimum is 6 characters)"
+				errors<<"Please enter email minimum 6 characters"
+			elsif @invite.errors[:email][0]=="is invalid"
+				errors<<"Please enter valid email address"
+			end
+			render :update do |page|
+				page.alert errors
+			end
+		end
+	end
+  def join_project
+		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
+		@user=User.find_by_email(@invite.email)
+    project=@invite.project
+		if @user && @user.is_guest == false
+      project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
+			#~ @project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
+			#~ @project_user.save
+      @user.guest_update_message(@invite.project_id)
+			@invite.update_attributes(:invitation_code=>nil, :status=>true)
+			redirect_to "/"
+		else
+			
+      project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
+			@user.guest_update_message(@invite.project_id)
+			@invite.update_attributes(:invitation_code=>nil)
+			redirect_to new_user_registration_path
+		end
+  end
+	def find_project_name
+    @project=Project.find_by_id(params[:project_id]) if params[:project_id]
+    session[:project_name]=@project.name if @project
+  end
+	def file_download_from_email
+		attachment=Attachment.find(params[:id])
+		if RAILS_ENV=="development"
+		send_file "#{RAILS_ROOT}/public"+attachment.public_filename
+		else
+			s3_connect
+			s3_file=S3Object.find(attachment.public_filename.split("/#{S3_CONFIG[:bucket_name]}/")[1],"#{S3_CONFIG[:bucket_name]}")
+			send_data(s3_file.value,:url_based_filename=>true,:filename=>attachment.filename,:type=>attachment.content_type)			
+		end		
+	end
 end
