@@ -78,7 +78,8 @@ layout :change_layout
 				project_id=project_id.split('@')
 				project_id=project_id[0].split('-').last
 				project=Project.find(project_id)
-				user=User.find_by_email(from_address)
+				#user=User.find_by_email(from_address)
+				user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
 				proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
 				proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
 				logger.info user.inspect if user
@@ -105,6 +106,12 @@ layout :change_layout
 					end
 				end	
       end
+			if message
+			message.project.users.each do |user|
+      activity=message.activities.create! :user=>user 
+       activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id || to_users.include?(user.email)
+		 end
+		 end
 			logger.info message.inspect if message
 		end
 		
