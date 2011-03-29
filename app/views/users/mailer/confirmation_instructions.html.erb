@@ -1,7 +1,9 @@
 
  Please verify the email address: [<%= @resource.email %>] that you entered on GetMocha.com by clicking the following link:
 
-<%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+<%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %> <br/>
+
+Powered by GetMocha.com
 
 
 
