@@ -87,15 +87,16 @@ layout :change_layout
 				name=params[:subject].to_s
 				if ((!proj_user || !user)  &&  project.is_public? )
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
-					message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
 					if user
+						message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
 					else
+						message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
 						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
 					end
 					ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id) if guest
-				end
-				if ((user && !user.is_guest && proj_user) || project.is_public?)
+				
+				elsif ((user && !user.is_guest && proj_user) || project.is_public?)
 					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 					activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
 				if params[:attachments] && params[:attachments].to_i > 0
