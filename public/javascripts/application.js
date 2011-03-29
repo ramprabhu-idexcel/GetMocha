@@ -849,8 +849,7 @@ else
       data : $('#form1').serialize(),
       success: function(data){
         a=data.search("try")
-	alert(a);
-        if(a!=0){
+	if(a!=0){
          $('.add-item-modal').hide();
          document.getElementById('messages_projects_list').innerHTML=data;
         }
