@@ -10,6 +10,8 @@ layout :change_layout
            %w{show}.include?(action_name) ? "before_login" : "application"
       elsif controller_name=="registrations"
          %w{edit}.include?(action_name) ? false : "before_login"
+      elsif controller_name=="sessions"
+         %w{edit}.include?(action_name) ? "application" : "before_login"
       else
           %w{edit}.include?(action_name) ? "before_login" : "application"
       end
