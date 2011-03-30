@@ -120,7 +120,7 @@ layout :change_layout
 				
 				name=params[:subject].to_s
 				logger.info proj_user.inspect
-				if proj_user && proj_user.status=="false"
+				if proj_user && proj_user.status==false
 					proj_user.update_attributes(:status=>true)
 				end
 				if ((!proj_user)  &&  project.is_public? )
