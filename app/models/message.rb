@@ -63,11 +63,11 @@ class Message < ActiveRecord::Base
     diff=current_user.user_time(Time.now)-current_user.user_time(time)
 		case diff
       when 0..59
-     "Posted #{pluralize(diff.to_i,"second")}ago"
+     "Posted #{pluralize(diff.to_i,"second")} ago"
       when 60..3599
-      "Posted #{pluralize((diff/60).to_i,"minute")}ago"
+      "Posted #{pluralize((diff/60).to_i,"minute")} ago"
       when 3600..86399
-      "Posted #{pluralize((diff/3600).to_i,"hour")}ago"
+      "Posted #{pluralize((diff/3600).to_i,"hour")} ago"
       else
         "Posted on #{user_time.strftime("%d/%m/%y")}"
     end
@@ -109,9 +109,13 @@ class Message < ActiveRecord::Base
     images=[]
     documents=[]
     attachments.each do |attach|
-      attach.content_type && attach.content_type.include?("image") ? images<<attach.public_filename(:message) : documents<<attach.public_filename
+      if attach.content_type && attach.content_type.include?("image") 
+        images<<"<a href='/file_download_from_email/#{attach.id}'><img width='75' height='75' alt='attachment' src='#{attach.public_filename(:image)}'/></a>"
+      else
+        documents<<"<a href='/file_download_from_email/#{attach.id}'>#{attach.filename}</a>"
+      end
     end
-    {:attached_images=>images,:attached_documents=>documents}
+    {:attach_image=>images,:attached_documents=>documents}
   end
   def date_header(user=nil)
     user=self.user if user.nil?

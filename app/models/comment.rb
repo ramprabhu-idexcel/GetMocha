@@ -52,5 +52,5 @@ class Comment < ActiveRecord::Base
       end
     end
     {:attach_image=>images,:attached_documents=>documents}
-    end
+  end
 end

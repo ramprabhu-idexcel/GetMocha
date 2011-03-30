@@ -103,17 +103,17 @@ $.messages;
                   {
                     comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
                     $.each(data.message.attach.attached_documents,function(index,value){
-                      comments.push('<p><a href="'+value+'">'+get_filename(value)+'</a></p>');
+                      comments.push('<p>'+value+'</a></p>');
                     });
                     comments.push('</div>')
                   }
                   
                   //Image attachments
-                  if(data.message.attach.attached_images.length>0)
+                  if(data.message.attach.attach_image.length>0)
                   {
                     comments.push('<div class="attachments">');
-                    $.each(data.message.attach.attached_images,function(index,value){
-                      comments.push('<div class="attachment-thumb-frame"><a href="'+value+'"><img alt="attachment" src="'+value+'" width="75" height="75"/></a></div>');
+                    $.each(data.message.attach.attach_image,function(index,value){
+                      comments.push('<div class="attachment-thumb-frame">'+value+'</div>');
                     });
                     comments.push('<div class="clear-fix"></div>')
                     comments.push('</div>');
