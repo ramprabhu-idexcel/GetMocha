@@ -112,7 +112,7 @@ if(d.length > 12)
    var e=d.substring(original,10)
    var file1=e.concat(c)
  }
- 	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file1 + '</span></div>');
+ 	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file+ '</span></div>');
     },
 			onComplete:function (event, files, index, xhr, handler) {
     $('#loader').hide();
