@@ -122,7 +122,7 @@ layout :change_layout
       end
 			if message
 			message.project.users.each do |user|
-      activity=message.activities.create! :user=>user 
+      activity=message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
        activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 		 end
 		 end
