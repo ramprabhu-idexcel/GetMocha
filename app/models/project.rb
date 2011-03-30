@@ -16,7 +16,7 @@ class Project < ActiveRecord::Base
   belongs_to :owner,:class_name=>"User"
 	attr_accessible :name,:status,:message_email_id,:task_email_id,:is_public,:user_id
 	validates :name, :presence   => true
-	validates :name, :length     => { :within => 3..40, :message=>"Please enter a project name with more than 3 characters and less than 20 characters" }
+	validates :name, :length     => { :within => 4..40, :message=>"Please enter a project name with more than 3 characters and less than 20 characters" }
 	after_create :create_email_ids
 	
   def self.user_projects(user_id)
