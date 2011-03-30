@@ -360,6 +360,11 @@ $(document).ready(function() {
   
     //Add message comments  
     $('.blue-33.add_comment').live('click',function(){
+      if($.trim($('#comment-message').val())=="")
+      {
+        alert('Please add your reply');
+        return false;
+      }
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
       $('#act').val(activity_id);
       var reply="";
