@@ -81,24 +81,40 @@ $(document).ready(function() {
     return false;
   });
   
-     $('.delete').click(function(){
+    /* $('.delete').click(function(){
+alert('here');
+	$(this).parent().parent().parent().parent().siblings().prev('br').remove();
+alert('afetrr bt');
          $(this).parent('span').remove();
+	
        $.ajax({
          url: $(this).attr('href'),
          type: 'delete',
        });
     return false;
-  });
+  });*/
   
-  $('.delete').live('click',function(){
+  $('.delete.delete_new').live('click',function(){
+          $.ajax({
+         url: $(this).attr('href'),
+         type: 'delete',
+       });
+    $(this).parent().parent().parent().parent().next().remove()
+        $(this).parent().parent().parent().parent().remove();
+	if($('.info_email').length<3)
+	$('#semail').children('br').remove()
+    return false;
+  });
+   
+
+  $('.edit.delete.delete_exist').live('click',function(){
          $(this).parent('span').remove();
        $.ajax({
          url: $(this).attr('href'),
          type: 'delete',
        });
     return false;
-  });
-    
+  });  
   
   //Message page codings
   if(typeof Message!="undefined" && Message==true)
