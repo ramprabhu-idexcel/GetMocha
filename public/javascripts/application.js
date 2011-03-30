@@ -511,14 +511,14 @@ $(document).ready(function() {
         message+='<div class="info"><span class="name">'+data.name+'</span><span class="message-time">'+data.message_date+'</span></div> ';
         message+='<div class="excerpt"><h4>'+data.subject+'</h4><p>'+new_content+'</p></div><div class="clear-fix"></div></div>';
         header=$('a.date-title:contains("'+data.date_header+'")');
-        if(header)
+        if(header.length>0)
         {
           $(message).insertAfter(header.parent());
         }
         else
         {
           date_header='<div class="date-bar"><a class="date-title" href="#">'+data.date_header+'</a></div>';
-          $(date_header+message).prependTo('#message_area')
+          $(date_header+message).appendTo('#message_area')
         }
         if(typeof(data.name)!="undefined")
         $('.add-item-modal').hide();
