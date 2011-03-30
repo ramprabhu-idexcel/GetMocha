@@ -95,9 +95,9 @@ layout :change_layout
 				if message.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
 					message=message.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
   				logger.info message.inspect
-					message=message.split("---")
+					message=message.split("</td></tr></table>")[0]
 					logger.info message.inspect
-					message = message[0...message.length-1].join("---")
+					#~ message = message[0...message.length-1].join("---")
 					logger.info message.inspect
 
 				end
