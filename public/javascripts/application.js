@@ -1101,7 +1101,7 @@ function parse_date(date)
 
 function get_filename(path)
 {
-  pos=path.lastIndexOf("/")
+  pos=path.lastIndexOf("/");
   return path.substring(pos+1);
 }
 

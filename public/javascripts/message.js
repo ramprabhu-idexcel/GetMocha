@@ -124,8 +124,19 @@ $.messages;
                   comments.push('<div class="prev-messages">');
                   $.each(data.comments,function(index,comment){
                     comments.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
-                    comments.push('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
+                    comments.push('<a class="name message_name" href="#">'+comment.user+'</a>');
+                    if((comment.attach.attach_image.length>0) || (comment.attach.attach_image.length>0))
+                      comments.push('<div class="has-attachment"></div>');
+                    comments.push('<span class="message-time">'+comment.created_at+'</span>');
                     comments.push('<div class="comment"><p>'+comment.comment+'</p>');
+                    if(comment.attach.attach_image.length>0)
+                    {
+                      comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
+                      $.each(comment.attach.attached_documents,function(index,value){
+                        comments.push('<p><a href="'+value+'">'+get_filename(value)+'</a></p>');
+                      });
+                      comments.push('</div>')
+                    }
                     if(comment.attach.attach_image.length>0)
                     {
                       comments.push('<div class="attachments">');
