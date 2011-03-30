@@ -120,6 +120,9 @@ layout :change_layout
 				
 				name=params[:subject].to_s
 				logger.info proj_user.inspect
+				if proj_user && proj_user.status=="false"
+					proj_user.update_attributes(:status=>true)
+				end
 				if ((!proj_user)  &&  project.is_public? )
 								logger.info "1111111111111111111111111111111111111111111111111111"
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
