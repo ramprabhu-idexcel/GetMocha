@@ -112,38 +112,31 @@ layout :change_layout
 					message=message.split("\240").join
 				end
 				
-				
 				if message.include?("&lt;!-- DIV {margin:0px;} --&gt;")
-					
 					message=message.split("&lt;!-- DIV {margin:0px;} --&gt;")[1]
 				end
 				
 				name=params[:subject].to_s
-				logger.info proj_user.inspect
 				if proj_user && proj_user.status==false
 					proj_user.update_attributes(:status=>true)
 				end
 				if ((!proj_user)  &&  project.is_public? )
-								logger.info "1111111111111111111111111111111111111111111111111111"
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
 					if user
-						logger.info "1111111111111111111111111111111111111111111111111111"
 						#~ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 						#~ message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
 					else
-						logger.info "22222222222222222222222222222222222222222222222222"
 						message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
 						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
 					end
 					 if guest
 						 ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
-						elsif user && user.is_guest
-							logger.info "-------------------------------------------"
-							ProjectGuest.create(:guest_id=>user.id,:project_id=>project.id)
-						end
+					elsif user && user.is_guest
+				  		ProjectGuest.create(:guest_id=>user.id,:project_id=>project.id)
+					end
 				
 				elsif ((user && !user.is_guest && proj_user) || project.is_public?)
-					logger.info "3333333333333333333333333333333333333333333333333333"
+					
 					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 					#~ activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
 				if params[:attachments] && params[:attachments].to_i > 0
