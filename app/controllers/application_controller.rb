@@ -135,14 +135,14 @@ layout :change_layout
 				elsif ((user && !user.is_guest && proj_user) || project.is_public?)
 					logger.info "3333333333333333333333333333333333333333333333333333"
 					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
-					activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
+					#~ activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
 				if params[:attachments] && params[:attachments].to_i > 0
 					for count in 1..params[:attachments].to_i
 						attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
 					end
 				end	
       end
-			if message
+			if message && message.project
 			message.project.users.each do |user|
      activity=message.activities.create! :user=>user
        activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
