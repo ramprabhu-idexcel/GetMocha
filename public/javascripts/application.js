@@ -150,7 +150,7 @@ $(document).ready(function() {
     
     //Expand single message
     $('.name.message_name').live('click',function(){
-      $(this).parent('div.message-body').parent('div.message.message_comments').addClass('open');
+      $(this).parent('div.message-body').parent('div.message.message_comments').toggleClass('open');
       return false;
     });
         
