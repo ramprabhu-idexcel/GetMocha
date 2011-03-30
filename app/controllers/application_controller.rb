@@ -99,6 +99,7 @@ layout :change_layout
 				if message.include?("\240")
 					message=content.split("\240").join
 				end
+				logger.info message.inspect
 				name=params[:subject].to_s
 				if ((!proj_user || !user)  &&  project.is_public? )
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
