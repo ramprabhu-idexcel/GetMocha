@@ -20,7 +20,7 @@ class Comment < ActiveRecord::Base
     comment=self.find_by_id(id,:select=>[:id,:comment,:created_at,:user_id])
     user=comment.user
     date=Comment.find_comments_time(comment.created_at,current_user)
-    comment.attributes.merge({:user=>comment.user.name,:created_at=>date,:attach=>comment.attach_urls})
+    comment.attributes.merge({:user=>comment.user.name,"created_at"=>date,:attach=>comment.attach_urls})
   end
   def self.find_comments_time(time,current_user)
     user_time=current_user.user_time(time)
