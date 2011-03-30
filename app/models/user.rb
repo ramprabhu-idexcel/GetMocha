@@ -50,10 +50,12 @@
     message.uniq
   end
   def starred_messages(sort_by=nil,order=nil)
+    order="desc" unless order
     sort_field=find_sort_field(sort_by)
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Message",true,false).order("#{sort_field} #{order}")
   end
   def starred_comments(sort_by,order)
+    order="desc" unless order
     sort_field=find_sort_field(sort_by)
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Comment",true,false).order("#{sort_field} #{order}")
   end
@@ -62,6 +64,7 @@
   end
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
+    order="desc" unless order
     if sort_field=="is_starred"
       activities.where('resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true).order("created_at #{order}")
     else
@@ -173,5 +176,21 @@
   def guest_update_message(project_id)
     project_id=project_id.to_i
     guest_message_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
+  end
+  def unread_all_message
+    activities.find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=?',"Message",false,false])
+  end
+  def unread_all_message_count
+    unread_all_message.count
+  end
+  def unread_project_messages
+    message=[]
+    projects.each do |project|
+      message<<project_starred_messages(project.id,nil,nil)
+    end
+    message
+  end
+  def project_unread_counts
+    
   end
 end
