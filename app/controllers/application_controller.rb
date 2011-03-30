@@ -113,7 +113,9 @@ layout :change_layout
 				end
 				logger.info "*****************************"
 				logger.info message.inspect
-				
+				if message.include?("<!-- DIV {margin:0px;} -->")
+					message=message.split("<!-- DIV {margin:0px;} -->")[1]
+				end
 				name=params[:subject].to_s
 				if ((!proj_user || !user)  &&  project.is_public? )
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
