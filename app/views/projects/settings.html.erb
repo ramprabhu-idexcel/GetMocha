@@ -155,15 +155,28 @@ var pars = "project_id=" + proj_id +  "&proj_status="+ status;
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
-				a=$('#completed_list').css('display');
+			 if(status=="1")
+			 show_status="Active";
+			 else if(status=="2")
+			 show_status="In Progress"
+			 else
+			 show_status="Completed"
+			 a=$('#completed_list').css('display');
 			 document.getElementById('project_list').innerHTML=data;
 			 if(a=="block")
 			 show_completed_projects();
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
   		 document.getElementById('change_project_status').innerHTML="Edit";
+  		 //document.getElementById('change_project_status').style.marginLeft="90px";
+  		 //document.getElementById('change_project_status').style.marginTop="-17px";
        document.getElementById('project_status_select_box').className="hidden";
-			 document.getElementById('project_status_label').style.display="block";
+
+			 
+			 			 document.getElementById('project_status_label').style.display="block";
+						 document.getElementById('project_status_label').innerHTML=show_status;			 
+						 
+
 			 }
     });
 }
