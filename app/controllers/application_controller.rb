@@ -85,6 +85,20 @@ layout :change_layout
 				logger.info user.inspect if user
 				logger.info proj_user.inspect if proj_user
 				message=params[:html]
+				if message.include?("gmail_quote")
+				message=message.split('<div class="gmail_quote">')[0]
+				end
+				if message.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
+					message=message.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
+					message=message.split("---")
+					message = message[0...message.length-1].join("---")
+				end
+				if message.count("Apple-style-span") > 0 or message.count("Apple-converted-space") > 0
+					message = Sanitize.clean(message, Sanitize::Config::BASIC)
+				end
+				if message.include?("\240")
+					message=content.split("\240").join
+				end
 				name=params[:subject].to_s
 				if ((!proj_user || !user)  &&  project.is_public? )
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
