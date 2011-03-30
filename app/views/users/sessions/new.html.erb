@@ -22,9 +22,9 @@
 <%= f.hidden_field :remember_me,:id=>"remember_hidden_id",:value=>0%>
 <%= f.submit "Log in",:class=>"btn login-btn" %>
 <%= f.label :email, "Email"%>
-<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address"  %>
+<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address",:style=>"width:214px;"  %>
 <%= f.label :password, "Password"%>
-<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password" %>
+<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:214px;" %>
 <%end%>
 </div>
 </div>
