@@ -30,6 +30,30 @@
 </div>
 <script>
 var Login=true;
+
+    $('#forgot_pass').live('click',function(){
+	  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var email=$('#forgot_email').val()
+		if($('#forgot_email').val()=='Account email address')
+		{
+		alert('pls enter your email id');
+		}
+    else if(!emailReg.test(email)) {
+		  alert('pls enter the valid email address');
+		 }
+		else
+      {      
+        $.ajax({
+        url:'/users/password',
+        data: $('form#fpwd').serialize(),
+        type: "POST",
+        success: function(data){
+            window.location.href="/";
+          }
+      });
+    }    
+   return false;    
+    });
 </script>
 <div class="push"></div>
 </div>
