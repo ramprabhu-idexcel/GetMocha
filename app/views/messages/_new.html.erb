@@ -40,8 +40,8 @@
 				<% end %>
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
 						<fieldset id="attach" class="open">
-						<div id="loader" style="display:none;">
-	           <img src="/images/spinner.gif" />
+						<div id="loader1" style="display:none;">
+	           <img src="/images/ajax-loader(2).gif" />
        </div>
 					<label>Attachments:</label>
 					<div  id="attach_upload" class="attachment-upload">
@@ -97,7 +97,7 @@ if (field=='message_message')
     uploadTable: $('#files'),
     downloadTable: $('#attachment_files'),
 			onProgress: function(event, files, index, xhr, handler){
-		$('#loader').show();
+		$('#loader1').show();
 		},
     buildUploadRow: function (files, index) {
         return false;    },
@@ -115,7 +115,7 @@ if(d.length > 12)
  	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file+ '</span></div>');
     },
 			onComplete:function (event, files, index, xhr, handler) {
-    $('#loader').hide();
+    $('#loader1').hide();
 }
 });
 });

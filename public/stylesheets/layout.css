@@ -216,6 +216,4 @@ h1 {
 	position: relative;
 	height: 36px;
 }
-#loader.loading {
-  background: url(../images/spinner.gif) no-repeat center center;
-}
+
