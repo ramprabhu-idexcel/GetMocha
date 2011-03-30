@@ -20,16 +20,40 @@ function settings_secondpanel(project_id)
 <% @projects.each do |p| %>
 var id=<%= p.id %>;
 if(id==project_id)
+{
+is_open=$('#project_list_'+id).children('.num-unread').length;
+if(is_open=="0")
 document.getElementById('project_list_'+id).className="project open";
 else
+document.getElementById('project_list_'+id).className="project has-unread open";
+}
+else
+{
+is_open=$('#project_list_'+id).children('.num-unread').length;
+if(is_open=="0")
 document.getElementById('project_list_'+id).className="project";
+else
+document.getElementById('project_list_'+id).className="project has-unread";
+}
 <% end %>
 <% @completed_projects.each do |p| %>
 var id=<%= p.id %>;
 if(id==project_id)
+{
+is_open=$('#project_list_'+id).children('.num-unread').length;
+if(is_open=="0")
 document.getElementById('project_list_'+id).className="project open";
 else
+document.getElementById('project_list_'+id).className="project has-unread open";
+}
+else
+{
+is_open=$('#project_list_'+id).children('.num-unread').length;
+if(is_open=="0")
 document.getElementById('project_list_'+id).className="project";
+else
+document.getElementById('project_list_'+id).className="project has-unread";
+}
 <% end %>
   $.ajax({
        type :'get',

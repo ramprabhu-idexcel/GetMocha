@@ -30,6 +30,10 @@ existing_project='<%=  session[:project_selected] %>';
 if(existing_project)
 {
 	window.location=$('#project_list_messages'+existing_project).attr('href');
+	is_open=$('#project_list_messages'+existing_project).children('.num-unread').length;
+	if(is_open=="0")
 	document.getElementById('project_list_messages'+existing_project).className="project open";
+	else
+	document.getElementById('project_list_messages'+existing_project).className="project has-unread open";
  }
 </script>
