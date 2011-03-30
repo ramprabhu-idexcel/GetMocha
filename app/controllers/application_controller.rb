@@ -119,6 +119,7 @@ layout :change_layout
 				end
 				
 				name=params[:subject].to_s
+				logger.info proj_user.inspect
 				if ((!proj_user)  &&  project.is_public? )
 								logger.info "1111111111111111111111111111111111111111111111111111"
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
@@ -131,7 +132,12 @@ layout :change_layout
 						message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
 						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
 					end
-					ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id) if guest
+					 if guest
+						 ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
+						elsif user && user.is_guest
+							logger.info "-------------------------------------------"
+							ProjectGuest.create(:guest_id=>user.id,:project_id=>project.id)
+						end
 				
 				elsif ((user && !user.is_guest && proj_user) || project.is_public?)
 					logger.info "3333333333333333333333333333333333333333333333333333"
