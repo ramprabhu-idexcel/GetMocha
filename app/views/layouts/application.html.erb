@@ -396,7 +396,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 				for(i=0; i<length; i++)
 				{
 					classopen=$('.projects-list').children("")[i].className;
-					if(classopen=="project open")
+					if(classopen=="project has-unread open" || classopen=="project open")
 					{
 					if((key=="down" || key=="Z") && (i==length-1))
 					 $('#completed_list').hide();
@@ -503,10 +503,10 @@ $('#mycontact1').toggleClass('open')
 		// for messages page navigation
 		function messages_navigation_down(key)
 		{
-		class=$('#comment_area').children('').length;
+		class1=$('#comment_area').children('').length;
 		class_hide=$('#comment_area').css('display');
 		
-		if(class==0 || class_hide=="none")
+		if(class1==0 || class_hide=="none")
 		{
 			//first panel
 			all_messages=document.getElementById('all_messages').className;
@@ -525,7 +525,7 @@ $('#mycontact1').toggleClass('open')
 			for(i=0; i<length; i++)
 			{
 			class=$('.projects-list').children('')[i].className;
-			if(class=="project open")
+			if(class=="project has-unread open" || class=="project open")
 			open="true"
 			
 			open_id=$('.projects-list').children('')[i].id;
@@ -533,7 +533,7 @@ $('#mycontact1').toggleClass('open')
 			{
 			  if(key=="down" || key=="Z")
 				already_exists=$('.projects-list').children('')[0].id;
-				else if(exit1!="true")
+				else if(exit1!="true" && (key=="up" || key=="A"))
 				{
 					window.location=$('#all_messages').attr('href');
 					document.getElementById('all_messages').className="all-messages has-unread open";
@@ -542,7 +542,7 @@ $('#mycontact1').toggleClass('open')
 								
 				}
 			}
-			else if(open=="true" && i<length && class=="project open")
+			else if(open=="true" && i<length && (class=="project has-unread open" || class=="project open"))
 			{
 			  if((key=="down" || key=="Z") && i<length-1)
 				already_exists=$('.projects-list').children('')[i+1].id;
@@ -572,12 +572,19 @@ $('#mycontact1').toggleClass('open')
 				//open_id=open_id.split('_')[2];
 				//open_id=open_id.split('messages')[1];
 					window.location=$('#'+already_exists).attr('href');
+					is_open=$('#'+already_exists).children('.num-unread').length;
+					if(is_open=="0")
 					document.getElementById(already_exists).className="project open";
+					else
+					document.getElementById(already_exists).className="project has-unread open";
 					
 					if(old_one=="true")
 					{
-					
+					is_open=$('#'+old_id).children('.num-unread').length;
+					if(is_open=="0")
 					document.getElementById(old_id).className="project";
+					else
+					document.getElementById(old_id).className="project has-unread";
 					}
 					else
 								document.getElementById('starred_messages').className="starred";
@@ -595,7 +602,11 @@ $('#mycontact1').toggleClass('open')
 				{
 					first=$('.projects-list').children('')[length-1].id;
 					window.location=$('#'+first).attr('href');
+					is_open=$('#'+first).children('.num-unread').length;
+					if(is_open=="0")
 					document.getElementById(first).className="project open";
+					else
+					document.getElementById(first).className="project has-unread open";
 					document.getElementById('all_messages').className="all-messages has-unread";
 				}
 				else if(open=="true" && (key=="down" || key=="Z"))
@@ -612,13 +623,17 @@ $('#mycontact1').toggleClass('open')
 					window.location=$('.starred').attr('href');
 					document.getElementById('starred_messages').className="starred open";
 					first=$('.projects-list').children('')[0].id;
+					is_open=$('#'+first).children('.num-unread').length;
+if(is_open=="0")
 					document.getElementById(first).className="project";
+					else
+					document.getElementById(first).className="project has-unread";
 				}
 				else if(star=="true")
 				{
 					//	window.location=$('#project_list_messages'+open_id).attr('href');
 				}
-				else
+				else if(key!="X" && key!="S")
 				{
 					window.location=$('#all_messages').attr('href');
 					document.getElementById('all_messages').className="all-messages has-unread open";
