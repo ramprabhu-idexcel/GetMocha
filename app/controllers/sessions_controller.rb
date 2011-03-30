@@ -5,6 +5,8 @@ class SessionsController <  Devise::SessionsController
     #~ render_with_scope :new
   #~ end
 	def create
+    session[:project_name]=nil
+		session[:project_selected]=nil
     resource = warden.authenticate!(:scope => resource_name)
     render :text=>"redirect"
   end

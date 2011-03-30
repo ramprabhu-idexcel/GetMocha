@@ -3,7 +3,6 @@ class UpdatesController < ApplicationController
 	before_filter :authenticate_user!
 	def edit_profile
 	 @user=current_user
-   puts params[:user].inspect
 	 value=params[:user].values[0]
     if @user.update_attributes(params[:user])	
       render :json=>{"success"=>value}.to_json

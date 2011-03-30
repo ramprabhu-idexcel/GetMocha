@@ -735,7 +735,8 @@ $(document).ready(function() {
     return false;
    });
      
-  	$('#save_email').click(function(){
+  	$('#save_email').live('click',function(){
+       alert('-----------');
         if($('#txt_email').val()=="")
        {
           alert("pls enter your email");
@@ -755,15 +756,15 @@ $(document).ready(function() {
            {
              alert(data.error);
            }
-			}			
+         }
         });
+      }  
     $('#txt_email').hide(); 
     $('#save_email').css('visibility','hidden');
      $('#label_email').show();
     $('#email').css('visibility','visible');
      return false;
-      }   
-        
+             
   });
    
    
