@@ -311,7 +311,7 @@ $(document).ready(function() {
         project_count=$('#project_list_messages'+project_id).children('span.num-unread');
         count_val=parseInt(count.text());
         project_val=parseInt(project_count.text());
-        if(count_val<1)
+        if(count_val==1)
         {
           count.remove();
         }
@@ -319,7 +319,7 @@ $(document).ready(function() {
         {
           count.text(count_val-1);
         }
-        if(project_val<1)
+        if(project_val==1)
         {
           project_count.remove();
         }
