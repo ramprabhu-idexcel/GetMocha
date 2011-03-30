@@ -128,9 +128,17 @@ $(document).ready(function() {
     {
       var path=window.location+"";
       path= path.split('?')[0];
+      a=path.split('#');
+      b=a[0];
+      if(a.length>0)
+        b=path.split('#')[1];
+        c=b.split('/');
+      sec=b.split('/')[0];
+      if(sec=="project")
+        sec=c[0]+'/'+c[1];
       var sort_by=$('.sort.selected').text();
       var order=$('.asc-desc.selected').children('span').attr('class');
-      window.location=path+'?sort_by='+sort_by+'&order='+order;
+      window.location="#"+sec+'?sort_by='+sort_by+'&order='+order;
     }
     
     //Expand all message
