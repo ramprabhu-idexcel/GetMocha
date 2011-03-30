@@ -327,7 +327,7 @@ alert('afetrr bt');
         project_count=$('#project_list_messages'+project_id).children('span.num-unread');
         count_val=parseInt(count.text());
         project_val=parseInt(project_count.text());
-        if(count_val<1)
+        if(count_val==1)
         {
           count.remove();
         }
@@ -335,7 +335,7 @@ alert('afetrr bt');
         {
           count.text(count_val-1);
         }
-        if(project_val<1)
+        if(project_val==1)
         {
           project_count.remove();
         }
@@ -376,6 +376,11 @@ alert('afetrr bt');
   
     //Add message comments  
     $('.blue-33.add_comment').live('click',function(){
+      if($.trim($('#comment-message').val())=="")
+      {
+        alert('Please add your reply');
+        return false;
+      }
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
       $('#act').val(activity_id);
       var reply="";

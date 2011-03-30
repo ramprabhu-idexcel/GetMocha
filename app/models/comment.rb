@@ -46,7 +46,7 @@ class Comment < ActiveRecord::Base
     documents=[]
     attachments.each do |attach|
       if attach.content_type && attach.content_type.include?("image") 
-        images<<"<a href='/file_download_from_email/#{attach.id}'><img width='75' height='75' alt='attachment' src='#{attach.public_filename(:image)}'/></a>"
+        images<<"<a href='/file_download_from_email/#{attach.id}'><img width='75' height='75' alt='attachment' src='#{attach.public_filename(:message)}'/></a>"
       else
         documents<<"<a href='/file_download_from_email/#{attach.id}'>#{attach.filename}</a>"
       end
