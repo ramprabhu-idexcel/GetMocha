@@ -110,27 +110,27 @@ layout :change_layout
 				logger.info "*****************************"
 				logger.info message.inspect
 				
-				name=params[:subject].to_s
-				if ((!proj_user || !user)  &&  project.is_public? )
-					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
-					if user
-						message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
-						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
-					else
-						message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
-						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
-					end
-					ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id) if guest
+				#~ name=params[:subject].to_s
+				#~ if ((!proj_user || !user)  &&  project.is_public? )
+					#~ guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
+					#~ if user
+						#~ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+						#~ message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
+					#~ else
+						#~ message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
+						#~ message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
+					#~ end
+					#~ ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id) if guest
 				
-				elsif ((user && !user.is_guest && proj_user) || project.is_public?)
-					message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
-					activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
-				if params[:attachments] && params[:attachments].to_i > 0
-					for count in 1..params[:attachments].to_i
-						attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
-					end
-				end	
-      end
+				#~ elsif ((user && !user.is_guest && proj_user) || project.is_public?)
+					#~ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+					#~ activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
+				#~ if params[:attachments] && params[:attachments].to_i > 0
+					#~ for count in 1..params[:attachments].to_i
+						#~ attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
+					#~ end
+				#~ end	
+      #~ end
 			if message
 			message.project.users.each do |user|
       #~ activity=message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
