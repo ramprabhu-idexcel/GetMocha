@@ -109,7 +109,7 @@ layout :change_layout
 				logger.info "*****************************"
 				logger.info message.inspect
 				if message.include?("\240")
-					message=content.split("\240").join
+					message=message.split("\240").join
 				end
 				logger.info "*****************************"
 				logger.info message.inspect
