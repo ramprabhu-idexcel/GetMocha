@@ -122,14 +122,13 @@ layout :change_layout
 				end
 				if ((!proj_user)  &&  project.is_public? )
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
-					if user
-						
+					if user						
 						message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
-						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id) 
-					else
+						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
+						else
 						message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
-						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id) 
-					end
+						message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id)
+						end
 					 if guest
 						 ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
 					elsif user && user.is_guest
