@@ -22,7 +22,10 @@
 				   <%end%>
   		<table id="files" ></table>
 			<form id="file_upload" action="/updates/save_image"  method="POST" enctype="multipart/form-data">
-		 	<div class="drag-drop">Drag and drop files here</div>
+		 	<div class="drag-drop"><div id="loader" style="display:none;">
+	           <img src="/images/spinner.gif" />
+       </div>
+			 Drag and drop files here</div>
 			</form>
 			<div class="clear-fix"></div>
 			</div>
@@ -243,6 +246,9 @@ $('#file_upload').fileUploadUI({
     },
     uploadTable: $('#files'),
     downloadTable: $('#files'),
+		onProgress: function(event, files, index, xhr, handler){
+		$('#loader').show();
+		},
     buildUploadRow: function (files, index) {
       return $('<tr><td>' + files[index].name + '<\/td>' +
                     '<td class="file_upload_progress"><div><\/div><\/td>' +
@@ -257,6 +263,7 @@ $('#file_upload').fileUploadUI({
 	   onComplete: function (event, files, index, xhr, handler) {
       var json = handler.response;
       $('img#default-image').attr('src',json.file_name);
+			$('#loader').hide();
     }
   });
 </script>
