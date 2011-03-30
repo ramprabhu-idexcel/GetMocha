@@ -526,7 +526,11 @@ $(document).ready(function() {
       }
         message='';
         message+='<div id="msac'+data.activity_id+'" class="message messow mpi'+data.project_id+'">';
-        message+='<div class="left-icons"><div class="avatar-mini"></div><img width="20" height="21" src="'+data.user_image+'" class="avatar-mini-img" alt="avatar"/></div>';
+        message+='<div class="left-icons"><div class="avatar-mini"></div><img width="20" height="21" src="'+data.user_image+'" class="avatar-mini-img" alt="avatar"/>';
+        message+='<a class="message-star secpan" style="display: none;" href="#">Star</a>';
+        if(data.has_attachment)
+        message+='<div class="has-attachment"></div>';
+        message+='</div>';
         message+='<div class="info"><span class="name">'+data.name+'</span><span class="message-time">'+data.message_date+'</span></div> ';
         message+='<div class="excerpt"><h4>'+data.subject+'</h4><p>'+new_content+'</p></div><div class="clear-fix"></div></div>';
         header=$('a.date-title:contains("'+data.date_header+'")');
