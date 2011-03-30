@@ -82,44 +82,45 @@ layout :change_layout
 				user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
 				proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
 				proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
-				logger.info user.inspect if user
-				logger.info proj_user.inspect if proj_user
+				
+				
 				message=params[:html]
-				logger.info "*****************************"
-				logger.info message.inspect
+				
+				
 				if message.include?("gmail_quote")
 				message=message.split('<div class="gmail_quote">')[0]
 			end
-			logger.info "*****************************"
-				logger.info message.inspect
+			
+				
 				if message.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
 					message=message.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
-  				logger.info message.inspect
+  				
 					message=message.split("</td></tr></table>")[0]
-					logger.info message.inspect
+					
 					#~ message = message[0...message.length-1].join("---")
-					logger.info message.inspect
+					
 
 				end
-				logger.info "*****************************"
-				logger.info message.inspect
+				
+				
 				if message.count("Apple-style-span") > 0 or message.count("Apple-converted-space") > 0
 					message = Sanitize.clean(message, Sanitize::Config::BASIC)
 				end
-				logger.info "*****************************"
-				logger.info message.inspect
+				
+				
 				if message.include?("\240")
 					message=message.split("\240").join
 				end
-				logger.info "*****************************"
-				logger.info message.inspect
+				
+				
 				if message.include?("&lt;!-- DIV {margin:0px;} --&gt;")
-					logger.info "#################################"
+					
 					message=message.split("&lt;!-- DIV {margin:0px;} --&gt;")[1]
 				end
-				logger.info message.inspect
+				
 				name=params[:subject].to_s
-				if ((!proj_user || !user)  &&  project.is_public? )
+				if ((!proj_user)  &&  project.is_public? )
+								logger.info "1111111111111111111111111111111111111111111111111111"
 					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
 					if user
 						logger.info "1111111111111111111111111111111111111111111111111111"
@@ -148,7 +149,7 @@ layout :change_layout
        activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 		 end
 		 end
-			logger.info message.inspect if message
+			
 		end
 		
 	def reply_to_message_via_email
