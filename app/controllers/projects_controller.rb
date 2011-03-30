@@ -63,7 +63,8 @@ class ProjectsController < ApplicationController
 		session[:project_selected]=nil
 		session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
-			session[:project_name]=@project.name
+		@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
+		session[:project_name]=@project.name
 		render :partial=>'settings_pane'
   end
 	def remove_people
@@ -75,6 +76,7 @@ class ProjectsController < ApplicationController
 		else
 			@guest_user=ProjectGuest.find_by_project_id_and_status_and_guest_id(@project.id,true,@user.id)
 			@guest_user.update_attributes(:status=>false)
+			@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
 		end
 		render :partial=>'settings_pane'
 	end

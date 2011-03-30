@@ -98,11 +98,11 @@
 					<% end %>
 				</div>
 			<% end %>
-			<% if !project.project_guests.blank? %>
+		<% if !@project_guest.blank? %>
 				<div class="guests">
 					<h2>Guests</h2>
-					<% project.project_guests.each do |proj_guest| %>
-					  <% if proj_guest.status? %>
+					<% @project_guest.each do |proj_guest| %>
+					  <%if proj_guest.status? %>
 							<div class="person">
 								<div class="avatar-mini"></div>
 								<img src="<%=proj_guest.guest.image_url%>" class="avatar-mini-img" alt="avatar"></img>
@@ -110,7 +110,7 @@
 								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_guest.guest.id %>,<%= project.id %>);">[x]</a>
 								<div class="clear-fix"></div>
 							</div>
-						<% end %>
+						<%end %>
 					<% end %>
 				</div>
 			<% end %>
