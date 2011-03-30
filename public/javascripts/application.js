@@ -374,8 +374,27 @@ $(document).ready(function() {
           if(attach==false)
           reply+=('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
           else
-          reply+=('<a class="name message_name" href="#">'+comment.user+'</a><div class="has-attachment"></div><span class="message-time">'+comment.created_at+'</span>');
+          reply+=('<a class="name message_name" href="#">'+comment.user+'</a>');
+          if((comment.attach.attach_image.length>0) || (comment.attach.attached_documents.length>0))
+          reply+='<div class="has-attachment"></div>';
+          reply+=('<span class="message-time">'+comment.created_at+'</span>');
           reply+=('<div class="comment"><p>'+comment.comment+'</p>');
+          if(comment.attach.attached_documents.length>0)
+          {
+            reply+=('<div style="margin-top:20px;margin-bottom:20px;">')
+            $.each(comment.attach.attached_documents,function(index,value){
+              reply+=('<p>'+value+'</p>');
+            });
+            reply+=('</div>')
+          }
+          if(comment.attach.attach_image.length>0)
+          {
+            reply+=('<div class="attachments">');
+            $.each(comment.attach.attach_image,function(index,value){
+              reply+=('<div class="attachment-thumb-frame">'+value+'</div>');
+            });
+            reply+=('<div class="clear-fix"></div></div>');
+          }
           reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
           $('.prev-messages').append(reply).show('slow');
           close_comment_area();

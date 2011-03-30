@@ -133,7 +133,7 @@ $.messages;
                     {
                       comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
                       $.each(comment.attach.attached_documents,function(index,value){
-                        comments.push('<p><a href="'+value+'">'+get_filename(value)+'</a></p>');
+                        comments.push('<p>'+value+'</p>');
                       });
                       comments.push('</div>')
                     }
@@ -141,7 +141,7 @@ $.messages;
                     {
                       comments.push('<div class="attachments">');
                       $.each(comment.attach.attach_image,function(index,value){
-                        comments.push('<div class="attachment-thumb-frame"><img alt="attachment" src="'+value+'" width="75" height="75"/></div>');
+                        comments.push('<div class="attachment-thumb-frame">'+value+'</div>');
                       });
                       comments.push('<div class="clear-fix"></div></div>');
                     }
