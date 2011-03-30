@@ -579,6 +579,7 @@ $(document).ready(function() {
     });
     $('.message_header').hide();
     $('body').attr('class','settings');
+    $('.sort-by').hide();
   });
   
    /************************************************Edit the User profile*****************************************/
