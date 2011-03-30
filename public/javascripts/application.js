@@ -61,19 +61,6 @@ $(document).ready(function() {
     }
       return false;
     });
-    
-    $('#forgot_pass').click(function(){
-     // $('#fpwd').submit();
-      $.ajax({
-        url:'/users/password',
-        data: $('form#fpwd').serialize(),
-        type: "POST",
-        success: function(data){
-            window.location.href="/";
-          }
-      });
-       return false;
-    });
   }
   
       
