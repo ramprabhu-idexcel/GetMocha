@@ -754,7 +754,6 @@ $(document).ready(function() {
    });
      
   	$('#save_email').live('click',function(){
-       alert('-----------');
         if($('#txt_email').val()=="")
        {
           alert("pls enter your email");
