@@ -194,16 +194,16 @@
 		function short_modal_down(key)
 	{
 		location1=window.location.href;
-		find_loc=$('#myprofile1').css('visibility');
-		if(find_loc=="visible")
+		find_loc=$('#myprofile1').css('display');
+		if(find_loc=="block")
 		{
 		  if(key!="A" && key!="Z")
 			profile_navigation_down(key);
 		}
 		else
 		{
-		find_loc=$('#general_anchor').css('visibility');
-		if(find_loc=="visible")
+		find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_down(key);
 		}
@@ -223,8 +223,8 @@
 	function short_modal_right()
 	{
 		location1=window.location.href;
-	find_loc=$('#general_anchor').css('visibility');
-		if(find_loc=="visible")
+	find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_right();
 		}
@@ -242,8 +242,8 @@
 	function short_modal_left()
 	{
 			location1=window.location.href;
-	find_loc=$('#general_anchor').css('visibility');
-		if(find_loc=="visible")
+	find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_left();
 		}
@@ -261,15 +261,15 @@
 	function short_modal_up()
 	{
 			location1=window.location.href;
-		find_loc=$('#myprofile1').css('visibility');
-		if(find_loc=="visible")
+		find_loc=$('#myprofile1').css('display');
+		if(find_loc=="block")
 		{
 			profile_navigation_down('up');
 		}
 		else
 		{
-		find_loc=$('#general_anchor').css('visibility');
-		if(find_loc=="visible")
+		find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_down('up');
 		}
