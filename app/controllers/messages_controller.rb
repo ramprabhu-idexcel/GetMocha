@@ -139,12 +139,17 @@ end
     @activity.update_attribute(:is_delete,true)
     render :nothing=>true
   end
+  
   private
   def find_activity
     params[:sort_by] ||="Date"
     params[:order] ||="Ascending"
-    @activity=Activity.find_by_id(params[:activity_id]) if params[:activity_id]
-		p @activity.inspect
+    if params[:activity_id]
+      @activity=Activity.find_by_id(params[:activity_id])
+      @project=@activity.resource.project
+      valid_member=@project.is_member?(current_user.id)
+      render :text=>"The page you were looking doesn't exist" and return unless @project.status && valid_member
+    end
 	end
   def unwanted_columns
     [:updated_at,:created_at,:is_assigned,:resource_type,:resource_id]
