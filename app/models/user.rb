@@ -47,7 +47,7 @@
       puts act.resource.commentable.id.inspect
       message<<last_created_message(act.resource.commentable.id)
     end
-    message.uniq
+    message.flatten.uniq
   end
   def starred_messages(sort_by=nil,order=nil)
     order="desc" unless order
