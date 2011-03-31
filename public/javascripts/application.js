@@ -462,6 +462,7 @@ alert('afetrr bt');
   
   //drop down
   $('#add-new').click(function(){
+ if (($('#add_new_mod').css('display')=="none") || ($('.add-item-modal').css('display')=="none"))
     $('#add_new_mods').slideToggle('fast');
     return false;
   });
