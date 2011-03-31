@@ -8,8 +8,8 @@ end
 def check_email_reply_and_save
 	  if params[:from]
 	  @dest_address=params[:to].split(',')
-	  @dest_address=@dest_address[0]
-			if @dest_address.include?('<')
+	  dest_address=@dest_address[0]
+			if  dest_address.include?('<')
 				@dest_address=@dest_address.split('<')
 				@dest_address=@dest_address[1].split('>')
 				@dest_address=@dest_address[0]

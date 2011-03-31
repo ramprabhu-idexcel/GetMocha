@@ -9,7 +9,7 @@
 <div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
 <h1>Forgot your password?</h1>
 <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:html => { :method => :post,:id=>"fpwd" ,:class=>"no-labels"}) do |f| %>
-<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address" %>
+<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address",:style=>"width:258px;;height:42px;"%>
 <%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
 <% end %>
 </div>
@@ -22,9 +22,9 @@
 <%= f.hidden_field :remember_me,:id=>"remember_hidden_id",:value=>0%>
 <%= f.submit "Log in",:class=>"btn login-btn" %>
 <%= f.label :email, "Email"%>
-<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address",:style=>"width:214px;height:36px;"  %>
+<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address",:style=>"width:226px;height:42px;"  %>
 <%= f.label :password, "Password"%>
-<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:214px;;height:36px;" %>
+<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:226px;;height:42px;" %>
 <%end%>
 </div>
 </div>
