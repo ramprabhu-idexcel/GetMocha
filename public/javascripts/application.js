@@ -522,10 +522,15 @@ alert('afetrr bt');
       	if(a!=0 && a!=6){
          $('.add-item-modal').hide();
           ref=window.location.href
-	if(data.search(/settings/))
-         document.getElementById('projects_list').innerHTML=data;
+          p=ref.search(/settings/)
+          if(p>=0)
+          {
+          document.getElementById('projects_list').innerHTML=data;
+          }
         else
-         document.getElementById('messages_projects_list').innerHTML=data;
+          {
+          document.getElementById('messages_projects_list').innerHTML=data;
+          }
         }
       },
       failure: function(){
