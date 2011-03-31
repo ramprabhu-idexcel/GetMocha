@@ -160,7 +160,7 @@
 						</div>
 						<div class="info-right">
 							<span class="info_time_zone" id="label_time_zone">
-							<%= select_tag("time_zone",options_for_select(time_zone_select),{:prompt => 'Select time_zone', :style=>"width:250px;"})%>
+							<%= select_tag("time_zone",options_for_select(time_zone_select,:selected=>current_user.time_zone),{:style=>"width:250px;"})%>
 							</span>
 						  <%=text_field :val,:data,:class=>"textfield",:id =>"txt_time_zone",:value=>current_user.time_zone,:style=>"display:none;"%>
                <%#=link_to "Edit","#",:class=>"edit",:id=>"time_zone"%>

@@ -139,7 +139,6 @@ end
     @activity.update_attribute(:is_delete,true)
     render :nothing=>true
   end
-  
   private
   def find_activity
     params[:sort_by] ||="Date"
