@@ -48,9 +48,13 @@ var Login=true;
         data: $('form#fpwd').serialize(),
         type: "POST",
         success: function(data){
-            window.location.href="/";
-          }
-      });
+				if(typeof(data.failure)!="undefined"){
+				alert(data.failure);
+				}
+				else
+		       window.location.href="/";
+          },
+				});
     }
 		return false;
 		});
