@@ -1,13 +1,13 @@
 GetMocha::Application.routes.draw do
     root :to => "home#index"
-    devise_for :users,:controllers =>{:registrations =>"users",:sessions=>"sessions",:confirmations=>"confirmation"}
+    devise_for :users,:controllers =>{:registrations =>"users",:sessions=>"sessions",:confirmations=>"confirmation",:passwords=>"passwords"}
     devise_scope :user do
     root :to => "devise/registrations#edit"
     get "signin", :to => "devise/sessions#new",:as=>"new_user_session"
     get "logout",:to=>"devise/sessions#destroy",:as=>"destroy_user_session"
     get "forgot_password",:to=>"devise/passwords#new",:as=>"new_user_password"
     get "resend_confirmation",:to=>"devise/confirmations#new",:as=>"new_user_confirmation"
-    get "change_password",:to=>"devise/passwords#edit",:as=>"edit_user_password"
+    get "change_password",:to=>"passwords#edit",:as=>"edit_user_password"
     get "signup",:to=>"devise/registrations#new",:as=>"new_user_registration"
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
     get "create" ,:to=>"devise/projects#create"
