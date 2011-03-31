@@ -1,4 +1,6 @@
-<%project=@project%>
+<%project=@project
+project_guest=@project_guest
+%>
 <div class="m-panel-contain" id="settings_secondpanel">
 		<div class="m-panel">
 			<a href="#general" onclick="javascript:settings_thirdpanel('general');" class="m-tab alt" id="general_anchor" style="font-size:14px;">General</a>
@@ -98,10 +100,10 @@
 					<% end %>
 				</div>
 			<% end %>
-		<% if !@project_guest.blank? %>
+		<% if !project_guest.blank? %>
 				<div class="guests">
 					<h2>Guests</h2>
-					<% @project_guest.each do |proj_guest| %>
+					<% project_guest.each do |proj_guest| %>
 					  <%if proj_guest.status? %>
 							<div class="person">
 								<div class="avatar-mini"></div>

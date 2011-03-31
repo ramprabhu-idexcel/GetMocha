@@ -1,3 +1,6 @@
+<% user_emails=@user_emails
+project_names=@project_names
+%>
 <head>
   <link rel="stylesheet" href="/stylesheets/demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -34,8 +37,7 @@
 			    </fieldset>
 			    <fieldset id="txtarea">
 					<label>Message:</label>
-		       		<%=f.text_area 'message', :class=>'textfield', :rows=>"", :cols=>"",:onfocus=>"javascript:changehight(this.id)"%>
-							<table id="files"></table>
+		       		<%=f.text_area 'message', :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
 			    </fieldset>
 				<% end %>
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
@@ -44,8 +46,7 @@
 	           <img src="/images/ajax-loader(2).gif" />
        </div>
 					<label>Attachments:</label>
-					<div  id="attach_upload" class="attachment-upload">
-						<%#=f3.text_area 'attachments', :class=>"textfield", :rows=>"1", :cols=>"25", :onfocus=>"javascript:changehight(this.id)"%>
+					<div  id="attach_upload" class="attachment-upload" style="display:none;">
 						<div class="drag-drop">Drag and drop files here</div>
 						<table id="files"></table>
 						<div id="attachment_files"> </div>
@@ -62,30 +63,21 @@
 	<div class="modal-bottom-right"></div>
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
-function changehight(id)
-{
-field=id
-if (field=='message_message')
-{
+	$('#txtarea').click(function(){
+document.getElementById('message_message').style.display="block";
 	document.getElementById('txtarea').className="open";
-	document.getElementById('message_message').className="textarea";
-	}
-	else
-	{
-	document.getElementById('attach').className="open";
-	document.getElementById('attach_upload').className="attachment_upload";
-	document.getElementById('message_attachments').className="drag-drop";
-	document.getElementById('message_attachments').value="drag&drop files here";
-	}
-	}
+	});
+	$('#attach').click(function(){
+	document.getElementById('attach_upload').style.display="block";
+	});
 <%=names=[]%>
 <%=projects=[]%>
-	<% @user_emails.each do |f|%>
+	<% user_emails.each do |f|%>
 		<%names<<f <<","%>
 		var userEmails = "<%= names %>";
 	<%end%>
 				userEmails=userEmails.split(',');
-			<% @project_names.each do |f|%>
+			<% project_names.each do |f|%>
 	    <%projects<<f <<","%>
 		var projectNames = "<%= projects %>";
 	<%end%>

@@ -1,3 +1,4 @@
+<% user_emails=@user_emails%>
 <div class="modal invite-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
@@ -41,7 +42,7 @@
 	document.getElementById('message').className="textarea";
 	}
 <%=emails=[]%>
-	<% @user_emails.each do |f|%>
+	<% user_emails.each do |f|%>
 	
 	<%emails<<f <<","%>
 		var userEmails= "<%= emails %>";

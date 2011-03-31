@@ -42,18 +42,18 @@ var Login=true;
 		  alert('pls enter the valid email address');
 		 }
 		else
-      {      
-        $.ajax({
-        url:'/users/password',
+		{
+		$.ajax({
+		     url:'/users/password',
         data: $('form#fpwd').serialize(),
         type: "POST",
         success: function(data){
             window.location.href="/";
           }
       });
-    }    
-   return false;    
-    });
+    }
+		return false;
+		});
 </script>
 <div class="push"></div>
 </div>

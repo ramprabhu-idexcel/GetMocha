@@ -37,6 +37,7 @@ class Message < ActiveRecord::Base
       activity.update_attributes(:is_read=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
     end
     to_users.each do |email|
+			email=email.lstrip
       if email.present?
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
@@ -109,8 +110,8 @@ class Message < ActiveRecord::Base
     images=[]
     documents=[]
     attachments.each do |attach|
-      if attach.content_type && attach.content_type.include?("image") 
-        images<<"<a href='/file_download_from_email/#{attach.id}'><img width='75' height='75' alt='attachment' src='#{attach.public_filename(:message)}'/></a>"
+      if attach.content_type && attach.content_type.include?("image")
+				images<<"<a href='/file_download_from_email/#{attach.id}'><img width='75' height='75' alt='attachment' src='#{attach.public_filename(:message)}'/></a>"
       else
         documents<<"<a href='/file_download_from_email/#{attach.id}'>#{attach.filename}</a>"
       end

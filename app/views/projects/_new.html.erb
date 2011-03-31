@@ -1,4 +1,5 @@
-  <link rel="stylesheet" href="demo.css">
+  <% user_emails=@user_emails%>
+	<link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
 <%form_for  :data, :url=>{ :controller => "projects", :action => "create" }, :html=>{ :id => 'form1', :name=>"forms1"} do |f|%>
 <div class="modal add-item-modal">
@@ -39,7 +40,7 @@ function resizing(){
 	}
 
 <%=emails=[]%>
-	<% @user_emails.each do |f|%>
+	<% user_emails.each do |f|%>
 	   <%emails<<f <<","%>
 		var userEmails= "<%= emails %>";
 	<%end%>

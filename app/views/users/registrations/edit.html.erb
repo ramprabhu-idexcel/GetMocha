@@ -91,9 +91,9 @@
   	 						  <%if current_user.secondary_emails.present?%>
        								     <% current_user.secondary_emails.each_with_index do |e,index| %>
 					           	 						  <%if e.confirmation_token.present?%>
-										                 <span id="sec_email"><%=raw index==0 ? "" : "<br/>"%><%=e.email%>&nbsp;(unverified)<%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete",:id=>"delete_email"%></span>
+										                 <span><%=raw index==0 ? "" : "<br/>"%><%=e.email%>&nbsp;(unverified)<%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete delete_exist",:id=>"delete_email"%></span>
 																		 <%else%>
-                                         <span id="sec_email"><%=e.email%><%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete",:id=>"delete_email"%> </span>
+                                         <span ><%=e.email%><%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete delete_exist",:id=>"delete_email"%> </span>
 																		<%end%>	
 							       			 <%end%>
 									<%end%>	
@@ -267,9 +267,10 @@ $('#file_upload').fileUploadUI({
 			$('#loader2').hide();
     }
   });
-	$('#delete_email').click(function(){
+	/*$('#delete_email').click(function(){
 	$('#sec_email').hide();
-	})
+	$
+	})*/
 </script>
 
 
