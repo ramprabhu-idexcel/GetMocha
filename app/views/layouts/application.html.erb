@@ -709,8 +709,9 @@ if(is_open=="0")
 			for(i=0; i<length; i++)
 			{
 			
-				firstclass=$('#message_area').children('')[i].className;
-				if(firstclass=="message messow  mpi2 open")
+				var firstclass=$('#message_area').children('')[i].className;
+				var f=firstclass.search('open')
+				if(f!=-1)
 				{
 				var is_there=typeof($('#message_area').children('')[i+1])=="undefined"
 				if(is_there==true)
@@ -725,15 +726,18 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+						var a_firstclass=$('#message_area').children('')[i+1].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
+						
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i+1].className="message messow  mpi2 open";
+						$('#message_area').children('')[i+1].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i-1].className="message messow  mpi2";
+						$('#message_area').children('')[i-1].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					else if(exit=="false" && (key=="down" || key=="X"))
@@ -742,15 +746,17 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i+2].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i+2].className="message messow  mpi2 open";
+						$('#message_area').children('')[i+2].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i-2].className="message messow  mpi2";
+						$('#message_area').children('')[i-2].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					if(key=="up" || key=="S")
@@ -762,15 +768,17 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i-1].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i-1].className="message messow  mpi2 open";
+						$('#message_area').children('')[i-1].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i+1].className="message messow  mpi2";
+						$('#message_area').children('')[i+1].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					else if(exit=="false")
@@ -781,15 +789,17 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i-2].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i-2].className="message messow  mpi2 open";
+						$('#message_area').children('')[i-2].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i+2].className="message messow  mpi2";
+						$('#message_area').children('')[i+2].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					}
