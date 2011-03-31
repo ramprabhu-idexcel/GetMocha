@@ -62,7 +62,7 @@ class MessagesController < ApplicationController
 			end
 			if message
 					@message.save
-					@to_users=params[:message][:recipient].split(', ')
+					@to_users=params[:message][:recipient].split(',')
 					#@project=Project.find_by_name(params[:message][:project])
 					#~ Message.send_message_to_team_members(@project,@message,@to_users)
           @message.add_in_activity(@to_users)
@@ -76,7 +76,7 @@ class MessagesController < ApplicationController
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message
 				#attachment.save
-        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
+        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id)
 				render :json=>@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url,:has_attachment=>@message.attachments.present?})
 			else
 				render :update do |page|

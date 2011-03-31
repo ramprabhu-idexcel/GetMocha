@@ -520,7 +520,8 @@ alert('afetrr bt');
         a=data.search(/alert/);
       	if(a!=0 && a!=6){
          $('.add-item-modal').hide();
-	if(window.location.href=='/settings')
+          ref=window.location.href
+	if(data.search(/settings/))
          document.getElementById('projects_list').innerHTML=data;
         else
          document.getElementById('messages_projects_list').innerHTML=data;
