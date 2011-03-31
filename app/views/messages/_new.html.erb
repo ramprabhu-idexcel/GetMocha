@@ -67,6 +67,17 @@ project_names=@project_names
 document.getElementById('message_message').style.display="block";
 	document.getElementById('txtarea').className="open";
 	});
+	$('#txtInput2').keyup(function(event){
+	if (event.keyCode == 9) {
+  document.getElementById('message_message').style.display="block";
+	document.getElementById('txtarea').className="open";
+	}
+	});
+	$('#message_message').keyup(function(event){
+	if (event.keyCode == 9) {
+  document.getElementById('attach_upload').style.display="block";
+	}
+	});
 	$('#attach').click(function(){
 	document.getElementById('attach_upload').style.display="block";
 	});

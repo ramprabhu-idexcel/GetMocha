@@ -60,7 +60,7 @@ class MessagesController < ApplicationController
 			elsif @message.errors[:message][0]=="can't be blank"
 				errors<<"Please enter message"
 			end
-			if message
+			if message && errors.empty?
 					@message.save
 					@to_users=params[:message][:recipient].split(',')
 					#@project=Project.find_by_name(params[:message][:project])
