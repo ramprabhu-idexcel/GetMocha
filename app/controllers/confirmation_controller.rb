@@ -1,11 +1,13 @@
 class ConfirmationController < Devise::ConfirmationsController
 	def show
-    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
-    if resource.errors.empty?
+		self.resource = resource_class.confirm_by_token(params[:confirmation_token])
+		if resource.errors.empty?
+			p resource.error.inspect
+			p"------------"
       set_flash_message :notice, :confirmed
 			redirect_to   "/signin"
     else
-    render_with_scope :new
+      redirect_to   "/signin"
 		end
 	end
 end
