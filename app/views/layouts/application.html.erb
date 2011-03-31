@@ -194,16 +194,16 @@
 		function short_modal_down(key)
 	{
 		location1=window.location.href;
-		find_loc=location1.search(/settings-profile/);
-		if(find_loc!=-1)
+		find_loc=$('#myprofile1').css('visibility');
+		if(find_loc=="visible")
 		{
 		  if(key!="A" && key!="Z")
 			profile_navigation_down(key);
 		}
 		else
 		{
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+		find_loc=$('#general_anchor').css('visibility');
+		if(find_loc=="visible")
 		{
 			settings_navigation_down(key);
 		}
@@ -223,8 +223,8 @@
 	function short_modal_right()
 	{
 		location1=window.location.href;
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+	find_loc=$('#general_anchor').css('visibility');
+		if(find_loc=="visible")
 		{
 			settings_navigation_right();
 		}
@@ -242,8 +242,8 @@
 	function short_modal_left()
 	{
 			location1=window.location.href;
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+	find_loc=$('#general_anchor').css('visibility');
+		if(find_loc=="visible")
 		{
 			settings_navigation_left();
 		}
@@ -261,15 +261,15 @@
 	function short_modal_up()
 	{
 			location1=window.location.href;
-		find_loc=location1.search(/settings-profile/);
-		if(find_loc!=-1)
+		find_loc=$('#myprofile1').css('visibility');
+		if(find_loc=="visible")
 		{
 			profile_navigation_down('up');
 		}
 		else
 		{
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+		find_loc=$('#general_anchor').css('visibility');
+		if(find_loc=="visible")
 		{
 			settings_navigation_down('up');
 		}
