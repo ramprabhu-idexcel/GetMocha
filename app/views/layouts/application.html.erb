@@ -20,7 +20,7 @@
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
-   <%= javascript_include_tag 'size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application'%>
+   <%= javascript_include_tag 'open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
 	<!--[if lt IE 7]>
@@ -81,6 +81,7 @@
 <script>
     function showTriggered(event)
 		 {
+		 
       if(event.identifier=='ENTER')
       {
         short_modal('/projects/add_new');
@@ -193,16 +194,16 @@
 		function short_modal_down(key)
 	{
 		location1=window.location.href;
-		find_loc=location1.search(/settings-profile/);
-		if(find_loc!=-1)
+		find_loc=$('#myprofile1').css('display');
+		if(find_loc=="block")
 		{
 		  if(key!="A" && key!="Z")
 			profile_navigation_down(key);
 		}
 		else
 		{
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+		find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_down(key);
 		}
@@ -222,8 +223,8 @@
 	function short_modal_right()
 	{
 		location1=window.location.href;
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+	find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_right();
 		}
@@ -241,8 +242,8 @@
 	function short_modal_left()
 	{
 			location1=window.location.href;
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+	find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_left();
 		}
@@ -260,15 +261,15 @@
 	function short_modal_up()
 	{
 			location1=window.location.href;
-		find_loc=location1.search(/settings-profile/);
-		if(find_loc!=-1)
+		find_loc=$('#myprofile1').css('display');
+		if(find_loc=="block")
 		{
 			profile_navigation_down('up');
 		}
 		else
 		{
-		find_loc=location1.search(/settings/);
-		if(find_loc!=-1)
+		find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
 		{
 			settings_navigation_down('up');
 		}
@@ -284,7 +285,7 @@
 	}
 	function short_modal(path)  //Add new project/messsage/task/tasclist
   {		
-	if ($('#add_new_mod').css('display')=="none")
+	if (($('#add_new_mod').css('display')=="none") || 	 ($('.add-item-modal').css('display')=="none"))
      $('#add_new_mods').show();
    }
 	 function short_modal1(path)  //Add new project/messsage/task/tasclist
@@ -370,7 +371,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			second_panel=$('#settings_secondpanel').css('visibility');
 			people=$('#settings_people').css('display');
 			general=$('#settings_general').css('display');
-			if((people=="block" || general=="block") && (key=="down" || key=="up") ||( key=="S" || key=="X"))
+			if((people=="block" || general=="block") && ((key=="down" || key=="up") ||( key=="S" || key=="X")))
 			{
 				// for second panel navgation
 				people=$('#settings_people').css('display');
@@ -391,8 +392,8 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 			else
 			{
 				//first_panel_navigation
-				active_length=$('#active_projects').children('').length;
-				length=$('.projects-list').children("").length;
+				var active_length=$('#active_projects').children('').length;
+				var length=$('.projects-list').children("").length;
 				already_exists="false";
 				for(i=0; i<length; i++)
 				{
@@ -438,8 +439,8 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 		//for settings page navigation for right arrow
 		function settings_navigation_right()
 		{
-			second_panel=$('#settings_secondpanel').css('visibility');
-		  if(second_panel=="visible")
+			second_panel=$('#settings_secondpanel').css('display');
+		  if(second_panel=="block")
 			{
 	 			people=$('#settings_people').css('display');
 				general=$('#settings_general').css('display');
@@ -510,7 +511,7 @@ $('#mycontact1').toggleClass('open')
 		if(class1==0 || class_hide=="none")
 		{
 			//first panel
-			all_messages=document.getElementById('all_messages').className;
+			var all_messages=document.getElementById('all_messages').className;
 			if(all_messages=="all-messages has-unread open")
 			all_messages="true"
 			
@@ -518,15 +519,15 @@ $('#mycontact1').toggleClass('open')
 			if(star=="starred open")
 			star="true";
 			already_exists="false";
-			length=$('.projects-list').children('').length
-			open="false";
-			get_all_messages="false";
-			old_one="false";
-			exit1="false"
+			var length=$('.projects-list').children('').length
+			var open="false";
+			var get_all_messages="false";
+			var old_one="false";
+			var exit1="false"
 			for(i=0; i<length; i++)
 			{
-			class=$('.projects-list').children('')[i].className;
-			if(class=="project has-unread open" || class=="project open")
+			var class1=$('.projects-list').children('')[i].className;
+			if(class1=="project has-unread open" || class1=="project open")
 			open="true"
 			
 			open_id=$('.projects-list').children('')[i].id;
@@ -543,7 +544,7 @@ $('#mycontact1').toggleClass('open')
 								
 				}
 			}
-			else if(open=="true" && i<length && (class=="project has-unread open" || class=="project open"))
+			else if(open=="true" && i<length && (class1=="project has-unread open" || class1=="project open"))
 			{
 			  if((key=="down" || key=="Z") && i<length-1)
 				already_exists=$('.projects-list').children('')[i+1].id;
@@ -651,12 +652,12 @@ if(is_open=="0")
 		//for messages navigation right arrow
 		function messages_navigation_right()
 		{
-		  already_exists="false"
-			length=$('#message_area').children('').length;
-			exit="false";
+		  var already_exists="false"
+			var length=$('#message_area').children('').length;
+			var exit="false";
 			for(i=0; i<length; i++)
 			{
-				firstclass=$('#message_area').children('')[i].className;
+				var firstclass=$('#message_area').children('')[i].className;
 				if(firstclass!="date-bar" && exit=="false")
 				{
 					already_exists=$('#message_area').children('')[i].id;
@@ -683,7 +684,7 @@ if(is_open=="0")
 		//for messages navigation left arrow
 		function messages_navigation_left()
 		{
-		length=$('#message_area').children('').length;
+		var length=$('#message_area').children('').length;
 			exit="false";
 			for(i=0; i<length; i++)
 			{
@@ -703,14 +704,21 @@ if(is_open=="0")
 		{
 			  already_exists="false"
 				exit="false";
-			length=$('#message_area').children('').length;
+			var length=$('#message_area').children('').length;
 			
 			for(i=0; i<length; i++)
 			{
-				firstclass=$('#message_area').children('')[i].className;
-				if(firstclass=="message messow  mpi2 open")
+			
+				var firstclass=$('#message_area').children('')[i].className;
+				var f=firstclass.search('open')
+				if(f!=-1)
 				{
+				var is_there=typeof($('#message_area').children('')[i+1])=="undefined"
+				if(is_there==true)
+				already_exists=$('#message_area').children('')[i-1].className;
+				else
 					already_exists=$('#message_area').children('')[i+1].className;
+					
 					
 					if(already_exists!="date-bar" && exit=="false" && (key=="down" || key=="X"))
 					{
@@ -718,15 +726,18 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+						var a_firstclass=$('#message_area').children('')[i+1].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
+						
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i+1].className="message messow  mpi2 open";
+						$('#message_area').children('')[i+1].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i-1].className="message messow  mpi2";
+						$('#message_area').children('')[i-1].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					else if(exit=="false" && (key=="down" || key=="X"))
@@ -735,15 +746,17 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i+2].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i+2].className="message messow  mpi2 open";
+						$('#message_area').children('')[i+2].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i-2].className="message messow  mpi2";
+						$('#message_area').children('')[i-2].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					if(key=="up" || key=="S")
@@ -755,32 +768,38 @@ if(is_open=="0")
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i-1].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i-1].className="message messow  mpi2 open";
+						$('#message_area').children('')[i-1].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i+1].className="message messow  mpi2";
+						$('#message_area').children('')[i+1].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					else if(exit=="false")
 					{
+				//	var is_there=typeof($('#message_area').children('')[i-2])=="undefined"
+
 					already_exists=$('#message_area').children('')[i-2].id;
 						already_exists=already_exists.split('msac')[1];
 						exists=$('#message_area').children('')[i].id;
 						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i-2].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
-						$('#message_area').children('')[i-2].className="message messow  mpi2 open";
+						$('#message_area').children('')[i-2].className=b_firstclass;
 						a=$('#message_area').children('')[i].className
 						if(a=="date-bar")
-						$('#message_area').children('')[i+2].className="message messow  mpi2";
+						$('#message_area').children('')[i+2].className=a_firstclass;
 						else
-						$('#message_area').children('')[i].className="message messow  mpi2";
+						$('#message_area').children('')[i].className=a_firstclass;
 						exit="true"
 					}
 					}

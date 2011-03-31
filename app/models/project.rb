@@ -34,8 +34,7 @@ class Project < ActiveRecord::Base
 		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
 	end
 	def is_member?(user_id)
-		member=Project.find(:first, :conditions=>['project_users.user_id=? AND project_users.status=?', user_id,true], :include=>:project_users)
-		!member.present?
+		project_users.find(:first, :conditions=>['user_id=? AND status=?', user_id,true]).present?
 	end
 	
 	def has_custom_message_id?
