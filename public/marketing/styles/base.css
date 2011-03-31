@@ -306,8 +306,8 @@ strong {font-weight: 700;}
 .login p.remember { float: right; }
 .login p.remember input { margin-right: 10px; }
 .login .textfield {
-	width: 226px;
-	height: 42px;
+	width: 214px;
+	height: 36px;
 	margin: 0 15px 10px 0;
 	padding: 4px 0 0 10px;
 	font-size: 16px;
@@ -431,8 +431,8 @@ strong {font-weight: 700;}
 .grid-630 label { width: 255px;	float: left; margin-right: 52px; font-size: 16px; font-weight: bold; color: #404040; }
 .grid-630 .textfield {
 	background: #f9f9f9;
-	width: 265px;
-	height: 34px;
+	width: 250px;
+	height: 27px;
 	margin: 15px 40px 15px 0;
 	padding: 4px 0 0 10px;
 	font-size: 14px;

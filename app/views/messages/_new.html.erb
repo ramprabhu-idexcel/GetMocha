@@ -1,3 +1,6 @@
+<% user_emails=@user_emails
+project_names=@project_names
+%>
 <head>
   <link rel="stylesheet" href="/stylesheets/demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -80,12 +83,12 @@ if (field=='message_message')
 	}
 <%=names=[]%>
 <%=projects=[]%>
-	<% @user_emails.each do |f|%>
+	<% user_emails.each do |f|%>
 		<%names<<f <<","%>
 		var userEmails = "<%= names %>";
 	<%end%>
 				userEmails=userEmails.split(',');
-			<% @project_names.each do |f|%>
+			<% project_names.each do |f|%>
 	    <%projects<<f <<","%>
 		var projectNames = "<%= projects %>";
 	<%end%>
