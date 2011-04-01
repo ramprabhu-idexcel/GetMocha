@@ -595,6 +595,7 @@ alert('afetrr bt');
     $('.account-dropdown').hide();
     $('.settings_header').hide();
      $('body').attr('class','settings');
+     document.title="Settings | Mocha"
     return false;
   });
   
@@ -605,6 +606,7 @@ alert('afetrr bt');
     $('.message_header').hide();
     $('body').attr('class','settings');
     $('.sort-by').hide();
+    document.title="Settings | Mocha"
   });
   
    /************************************************Edit the User profile*****************************************/

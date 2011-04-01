@@ -43,6 +43,10 @@ module ApplicationHelper
 			return "Terms of Use | Mocha"
 		elsif cn=="home" && an=="privacy"
 			return "Privacy Policy | Mocha"
+		elsif cn=="home" && an=="help"
+			return "Help | Mocha"
+		elsif cn=="home" && an=="email"
+			return "Email | Mocha"
 		end
 	end
 end

@@ -4,9 +4,9 @@ class MessagesController < ApplicationController
   before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
   before_filter :remove_timestamps,:only=>UPDATE_METHODS
   after_filter :set_timestamps,:only=>UPDATE_METHODS
-	before_filter :project_session,:only=>['index','all_messages','starred_messages']
-	before_filter :project_selected_session,:only=>['all_messages','starred_messages']
 	layout 'application', :except=>['new']
+	before_filter :clear_session_project,:only=>['all_messages','starred_messages']
+	before_filter :session_project_name,:only=>['index']
  	def index
 		#~ session[:project_name]=nil
 		#~ session[:project_selected]=nil
@@ -166,10 +166,12 @@ end
   def set_timestamps
     Activity.record_timestamps=true
   end
-	def project_session
-	session[:project_name]=nil
-end	
-def project_selected_session
-	session[:project_selected]=nil
-end
+	def clear_session_project
+		session[:project_name]=nil
+		session[:project_selected]=nil
+	end
+	def session_project_name
+  session[:project_name]=nil
+	end	
+	
 end
