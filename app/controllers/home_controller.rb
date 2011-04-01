@@ -16,7 +16,8 @@ def check_email_reply_and_save
 			end
 			logger.info @dest_address
 			logger.info @dest_address[0].to_s
-			if @dest_address.include?("#{APP_CONFIG[:project_email]}")
+			logger.info @dest_address.include?("p.test.getmocha.com")
+			if @dest_address.include?("p.test.getmocha.com")
 				new_project_via_email
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
 				message_create_via_email
