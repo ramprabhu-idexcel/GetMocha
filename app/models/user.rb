@@ -11,10 +11,10 @@
   validates :email,:presence => true, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i},:if=>:not_an_secondary
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions,:is_guest
   has_many :project_guests,:foreign_key=>'guest_id'
-  has_many :projects,:as=>:project_members
+  has_many :projects
   #~ has_one :project
   has_many :project_users
-  has_many :projects,:through=>:project_users,:as=>:project_members
+  #~ has_many :projects,:through=>:project_users,:as=>:project_members
   has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
  # has_many :messages
@@ -126,10 +126,10 @@
     project_starred_messages(project_id).count
   end
   def user_active_projects
-    projects.where("projects.status!=? AND project_users.status=?",ProjectStatus::COMPLETED,true).includes(:project_users)
+    Project.find(:all,:conditions=>['project_users.status=? AND project_users.user_id=? AND projects.status!=?',true,self.id,ProjectStatus::COMPLETED],:include=>:project_users)
   end
   def completed_projects
-    projects.where("projects.status=? AND project_users.status=?",ProjectStatus::COMPLETED,true).includes(:project_users)
+    Project.find(:all,:conditions=>['project_users.status=? AND project_users.user_id=? AND projects.status=?',true,self.id,ProjectStatus::COMPLETED],:include=>:project_users)
   end
   def full_name
     "#{first_name} #{last_name}"
