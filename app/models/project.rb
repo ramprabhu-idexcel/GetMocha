@@ -121,4 +121,7 @@ class Project < ActiveRecord::Base
 			send_data(s3_file.value,:url_based_filename=>true,:filename=>attachment.filename,:type=>attachment.content_type)			
 		end		
 	end
+	def verify_project
+	 find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+	end	
 end

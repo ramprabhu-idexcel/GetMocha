@@ -79,8 +79,9 @@ layout :change_layout
 				project_id=project_id[0].split('-').last
 				project=Project.find(project_id)
 				#user=User.find_by_email(from_address)
-				user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
-				proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
+				#~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
+				user=User.verify_email_id(from_address)
+	  		proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
 				proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
 				
 				
