@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 skip_before_filter :verify_authenticity_token
 #~ protect_from_forgery  layout :change_layout
 before_filter :http_authenticate, :except=>['']
-#~ before_filter :check_from_address_email,:only=>['new_project_via_email','message_create_via_email','reply_to_message_via_email']
+before_filter :check_from_address_email,:only=>['new_project_via_email','message_create_via_email','reply_to_message_via_email']
 before_filter :find_project
 layout :change_layout
   def change_layout
@@ -211,6 +211,18 @@ layout :change_layout
 				end
 			end
 		end
+			def check_from_address_email
+		logger.info "************////////////////////////////////////////////************"
+		@from_address=(params[:from].to_s)
+		logger.info "Start"
+			if(@from_address.include?('<'))
+					@from_address=@from_address.split('<')
+					@from_address=@from_address[1].split('>')
+					@from_address=@from_address[0]
+				end
+				logger.info @from_address
+			
+		end	
   protected
   def http_authenticate
     authenticate_or_request_with_http_basic do |user_name, password|
@@ -219,18 +231,7 @@ layout :change_layout
     warden.custom_failure! if performed?
   end
 	
-	def check_from_address_email(from_address)
-		logger.info "************////////////////////////////////////////////************"
-		
-		logger.info "Start"
-			if(from_address.include?('<'))
-					from_address=from_address.split('<')
-					from_address=from_address[1].split('>')
-					from_address=from_address[0]
-				end
-				logger.info from_address
-			
-		end	
+
 	#~ def from_email_id
 	#~ @from_address=(params[:from].to_s)
   #~ end		
