@@ -42,7 +42,7 @@ layout :change_layout
 					message=params[:text]
 					name=params[:subject].to_s
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
-					ProjectUser.new(:user_id => user.id, :project_id => project.id, :status => true)
+					ProjectUser.create(:user_id => user.id, :project_id => project.id, :status => true)
 					to_address.each do |mail|
 						mail=mail.strip
 						if(mail.include?('<'))
