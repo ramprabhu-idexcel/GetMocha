@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
-	Message_email="@m.getmocha.com"
-	Task_email="@t.getmocha.com"
+	Message_email="#{APP_CONFIG[:message_email]}"
+	Task_email="#{APP_CONFIG[:task_email]}"
 	has_many :project_users
 	has_many :project_guests
 	has_many :users, :through=> :project_users
