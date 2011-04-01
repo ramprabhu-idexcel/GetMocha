@@ -17,16 +17,16 @@
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 		
 		<tr><td><%=f.label "First_Name", "First Name",:class=>"last"%></td><td><%=f.label "Last_Name","Last Name",:class=>"last" %></td></tr>
-	 <tr><td><%=f.text_field :first_name,:class=>"textfield",:id=>"signup-fname",:style=>"width:263px;height:33px;"%></td>
-	  <td><%= f.text_field :last_name,:class=>"textfield last",:id=>"signup-lname",:style=>"width:263px;height:33px;" %></td></tr>
+	 <tr><td><%=f.text_field :first_name,:class=>"textfield",:id=>"signup-fname",:style=>"width:250px;height:27px;"%></td>
+	  <td><%= f.text_field :last_name,:class=>"textfield last",:id=>"signup-lname",:style=>"width:250px;height:27px;" %></td></tr>
 		<tr><td><%= f.label "Email_Address","Email Address",:class=>"last" %></td><td><%= f.label "Password","Password",:class=>"last"  %></td></tr>
     <%if session[:invite_email].present?%>
       <tr><td><%= f.text_field :email,:class=>"textfield",:value=>session[:invite_email],:style=>"width:263px;height:33px;" %></td>
       <%session[:invite_email]=nil%>
     <%else%>
-      <tr><td><%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com",:style=>"width:263px;height:33px;" %></td>
+      <tr><td><%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com",:style=>"width:250px;height:27px;" %></td>
     <%end%>
-	  <td><%= f.password_field :password,:class=>"textfield last",:style=>"width:263px;height:33px;"  %></td></tr>
+	  <td><%= f.password_field :password,:class=>"textfield last",:style=>"width:250px;height:27px;"  %></td></tr>
 	</table>
 	<hr class="light-hr" />
 	 <%=f.check_box "terms_conditions",:class=>"checkbox"%> I agree to the Mocha <a href="/terms">Terms of Use.</a>
