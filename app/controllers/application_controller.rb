@@ -26,18 +26,18 @@ layout :change_layout
     session[:project_name]=@project.name if @project
   end
   def new_project_via_email
-		logger.info "here"
+		
       from_address=params[:from].to_s
 				if(from_address.include?('<'))
 					from_address=from_address.split('<')
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
-				logger.info from_address
+				
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
 				user=User.find_by_email(from_address)
-				logger.info user.inspect
+				
 				if user
 					message=params[:text]
 					name=params[:subject].to_s
@@ -55,7 +55,7 @@ layout :change_layout
               ProjectMailer.delay.invite_people(user,invite)
 						end
 					end
-					logger.info project.inspect
+					
 					if cc_address
 					cc_address.each do |mail|
 						mail=mail.strip
