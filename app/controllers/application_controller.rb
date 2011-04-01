@@ -46,7 +46,7 @@ layout :change_layout
 							mail=mail[1].split('>')
 							mail=mail[0]
 						end
-						if !mail.to_s.include?("p.getmocha.com")
+						if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
               ProjectMailer.delay.invite_people(user,invite)
 						end
@@ -59,7 +59,7 @@ layout :change_layout
 							mail=mail[1].split('>')
 							mail=mail[0]
 						end
-						if !mail.to_s.include?("p.getmocha.com")
+						if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
 							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
 							ProjectMailer.delay.invite_people(user,invite)
 						end
