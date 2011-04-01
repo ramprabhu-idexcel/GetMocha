@@ -25,6 +25,10 @@
   has_many :comments
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
   named_scope :all_users, :select=>'email',:order => 'id'
+  #~ named_scope :verify_email_id,:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails
+   def self.verify_email_id(from_address)
+    find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
+  end
   def not_guest
     self.is_guest ? false : true
   end
