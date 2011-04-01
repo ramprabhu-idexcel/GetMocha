@@ -14,17 +14,11 @@ def check_email_reply_and_save
 				@dest_address=@dest_address[1].split('>')
 				@dest_address=@dest_address[0].to_s
 			end
-			d=@dest_address.split('@')[0]
-			logger.info d
-			logger.info d=="create"
-			logger.info @dest_address.class
-			logger.info @dest_address[0].to_s
-			logger.info @dest_address[0].to_s.include?("create").inspect
 			if @dest_address[0].to_s.include?("#{APP_CONFIG[:project_email]}")
 				new_project_via_email
-			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
+			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:message_email]}")
 				message_create_via_email
-			elsif @dest_address.include?("ctzm")
+			elsif @dest_address[0].to_s.include?("ctzm")
 				reply_to_message_via_email
 			end
 			render :text => "success"

@@ -9,5 +9,15 @@ class SessionsController <  Devise::SessionsController
 		session[:project_selected]=nil
     resource = warden.authenticate!(:scope => resource_name)
     render :text=>"redirect"
+		if resource
+		 invitations=Invitation.resource_email(resource)
+      invitations.each do |invite|
+        proj_user=ProjectUser.find_by_project_id_and_user_id(invite.project_id, resource.id)
+        if !proj_user
+          ProjectUser.create(:project_id=>invite.project_id, :user_id=>resource.id, :status=>true)
+        end
+        invite.update_attributes(:status=>true)	
+     end
+	  end	
   end
 end

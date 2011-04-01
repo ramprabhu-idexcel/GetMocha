@@ -26,22 +26,23 @@ layout :change_layout
     session[:project_name]=@project.name if @project
   end
   def new_project_via_email
-		logger.info "here"
+		
       from_address=params[:from].to_s
 				if(from_address.include?('<'))
 					from_address=from_address.split('<')
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
-				logger.info from_address
+				
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
 				user=User.find_by_email(from_address)
-				logger.info user.inspect
+				
 				if user
 					message=params[:text]
 					name=params[:subject].to_s
 					project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
+					ProjectUser.create(:user_id => user.id, :project_id => project.id, :status => true)
 					to_address.each do |mail|
 						mail=mail.strip
 						if(mail.include?('<'))
@@ -54,7 +55,7 @@ layout :change_layout
               ProjectMailer.delay.invite_people(user,invite)
 						end
 					end
-					logger.info project.inspect
+					
 					if cc_address
 					cc_address.each do |mail|
 						mail=mail.strip
@@ -78,9 +79,12 @@ layout :change_layout
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
-        project_id=@dest_address
+        project_id=@dest_address[0].to_s
+				logger.info project_id
 				project_id=project_id.split('@')
+				logger.info project_id
 				project_id=project_id[0].split('-').last
+				logger.info project_id
 				project=Project.find(project_id)
 				#user=User.find_by_email(from_address)
 				#~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
@@ -166,7 +170,7 @@ layout :change_layout
 				from_address=from_address[1].split('>')
 				from_address=from_address[0]
 			end
-			message_id=@dest_address.split('@')
+			message_id=@dest_address[0].to_s.split('@')
 			message_id=message_id[0].split('ctzm')
 			message_id=message_id[1]
 			message=Message.find(message_id)		

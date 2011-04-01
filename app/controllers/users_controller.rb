@@ -28,6 +28,7 @@ class UsersController <  Devise::RegistrationsController
     else
       errors=[]
       resource.errors.each_full{|msg| errors<< msg }
+      errors=errors.uniq
       clean_up_passwords(resource)
       render :udpate do |page|
         page.alert errors.join("\n")
