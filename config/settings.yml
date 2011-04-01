@@ -14,11 +14,11 @@ production:
   message_email: m.getmocha.com 
   reply_email: reply.getmocha.com 
   
-test:
-  site_url: http://localhost:3000
-  site_name: localhost
-  project_email: p.rfmocha.com
-  task_email: t.rfmocha.com
-  message_email: m.rfmocha.com 
-  reply_email: rfmocha.com 
+staging:
+  site_url: http://test.getmocha.com
+  site_name: test.getmocha.com
+  project_email: p.test.getmocha.com
+  task_email: t.test.getmocha.com
+  message_email: m.test.getmocha.com 
+  reply_email: reply.test.getmocha.com 
   

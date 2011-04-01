@@ -38,7 +38,7 @@ class MessagesController < ApplicationController
 	def create
 	errors=[]
 		if params[:message][:recipient].blank?
-			errors<<"Please enter To_email address"
+			#~ errors<<"Please enter To_email address"
 		elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 			errors<<"Please enter valid email"
 		end
