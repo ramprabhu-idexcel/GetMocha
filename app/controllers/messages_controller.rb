@@ -1,6 +1,9 @@
 class MessagesController < ApplicationController
 	before_filter :authenticate_user!
+  UPDATE_METHODS=['show','star_message','subscribe','unsubscribe','unsubscribe_via_email','destroy']
   before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
+  before_filter :remove_timestamps,:only=>UPDATE_METHODS
+  after_filter :set_timestamps,:only=>UPDATE_METHODS
 	layout 'application', :except=>['new']
  	def index
 		session[:project_name]=nil
@@ -116,9 +119,7 @@ end
   end
   def star_message
     starred=!@activity.is_starred
-		updateds=@activity.updated_at
     @activity.update_attribute(:is_starred,starred)
-    @activity.update_attribute(:updated_at,updateds)
     render :json=>{:count=>current_user.starred_messages_count}
   end
   def subscribe
@@ -155,5 +156,11 @@ end
   end
   def resource_columns
     [:message,:project_id,:subject]
+  end
+  def remove_timestamps
+    Activity.record_timestamps=false
+  end
+  def set_timestamps
+    Activity.record_timestamps=true
   end
 end
