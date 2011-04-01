@@ -1209,11 +1209,12 @@ function find_month(month)
 }
 //Task & Tasklist
  $('#tl_add').live('click',function(){
-   alert($('#tasklists_tlname').val());
+ var a=$('#tasklists_tlname').val();
+    var b=$('#txtInput2').val();
        $.ajax({
       type :'post',
       url :"/task_lists",
-      data : $('#form4').serialize(),
+      data : {tlname : a, project : b},
       success: function(data){
         a=data.search(/alert/);
       	if(a!=0 && a!=6){
@@ -1236,4 +1237,40 @@ function find_month(month)
     });
     return false;
   });
- 
+  $('#t_can').live('click',function(){
+    $('.add-item-modal').hide();
+    return false;
+  });
+  $('#tl_can').live('click',function(){
+    $('.add-item-modal').hide();
+    return false;
+  });
+ $('#t_add').live('click',function(){
+ //var a=$('#tasklists_tlname').val();
+ //   var b=$('#txtInput2').val();
+       $.ajax({
+      type :'post',
+      url :"/tasks",
+      data :$('#taskf').serialize(),
+      success: function(data){
+        a=data.search(/alert/);
+      	if(a!=0 && a!=6){
+         $('.add-item-modal').hide();
+         /* ref=window.location.href
+          p=ref.search(/settings/)
+          if(p>=0)
+          {
+          document.getElementById('projects_list').innerHTML=data;
+          }
+        else
+          {
+          document.getElementById('messages_projects_list').innerHTML=data;
+          }*/
+        }
+      },
+      failure: function(){
+        alert("Error");
+      }
+    });
+    return false;
+  });

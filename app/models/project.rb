@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
   has_many :guests,:through=>:project_guests,:source => :user
 	has_many :activities, :through => :messages, :dependent=>:destroy
 	has_many :messages
-  has_many :tasklists
+  has_many :task_lists
 	has_many :tasks
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails

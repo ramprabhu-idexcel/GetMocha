@@ -1,5 +1,8 @@
-<% user_emails=@user_emails%>
-<%project_names=@project_names%>
+<% 
+user_emails=@user_emails
+project_names=@project_names
+t_list=@t_list
+%>
 <head>
   <link rel="stylesheet" href="/stylesheets/demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -8,31 +11,31 @@
 	<div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
 	<div class="modal-top-center">
-		<a class="save-btn" id="m_add" href="#message_create" >Save</a>
-		<a class="cancel-btn" id="m_can" href="#message_cancel" >Cancel</a>
+		<a class="save-btn" id="t_add" href="#message_create" >Save</a>
+		<a class="cancel-btn" id="t_can" href="#message_cancel" >Cancel</a>
 		Add New Task
 	</div>
 	<div class="modal-top-right"></div>
 	<div class="modal-body-contain">
 		<div class="modal-body">
 			<div class="modal-input">
-<%form_for :task, :url=>({ :controller => "messages", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true,:id=>"form2"}) do |f|%>
+<%form_for :task, :url=>({ :controller => "tasks", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true,:id=>"taskf"}) do |f|%>
 				<fieldset>
 					<label>Task</label>
-							<%=f.text_field  'task', :class=>"textfield" %>
+							<%=f.text_field  'name', :class=>"textfield" %>
 		    </fieldset>
 			    <fieldset>
 					<label>Project:</label>
 		       		<% p session[:project_name] %>
 					<% if session[:project_name] %>
-					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
+					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" , :value=>"#{session[:project_name]}", :disabled=>true%>
 					 <% else %>
-					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
+					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" %>
 					 <% end %>
 			    </fieldset>
 					<fieldset>
 					<label>Assign:</label>
-						<%=f.text_field  'recipient', :class=>"textfield", :id=>"txtInput1"  %>
+						<%=f.text_field  'recipient', :class=>"textfield", :id=>"assign_to"  %>
 						    </fieldset>
 					<fieldset>
 					<label>Notify:</label>
@@ -40,13 +43,13 @@
 			    </fieldset>
 					<fieldset>
 					<label>Tasklist:</label>
-						<%=f.text_field  'tasklist', :class=>"textfield", :id=>"txtInput3"  %>
+						<%=f.text_field  'tasklist', :class=>"textfield", :id=>"t_list"  %>
 					</fieldset>
 					<fieldset>
 					<label>Due_Date:</label>
-						<%=f.text_field  'due_date', :class=>"textfield"%>
+						<%=f.text_field  'due_date', :class=>"textfield" ,:id=>"txtInput3"%>
 							    </fieldset>
-			    <fieldset id="txtarea">
+			    <fieldset id="task_txtarea">
 					<label>Message:</label>
 		       		<%=f.text_area 'message', :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
 			    </fieldset>
@@ -74,14 +77,36 @@
 	<div class="modal-bottom-right"></div>
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
-	$('#txtarea').click(function(){
-document.getElementById('message_message').style.display="block";
-	document.getElementById('txtarea').className="open";
+<%=names=[]%>
+<%=tlist=[]%>
+<%=projects=[]%>
+	<% user_emails.each do |f|%>
+		<%names<<f <<","%>
+		<%end%>
+			<%project_names.each do |f|%>
+			  <%projects<<f <<","%>
+	<%end%>
+	<%t_list.each do |f|%>
+			  <%tlist<<f <<","%>
+	<%end%>
+	var userEmails = "<%= names %>";	
+var projectNames = "<%= projects %>";
+var tasklist="<%= tlist %>";
+userEmails=userEmails.split(',');
+	projectNames=projectNames.split(',');
+    var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('assign_to'), true);
+    var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
+		 var ac2 = new goog.ui.AutoComplete.Basic(tasklist, document.getElementById('t_list'),false);
+		</script>
+		<script>
+	$('#task_txtarea').click(function(){
+document.getElementById('task_message').style.display="block";
+	document.getElementById('task_txtarea').className="open";
 	});
 	$('#txtInput3').keydown(function(event){
 	if (event.keyCode == 9) {
   document.getElementById('task_message').style.display="block";
-	document.getElementById('txtarea').className="open";
+	document.getElementById('task_txtarea').className="open";
 	$('.drag-drop').focus();
 	}
 	});
@@ -94,20 +119,7 @@ document.getElementById('message_message').style.display="block";
 	$('#attach').click(function(){
 	document.getElementById('attach_upload').style.display="block";
 	});
-<%=names=[]%>
-<%=projects=[]%>
-	<% user_emails.each do |f|%>
-		<%names<<f <<","%>
-		<%end%>
-			<%project_names.each do |f|%>
-	    <%projects<<f <<","%>
-	<%end%>
-var userEmails = "<%= names %>";	
-var projectNames = "<%#= projects %>";
-userEmails=userEmails.split(',');
-	projectNames=projectNames.split(',');
-         var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('txtInput1'), true);
-    var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('txtInput2'),false);
+
 	$(function () {
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
@@ -144,5 +156,5 @@ function delete_attachment(file)
 			 document.getElementById('attachment_'+file).style.display="none";
 			 }
     });
-}*/
+}
 </script>
