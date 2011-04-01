@@ -24,6 +24,7 @@ GetMocha::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+    config.action_mailer.default_url_options = { :host => 'test.getmocha.com' }
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -32,4 +33,13 @@ GetMocha::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+  :address => "smtp.sendgrid.net",
+  :port => '25',
+  :domain => "reply.test.getmocha.com",
+  :authentication => :plain,
+  :user_name => "jesse@catalystfactory.com",
+  :password => "railsfactory"
+  }
 end
