@@ -4,9 +4,11 @@ class MessagesController < ApplicationController
   before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
   before_filter :remove_timestamps,:only=>UPDATE_METHODS
   after_filter :set_timestamps,:only=>UPDATE_METHODS
+	before_filter :project_session,:only=>['index','all_messages','starred_messages']
+	before_filter :project_selected_session,:only=>['all_messages','starred_messages']
 	layout 'application', :except=>['new']
  	def index
-		session[:project_name]=nil
+		#~ session[:project_name]=nil
 		#~ session[:project_selected]=nil
 		@projects=current_user.user_active_projects
 	end
@@ -96,13 +98,13 @@ end
     render :nothing=>true
   end
   def all_messages
-		session[:project_name]=nil
-		session[:project_selected]=nil
+		#~ session[:project_name]=nil
+		#~ session[:project_selected]=nil
 		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time,:has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def starred_messages
-		session[:project_name]=nil
-		session[:project_selected]=nil
+		#~ session[:project_name]=nil
+		#~ session[:project_selected]=nil
 		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def project_messages
@@ -164,4 +166,10 @@ end
   def set_timestamps
     Activity.record_timestamps=true
   end
+	def project_session
+	session[:project_name]=nil
+end	
+def project_selected_session
+	session[:project_selected]=nil
+end
 end

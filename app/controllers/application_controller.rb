@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
 skip_before_filter :verify_authenticity_token
 #~ protect_from_forgery  layout :change_layout
 before_filter :http_authenticate, :except=>['']
+before_filter :from_email_id,:only=>['new_project_via_email','message_create_via_email','reply_to_message_via_email']
 before_filter :find_project
 layout :change_layout
   def change_layout
@@ -27,13 +28,13 @@ layout :change_layout
   end
   def new_project_via_email
 		
-      from_address=params[:from].to_s
-				if(from_address.include?('<'))
-					from_address=from_address.split('<')
-					from_address=from_address[1].split('>')
-					from_address=from_address[0]
-				end
-				
+      #~ from_address=params[:from].to_s
+				#~ if(from_address.include?('<'))
+					#~ from_address=from_address.split('<')
+					#~ from_address=from_address[1].split('>')
+					#~ from_address=from_address[0]
+				#~ end
+				#~ from_address=check_from_address_email(params[:from].to_s)
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
 				user=User.find_by_email(from_address)
@@ -73,12 +74,13 @@ layout :change_layout
 				end
       end
       def message_create_via_email
-         from_address=params[:from].to_s
-				if(from_address.include?('<'))
-					from_address=from_address.split('<')
-					from_address=from_address[1].split('>')
-					from_address=from_address[0]
-				end
+         #~ from_address=params[:from].to_s
+				#~ if(from_address.include?('<'))
+					#~ from_address=from_address.split('<')
+					#~ from_address=from_address[1].split('>')
+					#~ from_address=from_address[0]
+				#~ end
+				#~ from_address=check_from_address_email(params[:from].to_s)
         project_id=@dest_address[0].to_s
 				logger.info project_id
 				project_id=project_id.split('@')
@@ -164,12 +166,13 @@ layout :change_layout
 		end
 		
 	def reply_to_message_via_email
-			from_address=params[:from].to_s
-			if(from_address.include?('<'))
-				from_address=from_address.split('<')
-				from_address=from_address[1].split('>')
-				from_address=from_address[0]
-			end
+			#~ from_address=params[:from].to_s
+			#~ if(from_address.include?('<'))
+				#~ from_address=from_address.split('<')
+				#~ from_address=from_address[1].split('>')
+				#~ from_address=from_address[0]
+			#~ end
+			#~ from_address=check_from_address_email(params[:from].to_s)
 			message_id=@dest_address[0].to_s.split('@')
 			message_id=message_id[0].split('ctzm')
 			message_id=message_id[1]
@@ -214,4 +217,16 @@ layout :change_layout
     end
     warden.custom_failure! if performed?
   end
+	
+	def check_from_address_email(from_address)
+			if(from_address.include?('<'))
+					from_address=from_address.split('<')
+					from_address=from_address[1].split('>')
+					from_address=from_address[0]
+				end
+			return from_address
+		end	
+	def from_email_id
+		from_address=check_from_address_email(params[:from].to_s)
+  end		
 end
