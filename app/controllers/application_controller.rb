@@ -38,7 +38,7 @@ layout :change_layout
 		
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
-				user=User.find_by_email(@from_address)
+				user=User.find_by_email(from_address)
 				
 				if user
 					message=params[:text]
@@ -91,7 +91,7 @@ layout :change_layout
 				project=Project.find(project_id)
 				#user=User.find_by_email(from_address)
 				#~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
-				user=User.verify_email_id(@from_address)
+				user=User.verify_email_id(from_address)
 	  		proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
 				proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
 				
@@ -179,7 +179,7 @@ layout :change_layout
 			message_id=message_id[1]
 			message=Message.find(message_id)		
 			project=Project.find(message.project_id)
-			user=User.find_by_email(@from_address)
+			user=User.find_by_email(from_address)
 			content1=params[:html].split("##Type above this line to post a reply to this message##")
 			content=content1[0]
 			content_f = content.split("wrote:")[0]
