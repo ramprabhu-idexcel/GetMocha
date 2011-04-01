@@ -14,7 +14,7 @@ production:
   message_email: m.getmocha.com 
   reply_email: reply.getmocha.com 
   
-staging:
+test:
   site_url: http://test.getmocha.com
   site_name: test.getmocha.com
   project_email: p.test.getmocha.com
