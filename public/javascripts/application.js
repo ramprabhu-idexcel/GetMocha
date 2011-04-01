@@ -225,19 +225,7 @@ alert('afetrr bt');
     }
     //delete the messages
     $('#trash_message').live('click',function(){
-      var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
-      var delete_message= confirm("Do you really want to delete this message?");
-      if(delete_message)
-      {
-        $.ajax({
-          url: '/messages',
-          type:'delete',
-          data:{'activity_id':activity_id}
-        });
-        $('#comment_area').fadeOut('');
-        $('.comment-input').hide();
-        $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
-      }
+      delete_message();
       return false;
     });
     
@@ -1003,12 +991,6 @@ else
   /********************************End of user profile***************/
   
   
-  
-  
-  
-  
-  
-  
 });//End of doc
 
 
@@ -1017,8 +999,23 @@ else
 
 
 
-
-
+// MEthod to delete the message
+  function delete_message()
+  {
+    var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+    var delete_message= confirm("Do you really want to delete this message?");
+    if(delete_message)
+    {
+      $.ajax({
+        url: '/messages',
+        type:'delete',
+        data:{'activity_id':activity_id}
+      });
+      $('#comment_area').fadeOut('');
+      $('.comment-input').hide();
+      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
+    }
+  }
 
 
 /* $('#attach').fileUploadUI({
