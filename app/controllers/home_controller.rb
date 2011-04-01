@@ -19,7 +19,7 @@ def check_email_reply_and_save
 			logger.info d=="create"
 			logger.info @dest_address.class
 			logger.info @dest_address[0].to_s
-			logger.info @dest_address.include?("create")
+			logger.info @dest_address.include?("create").inspect
 			if @dest_address.include?("create")
 				new_project_via_email
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
