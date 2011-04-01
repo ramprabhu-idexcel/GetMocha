@@ -34,7 +34,7 @@ layout :change_layout
 					#~ from_address=from_address[1].split('>')
 					#~ from_address=from_address[0]
 				#~ end
-				from_address=check_from_address_email(params[:from].to_s)
+				#~ from_address=check_from_address_email(params[:from].to_s)
 				logger.info @from_address
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
