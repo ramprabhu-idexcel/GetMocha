@@ -220,7 +220,7 @@ layout :change_layout
   end
 	
 	def check_from_address_email
-		logger.info "************************"
+		logger.info "************////////////////////////////////////////////************"
 		@from_address=(params[:from].to_s)
 		logger.info "Start"
 			if(@from_address.include?('<'))
