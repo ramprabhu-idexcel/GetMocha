@@ -14,6 +14,8 @@ def check_email_reply_and_save
 				@dest_address=@dest_address[1].split('>')
 				@dest_address=@dest_address[0]
 			end
+			logger.info @dest_address.include?("#{APP_CONFIG[:project_email]}")
+			logger.info @dest_address.inspect
 			if @dest_address.include?("#{APP_CONFIG[:project_email]}")
 				new_project_via_email
 			elsif @dest_address.include?("#{APP_CONFIG[:message_email]}")
