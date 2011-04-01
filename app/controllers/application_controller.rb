@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 skip_before_filter :verify_authenticity_token
 #~ protect_from_forgery  layout :change_layout
-before_filter :http_authenticate, :except=>['new_project_via_email']
+before_filter :http_authenticate, :except=>['']
 before_filter :find_project
 layout :change_layout
   def change_layout
