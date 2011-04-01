@@ -170,7 +170,7 @@ layout :change_layout
 				from_address=from_address[1].split('>')
 				from_address=from_address[0]
 			end
-			message_id=@dest_address.split('@')
+			message_id=@dest_address[0].to_s.split('@')
 			message_id=message_id[0].split('ctzm')
 			message_id=message_id[1]
 			message=Message.find(message_id)		
