@@ -35,6 +35,7 @@ layout :change_layout
 					#~ from_address=from_address[0]
 				#~ end
 				#~ from_address=check_from_address_email(params[:from].to_s)
+				logger.info @from_address
 				to_address=params[:to].split(',')
 				cc_address=params[:cc].split(',') if params[:cc]
 				user=User.find_by_email(@from_address)
@@ -219,11 +220,13 @@ layout :change_layout
   end
 	
 	def check_from_address_email(from_address)
+		logger.info "Start"
 			if(from_address.include?('<'))
 					from_address=from_address.split('<')
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
+				logger.info from_address
 			return from_address
 		end	
 	def from_email_id
