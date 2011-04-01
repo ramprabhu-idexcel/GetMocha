@@ -18,7 +18,7 @@ project_names=@project_names
 		<div class="modal-body">
 			<div class="modal-input">
 <%form_for :message, :url=>({ :controller => "messages", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true,:id=>"form2"}) do |f|%>
-				<fieldset>
+				<fieldset style="border-top:medium none;">
 					<label>To:</label>
 							<%=f.text_field  'recipient', :class=>"textfield", :id=>"txtInput1" %>
 		    </fieldset>
@@ -28,7 +28,7 @@ project_names=@project_names
 			    </fieldset>
 				<fieldset>
 					<label>Project:</label>
-					<% p session[:project_name] %>
+					
 					<% if session[:project_name] %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
 					 <% else %>
