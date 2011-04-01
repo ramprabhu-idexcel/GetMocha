@@ -79,9 +79,12 @@ layout :change_layout
 					from_address=from_address[1].split('>')
 					from_address=from_address[0]
 				end
-        project_id=@dest_address
+        project_id=@dest_address[0].to_s
+				logger.info project_id
 				project_id=project_id.split('@')
+				logger.info project_id
 				project_id=project_id[0].split('-').last
+				logger.info project_id
 				project=Project.find(project_id)
 				#user=User.find_by_email(from_address)
 				#~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
