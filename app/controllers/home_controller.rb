@@ -17,7 +17,7 @@ def check_email_reply_and_save
 			d=@dest_address.split('@')[0]
 			logger.info d
 			logger.info d=="create"
-			logger.info @dest_address
+			logger.info @dest_address.class
 			logger.info @dest_address[0].to_s
 			logger.info @dest_address.include?("create")
 			if @dest_address.include?("create")
