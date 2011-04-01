@@ -3,7 +3,7 @@ class UsersController <  Devise::RegistrationsController
   before_filter :session_clear
   def create
     resource=User.new(params[:user])
-          resource.time_zone="(GMT+10:00) Eastern Time - Brisbane"
+          resource.time_zone="(GMT-05:00) Eastern Standard Time"
     user=User.find_by_email_and_is_guest(params[:user][:email],true)
     if user
       resource=user
