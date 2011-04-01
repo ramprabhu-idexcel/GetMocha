@@ -16,6 +16,15 @@ $.messages;
               $('.message_header').hide();
               $('#comment_area').html('');
           }
+          
+          else if((page=="") && ((window.location+"")==$.host+"messages"))
+          {
+            var restfulPageUrl = this.restfulUrl+"all_messages";
+            this.loadRestfulData( restfulPageUrl );
+            $('.sort-by').show();
+            $('.message_header').hide();
+            $('#comment_area').html('');
+          }
          },
          projectMessage:function(page){
          
