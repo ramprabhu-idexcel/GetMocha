@@ -1,7 +1,7 @@
 <%projects=@projects%>
 <div class="l-panel" id= "projectslist">
-	<%if ! unread_message_count.nil? &&  unread_message_count!=0%>
-	<a class="all-messages has-unread" href="#all_messages" id="all_messages"><span class="num-unread"><%= unread_message_count%></span><span class="icon"></span>All Messages </a>
+	<%unless current_user.unread_all_message_count<1%>
+	<a class="all-messages has-unread" href="#all_messages" id="all_messages"><span class="num-unread"><%= current_user.unread_all_message_count%></span><span class="icon"></span>All Messages </a>
 			<a href="#starred_messages"  id="starred_messages" class="starred starred_count"><% if current_user.starred_messages_count != 0 %><span class="num-tasks"><%= current_user.starred_messages_count%></span><% end %><span class="icon"></span>Starred </a>
 			<%else%>
 			<a  class="all-messages has-unread" href="#all_messages" id="all_messages"><span class="icon"></span>All Messages </a>
