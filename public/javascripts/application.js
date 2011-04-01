@@ -179,7 +179,7 @@ alert('afetrr bt');
         type: 'get',
         success:function(data)
         { 
-          $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
+          display_star_count(data.count);
         }
       });
       return false;
@@ -196,7 +196,7 @@ alert('afetrr bt');
         type: 'get',
         success:function(data)
         { 
-          $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
+          display_star_count(data.count);
         }
       });
       if($('#starred_messages').hasClass('open'))
@@ -211,13 +211,18 @@ alert('afetrr bt');
         url: path,
         type: 'get',
         success:function(data)
-        {
-          $('a.starred.starred_count').html('<span class="num-tasks">'+data.count+'</span><span class="icon"></span>Starred' );
+        { 
+          display_star_count(data.count);
         }
       });
       return false;
     });
-    
+    function display_star_count(count){
+      if(count==0)
+        $('a.starred.starred_count').html('<span class="icon"></span>Starred' );
+      else
+        $('a.starred.starred_count').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
+    }
     //delete the messages
     $('#trash_message').live('click',function(){
       var activity_id=$('.message.messow.open').attr('id').split('msac')[1];

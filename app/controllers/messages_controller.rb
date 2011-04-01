@@ -1,6 +1,9 @@
 class MessagesController < ApplicationController
 	before_filter :authenticate_user!
+  UPDATE_METHODS=['show','star_message','subscribe','unsubscribe','unsubscribe_via_email','destroy']
   before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
+  before_filter :remove_timestamps,:only=>UPDATE_METHODS
+  after_filter :set_timestamps,:only=>UPDATE_METHODS
 	layout 'application', :except=>['new']
  	def index
 		session[:project_name]=nil
@@ -117,9 +120,7 @@ end
   end
   def star_message
     starred=!@activity.is_starred
-		updateds=@activity.updated_at
     @activity.update_attribute(:is_starred,starred)
-    @activity.update_attribute(:updated_at,updateds)
     render :json=>{:count=>current_user.starred_messages_count}
   end
   def subscribe
@@ -146,9 +147,9 @@ end
     params[:order] ||="Ascending"
     if params[:activity_id]
       @activity=Activity.find_by_id(params[:activity_id])
-      @project=@activity.resource.project
-      valid_member=@project.is_member?(current_user.id)
-      render :text=>"The page you were looking doesn't exist" and return unless @project.status && valid_member
+      #~ @project=@activity.resource.project
+      #~ valid_member=@project.is_member?(current_user.id)
+      #~ render :text=>"The page you were looking doesn't exist" and return unless @project.status && valid_member
     end
 	end
   def unwanted_columns
@@ -156,5 +157,11 @@ end
   end
   def resource_columns
     [:message,:project_id,:subject]
+  end
+  def remove_timestamps
+    Activity.record_timestamps=false
+  end
+  def set_timestamps
+    Activity.record_timestamps=true
   end
 end
