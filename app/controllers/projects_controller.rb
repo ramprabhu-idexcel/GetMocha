@@ -178,6 +178,7 @@ class ProjectsController < ApplicationController
 					@user.guest_update_message(@invite.project_id)
 				end
 				@invite.update_attributes(:invitation_code=>nil)
+        session[:invite_email]=@invite.email
 				redirect_to new_user_registration_path
 			end
 		end

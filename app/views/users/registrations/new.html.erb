@@ -20,7 +20,12 @@
 	 <tr><td><%=f.text_field :first_name,:class=>"textfield",:id=>"signup-fname",:style=>"width:263px;height:33px;"%></td>
 	  <td><%= f.text_field :last_name,:class=>"textfield last",:id=>"signup-lname",:style=>"width:263px;height:33px;" %></td></tr>
 		<tr><td><%= f.label "Email_Address","Email Address",:class=>"last" %></td><td><%= f.label "Password","Password",:class=>"last"  %></td></tr>
-		<tr><td><%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com",:style=>"width:263px;height:33px;" %></td>
+    <%if session[:invite_email].present?%>
+      <tr><td><%= f.text_field :email,:class=>"textfield",:value=>session[:invite_email],:style=>"width:263px;height:33px;" %></td>
+      <%session[:invite_email]=nil%>
+    <%else%>
+      <tr><td><%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com",:style=>"width:263px;height:33px;" %></td>
+    <%end%>
 	  <td><%= f.password_field :password,:class=>"textfield last",:style=>"width:263px;height:33px;"  %></td></tr>
 	</table>
 	<hr class="light-hr" />
