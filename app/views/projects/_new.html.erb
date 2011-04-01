@@ -39,18 +39,14 @@
 	document.getElementById('invite_message').className="textarea";
 	$('#invite_message').focus()
 	});
-		$('#txtInput2').keydown(function(event){
+		$('#txtInput2').keypress(function(event){
 	if (event.keyCode == 9) {
 	document.getElementById('ellaborate').className="open";
 	document.getElementById('invite_message').className="textarea";
-$('#invite_message').focus();
+$('.modal-bottom-left').focus();
 	}
 	});
-			$('#invite_message').keydown(function(event){
-	if (event.keyCode == 9) {
-	$('#invite_message').focus();
-	}
-	});
+
 
 
 <%=emails=[]%>
