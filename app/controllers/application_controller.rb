@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 skip_before_filter :verify_authenticity_token
 #~ protect_from_forgery  layout :change_layout
-before_filter :http_authenticate, :except=>['']
+before_filter :http_authenticate, :except=>['check_from_address_email']
 before_filter :check_from_address_email,:only=>['new_project_via_email','message_create_via_email','reply_to_message_via_email']
 before_filter :find_project
 layout :change_layout
