@@ -1,0 +1,47 @@
+<%project_names=@project_names%>
+<head>
+  <link rel="stylesheet" href="/stylesheets/demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
+   <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
+</head>
+	<div class="modal add-item-modal">
+	<div class="modal-top-left"></div>
+	<div class="modal-top-center">
+		<a class="save-btn" id="tl_add" href="#message_create" >Save</a>
+		<a class="cancel-btn" id="tl_can" href="#message_cancel" >Cancel</a>
+		Add New Task
+	</div>
+	<div class="modal-top-right"></div>
+	<div class="modal-body-contain">
+		<div class="modal-body">
+			<div class="modal-input">
+<%form_for :tasklists, :url=>{ :controller => "task_lists", :action => "create" }, :html=>{:id=>"form4"} do |f4|%>
+				<fieldset>
+					<label>Name</label>
+							<%=f4.text_field 'tlname', :class=>"textfield"%>
+		    </fieldset>
+			    <fieldset>
+					<label>Project:</label>
+					<% p session[:project_name] %>
+					<% if session[:project_name] %>
+					 		<%=f4.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
+					 <% else %>
+					 		<%=f4.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
+					 <% end %>
+					</fieldset>
+								<% end %>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-bottom-left"></div>
+	<div class="modal-bottom"></div>
+	<div class="modal-bottom-right"></div>
+<script type="text/javascript">
+<%=projects=[]%>
+<% project_names.each do |f|%>
+	    <%projects<<f <<","%>
+		var projectNames = "<%= projects %>";
+	<%end%>
+				projectNames=projectNames.split(',');
+ var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('txtInput2'),false);
