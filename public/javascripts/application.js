@@ -470,7 +470,7 @@ alert('afetrr bt');
   //add new message modal
   
   $('.create_message').live('click',function(){
-    $.ajax({
+     $.ajax({
       type :'get',
       url :"/messages/new",
       success: function(data){
@@ -495,7 +495,30 @@ alert('afetrr bt');
     $('#add_new_mods').hide()
     return false;
   });
-  
+    $('.create_task').live('click',function(){
+    $.ajax({
+      type :'get',
+      url :"/tasks/new",
+      success: function(data){
+			 $('#add_new_mod').html(data); 
+        $('#add_new_mod').show();
+      }
+    });
+    $('#add_new_mods').hide()
+    return false;
+  });
+  $('.create_task_list').live('click',function(){
+    $.ajax({
+      type :'get',
+      url :"/task_lists/new",
+      success: function(data){
+			 $('#add_new_mod').html(data); 
+        $('#add_new_mod').show();
+      }
+    });
+    $('#add_new_mods').hide()
+    return false;
+  });
   //cancel message modal
   $('#m_can').live('click',function(){
     $('.add-item-modal').hide();
@@ -584,9 +607,9 @@ alert('afetrr bt');
     $('.file_upload_start button').click();
   });
   
-  $('.create_task, .create_task_list').click(function(){
-    return false;
-  });
+  //~ $('.create_task, .create_task_list').click(function(){
+    //~ return false;
+  //~ });
   
   $('#my_account').live('click',function(){
     $.get('/settings-profile', function(data) {
@@ -1184,3 +1207,33 @@ function find_month(month)
     month_number="0"+month_number;
   return month_number;
 }
+//Task & Tasklist
+ $('#tl_add').live('click',function(){
+   alert($('#tasklists_tlname').val());
+       $.ajax({
+      type :'post',
+      url :"/task_lists",
+      data : $('#form4').serialize(),
+      success: function(data){
+        a=data.search(/alert/);
+      	if(a!=0 && a!=6){
+         $('.add-item-modal').hide();
+         /* ref=window.location.href
+          p=ref.search(/settings/)
+          if(p>=0)
+          {
+          document.getElementById('projects_list').innerHTML=data;
+          }
+        else
+          {
+          document.getElementById('messages_projects_list').innerHTML=data;
+          }*/
+        }
+      },
+      failure: function(){
+        alert("Error");
+      }
+    });
+    return false;
+  });
+ 
