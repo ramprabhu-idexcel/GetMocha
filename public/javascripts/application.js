@@ -225,15 +225,7 @@ alert('afetrr bt');
     }
     //delete the messages
     $('#trash_message').live('click',function(){
-      var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
-      $.ajax({
-        url: '/messages',
-        type:'delete',
-        data:{'activity_id':activity_id}
-      });
-      $('#comment_area').fadeOut('');
-      $('.comment-input').hide();
-      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
+      delete_message();
       return false;
     });
     
@@ -384,50 +376,53 @@ alert('afetrr bt');
       if($.trim($('#comment-message').val())=="")
       {
         alert('Please add your reply');
-        return false;
       }
-      var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
-      $('#act').val(activity_id);
-      var reply="";
-      $.ajax({
-        url: '/comments',
-        type: 'post',
-        data: $('form#add_com_msg').serialize(),
-        success:function(data){
-          attach=data.attach;
-          var comment=data.comment[0];
-          reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
-          if(attach==false)
-          reply+=('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
-          else
-          reply+=('<a class="name message_name" href="#">'+comment.user+'</a>');
-          if((comment.attach.attach_image.length>0) || (comment.attach.attached_documents.length>0))
-          reply+='<div class="has-attachment"></div>';
-          reply+=('<span class="message-time">'+comment.created_at+'</span>');
-          reply+=('<div class="comment"><p>'+comment.comment+'</p>');
-          if(comment.attach.attached_documents.length>0)
-          {
-            reply+=('<div style="margin-top:20px;margin-bottom:20px;">')
-            $.each(comment.attach.attached_documents,function(index,value){
-              reply+=('<p>'+value+'</p>');
-            });
-            reply+=('</div>')
+      else
+      {
+        var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+        $('#act').val(activity_id);
+        var reply="";
+        $.ajax({
+          url: '/comments',
+          type: 'post',
+          data: $('form#add_com_msg').serialize(),
+          success:function(data){
+            attach=data.attach;
+            var comment=data.comment[0];
+            reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
+            if(attach==false)
+            reply+=('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
+            else
+            reply+=('<a class="name message_name" href="#">'+comment.user+'</a>');
+            if((comment.attach.attach_image.length>0) || (comment.attach.attached_documents.length>0))
+            reply+='<div class="has-attachment"></div>';
+            reply+=('<span class="message-time">'+comment.created_at+'</span>');
+            reply+=('<div class="comment"><p>'+comment.comment+'</p>');
+            if(comment.attach.attached_documents.length>0)
+            {
+              reply+=('<div style="margin-top:20px;margin-bottom:20px;">')
+              $.each(comment.attach.attached_documents,function(index,value){
+                reply+=('<p>'+value+'</p>');
+              });
+              reply+=('</div>')
+            }
+            if(comment.attach.attach_image.length>0)
+            {
+              reply+=('<div class="attachments">');
+              $.each(comment.attach.attach_image,function(index,value){
+                reply+=('<div class="attachment-thumb-frame">'+value+'</div>');
+              });
+              reply+=('<div class="clear-fix"></div></div>');
+            }
+            reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+            $('.prev-messages').append(reply).show('slow');
+            close_comment_area();
+            if($('.message.message_comments').length>9)
+              $('.expand-all').show();
+            $('.attachment').remove();
           }
-          if(comment.attach.attach_image.length>0)
-          {
-            reply+=('<div class="attachments">');
-            $.each(comment.attach.attach_image,function(index,value){
-              reply+=('<div class="attachment-thumb-frame">'+value+'</div>');
-            });
-            reply+=('<div class="clear-fix"></div></div>');
-          }
-          reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
-          $('.prev-messages').append(reply).show('slow');
-          close_comment_area();
-          if($('.message.message_comments').length>9)
-            $('.expand-all').show();
-        }
-      });
+        });
+      }
       return false;
     });
    
@@ -999,12 +994,6 @@ else
   /********************************End of user profile***************/
   
   
-  
-  
-  
-  
-  
-  
 });//End of doc
 
 
@@ -1013,8 +1002,23 @@ else
 
 
 
-
-
+// MEthod to delete the message
+  function delete_message()
+  {
+    var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
+    var delete_message= confirm("Do you really want to delete this message?");
+    if(delete_message)
+    {
+      $.ajax({
+        url: '/messages',
+        type:'delete',
+        data:{'activity_id':activity_id}
+      });
+      $('#comment_area').fadeOut('');
+      $('.comment-input').hide();
+      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
+    }
+  }
 
 
 /* $('#attach').fileUploadUI({

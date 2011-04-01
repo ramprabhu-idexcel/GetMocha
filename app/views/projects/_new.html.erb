@@ -23,7 +23,7 @@
 				</fieldset>
 				<fieldset id="ellaborate">
 					<label>Message:</label>
-				 <%=text_area :invite,:message, :class=>'textfield', :rows=>"1", :cols=>"30", :onfocus=>"javascript:resizing()"%>
+				 <%=text_area :invite,:message, :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
 				</fieldset>
 			</div>
 		</div>
@@ -34,10 +34,24 @@
 </div>
 <%end%>
 <script>
-function resizing(){
+	$('#ellaborate').click(function(){
 	document.getElementById('ellaborate').className="open";
 	document.getElementById('invite_message').className="textarea";
+	$('#invite_message').focus()
+	});
+		$('#txtInput2').keydown(function(event){
+	if (event.keyCode == 9) {
+	document.getElementById('ellaborate').className="open";
+	document.getElementById('invite_message').className="textarea";
+$('#invite_message').focus();
 	}
+	});
+			$('#invite_message').keydown(function(event){
+	if (event.keyCode == 9) {
+	$('#invite_message').focus();
+	}
+	});
+
 
 <%=emails=[]%>
 	<% user_emails.each do |f|%>

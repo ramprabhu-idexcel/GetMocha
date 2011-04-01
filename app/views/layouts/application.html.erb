@@ -350,15 +350,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 		}
 		else
 		{
-		  var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
-      $.ajax({
-        url: '/messages',
-        type:'delete',
-        data:{'activity_id':activity_id}
-      });
-      $('#comment_area').fadeOut('');
-      $('.comment-input').hide();
-      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
+		  delete_message();
 		}
 		
 		}
