@@ -27,7 +27,7 @@ layout :change_layout
     session[:project_name]=@project.name if @project
   end
   def new_project_via_email
-		
+		logger.info "************************"
       #~ from_address=params[:from].to_s
 				#~ if(from_address.include?('<'))
 					#~ from_address=from_address.split('<')
@@ -220,6 +220,7 @@ layout :change_layout
   end
 	
 	def check_from_address_email
+		logger.info "************************"
 		@from_address=(params[:from].to_s)
 		logger.info "Start"
 			if(@from_address.include?('<'))
