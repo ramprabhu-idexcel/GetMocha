@@ -41,7 +41,8 @@ class Message < ActiveRecord::Base
       if email.present?
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if ProjectUser.is_member?(u.id,self.project.id) && u && u.id
+				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
+        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id && !a
         ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)
       end
     end
