@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 skip_before_filter :verify_authenticity_token
 #~ protect_from_forgery  layout :change_layout
-before_filter :http_authenticate
+before_filter :http_authenticate, :except=>['new_project_via_email']
 before_filter :find_project
 layout :change_layout
   def change_layout
@@ -26,6 +26,7 @@ layout :change_layout
     session[:project_name]=@project.name if @project
   end
   def new_project_via_email
+		logger.info "here"
       from_address=params[:from].to_s
 				if(from_address.include?('<'))
 					from_address=from_address.split('<')
