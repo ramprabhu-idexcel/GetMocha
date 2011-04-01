@@ -60,6 +60,8 @@ class MessagesController < ApplicationController
 		   end
 		else
 			@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
+			#~ ~ @message=Message.verify_message_parameters
+			#~ @message=Message.verify_message_parameters(params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
   		message=@message.valid?
 			if @message.errors[:subject][0]=="can't be blank"
 				errors<<"Please enter subject"
