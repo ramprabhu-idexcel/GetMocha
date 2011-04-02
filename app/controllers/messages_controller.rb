@@ -5,8 +5,10 @@ class MessagesController < ApplicationController
   before_filter :remove_timestamps,:only=>UPDATE_METHODS
   after_filter :set_timestamps,:only=>UPDATE_METHODS
 	layout 'application', :except=>['new']
+	before_filter :clear_session_project,:only=>['all_messages','starred_messages']
+	before_filter :session_project_name,:only=>['index']
  	def index
-		session[:project_name]=nil
+		#~ session[:project_name]=nil
 		#~ session[:project_selected]=nil
 		@projects=current_user.user_active_projects
 	end
@@ -58,6 +60,8 @@ class MessagesController < ApplicationController
 		   end
 		else
 			@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
+			#~ ~ @message=Message.verify_message_parameters
+			#~ @message=Message.verify_message_parameters(params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
   		message=@message.valid?
 			if @message.errors[:subject][0]=="can't be blank"
 				errors<<"Please enter subject"
@@ -96,13 +100,13 @@ end
     render :nothing=>true
   end
   def all_messages
-		session[:project_name]=nil
-		session[:project_selected]=nil
+		#~ session[:project_name]=nil
+		#~ session[:project_selected]=nil
 		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time,:has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def starred_messages
-		session[:project_name]=nil
-		session[:project_selected]=nil
+		#~ session[:project_name]=nil
+		#~ session[:project_selected]=nil
 		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def project_messages
@@ -147,9 +151,9 @@ end
     params[:order] ||="Ascending"
     if params[:activity_id]
       @activity=Activity.find_by_id(params[:activity_id])
-      @project=@activity.resource.project
-      valid_member=@project.is_member?(current_user.id)
-      render :text=>"The page you were looking doesn't exist" and return unless @project.status && valid_member
+      #~ @project=@activity.resource.project
+      #~ valid_member=@project.is_member?(current_user.id)
+      #~ render :text=>"The page you were looking doesn't exist" and return unless @project.status && valid_member
     end
 	end
   def unwanted_columns
@@ -164,4 +168,12 @@ end
   def set_timestamps
     Activity.record_timestamps=true
   end
+	def clear_session_project
+		session[:project_name]=nil
+		session[:project_selected]=nil
+	end
+	def session_project_name
+  session[:project_name]=nil
+	end	
+	
 end

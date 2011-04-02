@@ -27,4 +27,26 @@ module ApplicationHelper
 			t=(time+find_current_zone_difference(time_zone)).strftime("%l:%M %p")
 		end
 	end
+	def title(cn,an)
+
+		if cn=="messages" && an=="index"
+			return "Messages | Mocha"
+		elsif cn=="home" && an=="index"
+			return "Home | Mocha"
+		elsif cn=="home" && an=="faq"
+			return "Frequently Asked Questions | Mocha"
+		elsif cn=="registrations" && an=="new"
+			return "Signup | Mocha"
+		elsif cn=="sessions" && an=="new"
+			return "Login | Mocha"
+		elsif cn=="home" && an=="terms"
+			return "Terms of Use | Mocha"
+		elsif cn=="home" && an=="privacy"
+			return "Privacy Policy | Mocha"
+		elsif cn=="home" && an=="help"
+			return "Help | Mocha"
+		elsif cn=="home" && an=="email"
+			return "Email | Mocha"
+		end
+	end
 end

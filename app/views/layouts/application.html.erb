@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title> Mocha</title>
+		<% ctrlr = controller.controller_name %>
+	<% acn = controller.action_name %>
+	<title><%= title(ctrlr,acn)%></title>
   <meta name="description" content="A description of the page must go here." />
   <meta name="keywords" content="keyword1,keyword2,keyword3" />
   <meta name="robots" content="INDEX,FOLLOW" />
@@ -20,7 +22,7 @@
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
-   <%= javascript_include_tag 'open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application'%>
+   <%= javascript_include_tag 'size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
 	<!--[if lt IE 7]>
@@ -350,15 +352,7 @@ if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" 
 		}
 		else
 		{
-		  var activity_id=$('.message.messow.open').attr('id').split('msac')[1];
-      $.ajax({
-        url: '/messages',
-        type:'delete',
-        data:{'activity_id':activity_id}
-      });
-      $('#comment_area').fadeOut('');
-      $('.comment-input').hide();
-      $('#msac'+activity_id).fadeOut('slow',function(){$(this).remove()});
+		  delete_message();
 		}
 		
 		}

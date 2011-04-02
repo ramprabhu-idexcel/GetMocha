@@ -26,14 +26,17 @@ $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
   </div>
 </div><!--end of r-panel-contain-->
 <script>
-existing_project='<%=  session[:project_selected] %>';
+var existing_project='<%=  session[:project_selected] %>';
 if(existing_project)
 {
 	window.location=$('#project_list_messages'+existing_project).attr('href');
-	is_open=$('#project_list_messages'+existing_project).children('.num-unread').length;
-	if(is_open=="0")
-	document.getElementById('project_list_messages'+existing_project).className="project open";
-	else
-	document.getElementById('project_list_messages'+existing_project).className="project has-unread open";
+	var is_open=$('#project_list_messages'+existing_project).children('.num-unread').length;
+  if(typeof(document.getElementById('project_list_messages'+existing_project))!="undefined")
+  {
+    if(is_open=="0")
+    document.getElementById('project_list_messages'+existing_project).className="project open";
+    else
+    document.getElementById('project_list_messages'+existing_project).className="project has-unread open";
+  }
  }
 </script>

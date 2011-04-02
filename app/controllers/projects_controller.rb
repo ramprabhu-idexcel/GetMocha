@@ -14,8 +14,9 @@ class ProjectsController < ApplicationController
 		end
 		def create		
 		invite_users=params[:invite][:email].split(',')
-		@project=Project.new(params[:project])
-		@project.user_id=current_user.id
+		#~ @project=Project.new(params[:project])
+		#~ @project.user_id=current_user.id
+		@project=current_user.projects.build(params[:project])
 		project=@project.valid?
 		errors=[]
 		if @project.errors[:name][0]=="can't be blank"
@@ -36,8 +37,9 @@ class ProjectsController < ApplicationController
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
 			invite_users.each do |invite_user|
-			@invite=Invitation.new(:email=>invite_user,:message=>params[:invite][:message])
-		  @invite.project_id=@project.id
+			#~ @invite=Invitation.new(:email=>invite_user,:message=>params[:invite][:message])
+		  #~ @invite.project_id=@project.id
+			@invite=@project.invitations.build(:email=>invite_user,:message=>params[:invite][:message])
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
     end
@@ -176,6 +178,7 @@ class ProjectsController < ApplicationController
 					@user.guest_update_message(@invite.project_id)
 				end
 				@invite.update_attributes(:invitation_code=>nil)
+        session[:invite_email]=@invite.email
 				redirect_to new_user_registration_path
 			end
 		end
