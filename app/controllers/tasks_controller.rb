@@ -41,17 +41,85 @@ class TasksController < ApplicationController
 	  render :partial=>'new'
 	end
 	def create
-		p params[:tasklist]
-		@projects=Project.find_by_name(params[:task][:project])
-		p @projects
-		@tasklist=TaskList.find_by_name(params[:task][:tasklist])
-		p @tasklist
-		@tasks=Task.create!(:name=>params[:task][:name], :project_id=>@projects.id,:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:task][:due_date],:task_list_id=>@tasklist.id)
-		
-	
-		
-	
-	render :nothing=>true
-	end
-	
+		errors=[]
+		if !session[:project_name].nil?
+		  @project=Project.find_by_name(session[:project_name])
+		else
+		  @project=Project.find_by_name(params[:task][:project])
+		end
+		if !@project
+			render :update do |page|
+			  if session[:project_name].nil?&&params[:task][:project].blank?
+				  page.alert "Please Enter the Project name"
+			  elsif !params[:task][:project].blank?
+			    page.alert "Please enter existing projects only"
+			  end
+		  end
+		else
+		  if params[:task][:tasklist].blank?
+			  errors<< "Please Enter the tasklist name"
+				if !params[:task][:recipient].blank? 
+			    #~ errors<<"Please enter To_email address"
+		      if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+			      errors<<"Please enter valid email for assign"
+		      end
+	      end
+			else
+			  if !params[:task][:notify].blank? 
+			    #~ errors<<"Please enter To_email address"
+		      if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+			      errors<<"Please enter valid notify email"
+		      end
+		    end
+		    @tasklist=TaskList.find_by_name(params[:task][:tasklist])
+		  	p @tasklist
+			  p @project
+			  if !@tasklist
+			    if !params[:task][:tasklist].blank?
+			      errors<<"Please enter existing tasklist only"
+			    end
+		    else
+		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:task][:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
+					p @tasks.inspect
+			    tasks=@tasks.valid?
+					p params[:task][:message]
+					p @tasks.errors.inspect
+					if @tasks.errors[:name][1]=="can't be blank"
+				    errors<<"Please enter task name"
+					elsif !@tasks.errors[:name][0].nil?
+						errors<<"task name already exist in this task list"
+		  	  elsif @tasks.errors[:description][1]=="can't be blank"
+				    errors<<"Please enter description message"
+					elsif !@tasks.errors[:description][0].nil?
+						errors<<"Enter more than 6 charecter in task description message"
+			    end
+			  end
+		  	if tasks
+		      @tasks.save
+					@notify="#{@notify},#{params[:task][:recipient]}"
+					@notify=params[:task][:notify].split(',')
+					#@project=Project.find_by_name(params[:message][:project])
+					#~ Message.send_message_to_team_members(@project,@message,@to_users)
+          @tasks.add_in_activity(@notify,params[:task][:recipient],current_user)
+					Task.send_task_notification_to_team_members(current_user,@to_users,@tasks)
+					if !session[:attaches_id].nil?
+					  attachment=Attachment.recent_attachments
+					  attachment.each do |attach|
+				  	attach.update_attributes(:attachable=>@tasks)
+				    end
+			    end
+				  session[:attaches_id]=nil
+			  	#	attachment.attachable=@message
+				  #attachment.save
+          activity_id=current_user.activities.find_by_resource_type_and_resource_id("Task",@message.id)
+	        render :nothing=>true
+			  else
+			    render :update do |page|
+				  page.alert errors.join("\n")
+				  end
+	      end
+  	  end
+	  end
+  end
 end
+

@@ -14,13 +14,13 @@ class TaskListsController < ApplicationController
 		render :partial => 'new'
 	end
 	def create
-		p params.inspect
-				if !session[:project_name].nil?
+		errors=[]
+		if !session[:project_name].nil?
 		  @project=Project.find_by_name(session[:project_name])
 		else
 		  @project=Project.find_by_name(params[:project])
 		end
-		if !@project
+			if !@project
 			 render :update do |page|
 			 if session[:project_name].nil?&&params[:project].blank?
 			 page.alert "Please Enter the Project name"
@@ -34,19 +34,19 @@ class TaskListsController < ApplicationController
 		@tasklist.project_id=@project.id
 		@tasklist.user_id=current_user.id
 			 	tasklist=@tasklist.valid?
-		errors=[]
 		if @tasklist.errors[:name][0]=="can't be blank"
 			errors<<"Please enter project name"
 		elsif !@tasklist.errors[:name][0].nil?
 			errors<<@tasklist.errors[:name][0]
 		end
-	end
 	if tasklist
 				@tasklist.save
+				render :nothing=>true
 				else
 								render :update do |page|
 				page.alert errors.join("\n")
-			end
-end
+			  end
+		  end
+		end
 	end
 end
