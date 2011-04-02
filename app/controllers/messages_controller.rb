@@ -151,9 +151,13 @@ end
     params[:order] ||="Ascending"
     if params[:activity_id]
       @activity=Activity.find_by_id(params[:activity_id])
-      #~ @project=@activity.resource.project
-      #~ valid_member=@project.is_member?(current_user.id)
-      #~ render :text=>"The page you were looking doesn't exist" and return unless @project.status && valid_member
+			if @activity.resource_type=="Comment"
+				valid_member=true
+			else
+      @project=@activity.resource.project
+      valid_member=@project.is_member?(current_user.id)
+			end
+      render :text=>"The page you were looking doesn't exist" and return unless @project && @project.status && valid_member
     end
 	end
   def unwanted_columns
