@@ -66,7 +66,11 @@ GetMocha::Application.routes.draw do
   get :remove_attach
   end
   end
-  resources :tasks
+  resources :tasks do
+      member do
+          get :project_tasklists
+      end
+      end
   resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"

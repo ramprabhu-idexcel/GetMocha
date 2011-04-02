@@ -8,7 +8,7 @@ class Project < ActiveRecord::Base
 	has_many :activities, :through => :messages, :dependent=>:destroy
 	has_many :messages
   has_many :task_lists
-	has_many :tasks
+	has_many :tasks, :through=>:task_lists
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails
 	has_many :chats

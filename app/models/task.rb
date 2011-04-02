@@ -1,9 +1,9 @@
 class Task < ActiveRecord::Base
-	belongs_to :project
 	belongs_to :user
-	has_many :activities, :dependent => :destroy
+	has_many :activities, :as => :resource, :dependent=>:destroy
 	has_many :comments, :dependent=>:destroy
 	belongs_to :task_list
+		belongs_to :project
 	belongs_to :guest
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
                     #:length     => { :within => 6..250 }
@@ -14,6 +14,7 @@ validates :name, :presence   => true, :uniqueness =>true
 def add_in_activity(to_users,assign,user)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
 			assign=assign.split(',')
+			p to_users
      # self.project.users.each do |user|
 		# assign=
       activity=self.activities.create!(:user=>user, :is_subscribed=>true)
@@ -21,8 +22,10 @@ def add_in_activity(to_users,assign,user)
     to_users.each do |email|
 			email=email.lstrip
       if email.nil?
+				p email
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
+				p u.inspect
         self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
 				activity.update_attributes(:is_assigned=>true) if user.email==assign
         ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)

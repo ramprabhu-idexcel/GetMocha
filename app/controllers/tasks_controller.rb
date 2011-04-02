@@ -97,11 +97,12 @@ class TasksController < ApplicationController
 		  	if tasks
 		      @tasks.save
 					@notify="#{@notify},#{params[:task][:recipient]}"
+					p @notify
 					@notify=params[:task][:notify].split(',')
 					#@project=Project.find_by_name(params[:message][:project])
 					#~ Message.send_message_to_team_members(@project,@message,@to_users)
           @tasks.add_in_activity(@notify,params[:task][:recipient],current_user)
-					Task.send_task_notification_to_team_members(current_user,@to_users,@tasks)
+					Task.send_task_notification_to_team_members(current_user,@notify,@tasks)
 					if !session[:attaches_id].nil?
 					  attachment=Attachment.recent_attachments
 					  attachment.each do |attach|
@@ -111,7 +112,7 @@ class TasksController < ApplicationController
 				  session[:attaches_id]=nil
 			  	#	attachment.attachable=@message
 				  #attachment.save
-          activity_id=current_user.activities.find_by_resource_type_and_resource_id("Task",@message.id)
+          activity_id=current_user.activities.find_by_resource_type_and_resource_id("Task",@tasks.id)
 	        render :nothing=>true
 			  else
 			    render :update do |page|
@@ -121,5 +122,19 @@ class TasksController < ApplicationController
   	  end
 	  end
   end
-end
+	def project_tasklists
+		@t_list=[]
+		p "___________________"
+		@proj=Project.find_by_name(params[:id])
+		@tlist=@proj.task_lists
+		p @proj
+		p @tlist
+		 if !@tlist.nil?
+	@tlist.each do |tl|
+		 @t_list<<"#{tl.name}" if !tl.name.nil?
+		 end
+		render :json=>{:data=>@t_list}.to_json
+	end
+  end
+  end
 

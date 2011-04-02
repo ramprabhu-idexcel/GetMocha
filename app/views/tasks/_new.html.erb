@@ -39,7 +39,7 @@ t_list=@t_list
 						    </fieldset>
 					<fieldset>
 					<label>Notify:</label>
-						<%=f.text_field  'notify', :class=>"textfield" %>
+						<%=f.text_field  'notify', :class=>"textfield", :id=>"t_notify"%>
 			    </fieldset>
 					<fieldset>
 					<label>Tasklist:</label>
@@ -95,6 +95,7 @@ var tasklist="<%= tlist %>";
 userEmails=userEmails.split(',');
 	projectNames=projectNames.split(',');
     var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('assign_to'), true);
+		var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('t_notify'), true);
     var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
 		 var ac2 = new goog.ui.AutoComplete.Basic(tasklist, document.getElementById('t_list'),false);
 		</script>
@@ -157,4 +158,22 @@ function delete_attachment(file)
 			 }
     });
 }
+$('#project_val').keydown(function(event){
+if (event.keyCode == 9){
+if (document.getElementById("project_val").value!="")
+{
+proj=document.getElementById("project_val").value
+$.ajax({
+      url:'/tasks/'+proj+'/project_tasklists',
+      type: 'get',
+			 success: function(data){
+			 alert(data.data);
+			 tlist=data.data;
+			 alert(tlist);
+			// document.getElementById('attachment_'+file).style.display="none";
+			 }
+			 });
+			 }
+			 }
+			 });
 </script>

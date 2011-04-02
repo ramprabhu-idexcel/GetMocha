@@ -157,4 +157,22 @@ function delete_attachment(file)
 			 }
     });
 }
+$('#project_val').keydown(function(){
+alert("hi");
+if (event.keyCode == 9){
+alert("hi");
+if (document.getElementById("project_val").value!=nil)
+{
+proj=document.getElementById("project_val").value
+$.ajax({
+      url:'/project_tasklists/'+proj,
+      type: 'get',
+			 success: function(data){
+			 alert(data);
+			// document.getElementById('attachment_'+file).style.display="none";
+			 }
+			 });
+			 }
+			 }
+			 });
 </script>
