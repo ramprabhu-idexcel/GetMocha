@@ -375,7 +375,7 @@ alert('afetrr bt');
     $('.blue-33.add_comment').live('click',function(){
       if($.trim($('#comment-message').val())=="")
       {
-        alert('Please enter a Message ');
+        alert('Please enter a Comment ');
       }
       else
       {
