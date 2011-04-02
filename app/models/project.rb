@@ -37,8 +37,7 @@ class Project < ActiveRecord::Base
 	def is_member?(user_id)
 		project_users.find(:first, :conditions=>['user_id=? AND status=?', user_id,true]).present?
 	end
-	
-	def has_custom_message_id?
+		def has_custom_message_id?
 		custom_emails.find_by_custom_type("Message").present?
 	end
 	

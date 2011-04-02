@@ -28,7 +28,7 @@ layout :change_layout
   end
   def new_project_via_email
 		
-      from_address=params[:from].to_s
+       from_address=params[:from].to_s
 				if(from_address.include?('<'))
 					from_address=from_address.split('<')
 					from_address=from_address[1].split('>')
