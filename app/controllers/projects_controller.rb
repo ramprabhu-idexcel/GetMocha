@@ -43,14 +43,14 @@ class ProjectsController < ApplicationController
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
     end
-      @projects=current_user.user_active_projects
-			 	render :partial=>"messages/project_list"
+		@projects=current_user.user_active_projects
+		render :partial=>"messages/project_list"
 		else
-			render :update do |page|
-				page.alert errors.join("\n")
+		render :update do |page|
+			page.alert errors.join("\n")
 			end
-		end
-	end
+			end
+			end
 	def settings
 		session[:project_name]=nil
 		@projects=current_user.user_active_projects
