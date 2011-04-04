@@ -30,7 +30,7 @@ class UpdatesController < ApplicationController
     @secondary_email=current_user.secondary_emails.build(:email=>params[:secondary_email])
     if @secondary_email.valid?
       @secondary_email.save
-      render :partial=>"field"
+      render :partial=>"field",:locals=>{:secondary_email=>@secondary_email}
     else
       render :json=>{"error"=>@secondary_email.errors.entries.first.join(' ')}.to_json
     end

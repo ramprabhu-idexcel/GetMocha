@@ -43,14 +43,14 @@ class ProjectsController < ApplicationController
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
     end
-      @projects=current_user.user_active_projects
-			 	render :partial=>"messages/project_list"
+		@projects=current_user.user_active_projects
+		render :partial=>"messages/project_list"
 		else
-			render :update do |page|
-				page.alert errors.join("\n")
+		render :update do |page|
+			page.alert errors.join("\n")
 			end
-		end
-	end
+			end
+			end
 	def settings
 		session[:project_name]=nil
 		@projects=current_user.user_active_projects
@@ -66,7 +66,7 @@ class ProjectsController < ApplicationController
 		session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
 		@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
-		session[:project_name]=@project.name
+		session[:project_name]=@project
 		render :partial=>'settings_pane'
   end
 	def remove_people
@@ -185,7 +185,7 @@ class ProjectsController < ApplicationController
   end
 	def find_project_name
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
-    session[:project_name]=@project.name if @project
+    session[:project_name]=@project if @project
   end
 	def file_download_from_email
 		attachment=Attachment.find(params[:id])

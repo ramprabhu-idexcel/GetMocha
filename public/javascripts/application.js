@@ -307,9 +307,13 @@ alert('afetrr bt');
     
     $('.messow').live('click',function(){
       var id=$(this).attr('id').split('msac')[1];
-      var primarUrl=(window.location+'').split('#')[0];
+      var url=(window.location+'').split('#');
+      var primarUrl=url[0];
       var secondaryUrl=(window.location+'').split('?')[0];
-      var loc=secondaryUrl.split('#')[1].split('/')[0];
+      if(typeof(url[1])!="undefined")
+        var loc=secondaryUrl.split('#')[1].split('/')[0];
+      else
+        var loc="all_messages";
       if(loc=="project")
       {
         loc=secondaryUrl.split('#')[1].split('/')[0]+'/'+secondaryUrl.split('#')[1].split('/')[1]
@@ -389,7 +393,7 @@ alert('afetrr bt');
           success:function(data){
             attach=data.attach;
             var comment=data.comment[0];
-            reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star" href="#">Star</a>');
+            reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
             if(attach==false)
             reply+=('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
             else

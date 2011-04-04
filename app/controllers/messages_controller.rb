@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
 		Attachment.delete(attach)
 		end
 		if session[:project_name]
-			project=Project.find_by_name(session[:project_name])
+			project=Project.find(session[:project_name].id)
 			@users=project.users
 		else
 		  @users=current_user.my_contacts
@@ -33,10 +33,10 @@ class MessagesController < ApplicationController
 			@user_emails<<"#{f.email}"
 		  end
 		end
-	  @projects.each do |project|
-		@project_names<<"#{project.name}"
-	  end
-	  render :partial=>'new'
+	  #~ @projects.each do |project|
+		#~ @project_names<<"#{project.name}"
+	#~ end
+	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:project_names=>@project_names}
   end
 	def create
 	errors=[]
@@ -46,9 +46,9 @@ class MessagesController < ApplicationController
 			errors<<"Please enter valid email"
 		end
 		if !session[:project_name].nil?
-		  @project=Project.find_by_name(session[:project_name])
+		  @project=Project.find(session[:project_name].id)
 		else
-		  @project=Project.find_by_name(params[:message][:project])
+		  @project=Project.find(params[:project_id])
 		end
 	if !@project
 			 render :update do |page|
