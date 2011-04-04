@@ -130,6 +130,12 @@ class TasksController < ApplicationController
   def completed_tasks
     render :json=>current_user.group_completed_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
+  
+  def complete_task
+    task=Task.find_by_id(params[:id])
+    task.update_attribute(:is_completed,!task.is_completed)
+    render :nothing=>true
+  end
   private
   
   def unwanted_columns

@@ -64,6 +64,9 @@ GetMocha::Application.routes.draw do
   end
   # task routes
   resources :tasks do
+    collection do
+      put :complete_task
+    end
     member do
       get :project_tasklists
     end

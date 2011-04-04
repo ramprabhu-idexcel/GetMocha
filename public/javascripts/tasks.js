@@ -1,10 +1,5 @@
 (function($) {
-  $('body').attr('class','tasks');
-  document.title= "Tasks | Mocha";
-  $('.sort-by').hide();
-  $('#reply_comment').hide();
-  $('.star.star_items').hide();
-  $('#trash_message').hide();
+  initial_setup();
 
   //first pane
   
@@ -13,7 +8,19 @@
     $(this).addClass('open');
   });
     
-
+  //complete/reopen the tasks
+  $(".checkbox > span.icon").live('click',function(){
+    $(this).toggleClass('checked');
+    var tk_id=$(this).attr('class').split(' ')[0];
+    var task_id=tk_id.split(':')[1];
+    $.ajax({
+      url:'/tasks/complete_task',
+      type:'put',
+      data:{id : task_id}
+    });
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -47,10 +54,10 @@
     $.each(data,function(index,value){
       items.push('<div class="sub-header"><a href="#">'+value[0].activity.resource.task_list_name+'</a></div>');
       $.each(value,function(i,v){
-        items.push('<div class="task '+(v.activity.is_starred ? "starred" : "")+'"><div class="left-icons">');
-        if(v.activity.is_starred)
-          items.push('<a class="task-star" href="#">Star</a>');       
-        items.push('<div class="checkbox"><span class="icon'+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
+        var starred=v.activity.is_starred;
+        items.push('<div class="task '+(starred ? "starred" : "")+'"><div class="left-icons">');
+        items.push('<a class="task-star" href="#" '+(starred ? '' : 'style="display:none;"')+'>Star</a>');    
+        items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
         items.push('<div class="info">');
         items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value)+'">'+v.activity.resource.due_date_value+'</span>');
         items.push('<span class="name">'+v.activity.resource.assigned_to+'</span>');
@@ -60,6 +67,7 @@
       });
     });
     $('.m-panel').html(items.join(''));
+    $('.sort-by').show();
   }
   
   function due_date_class(date_value)
@@ -73,6 +81,16 @@
     default:
       return "";
     }
+  }
+  
+  function initial_setup()
+  {
+    $('body').attr('class','tasks');
+    document.title= "Tasks | Mocha";
+    $('.sort-by').hide();
+    $('#reply_comment').hide();
+    $('.star.star_items').hide();
+    $('#trash_message').hide();
   }
   
   var app = new restfulApp;
