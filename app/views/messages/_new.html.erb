@@ -30,7 +30,7 @@
 					<label>Project:</label>
 					
 					<% if session[:project_name] %>
-					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
+					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name].name}", :disabled=>true%>
 					 <% else %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
 							<input type="hidden" id="autocomplete_hidden" name="project_id" value=""/>

@@ -24,7 +24,7 @@ layout :change_layout
   end
   def find_project
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
-    session[:project_name]=@project.name if @project
+    session[:project_name]=@project if @project
   end
   def new_project_via_email
 		
