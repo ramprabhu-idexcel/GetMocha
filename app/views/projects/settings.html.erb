@@ -11,12 +11,11 @@
 			<a href="#people" onclick="javascript:settings_thirdpanel('people');" class="m-tab alt" id="people_anchor" style="font-size:14px;">People</a>
 		</div>
   </div>
-  
 	<div id="add_people" style="display:none;">
 		<%= render :partial=>'invite' %>
-	<div>
-
-<script>
+		<div>
+		
+		<script>
 var existing_project='<%=  session[:project_selected] %>';
 if(existing_project)
 settings_secondpanel(existing_project);
@@ -27,10 +26,10 @@ function settings_secondpanel(project_id)
   var id=<%= p.id %>;
   if(typeof(document.getElementById('project_list_'+id))!="undefined")
   {
-    if(id==project_id)
-    { 
-      is_open=$('#project_list_'+id).children('.num-unread').length;
-      if(is_open=="0")
+	if(id==project_id)
+	{
+	is_open=$('#project_list_'+id).children('.num-unread').length;
+		if(is_open=="0")
         document.getElementById('project_list_'+id).className="project open";
       else
         document.getElementById('project_list_'+id).className="project has-unread open";

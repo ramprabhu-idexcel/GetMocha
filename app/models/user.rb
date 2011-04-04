@@ -1,32 +1,26 @@
-		class User < ActiveRecord::Base
+class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable,  :confirmable,:validatable
-         #~ :validatable
-         #~ :trackable,
-  # Setup accessible (or protected) attributes for your model
+  devise :database_authenticatable, :registerable,:recoverable, :rememberable,  :confirmable,:validatable
   validates :first_name,:last_name,:presence=> true,:if=>:not_guest
   validates :terms_conditions,:acceptance => true,:if=>:not_guest
   validates :email,:presence => true, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i},:if=>:not_an_secondary
   attr_accessible :email, :password, :remember_me,:first_name,:last_name,:title,:phone,:mobile,:time_zone,:color,:status,:terms_conditions,:is_guest
   has_many :project_guests,:foreign_key=>'guest_id'
   has_many :projects
-  #~ has_one :project
   has_many :project_users
-  #~ has_many :projects,:through=>:project_users,:as=>:project_members
   has_one :attachment ,:as => :attachable, :dependent=>:destroy
   has_many :chats
- # has_many :messages
   has_many :messages, :through => :activities, :source => :resource, :source_type => 'Message'
   has_many :activities
-  #has_many :activities
   has_many :secondary_emails
   has_many :comments
+  has_many :task_lists
+  has_many :tasks,:through=>:task_lists
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
   named_scope :all_users, :select=>'email',:order => 'id'
-  #~ named_scope :verify_email_id,:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails
-   def self.verify_email_id(from_address)
+
+  def self.verify_email_id(from_address)
     find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
   end
   def not_guest
@@ -193,4 +187,30 @@
   def unread_all_message_count
     unread_all_message.count
   end
+  def all_tasks
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at asc")
   end
+  def group_all_tasks
+    all_tasks.group_by{|a| a.resource.task_list_id}
+  end
+  def my_tasks
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at asc")
+  end
+  def group_my_tasks
+    my_tasks.group_by{|a| a.resource.task_list_id}
+  end
+  def starred_tasks
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at asc")
+  end
+  def group_starred_tasks
+    starred_tasks.group_by{|a| a.resource.task_list_id}
+  end
+  def completed_tasks
+    activities=[]
+    all_tasks.collect{|t| activities << t if t.resource.is_completed==true}
+    activities
+  end
+  def group_completed_tasks
+    completed_tasks.group_by{|a| a.resource.task_list_id}
+  end
+end

@@ -39,7 +39,7 @@ class Activity < ActiveRecord::Base
   #~ def activity_comments(type_ids)
     #~ find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false])
   #~ end
-   def unread_all_message(current_user)
+  def unread_all_message(current_user)
     find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=? AND user_id=?',"Message",false,false,current_user.id])
   end
 end
