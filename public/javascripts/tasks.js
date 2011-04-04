@@ -6,6 +6,7 @@
   $('.project').live('click',function(){
     $('.project').removeClass('open');
     $(this).addClass('open');
+    return false;
   });
 
 

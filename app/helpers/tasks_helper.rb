@@ -22,11 +22,20 @@ module TasksHelper
     link_to form_content(count,"Starred"),"#starred-tasks",:class=>"starred"
   end
   
-  #~ def project_tab(project)
-    #~ content_tag(:div,'',:class=>'projects-list') do
-      #~ content_tag(:div,'',:class=>'project') do
-        #~ content_tag(:span,'',:class=>'icon')+content_tag(:span,content_tag(:span,'',:class=>'icon')+project.name,:class=>'project-title')+content_tag(:div,'',:class=>'clear-fix')
-      #~ end
-    #~ end
-  #~ end
+  def link_to_completed_tasks
+    count=current_user.completed_tasks.count
+    link_to form_content(count,"Completed"),"#completed-tasks",:class=>"completed"
+  end
+  
+  def project_tab(project)
+      content_tag(:div,'',:class=>'project') do
+        content_tag(:span,'',:class=>'icon')+content_tag(:span,content_tag(:span,'',:class=>'icon')+project.name,:class=>'project-title')+task_list_project(project.task_lists)+content_tag(:div,'',:class=>'clear-fix')
+      end
+  end
+  
+  def task_list_project(task_lists)
+    content_tag :ul do
+      task_lists.collect {|task_list| concat(content_tag(:li, content_tag(:span,task_list.name)))}
+    end
+  end
 end

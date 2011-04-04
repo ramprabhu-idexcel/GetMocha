@@ -199,4 +199,9 @@ class User < ActiveRecord::Base
   def starred_tasks
     activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at asc")
   end
+  def completed_tasks
+    activities=[]
+    all_tasks.collect{|t| activities << t if t.resource.is_completed==true}
+    activities
+  end
 end
