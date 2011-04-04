@@ -136,6 +136,12 @@ class TasksController < ApplicationController
     task.update_attribute(:is_completed,!task.is_completed)
     render :nothing=>true
   end
+  
+  def project_tasks
+    project=Project.find_by_id(params[:project_id])
+    task_ids=project.all_task_ids
+    render :json=>current_user.group_project_tasks(task_ids).to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+  end
   private
   
   def unwanted_columns

@@ -124,4 +124,7 @@ class Project < ActiveRecord::Base
 	def self.verify_project(current_user)
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 	end	
+  def all_task_ids
+    tasks.map(&:id)
+  end
 end

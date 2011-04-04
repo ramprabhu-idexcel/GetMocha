@@ -188,19 +188,19 @@ class User < ActiveRecord::Base
     unread_all_message.count
   end
   def all_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at asc")
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at desc")
   end
   def group_all_tasks
     all_tasks.group_by{|a| a.resource.task_list_id}
   end
   def my_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at asc")
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at desc")
   end
   def group_my_tasks
     my_tasks.group_by{|a| a.resource.task_list_id}
   end
   def starred_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at asc")
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at desc")
   end
   def group_starred_tasks
     starred_tasks.group_by{|a| a.resource.task_list_id}
@@ -212,5 +212,11 @@ class User < ActiveRecord::Base
   end
   def group_completed_tasks
     completed_tasks.group_by{|a| a.resource.task_list_id}
+  end
+  def project_tasks(task_ids)
+    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?)',"Task",false,task_ids],:order=>"created_at desc")
+  end
+  def group_project_tasks(task_ids)
+    project_tasks(task_ids).group_by{|a| a.resource.task_list_id}
   end
 end

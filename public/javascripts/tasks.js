@@ -3,11 +3,19 @@
 
   //first pane
   
-  $('.all-tasks, .my-tasks, .starred, .completed, .project').live('click',function(){
-    $('.all-tasks, .my-tasks, .starred, .completed, .project').removeClass('open');
-    $(this).addClass('open');
+  $('.all-tasks, .my-tasks, .starred, .completed').live('click',function(){
+    var clicked=$(this);
+    first_pane_class(clicked);
   });
-    
+  
+  $('.project').live('click',function(){
+    var clicked=$(this);
+    first_pane_class(clicked);
+    var project_id=clicked.attr('id').split('tpi')[1];
+    window.location.hash='#task/'+project_id;
+    return false;
+  });
+  
   //complete/reopen the tasks
   $(".checkbox > span.icon").live('click',function(){
     $(this).toggleClass('checked');
@@ -27,14 +35,13 @@
     ':all_task' : 'allTask',
     '*page' : 'projectTask',
     'tasks/*page' : 'projectTask',
-    '*tasks/:project_id' : 'projectTask',
+    '*task/:project_id' : 'projectTask',
     },
     allTask: function(page){
       var restfulPageUrl = this.restfulUrl + page  
       this.loadRestfulData( restfulPageUrl );
     },
     projectTask: function(page){
-      alert(page);
       var restfulPageUrl = this.restfulUrl + page  
       this.loadRestfulData( restfulPageUrl );
     },
@@ -91,6 +98,11 @@
     $('#reply_comment').hide();
     $('.star.star_items').hide();
     $('#trash_message').hide();
+  }
+  
+  function first_pane_class(clicked){
+    $('.all-tasks, .my-tasks, .starred, .completed, .project').removeClass('open');
+    clicked.addClass('open');
   }
   
   var app = new restfulApp;
