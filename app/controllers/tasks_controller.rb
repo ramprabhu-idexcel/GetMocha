@@ -116,13 +116,28 @@ class TasksController < ApplicationController
   end
 
   def all_tasks
-    render :json=>current_user.group_all_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>[:task_list_name,:due_date_value,:assigned_to]}})
+    render :json=>current_user.group_all_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
   
+  def my_tasks
+    render :json=>current_user.group_my_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+  end
+  
+  def starred_tasks
+    render :json=>current_user.group_starred_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+  end
+  
+  def completed_tasks
+    render :json=>current_user.group_completed_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+  end
   private
   
   def unwanted_columns
     [:created_at,:updated_at,:is_read,:user_id,:is_assigned]
+  end
+  
+  def task_methods
+    [:task_list_name,:due_date_value,:assigned_to]
   end
 end
 

@@ -196,12 +196,21 @@ class User < ActiveRecord::Base
   def my_tasks
     activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at asc")
   end
+  def group_my_tasks
+    my_tasks.group_by{|a| a.resource.task_list_id}
+  end
   def starred_tasks
     activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at asc")
+  end
+  def group_starred_tasks
+    starred_tasks.group_by{|a| a.resource.task_list_id}
   end
   def completed_tasks
     activities=[]
     all_tasks.collect{|t| activities << t if t.resource.is_completed==true}
     activities
+  end
+  def group_completed_tasks
+    completed_tasks.group_by{|a| a.resource.task_list_id}
   end
 end
