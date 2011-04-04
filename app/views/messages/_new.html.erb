@@ -64,7 +64,7 @@
 	<div class="modal-bottom-right"></div>
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 	 <script type="text/javascript">
-
+var data="2";
 	 <%=names=[]%>
 	    <% user_emails.each do |f|%>
                 <%names<<f <<","%>
@@ -75,7 +75,7 @@
 
 
 	   $(document).ready(function(){
-var data = [<% @projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>];
+var data = [<% @projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
 $("#txtInput2").autocomplete(data, {
   formatItem: function(item) {
     return item.text;
