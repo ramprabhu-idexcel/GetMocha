@@ -156,8 +156,9 @@ end
 			else
       @project=@activity.resource.project
       valid_member=@project.is_member?(current_user.id)
-			end
-      render :text=>"The page you were looking doesn't exist" and return unless @project && @project.status && valid_member
+		end
+		
+      render :text=>"The page you were looking doesn't exist" and return unless valid_member
     end
 	end
   def unwanted_columns
