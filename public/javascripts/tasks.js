@@ -16,6 +16,10 @@
     return false;
   });
   
+  $('.sub-header').live('click',function(){
+    return false;
+  });
+  
   //complete/reopen the tasks
   $(".checkbox > span.icon").live('click',function(){
     $(this).toggleClass('checked');
@@ -27,6 +31,14 @@
       data:{id : task_id}
     });
     return false;
+  });
+  
+  $('.task.tsem').live('click',function(){
+    var activity_id=$(this).attr('class').split(' ')[0].split('actk:')[1];
+    $('.task.tsem').removeClass('open');
+    $(this).addClass('open');
+    var has_url=(window.location+"").split('#')[1];
+    window.location.hash="#"+has_url+"/"+activity_id;
   });
   
   var restfulApp = Backbone.Controller.extend({
@@ -62,7 +74,7 @@
       items.push('<div class="sub-header"><a href="#">'+value[0].activity.resource.task_list_name+'</a></div>');
       $.each(value,function(i,v){
         var starred=v.activity.is_starred;
-        items.push('<div class="task '+(starred ? "starred" : "")+'"><div class="left-icons">');
+        items.push('<div class="actk:'+v.activity.id+' task tsem '+(starred ? "starred" : "")+'"><div class="left-icons">');
         items.push('<a class="task-star" href="#" '+(starred ? '' : 'style="display:none;"')+'>Star</a>');    
         items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
         items.push('<div class="info">');
