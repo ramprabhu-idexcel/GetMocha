@@ -35,8 +35,8 @@ class MessagesController < ApplicationController
 		end
 	  @projects.each do |project|
 		@project_names<<"#{project.name}"
-	  end
-	  render :partial=>'new'
+	end
+	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:project_names=>@project_names}
   end
 	def create
 	errors=[]
