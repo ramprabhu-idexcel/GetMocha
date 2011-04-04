@@ -14,14 +14,14 @@
             <span class="icon"></span>
             <%=project.name%>
           </span>
+          <ul>
+            <%project.task_lists.each do |task_list|%>
+            <li><span><%=task_list.name%></span></li>
+            <%end%>
+          </ul>
           <div class="clear-fix"></div>
         </div>
       <%end%>
-       <!-- <ul>
-          <li><span>Task List</span></li>
-          <li><span>Task List has max 21</span></li>
-        </ul>-->
     </div>
-    
   </div>
 </div>

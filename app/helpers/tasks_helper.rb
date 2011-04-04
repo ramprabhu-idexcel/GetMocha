@@ -21,4 +21,12 @@ module TasksHelper
     count=current_user.starred_tasks.count
     link_to form_content(count,"Starred"),"#starred-tasks",:class=>"starred"
   end
+  
+  #~ def project_tab(project)
+    #~ content_tag(:div,'',:class=>'projects-list') do
+      #~ content_tag(:div,'',:class=>'project') do
+        #~ content_tag(:span,'',:class=>'icon')+content_tag(:span,content_tag(:span,'',:class=>'icon')+project.name,:class=>'project-title')+content_tag(:div,'',:class=>'clear-fix')
+      #~ end
+    #~ end
+  #~ end
 end
