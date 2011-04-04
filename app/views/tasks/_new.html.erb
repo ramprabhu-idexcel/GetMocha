@@ -77,6 +77,7 @@ t_list=@t_list
 	<div class="modal-bottom-right"></div>
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
+var tlist;
 <%=names=[]%>
 <%=tlist=[]%>
 <%=projects=[]%>
@@ -86,9 +87,18 @@ t_list=@t_list
 			<%project_names.each do |f|%>
 			  <%projects<<f <<","%>
 	<%end%>
+	if(tlist==null){
 	<%t_list.each do |f|%>
 			  <%tlist<<f <<","%>
 	<%end%>
+	var tasklist="<%= tlist %>";
+	}
+	else
+	{
+	alert(tlist);
+	tlist=tlist.split(',');
+	var tasklist=tlist;
+	}
 	var userEmails = "<%= names %>";	
 var projectNames = "<%= projects %>";
 var tasklist="<%= tlist %>";
@@ -167,9 +177,7 @@ $.ajax({
       url:'/tasks/'+proj+'/project_tasklists',
       type: 'get',
 			 success: function(data){
-			 alert(data.data);
-			 tlist=data.data;
-			 alert(tlist);
+		  tlist=data.data;
 			// document.getElementById('attachment_'+file).style.display="none";
 			 }
 			 });

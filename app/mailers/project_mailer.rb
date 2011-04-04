@@ -87,13 +87,13 @@ class ProjectMailer < ActionMailer::Base
     end
     @existing_user=User.find_by_email(to_user)
     @task=task
-    @project=task.project
+    @project=task.task_list.project
     custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     if custom_email && !custom_email.blank?
       from=custom_email.email
     else
      from="mochabot@getmocha.com"
-    end
+   end
     subscribed_list=task.activities.find(:all, :conditions=>['is_subscribed=?', true])
     @people=[]
     if subscribed_list
