@@ -1,68 +1,87 @@
-	<div class="l-panel-contain" id="project_list">
+
+  <div class="l-panel-contain" id="project_list">
 	<% if @projects %>
 		<%= render :partial=>'project_list' %>
 	<% end %>
 	</div>
-	<span id="settings_pane">
+	<div class="m-panel-contain" id="settings_secondpanel">
 		<!-- Second and Third panel to come here -->
-	</span>
+    <div class="m-panel" style="display:none;">
+			<a href="#general" onclick="javascript:settings_thirdpanel('general');" class="m-tab alt" id="general_anchor" style="font-size:14px;">General</a>
+			<a href="#people" onclick="javascript:settings_thirdpanel('people');" class="m-tab alt" id="people_anchor" style="font-size:14px;">People</a>
+		</div>
+  </div>
+  
 	<div id="add_people" style="display:none;">
 		<%= render :partial=>'invite' %>
 	<div>
 
 <script>
-existing_project='<%=  session[:project_selected] %>';
+var existing_project='<%=  session[:project_selected] %>';
 if(existing_project)
 settings_secondpanel(existing_project);
 // Function for displaying second panel in project settings
 function settings_secondpanel(project_id)
 {
-<% @projects.each do |p| %>
-var id=<%= p.id %>;
-if(id==project_id)
-{
-is_open=$('#project_list_'+id).children('.num-unread').length;
-if(is_open=="0")
-document.getElementById('project_list_'+id).className="project open";
-else
-document.getElementById('project_list_'+id).className="project has-unread open";
-}
-else
-{
-is_open=$('#project_list_'+id).children('.num-unread').length;
-if(is_open=="0")
-document.getElementById('project_list_'+id).className="project";
-else
-document.getElementById('project_list_'+id).className="project has-unread";
-}
-<% end %>
-<% @completed_projects.each do |p| %>
-var id=<%= p.id %>;
-if(id==project_id)
-{
-is_open=$('#project_list_'+id).children('.num-unread').length;
-if(is_open=="0")
-document.getElementById('project_list_'+id).className="project open";
-else
-document.getElementById('project_list_'+id).className="project has-unread open";
-}
-else
-{
-is_open=$('#project_list_'+id).children('.num-unread').length;
-if(is_open=="0")
-document.getElementById('project_list_'+id).className="project";
-else
-document.getElementById('project_list_'+id).className="project has-unread";
-}
-<% end %>
-  $.ajax({
-       type :'get',
-			 url : "/projects/"+project_id+"/settings_pane",
-       success: function(data){
-
-			 document.getElementById('settings_pane').innerHTML=data;
-			 }
-    });
+  <% @projects.each do |p| %>
+  var id=<%= p.id %>;
+  if(typeof(document.getElementById('project_list_'+id))!="undefined")
+  {
+    if(id==project_id)
+    { 
+      is_open=$('#project_list_'+id).children('.num-unread').length;
+      if(is_open=="0")
+        document.getElementById('project_list_'+id).className="project open";
+      else
+        document.getElementById('project_list_'+id).className="project has-unread open";
+    }
+    else
+    {
+      is_open=$('#project_list_'+id).children('.num-unread').length;
+      if(is_open=="0")
+        document.getElementById('project_list_'+id).className="project";
+      else
+        document.getElementById('project_list_'+id).className="project has-unread";
+    }
+  }
+  <% end %>
+  <% @completed_projects.each do |p| %>
+  var id=<%= p.id %>;
+  if(typeof(document.getElementById('project_list_'+id))!="undefined")
+  {
+    if(id==project_id)
+    {
+      is_open=$('#project_list_'+id).children('.num-unread').length;
+      if(is_open=="0")
+        document.getElementById('project_list_'+id).className="project open";
+      else
+        document.getElementById('project_list_'+id).className="project has-unread open";
+    }
+    else
+    {
+      is_open=$('#project_list_'+id).children('.num-unread').length;
+      if(is_open=="0")
+        document.getElementById('project_list_'+id).className="project";
+      else
+        document.getElementById('project_list_'+id).className="project has-unread";
+    }
+  }
+  <% end %>
+    $.ajax({
+         type :'get',
+         url : "/projects/"+project_id+"/settings_pane",
+         success: function(data){
+            $('.m-panel').show();
+            $('#general_anchor').removeClass('open');
+            $('#people_anchor').removeClass('open');
+           if(typeof($('#settings_general'))!="undefined")
+           {
+             $('#settings_general').remove();
+             $('#settings_people').remove();
+           }
+           $('#container').append(data);
+         }
+      });
 }
 // Function for displaying third panel in project settings
 function settings_thirdpanel(page)
@@ -71,8 +90,10 @@ if(page=="people")
 {
 document.getElementById('people_anchor').className="m-tab alt open";
 document.getElementById('general_anchor').className="m-tab alt";
-document.getElementById('settings_general').style.display="none";
-document.getElementById('settings_people').style.display="block";
+$('#settings_general').hide();
+$('#settings_people').show();
+//document.getElementById('settings_general').style.display="none";
+//document.getElementById('settings_people').style.display="block";
 document.getElementById('people_settings_popup').style.display="block";
 $('li.settings_header').show();
 }
@@ -80,8 +101,10 @@ else
 {
 document.getElementById('general_anchor').className="m-tab alt open";
 document.getElementById('people_anchor').className="m-tab alt";
-document.getElementById('settings_people').style.display="none";
-document.getElementById('settings_general').style.display="block";
+//document.getElementById('settings_people').style.display="none";
+//document.getElementById('settings_general').style.display="block";
+$('#settings_general').show();
+$('#settings_people').hide();
 document.getElementById('people_settings_popup').style.display="none";
 $('li.settings_header').hide();
 }

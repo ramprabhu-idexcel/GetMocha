@@ -104,6 +104,10 @@ $.messages;
             $.ajax({
                 url: pageUrl,
                 success: function(data){  
+if(data=="The page you were looking doesn't exist")
+document.getElementById('comment_area').innerHTML=data
+else
+{
                   comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit subject_edit" href="#">Edit</a></h2>');
                   comments.push('<p class="post-time">'+data.message.updated_date+' by <a href="#" class="user-name">'+data.message.name+'</a></p><hr/>');
                   comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit message_edit" href="#">Edit</a></p></div>');
@@ -164,6 +168,7 @@ $.messages;
                   else
                    $('.expand-all').hide();
                 }
+}
                });
          }
       });
