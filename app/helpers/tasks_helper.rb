@@ -28,7 +28,7 @@ module TasksHelper
   end
   
   def project_tab(project)
-      content_tag(:div,'',:class=>'project') do
+      content_tag(:div,'',:class=>'project',:id=>"tpi#{project.id}") do
         content_tag(:span,'',:class=>'icon')+content_tag(:span,content_tag(:span,'',:class=>'icon')+project.name,:class=>'project-title')+task_list_project(project.task_lists)+content_tag(:div,'',:class=>'clear-fix')
       end
   end
