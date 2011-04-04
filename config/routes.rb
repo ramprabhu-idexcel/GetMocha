@@ -11,6 +11,18 @@ GetMocha::Application.routes.draw do
     get "signup",:to=>"devise/registrations#new",:as=>"new_user_registration"
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
     get "create" ,:to=>"devise/projects#create"
+end
+  get "admin_panel" =>'admins#new'
+  post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
+  post "admin_settings"=>'admins#settings', :as=>:admin_page
+  get "admins/users"=>'admins#users'
+  get "admins/projects"=>'admins#projects'
+  get "admins/analetics"=>'admins#analetics'
+  resources :admins do
+      member do
+      post 'remove_user'
+      post 'remove_project'
+  end
   end
   resources :projects do
   collection do
