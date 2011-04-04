@@ -75,7 +75,7 @@ var data="2";
 
 
 	   $(document).ready(function(){
-var data = [<% @projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
+var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
 $("#txtInput2").autocomplete(data, {
   formatItem: function(item) {
     return item.text;
