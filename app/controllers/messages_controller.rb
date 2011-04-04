@@ -33,9 +33,9 @@ class MessagesController < ApplicationController
 			@user_emails<<"#{f.email}"
 		  end
 		end
-	  @projects.each do |project|
-		@project_names<<"#{project.name}"
-	end
+	  #~ @projects.each do |project|
+		#~ @project_names<<"#{project.name}"
+	#~ end
 	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:project_names=>@project_names}
   end
 	def create
@@ -48,7 +48,7 @@ class MessagesController < ApplicationController
 		if !session[:project_name].nil?
 		  @project=Project.find_by_name(session[:project_name])
 		else
-		  @project=Project.find_by_name(params[:message][:project])
+		  @project=Project.find(params[:project_id])
 		end
 	if !@project
 			 render :update do |page|
