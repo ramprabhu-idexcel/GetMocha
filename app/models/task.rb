@@ -91,11 +91,31 @@ def add_in_activity(to_users,assign,user)
   end
 	def author
 	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
-end
-def task_notification
-	"Subject: #{self.name} <br/> Author: #{self.author} <br/> Task: #{self.description}"
-end
-def comment_notify
+  end
+  def task_notification
+    "Subject: #{self.name} <br/> Author: #{self.author} <br/> Task: #{self.description}"
+  end
+  def comment_notify
 		"Author: #{self.author} <br/> Comment: #{self.comment}"
 	end
-	end
+  def task_list_name
+    self.task_list.name
+  end
+  def due_date_value
+    due_date.present? ? get_date_value : ""
+  end
+  def get_date_value
+    case due_date
+      when Date.today
+        "Today"
+      when Date.yesterday
+        "Yesterday"
+      else
+        due_date.strftime("%b %e")
+    end
+  end
+  def assigned_to
+    activity=activities.find(:first,:conditions=>['is_assigned=?',true])
+    activity.present? ? activity.user.full_name : ''
+  end
+end

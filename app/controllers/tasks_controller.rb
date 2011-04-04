@@ -59,18 +59,13 @@ class TasksController < ApplicationController
 		      end
 		    end
 		    @tasklist=TaskList.find_by_name(params[:task][:tasklist])
-		  	p @tasklist
-			  p @project
 			  if !@tasklist
 			    if !params[:task][:tasklist].blank?
 			      errors<<"Please enter existing tasklist only"
 			    end
 		    else
 		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:task][:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
-					p @tasks.inspect
 			    tasks=@tasks.valid?
-					p params[:task][:message]
-					p @tasks.errors.inspect
 					if @tasks.errors[:name][1]=="can't be blank"
 				    errors<<"Please enter task name"
 					elsif !@tasks.errors[:name][0].nil?
@@ -84,7 +79,6 @@ class TasksController < ApplicationController
 		  	if tasks
 		      @tasks.save
 					@notify="#{@notify},#{params[:task][:recipient]}"
-					p @notify
 					@notify=params[:task][:notify].split(',')
 					#@project=Project.find_by_name(params[:message][:project])
 					#~ Message.send_message_to_team_members(@project,@message,@to_users)
@@ -111,11 +105,8 @@ class TasksController < ApplicationController
   end
 	def project_tasklists
 		@t_list=[]
-		p "___________________"
 		@proj=Project.find_by_name(params[:id])
 		@tlist=@proj.task_lists
-		p @proj
-		p @tlist
 		 if !@tlist.nil?
 	@tlist.each do |tl|
 		 @t_list<<"#{tl.name}" if !tl.name.nil?
@@ -123,5 +114,15 @@ class TasksController < ApplicationController
 		render :json=>{:data=>@t_list}.to_json
 	end
   end
+
+  def all_tasks
+    render :json=>current_user.group_all_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>[:task_list_name,:due_date_value,:assigned_to]}})
   end
+  
+  private
+  
+  def unwanted_columns
+    [:created_at,:updated_at,:is_read,:user_id,:is_assigned]
+  end
+end
 
