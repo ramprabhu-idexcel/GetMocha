@@ -66,7 +66,7 @@ class ProjectsController < ApplicationController
 		session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
 		@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
-		session[:project_name]=@project.name
+		session[:project_name]=@project
 		render :partial=>'settings_pane'
   end
 	def remove_people
@@ -185,7 +185,7 @@ class ProjectsController < ApplicationController
   end
 	def find_project_name
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
-    session[:project_name]=@project.name if @project
+    session[:project_name]=@project if @project
   end
 	def file_download_from_email
 		attachment=Attachment.find(params[:id])
