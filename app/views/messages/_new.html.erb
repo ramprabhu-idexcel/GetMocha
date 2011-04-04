@@ -83,8 +83,7 @@ $("#txtInput2").autocomplete(data, {
 }).result(function(event, item) {
   document.getElementById('autocomplete_hidden').value=item.id;
 });
-  });  
-	
+}); 	
 		$(function () {
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
@@ -135,10 +134,7 @@ document.getElementById('message_message').style.display="block";
 	$('#attach').click(function(){
 	document.getElementById('attach_upload').style.display="block";
 	});
-
-    
-
-function delete_attachment(file)
+	function delete_attachment(file)
 {
  $.ajax({
       url:'/remove_attach/'+file,
