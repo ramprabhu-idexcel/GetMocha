@@ -69,6 +69,9 @@ GetMocha::Application.routes.draw do
     end
   end
   match 'all_tasks'=>'tasks#all_tasks',:as=>'all_tasks',:method=>:get
+  match 'my_tasks'=>'tasks#my_tasks',:as=>'my_tasks',:method=>:get
+  match 'starred_tasks'=>'tasks#starred_tasks',:as=>'starred_tasks',:method=>:get
+  match 'completed_tasks'=>'tasks#completed_tasks',:as=>'completed_tasks',:method=>:get
   resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"

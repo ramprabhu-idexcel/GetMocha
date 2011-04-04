@@ -7,13 +7,12 @@
   $('#trash_message').hide();
 
   //first pane
-  $('.project').live('click',function(){
-    $('.project').removeClass('open');
+  
+  $('.all-tasks, .my-tasks, .starred, .completed, .project').live('click',function(){
+    $('.all-tasks, .my-tasks, .starred, .completed, .project').removeClass('open');
     $(this).addClass('open');
-    return false;
   });
-
-
+    
 
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
