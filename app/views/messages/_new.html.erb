@@ -107,19 +107,7 @@ document.getElementById('message_message').style.display="block";
 	$('#attach').click(function(){
 	document.getElementById('attach_upload').style.display="block";
 	});
-<%=names=[]%>
-<%=projects=[]%>
-	<% user_emails.each do |f|%>
-		<%names<<f <<","%>
-		var userEmails = "<%= names %>";
-	<%end%>
-				userEmails=userEmails.split(',');
-			<% project_names.each do |f|%>
-	    <%projects<<f <<","%>
-		var projectNames = "<%= projects %>";
-	<%end%>
-				projectNames=projectNames.split(',');
-         var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('txtInput1'), true);
+
     
 	$(function () {
     $('#form3').fileUploadUI({
