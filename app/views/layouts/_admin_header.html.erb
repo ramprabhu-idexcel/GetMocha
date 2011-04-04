@@ -1,0 +1,31 @@
+<div class="header">
+	<div class="l-header">
+		<ul class="nav">
+			<li><a href="/messages" class="nav-messages"><span class="icon"></span></a></li>
+
+			<li><a href="/tasks" class="nav-tasks"><span class="icon"></span></a></li>
+			<li><a href="/chats" class="nav-chat"><span class="icon"></span></a></li>
+		</ul>
+		
+		<a href="#add_new" class="add-new" id="add-new"></a>
+	</div>
+	<div class="m-header">
+	<% if action_name !="settings"%>
+	<%if controller_name!="registrations" && action_name !="edit" %>
+	       <%=link_to 'Sort by','#sort',:class=>"sort-by"%>
+		<% end %>
+	<% end %>
+	</div>
+
+	
+	<div class="r-header">
+		<ul>
+    <!--  <li class="settings_header" style="display:none;"><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" >Invite</a></li>-->
+			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
+			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
+			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
+		</ul>
+		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span>Admin</a>
+    <%=link_to '','#settings',:class=>"settings project-settings"%>
+	</div>
+</div>

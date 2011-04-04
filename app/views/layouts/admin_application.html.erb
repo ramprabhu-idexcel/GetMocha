@@ -1,0 +1,814 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<% ctrlr = controller.controller_name %>
+	<% acn = controller.action_name %>
+	<title><%= title(ctrlr,acn)%></title>
+  <meta name="description" content="A description of the page must go here." />
+  <meta name="keywords" content="keyword1,keyword2,keyword3" />
+  <meta name="robots" content="INDEX,FOLLOW" />
+  <meta charset="utf-8" />
+  <%= csrf_meta_tag %>
+	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+  <%=stylesheet_link_tag "base","modal","scrollbar",'colorpicker'%>
+  <script src="/closure-library/closure/goog/base.js"></script>
+  <script>
+    goog.require('goog.dom');
+    goog.require('goog.events.KeyCodes');
+    goog.require('goog.ui.KeyboardShortcutHandler');
+    goog.require('goog.ui.AutoComplete.Basic');
+  </script>
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
+	<![endif]-->
+   <%= javascript_include_tag 'size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application'%>
+    <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+    <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
+	<!--[if lt IE 7]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
+	<![endif]-->
+	<!--[if IE 6]>
+	<script type="text/javascript">
+		// Load jQuery if not already loaded
+		if (typeof jQuery == 'undefined') {
+			document.write('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></'+'script>');
+			var __noconflict = true;
+		}
+		var IE6UPDATE_OPTIONS = {icons_path: '/scripts/third-party/ieupdate/images/'};
+	</script>
+	<script src="/scripts/third-party/ieupdate/ie6update.js" type="text/javascript"></script>
+	<![endif]-->
+ <!--<link rel="shortcut icon" href="/images/favicon.ico" />-->
+</head>
+<body class="messages">
+<%= render :partial=>'/layouts/admin_header'%>
+<div class="clear-fix"></div>
+<div id="container">
+  <%=yield%>
+	<div class="clear-fix"></div>
+</div>
+<div class="sort-by-tooltip" style="display:none;">
+	<div class="sort-by-top"></div>
+	<ul>
+		<li class="sort selected"><span>Date</span></li>
+		<li class="sort"><span>Starred</span></li>
+		<li class="sort"><span>Unread</span></li>
+	</ul>
+	<ul>
+		<li class="asc-desc"><span class="asc">Ascending</span></li>
+		<li class="asc-desc selected"><span class="desc">Descending</span></li>
+	</ul>
+</div>
+<div id="add_new_mods" class="modal add-new-modal" style="display:none">
+	<div class="modal-top-left"></div>
+	<div class="modal-top-center"></div>
+	<div class="modal-top-right"></div>
+	<div class="modal-body-contain">
+		<div class="modal-body">
+			<a href="#create_message" class="silver-45 create_message" ><span>Messages</span></a>
+			<a href="#add-task" class="silver-45 create_task"><span>Task</span></a>
+			<a href="#add-task-list" class="silver-45 create_task_list"><span>Task List</span></a>
+			<a href="#create_project" class="silver-45 create_project"><span>Project</span></a>
+		</div>
+	</div>
+	<div class="modal-bottom-left"></div>
+	<div class="modal-bottom"></div>
+	<div class="modal-bottom-right"></div>
+</div>
+<div id="add_new_mod" style="display:none;">
+</div>
+<%=render "/layouts/name_settings"%>
+</body>
+<script>
+    function showTriggered(event)
+		 {
+		  if(event.identifier=='ENTER')
+      {
+        short_modal('/projects/add_new');
+      }
+      if(event.identifier=='GS')
+      {
+         project_settings();
+      }
+      if(event.identifier=='GP')
+      {
+        settings_profile();
+      }
+      if(event.identifier=='Q')
+      {
+        short_modal2('/messages');
+      }
+      if(event.identifier=='SHIFT_M')
+      {
+        short_modal1('/messages/new');
+      }
+      if(event.identifier=='ESC')
+      {
+			//  short_modal('esc');
+        short_modal1('esc');
+	    }
+      if(event.identifier=='R')
+      {
+      short_model3();
+      }
+			if(event.identifier=='U')
+			{
+			 short_modal4('U');
+			}
+			if(event.identifier=='T')
+			{
+			 short_modal4('T');
+			}
+			if(event.identifier=='DOWN')
+			{
+			 short_modal_down('down');
+			}
+			if(event.identifier=='RIGHT')
+			{
+			short_modal_right();
+			}
+			if(event.identifier=='UP')
+			{
+			short_modal_up();
+			}
+			if(event.identifier=='LEFT')
+			{
+			short_modal_left();
+			}
+			if(event.identifier=='Z')
+			{
+			short_modal_down('Z')
+			}
+			if(event.identifier=='A')
+			{
+			short_modal_down('A')
+			}
+			if(event.identifier=='S')
+			{
+			short_modal_down('S')
+			}
+			if(event.identifier=='X')
+			{
+			short_modal_down('X')
+			}
+    }
+  var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
+  var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
+  var ESC = goog.ui.KeyboardShortcutHandler.Modifiers.ESC;
+  var CTRL = goog.ui.KeyboardShortcutHandler.Modifiers.CTRL;
+  var SHIFT = goog.ui.KeyboardShortcutHandler.Modifiers.SHIFT;
+  var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
+	 var UP= goog.ui.KeyboardShortcutHandler.Modifiers.UP;
+	 var DOWN= goog.ui.KeyboardShortcutHandler.Modifiers.DOWN;
+	 var LEFT= goog.ui.KeyboardShortcutHandler.Modifiers.LEFT;
+	 var RIGHT= goog.ui.KeyboardShortcutHandler.Modifiers.RIGHT;
+   //var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;
+  shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
+  shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
+  shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
+  shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
+  shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
+	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
+	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T)
+	shortcutHandler.registerShortcut('A',goog.events.KeyCodes.A)
+	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z)
+	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
+	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
+  shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
+  shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
+  shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
+	shortcutHandler.registerShortcut('UP',goog.events.KeyCodes.UP);
+	shortcutHandler.registerShortcut('DOWN',goog.events.KeyCodes.DOWN);
+	shortcutHandler.registerShortcut('LEFT',goog.events.KeyCodes.LEFT);
+	shortcutHandler.registerShortcut('RIGHT',goog.events.KeyCodes.RIGHT);
+  goog.events.listen(shortcutHandler,goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,showTriggered);
+  $(document).ready(function(){
+    $('a.menutext').click(function(){
+      path=($(this).attr('href'));
+      redirect_short(path);
+      return false;
+    });
+  });
+	
+	// For the keys A,Z,down,S,X
+		function short_modal_down(key)
+	{
+		location1=window.location.href;
+		find_loc=$('#myprofile1').css('display');
+		if(find_loc=="block")
+		{
+		  if(key!="A" && key!="Z")
+			profile_navigation_down(key);
+		}
+		else
+		{
+		find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
+		{
+			settings_navigation_down(key);
+		}
+		else
+		{
+		
+		find_loc=location1.search(/messages/)
+		
+		if(find_loc!=-1)
+		{
+			messages_navigation_down(key);
+		}
+		}
+		}
+	}
+	// For right arrow
+	function short_modal_right()
+	{
+		location1=window.location.href;
+	find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
+		{
+			settings_navigation_right();
+		}
+		else
+		{
+		find_loc=location1.search(/messages/);
+		if(find_loc!=-1)
+		{
+			messages_navigation_right();
+		}
+		}
+	}
+	
+	//for left arrow
+	function short_modal_left()
+	{
+			location1=window.location.href;
+	find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
+		{
+			settings_navigation_left();
+		}
+		else
+		{
+		find_loc=location1.search(/messages/);
+		if(find_loc!=-1)
+		{
+			messages_navigation_left();
+		}
+		}
+	}
+	
+	// for up arrow
+	function short_modal_up()
+	{
+			location1=window.location.href;
+		find_loc=$('#myprofile1').css('display');
+		if(find_loc=="block")
+		{
+			profile_navigation_down('up');
+		}
+		else
+		{
+		find_loc=$('#general_anchor').css('display');
+		if(find_loc=="block")
+		{
+			settings_navigation_down('up');
+		}
+		else
+		{
+		find_loc=location1.search(/messages/)
+		if(find_loc!=-1)
+		{
+			messages_navigation_down('up');
+		}
+		}
+		}
+	}
+	function short_modal(path)  //Add new project/messsage/task/tasclist
+  {		
+	if (($('#add_new_mod').css('display')=="none") || 	 ($('.add-item-modal').css('display')=="none"))
+     $('#add_new_mods').show();
+   }
+	 function short_modal1(path)  //Add new project/messsage/task/tasclist
+	 {
+    if (path!='esc')
+    {
+      $.ajax({
+        type :'get',
+        url :path,
+        success: function(data){
+          $('#add_new_mod').html(data);
+					$('#add_new_mod').show();
+					}
+					});
+					}
+    else
+    {
+		$('#add_new_mod').hide();
+		$('#add_people').hide();
+		$('#add_new_mods').hide();
+		$('.sort-by-tooltip').hide();
+		}
+		}
+  function short_modal2(path)
+  {
+		window.location.href=path;
+  }
+  function settings_profile()
+  {
+    $.get('/settings-profile', function(data) {
+      $('#container').html(data);
+    });
+    $('.account-dropdown').hide();
+  }
+  function project_settings(){
+    $.get('/settings', function(data) {
+      $('#container').html(data);
+    });
+    $('.message_header').hide();
+  }
+  function short_model3()
+  {
+if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
+      $('.comment-contain').slideToggle('slow');
+			 $('.attachment').remove();	
+  }
+	function short_modal4(key)
+	{
+	a=$('#submsg').css('display');
+	if(a=="inline")
+	{
+	if(key=="U")
+	{
+	 var id=$('.message.messow.open').attr('id').split('msac')[1];
+    $.ajax({
+      url:'/subscribe/'+id,
+      type: 'get'
+    });
+		    var content=$('#submsg').text();
+    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+    $('#submsg').text(result);
+		return false;
+		}
+		else
+		{
+		  delete_message();
+		}
+		
+		}
+	}
+		
+		//for settings page navigation
+		function settings_navigation_down(key)
+		{
+			second_panel=$('#settings_secondpanel').css('visibility');
+			people=$('#settings_people').css('display');
+			general=$('#settings_general').css('display');
+			if((people=="block" || general=="block") && ((key=="down" || key=="up") ||( key=="S" || key=="X")))
+			{
+				// for second panel navgation
+				people=$('#settings_people').css('display');
+				general=$('#settings_general').css('display');
+				if(people=="none" && general=="none")
+				{
+					settings_thirdpanel('general');
+				}
+				else if(people=="none")
+				{
+					settings_thirdpanel('people');
+				}
+				else
+				{
+					settings_thirdpanel('general');
+				}
+			}
+			else
+			{
+				//first_panel_navigation
+				var active_length=$('#active_projects').children('').length;
+				var length=$('.projects-list').children("").length;
+				already_exists="false";
+				for(i=0; i<length; i++)
+				{
+					classopen=$('.projects-list').children("")[i].className;
+					if(classopen=="project has-unread open" || classopen=="project open")
+					{
+					if((key=="down" || key=="Z") && (i==length-1))
+					 $('#completed_list').hide();
+					 else if((key=="up" || key=="A") && (i==0))
+					 $('#completed_list').show();
+					 else if((key=="down" || key=="Z") && (i >= active_length-1))
+					 $('#completed_list').show();
+					 else if((key=="up" || key=="A") && (i == active_length))
+					 $('#completed_list').hide();
+					 if((key=="down" || key=="Z") && (i==length-1))
+						already_exists=$('.projects-list').children("")[0].id;
+						else if((key=="up" || key=="A") && (i==0))
+						already_exists=$('.projects-list').children("")[length-1].id;
+						else
+						if(key=="down" || key=="Z")
+						already_exists=$('.projects-list').children("")[i+1].id;
+						else
+						already_exists=$('.projects-list').children("")[i-1].id;
+					}
+				}
+				if(already_exists=="false")
+				{
+						first_item=$('.projects-list').children("")[0].id;
+						id=first_item.split('_');
+						id=id[id.length-1];
+						settings_secondpanel(id);
+				}
+				else
+				{
+				
+				id=already_exists.split('_');
+						id=id[id.length-1];
+						settings_secondpanel(id);
+				}
+			}
+		}
+		
+		//for settings page navigation for right arrow
+		function settings_navigation_right()
+		{
+			second_panel=$('#settings_secondpanel').css('display');
+		  if(second_panel=="block")
+			{
+	 			people=$('#settings_people').css('display');
+				general=$('#settings_general').css('display');
+				if(people=="none" && general=="none")
+				{
+					settings_thirdpanel('general');
+				}
+				else if(people=="none")
+				{
+				settings_thirdpanel('people');
+				}
+				else
+				{
+				settings_thirdpanel('general');
+				}
+			}
+		}
+		
+		//for settings page navigation for left arrow
+		function settings_navigation_left()
+		{
+			people=$('#settings_people').css('display');
+			general=$('#settings_general').css('display');
+			if(people=="block" || general=="block")
+			{
+				$('#settings_people').hide();
+				$('#settings_general').hide();
+				document.getElementById('people_anchor').className="m-tab alt";
+				document.getElementById('general_anchor').className="m-tab alt";
+			}
+		}
+		
+		// for profile page navigation
+		function profile_navigation_down(key)
+		{
+			profile=$('#my_profile').css('display');
+			contacts=$('#my_contacts').css('display');
+				if(profile=="none" && contacts=="none")
+				{
+					 $('#mycontact1').toggleClass('open')
+        $('#my_profile').show();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').hide();
+				}
+				else if(profile=="none")
+				{
+									 $('#mycontact1').toggleClass('open')
+        $('#my_profile').show();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').hide();
+				}
+				else
+				{
+$('#mycontact1').toggleClass('open')
+        $('#my_profile').hide();
+        $('#myprofile1').toggleClass('open')
+        $('#my_contacts').show();
+        $('#people_settings_popup').show();
+				}
+		}
+	
+		// for messages page navigation
+		function messages_navigation_down(key)
+		{
+		class1=$('#comment_area').children('').length;
+		class_hide=$('#comment_area').css('display');
+		
+		if(class1==0 || class_hide=="none")
+		{
+			//first panel
+			var all_messages=document.getElementById('all_messages').className;
+			if(all_messages=="all-messages has-unread open")
+			all_messages="true"
+			
+			star=document.getElementById('starred_messages').className;
+			if(star=="starred open")
+			star="true";
+			already_exists="false";
+			var length=$('.projects-list').children('').length
+			var open="false";
+			var get_all_messages="false";
+			var old_one="false";
+			var exit1="false"
+			for(i=0; i<length; i++)
+			{
+			var class1=$('.projects-list').children('')[i].className;
+			if(class1=="project has-unread open" || class1=="project open")
+			open="true"
+			
+			open_id=$('.projects-list').children('')[i].id;
+			if(star=="true")
+			{
+			  if(key=="down" || key=="Z")
+				already_exists=$('.projects-list').children('')[0].id;
+				else if(exit1!="true" && (key=="up" || key=="A"))
+				{
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+								document.getElementById('starred_messages').className="starred";
+								exit1="true"
+								
+				}
+			}
+			else if(open=="true" && i<length && (class1=="project has-unread open" || class1=="project open"))
+			{
+			  if((key=="down" || key=="Z") && i<length-1)
+				already_exists=$('.projects-list').children('')[i+1].id;
+				else if(i!=0 && i<length && (key=="up" || key=="A"))
+				already_exists=$('.projects-list').children('')[i-1].id;
+				old_id=$('.projects-list').children('')[i].id;
+				old_one="true";
+				if(i==length-1)
+				{
+				document.getElementById(old_id).className="project";
+
+				}
+			
+				
+			}
+		
+			else
+			{
+			get_all_messages=="true"
+
+
+			}
+			}
+			
+			if(already_exists!="false")
+			{
+				//open_id=open_id.split('_')[2];
+				//open_id=open_id.split('messages')[1];
+					window.location=$('#'+already_exists).attr('href');
+					is_open=$('#'+already_exists).children('.num-unread').length;
+					if(is_open=="0")
+					document.getElementById(already_exists).className="project open";
+					else
+					document.getElementById(already_exists).className="project has-unread open";
+					
+					if(old_one=="true")
+					{
+					is_open=$('#'+old_id).children('.num-unread').length;
+					if(is_open=="0")
+					document.getElementById(old_id).className="project";
+					else
+					document.getElementById(old_id).className="project has-unread";
+					}
+					else
+								document.getElementById('starred_messages').className="starred";
+			}
+			else
+			{
+				if(all_messages=="true" && (key=="down" || key=="Z"))
+				{
+				
+					window.location=$('.starred').attr('href');
+					document.getElementById('starred_messages').className="starred open";
+					document.getElementById('all_messages').className="all-messages has-unread";
+				}
+				else if(all_messages=="true" && (key=="up" || key=="A") && star!="true")
+				{
+					first=$('.projects-list').children('')[length-1].id;
+					window.location=$('#'+first).attr('href');
+					is_open=$('#'+first).children('.num-unread').length;
+					if(is_open=="0")
+					document.getElementById(first).className="project open";
+					else
+					document.getElementById(first).className="project has-unread open";
+					document.getElementById('all_messages').className="all-messages has-unread";
+				}
+				else if(open=="true" && (key=="down" || key=="Z"))
+				{
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+					first=$('.projects-list').children('')[length-1].id;
+					document.getElementById(first).className="project";
+				}
+
+				else if((open=="true" && (key=="up" || key=="A") && exit1=="false"))
+				{
+				
+					window.location=$('.starred').attr('href');
+					document.getElementById('starred_messages').className="starred open";
+					first=$('.projects-list').children('')[0].id;
+					is_open=$('#'+first).children('.num-unread').length;
+if(is_open=="0")
+					document.getElementById(first).className="project";
+					else
+					document.getElementById(first).className="project has-unread";
+				}
+				else if(star=="true")
+				{
+					//	window.location=$('#project_list_messages'+open_id).attr('href');
+				}
+				else if(key!="X" && key!="S")
+				{
+					window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open";
+					
+				}
+			}
+		}
+		else
+		{
+		messages_second_panel_navigation(key);
+		}
+		}
+		
+		//for messages navigation right arrow
+		function messages_navigation_right()
+		{
+		  var already_exists="false"
+			var length=$('#message_area').children('').length;
+			var exit="false";
+			for(i=0; i<length; i++)
+			{
+				var firstclass=$('#message_area').children('')[i].className;
+				if(firstclass!="date-bar" && exit=="false")
+				{
+					already_exists=$('#message_area').children('')[i].id;
+					already_exists=already_exists.split('msac')[1];
+					a=window.location.href;
+					a=a.search('/'+already_exists);
+					
+					loc=window.location.href.split(already_exists)[0];
+					
+					if(a==-1)
+					window.location=loc+"/"+already_exists;
+					else
+					window.location=loc+already_exists;
+					$('#comment_area').show();
+
+					$('#message_expand').show();
+					exit="true"
+					$('#message_area').children('')[i].className="message messow  mpi2 open";
+					show_header();
+				}
+			}
+		}
+		
+		//for messages navigation left arrow
+		function messages_navigation_left()
+		{
+		var length=$('#message_area').children('').length;
+			exit="false";
+			for(i=0; i<length; i++)
+			{
+				firstclass=$('#message_area').children('')[i].className;
+				if(firstclass=="message messow  mpi2 open")
+				{
+					$('#message_area').children('')[i].className="message messow  mpi2";
+				}
+			}
+			$('#comment_area').hide();
+			$('#message_expand').hide();
+					$('.message_header').hide();
+		}
+		
+		//for messages second panel navigation
+		function messages_second_panel_navigation(key)
+		{
+			  already_exists="false"
+				exit="false";
+			var length=$('#message_area').children('').length;
+			
+			for(i=0; i<length; i++)
+			{
+			
+				var firstclass=$('#message_area').children('')[i].className;
+				var f=firstclass.search('open')
+				if(f!=-1)
+				{
+				var is_there=typeof($('#message_area').children('')[i+1])=="undefined"
+				if(is_there==true)
+				already_exists=$('#message_area').children('')[i-1].className;
+				else
+					already_exists=$('#message_area').children('')[i+1].className;
+					
+					
+					if(already_exists!="date-bar" && exit=="false" && (key=="down" || key=="X"))
+					{
+						already_exists=$('#message_area').children('')[i+1].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+						var a_firstclass=$('#message_area').children('')[i+1].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
+						
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i+1].className=b_firstclass;
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i-1].className=a_firstclass;
+						else
+						$('#message_area').children('')[i].className=a_firstclass;
+						exit="true"
+					}
+					else if(exit=="false" && (key=="down" || key=="X"))
+					{
+					already_exists=$('#message_area').children('')[i+2].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i+2].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i+2].className=b_firstclass;
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i-2].className=a_firstclass;
+						else
+						$('#message_area').children('')[i].className=a_firstclass;
+						exit="true"
+					}
+					if(key=="up" || key=="S")
+					{
+					already_exists=$('#message_area').children('')[i-1].className;
+					 if(already_exists!="date-bar" && exit=="false")
+					{
+						already_exists=$('#message_area').children('')[i-1].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i-1].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i-1].className=b_firstclass;
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i+1].className=a_firstclass;
+						else
+						$('#message_area').children('')[i].className=a_firstclass;
+						exit="true"
+					}
+					else if(exit=="false")
+					{
+				//	var is_there=typeof($('#message_area').children('')[i-2])=="undefined"
+
+					already_exists=$('#message_area').children('')[i-2].id;
+						already_exists=already_exists.split('msac')[1];
+						exists=$('#message_area').children('')[i].id;
+						exists=exists.split('msac')[1];
+							var a_firstclass=$('#message_area').children('')[i-2].className;
+						var b_firstclass=$('#message_area').children('')[i].className;
+						loc=window.location.href.split(exists)[0];
+						window.location=loc+already_exists;
+						loc="";
+						$('#message_area').children('')[i-2].className=b_firstclass;
+						a=$('#message_area').children('')[i].className
+						if(a=="date-bar")
+						$('#message_area').children('')[i+2].className=a_firstclass;
+						else
+						$('#message_area').children('')[i].className=a_firstclass;
+						exit="true"
+					}
+					}
+				}
+			}
+		}
+		
+		//for displaying the message header
+		function show_header()
+		{
+
+		$('.message_header').show();
+		
+		}
+		
+</script>
+
+</html>
+
