@@ -1,0 +1,27 @@
+<%projects=@projects%>
+<div class="l-panel-contain">
+  <div class="l-panel">
+    <%=link_to_all_tasks%>
+    <%=link_to_my_tasks%>
+    <%=link_to_starred_tasks%>
+    <a href="#" class="completed"><span class="icon"></span>Completed</a>
+    
+    <div class="projects-list">
+      <%projects.each do |project|%>
+        <div class="project">
+          <span class="icon"></span>
+          <span class="project-title">
+            <span class="icon"></span>
+            <%=project.name%>
+          </span>
+          <div class="clear-fix"></div>
+        </div>
+      <%end%>
+       <!-- <ul>
+          <li><span>Task List</span></li>
+          <li><span>Task List has max 21</span></li>
+        </ul>-->
+    </div>
+    
+  </div>
+</div>
