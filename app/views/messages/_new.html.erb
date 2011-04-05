@@ -131,6 +131,13 @@ document.getElementById('message_message').style.display="block";
 	$('#message_message').focus();
 	}
 	});
+		$('#message_subject').keydown(function(event){
+	if (event.keyCode == 9 && document.getElementById('txtInput2').value!="") {
+  document.getElementById('message_message').style.display="block";
+	document.getElementById('txtarea').className="open";
+	$('.drag-drop').focus();
+	}
+	});
 	$('#attach').click(function(){
 	document.getElementById('attach_upload').style.display="block";
 	});
