@@ -21,7 +21,7 @@ class AdminsController < ApplicationController
 	end
 	def users
 		@users=User.find(:all)
-		render :partial=>'users'
+		render :partial=>'users',:locals=>{:users=>@users}
 	end
 	def projects
 		@projects=Project.find(:all)
@@ -42,12 +42,12 @@ class AdminsController < ApplicationController
 			@user=User.delete(params[:id])
 			@users=User.find(:all)
 			
-render :partial=>'users'
+render :partial=>'users',:locals=>{:users=>@users}
 		end
 		def remove_project
 			p params.inspect
 			@project=Project.delete(params[:id])
 			@projects=Project.find(:all)
-			render :partial=>'projects'
+			render :partial=>'projects',:locals=>{:projects=>@projects}
 end
 end
