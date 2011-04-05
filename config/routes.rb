@@ -75,20 +75,20 @@ end
     end
   end
   # task routes
-  resources :tasks do
-    collection do
-      put :complete_task
-      get :all_tasks
-      get :starred_tasks
-      get :completed_tasks
-      get :my_tasks
-    end
-    member do
-      get :project_tasklists
-    end
-  end
-  match 'tasks/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
-  resources :task_lists
+  #~ resources :tasks do
+    #~ collection do
+      #~ put :complete_task
+      #~ get :all_tasks
+      #~ get :starred_tasks
+      #~ get :completed_tasks
+      #~ get :my_tasks
+    #~ end
+    #~ member do
+      #~ get :project_tasklists
+    #~ end
+  #~ end
+  #~ match 'tasks/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
+  #~ resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"
