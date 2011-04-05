@@ -146,7 +146,8 @@ class TasksController < ApplicationController
     activity=Activity.find_by_id(params[:activity_id])
     task=activity.resource
     comment_ids=task.comments.map(&:id)
-    render :json=>current_user.hash_activities_comments(comment_ids).to_json(options)
+    task_values=task.third_pane_data
+    render :json=>{:task=>task_values}.to_json
   end
   private
   def options
