@@ -127,4 +127,12 @@ class Project < ActiveRecord::Base
   def all_task_ids
     tasks.map(&:id)
   end
+  def team_members
+    User.find(:all,:conditions=>['project_users.status=:value AND users.status=:value',{:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
+  end
+  def members_list
+    users=[]
+    team_members.collect{|user| users<<{:id=>user.id,:name=>user.full_name}}
+    users
+  end
 end
