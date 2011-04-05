@@ -60,7 +60,6 @@
       this.loadRestfulData( restfulPageUrl );
     },
     taskComment: function(page){
-      alert(window.location.hash);
       var hash_url=window.location.hash;
       var activity_id=hash_url.split('/')[1];
       var restfulPageUrl = this.restfulUrl +'tasks/task_comment/'+ activity_id;  
@@ -104,6 +103,21 @@
     });
     $('.m-panel').html(items.join(''));
     $('.sort-by').show();
+  }
+  
+  function function load_third_pane(data)
+  {
+    var items=[];
+    items.push('<div class="message-body">');
+    items.push('<div class="checkbox"><span onclick="checkBox(this);" class="icon"/></div>');
+    items.push('<h2>This is an example of a really long todo. <a class="edit" href="/tasks-edit">Edit</a></h2>');
+    items.push('<p class="filed-under">Filed under <a href="/task-dropdown">Task List</a></p>');
+    items.push('<p class="recipients">Assigned to <a href="/task-dropdown-1">Stuart Bowness</a></p><hr/>');
+    items.push('<div class="main-content"><p>first take at our design for the new Readability app.<a class="edit" href="/tasks-edit">Edit</a></p></div>');
+    items.push('<p class="recipients">Assigned to <a href="/task-dropdown-1">Stuart Bowness</a></p><hr/>');
+    items.push('<p class="subscribers">Subscribed: Jessa Ma and <a href="/subscribed-wrap">11 others</a> | <a href="#">unsubscribe</a></p>');
+    items.push('</div>');
+    $('.r-panel').html(items.join(''));
   }
   
   function due_date_class(date_value)
