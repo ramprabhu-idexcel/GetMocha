@@ -105,7 +105,7 @@
     $('.sort-by').show();
   }
   
-  function function load_third_pane(data)
+  function load_third_pane(data)
   {
     var items=[];
     items.push('<div class="message-body">');
