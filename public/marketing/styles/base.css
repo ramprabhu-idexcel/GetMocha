@@ -221,6 +221,12 @@ strong {
     margin-right: 50px;
     padding: 25px 30px;
     width: 568px;
+      /* Manually added due to the curve shape issue not displaying on chrome, safari and IE in support page */
+    border-bottom-right-radius: 5px 5px;
+    border-top-left-radius: 5px 5px;
+    border-top-right-radius: 5px 5px;
+    border-bottom-left-radius: 5px 5px;
+    /* Manually added due to the curve shape issue not displaying on chrome, safari and IE in support page */
 }
 .grid-600-c {
     clear: both;
@@ -326,6 +332,12 @@ strong {
     background: none repeat scroll 0 0 white;
     border: 1px solid #9C9FA6;
     color: #828A93;
+    /* Manually added due to the curve shape issue not displaying on chrome, safari and IE in support page */
+    border-bottom-right-radius: 5px 5px;
+    border-top-left-radius: 5px 5px;
+    border-top-right-radius: 5px 5px;
+    border-bottom-left-radius: 5px 5px;
+    /* Manually added due to the curve shape issue not displaying on chrome, safari and IE in support page */
 }
 .header {
     background: url("../images/layout/header-bg.png") repeat-x scroll left top transparent;
@@ -681,6 +693,12 @@ strong {
     border: 1px solid #232221;
     color: #FFFFFF;
     text-shadow: 0 1px 1px #464544;
+    /* Manually added due to the curve shape issue not displaying on chrome, safari and IE in support page */
+    border-bottom-right-radius: 10px 10px;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    /* Manually added due to the curve shape issue not displaying on chrome, safari and IE in support page */
 }
 .support-nav ul a:hover {
     text-decoration: none;
