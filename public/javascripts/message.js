@@ -5,7 +5,7 @@ $.messages;
          restfulUrl: $.host,
          routes: {
          '*message/:project_id' : 'projectMessage',
-         "*page":                    "findMessage", //This simply matches any urls that weren't caught above and assigns it to "page"
+         "*page":                    "findMessage" //This simply matches any urls that weren't caught above and assigns it to "page"
          },
           
         findMessage: function( page ){
@@ -25,9 +25,13 @@ $.messages;
             $('.message_header').hide();
             $('#comment_area').html('');
           }
+          else if(page.search(/\d/)==0)
+          {
+            var restfulPageUrl = this.restfulUrl+"project/"+page;
+            this.loadRestfulData( restfulPageUrl );
+          }
          },
          projectMessage:function(page){
-         
             var path=(window.location+"").split('?')[0];
             path=path.split('#')[1];
             if((/^all_messages\/[1-9]/.test(path)) ||(/^starred_messages\/[1-9]/.test(path)))
@@ -44,8 +48,8 @@ $.messages;
                 {
                   path=path+"?"+url[1];
                 }
-                var restfulPageUrl = this.restfulUrl + path  
-                this.loadRestfulData( restfulPageUrl );    
+                var restfulPageUrl = this.restfulUrl +'project/'+ path  
+                this.loadCommentData( restfulPageUrl );    
                 $('.message_header').hide();
                 $('#comment_area').html('');  
               }   

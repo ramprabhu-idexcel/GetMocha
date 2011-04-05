@@ -231,6 +231,7 @@ alert('afetrr bt');
     
     //first panel change the class
     $('.project,.all-messages,.starred').click(function(){
+      $('.expand-all').hide();
       $('.project.open,.all-messages,.starred').removeClass('open'); 
       $(this).addClass('open');
     });
@@ -354,10 +355,6 @@ alert('afetrr bt');
       
     });
   
-    $('#all_messages, .project, .starred').click(function(){
-      $('.expand-all').hide();
-    });
-    
     //message reply link and reply in the comment
     $('.reply').click(function(){
       $('.comment-contain').slideToggle('slow',function(){

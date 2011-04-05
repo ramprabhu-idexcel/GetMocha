@@ -11,9 +11,9 @@
 	<% projects.each do |project| %>
 	<% count= unread_project_message_count(project.id)%>
 		<%if !count.nil? && count!=0%>
-		<a href="#project/<%=project.id %>" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="num-unread"><%=count%></span><span class="icon"></span><%= project.name %></a>
+		<a href="#<%=project.id %>" class="project has-unread"  id="project_list_messages<%= project.id %>"><span class="num-unread"><%=count%></span><span class="icon"></span><%= project.name %></a>
 		<%else%>
-		<a href="#project/<%=project.id %>" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
+		<a href="#<%=project.id %>" class="project"  id="project_list_messages<%= project.id %>"><span class="icon"></span><%= project.name %></a>
 				<%end%>
 	<% end %>
 	</div>
