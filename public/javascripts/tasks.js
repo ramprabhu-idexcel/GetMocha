@@ -44,6 +44,25 @@
     window.location.hash="#"+secondary_url+"/"+activity_id;
   });
   
+  $('.filed-tasklist').live('click',function(){
+    $('.task-dropdown.task_list').fadeToggle();
+    return false;
+  });
+  
+  $('a.assigned-to').live('click',function(){
+    $('.task-dropdown.assigned-to').fadeToggle();
+    return false;
+  });
+  
+  //subscribe tasks
+  $('.task-subscribe').live('click',function(){
+    return false;
+  });
+  
+  $('.expand_user').live('click',function(){
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -108,14 +127,35 @@
   function load_third_pane(data)
   {
     var items=[];
+    task=data.task;
     items.push('<div class="message-body">');
-    items.push('<div class="checkbox"><span onclick="checkBox(this);" class="icon"/></div>');
-    items.push('<h2>This is an example of a really long todo. <a class="edit" href="/tasks-edit">Edit</a></h2>');
-    items.push('<p class="filed-under">Filed under <a href="/task-dropdown">Task List</a></p>');
-    items.push('<p class="recipients">Assigned to <a href="/task-dropdown-1">Stuart Bowness</a></p><hr/>');
-    items.push('<div class="main-content"><p>first take at our design for the new Readability app.<a class="edit" href="/tasks-edit">Edit</a></p></div>');
-    items.push('<p class="recipients">Assigned to <a href="/task-dropdown-1">Stuart Bowness</a></p><hr/>');
-    items.push('<p class="subscribers">Subscribed: Jessa Ma and <a href="/subscribed-wrap">11 others</a> | <a href="#">unsubscribe</a></p>');
+    items.push('<div class="checkbox"><span class="icon '+(task.is_completed ? "checked":"")+'"></span></div>');
+    items.push('<h2>'+task.name+'<a class="edit" href="#">Edit</a></h2>');
+    items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
+    //other task-list-names
+    items.push('<div class="task-dropdown task_list" style="display:none;">');
+    items.push('<div class="task-dropdown-t"></div>');
+    items.push('<ul>');
+    $.each(task.other_task_lists,function(i,v){
+      items.push('<li><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
+    });      
+    items.push('</ul>');
+    items.push('</div>');
+    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to+'</a></p><hr/>');
+    //other teammembers
+    items.push('<div class="task-dropdown assigned-to" style="display:none;">');
+    items.push('<div class="task-dropdown-t"></div>');
+    items.push('<ul>');
+    $.each(task.team_members,function(i,v){
+      items.push('<li class="" id="ul:'+v.id+'"><span>'+v.name+'</span></li>');
+    });
+    items.push('</ul>')
+    
+    items.push('<input type="text" onfocus="this.select()" onclick="this.value=\'\';"class="textfield" value="Invite by email" name="assign"/>');
+    items.push('<a class="invite-btn" href="#">+</a>');
+    items.push('</div>');
+    items.push('<div class="main-content"><p>'+task.description+'<a class="edit" href="#">Edit</a></p></div>');
+    items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('</div>');
     $('.r-panel').html(items.join(''));
   }
