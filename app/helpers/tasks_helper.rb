@@ -8,11 +8,11 @@ module TasksHelper
   end
   def link_to_all_tasks
     count=current_user.all_tasks.count
-    link_to form_content(count,"All Task"),"#all_tasks",:class=>"all-tasks"
+    link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks"
   end
   def link_to_my_tasks
     count=current_user.my_tasks.count
-    link_to form_content(count,"My Task"),"#my_tasks",:class=>"my-tasks"
+    link_to form_content(count,"My Tasks"),"#my_tasks",:class=>"my-tasks"
   end
   def link_to_starred_tasks
     count=current_user.starred_tasks.count
