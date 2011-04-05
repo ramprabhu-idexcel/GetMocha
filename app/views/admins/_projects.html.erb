@@ -1,7 +1,7 @@
 <div class="user-info">
 <div class="label_contain"><br/>
 <h3>Projects</h3><br/>
-<%@projects.each do |project|%>
+<%projects.each do |project|%>
 <span class="name" id="#{project.id}"><%="#{project.name}"%></span><a onclick="javascript:remove_project('<%=project.id%>');" class="remove" href="#">[x]</a><br/>
 <%end%>
 </div>
