@@ -2,11 +2,12 @@ class AdminsController < ApplicationController
 	layout "admin_application",:except=>["new","reset_password"]
 	#layout 'before_login', :only=>["new","reset_password"]
 	def new
-		
+
 	end
 	def admin_panel
 		layout 'before_login'
 		p params.inspect
+	
 		if params[:email]=='admin@getmocha.com' && params[:password]=='admin123'
 			redirect_to 'settings'
 			else
