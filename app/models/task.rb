@@ -118,4 +118,11 @@ def add_in_activity(to_users,assign,user)
     activity=activities.find(:first,:conditions=>['is_assigned=?',true])
     activity.present? ? activity.user.full_name : ''
   end
+  def other_task_lists
+    self.task_list.project.task_lists.select([:id,:name,:project_id])
+  end
+  def third_pane_data
+    project=self.task_list.project
+    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list})
+  end
 end
