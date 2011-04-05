@@ -30,7 +30,7 @@ class TasksController < ApplicationController
 	def create
 		errors=[]
 		if !session[:project_name].nil?
-		  @project=Project.find_by_name(session[:project_name])
+		  @project=Project.find(session[:project_name])
 		else
 		  @project=Project.find_by_name(params[:task][:project])
 		end

@@ -109,7 +109,8 @@ class Project < ActiveRecord::Base
   end
 	def find_project_name
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
-    session[:project_name]=@project if @project
+    session[:project_name]=@project.name if @project
+    session[:project_selected]=@project.id if @project
   end
 	def file_download_from_email
 		attachment=Attachment.find(params[:id])
