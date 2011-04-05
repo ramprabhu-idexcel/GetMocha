@@ -2,12 +2,11 @@
   initial_setup();
 
   //first pane
-  
   $('.all-tasks, .my-tasks, .starred, .completed').live('click',function(){
     var clicked=$(this);
     first_pane_class(clicked);
   });
-  
+
   $('.project').live('click',function(){
     var clicked=$(this);
     first_pane_class(clicked);
@@ -35,21 +34,30 @@
   
   $('.task.tsem').live('click',function(){
     var activity_id=$(this).attr('class').split(' ')[0].split('actk:')[1];
+    var has_url=window.location.hash;
     $('.task.tsem').removeClass('open');
     $(this).addClass('open');
-    var has_url=(window.location+"").split('#')[1];
-    window.location.hash="#"+has_url+"/"+activity_id;
+    if(has_url=="")
+      var secondary_url="all_tasks";
+    else
+      var secondary_url=(window.location.hash).split('#')[1];
+    window.location.hash="#"+secondary_url+"/"+activity_id;
   });
   
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
-    ':all_task' : 'allTask',
-    '*page' : 'projectTask',
+    ':all_task'   : 'allTask',
+    '*page'       : 'projectTask',
     'tasks/*page' : 'projectTask',
     '*task/:project_id' : 'projectTask',
     },
     allTask: function(page){
+      if(page=="")
+      {
+        page="all_tasks";
+        $('.all-tasks').addClass('open');
+      }
       var restfulPageUrl = this.restfulUrl+'tasks/'+ page  
       this.loadRestfulData( restfulPageUrl );
     },
