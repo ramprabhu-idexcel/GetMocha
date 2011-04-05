@@ -87,7 +87,7 @@ end
       get :project_tasklists
     end
   end
-  match 'tasks/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
+  match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
   resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"

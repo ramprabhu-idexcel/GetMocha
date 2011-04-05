@@ -118,19 +118,19 @@ class TasksController < ApplicationController
   def show
     project=Project.find_by_id(params[:id])
     task_ids=project.all_task_ids
-    render :json=>current_user.group_project_tasks(task_ids).to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+    render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def all_tasks
-    render :json=>current_user.group_all_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+    render :json=>current_user.group_all_tasks.to_json(options)
   end
 	def my_tasks
-    render :json=>current_user.group_my_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+    render :json=>current_user.group_my_tasks.to_json(options)
   end
 	def starred_tasks
-    render :json=>current_user.group_starred_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+    render :json=>current_user.group_starred_tasks.to_json(options)
   end
 	def completed_tasks
-    render :json=>current_user.group_completed_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+    render :json=>current_user.group_completed_tasks.to_json(options)
   end
 	def complete_task
     task=Task.find_by_id(params[:id])
@@ -140,9 +140,18 @@ class TasksController < ApplicationController
 	def project_tasks
     project=Project.find_by_id(params[:project_id])
     task_ids=project.all_task_ids
-    render :json=>current_user.group_project_tasks(task_ids).to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+    render :json=>current_user.group_project_tasks(task_ids).to_json(options)
+  end
+  def task_comments
+    activity=Activity.find_by_id(params[:activity_id])
+    task=activity.resource
+    comment_ids=task.comments.map(&:id)
+    render :json=>current_user.hash_activities_comments(comment_ids).to_json(options)
   end
   private
+  def options
+    {:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}}}
+  end
 	def unwanted_columns
     [:created_at,:updated_at,:is_read,:user_id,:is_assigned]
   end

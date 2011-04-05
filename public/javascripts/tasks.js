@@ -48,9 +48,7 @@
     restfulUrl: $.host,
     routes: {
     ':all_task'   : 'allTask',
-    '*page'       : 'projectTask',
-    'tasks/*page' : 'projectTask',
-    '*task/:project_id' : 'projectTask',
+    ':all_task/:activity_id' : 'taskComment',
     },
     allTask: function(page){
       if(page=="")
@@ -61,15 +59,26 @@
       var restfulPageUrl = this.restfulUrl+'tasks/'+ page  
       this.loadRestfulData( restfulPageUrl );
     },
-    projectTask: function(page){
-      var restfulPageUrl = this.restfulUrl +'tasks/'+ page  
-      this.loadRestfulData( restfulPageUrl );
+    taskComment: function(page){
+      alert(window.location.hash);
+      var hash_url=window.location.hash;
+      var activity_id=hash_url.split('/')[1];
+      var restfulPageUrl = this.restfulUrl +'tasks/task_comment/'+ activity_id;  
+      this.loadCommentData( restfulPageUrl );
     },
     loadRestfulData: function( pageUrl ){
       $.ajax({
         url: pageUrl,
         success: function(data){
           load_second_pane(data);
+        }
+      });
+    },
+    loadCommentData: function( pageUrl ){
+      $.ajax({
+        url: pageUrl,
+        success: function(data){
+          load_third_pane(data);
         }
       });
     }
