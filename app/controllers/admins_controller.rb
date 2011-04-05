@@ -25,7 +25,7 @@ class AdminsController < ApplicationController
 	end
 	def projects
 		@projects=Project.find(:all)
-			render :partial=>'projects'
+			render :partial=>'projects',:locals=>{:projects=>@projects}
 	end
 	def analetics
 		@p_active_count=Project.find(:all, :conditions=>['status=?',true])
@@ -35,7 +35,7 @@ class AdminsController < ApplicationController
 		@t_count=Task.find(:all)
 		@u_count=User.find(:all,:conditions=>['is_guest=?',false])
 		@g_count=User.find(:all,:conditions=>['is_guest=?',true])
-		render :partial=>'analetics'
+			render :partial=>'analetics',:locals=>{:p_active_count=>@p_active_count,:p_completed_count=>@p_completed_count,:m_count=>@m_count,:tl_count=>@tl_count,:t_count=>@t_count,:u_count=>@u_count,:g_count=>@g_count}
 	end
 		def remove_user
 			puts params.inspect
