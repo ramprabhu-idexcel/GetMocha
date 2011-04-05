@@ -11,7 +11,7 @@ class TaskListsController < ApplicationController
 		@projects.each do |project|
 		@project_names<<"#{project.name}"
 		end
-		render :partial => 'new'
+		render :partial => 'new',:locals=>{:project_names=>@project_names}
 	end
 	def create
 		errors=[]
