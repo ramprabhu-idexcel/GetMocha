@@ -78,10 +78,10 @@
 
 			<label for="contact-name">Your Name</label>
 			<label for="contact-email" class="last">Email Address</label>
-			<input id="contact-name" type="text" class="textfield" style="width:262px; height: 33px;" value="" />
-			<input id="contact-email" type="text" class="textfield last" style="width:262px; height: 33px;" value="" />
+			<input id="contact-name" type="text" class="textfield" style="width:250px; height: 27px;" value="" />
+			<input id="contact-email" type="text" class="textfield last" style="width:250px; height: 27px;" value="" />
 			<label for="contact-subjet">Subject</label><br />
-			<input id="contact-name" type="text" class="textfield" style="width:262px; height: 33px;" value="" /><br />
+			<input id="contact-name" type="text" class="textfield" style="width:250px; height: 27px;" value="" /><br />
 			
 			<label for="contact-message" class="last">Message</label><br />
 
@@ -98,19 +98,7 @@
 </div>
 
 <div class="footer">
-	<div class="container-960">
-		<span class="copy">Copyright &copy; 2011 Mocha</span>
-
-		<ul>
-			<li><a href="/signin">Login</a></li>
-			<li><a href="#">Blog</a></li>
-
-			<li><a href="/faq">FAQ</a></li>
-			<li><a href="/terms">Terms of Use</a></li>
-			<li><a href="/privacy">Privacy Policy</a></li>
-
-		</ul>
-	</div>
+	<%= render :partial=>'/home/footer'%>
 </div>
 
 </body>

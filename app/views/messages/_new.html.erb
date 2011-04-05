@@ -30,7 +30,7 @@
 					<label>Project:</label>
 					
 					<% if session[:project_name] %>
-					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name].name}", :disabled=>true%>
+					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
 					 <% else %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
 							<input type="hidden" id="autocomplete_hidden" name="project_id" value=""/>
@@ -129,6 +129,13 @@ document.getElementById('message_message').style.display="block";
 	if (event.keyCode == 9) {
   document.getElementById('attach_upload').style.display="block";
 	$('#message_message').focus();
+	}
+	});
+		$('#message_subject').keydown(function(event){
+	if (event.keyCode == 9 && document.getElementById('txtInput2').value!="") {
+  document.getElementById('message_message').style.display="block";
+	document.getElementById('txtarea').className="open";
+	$('.drag-drop').focus();
 	}
 	});
 	$('#attach').click(function(){
