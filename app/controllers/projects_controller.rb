@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
 	  @users.each do |f|
 			@user_emails<<"#{f.email}"
 		end
-		render :partial => 'new'
+		render :partial => 'new',:locals=>{:user_emails=>@user_emails}
 		end
 		def create		
 		invite_users=params[:invite][:email].split(',')

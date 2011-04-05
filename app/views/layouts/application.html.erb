@@ -12,8 +12,9 @@
   <%= csrf_meta_tag %>
 	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
   <%=stylesheet_link_tag "base","modal","scrollbar",'colorpicker','jquery.autocomplete'%>
-	  
-  <script src="/closure-library/closure/goog/base.js"></script>
+	<script src="/closure-library/closure/goog/base.js"></script>
+	  <link rel="stylesheet" href="/stylesheets/demo.css">
+  <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
   <script>
     goog.require('goog.dom');
     goog.require('goog.events.KeyCodes');
@@ -23,7 +24,7 @@
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
-   <%= javascript_include_tag 'jquery-latest','jquery.bgiframe.min','size-container','open','jquery-1.4.4.min','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete'%>
+      <%= javascript_include_tag 'jquery-1.4.4.min','jquery-latest','jquery.bgiframe.min','size-container','open','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
 	<!--[if lt IE 7]>

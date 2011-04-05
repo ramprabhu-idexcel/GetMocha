@@ -1,10 +1,10 @@
 <head>
-  <link rel="stylesheet" href="/stylesheets/demo.css">
-  <!--<link rel="stylesheet" href="/stylesheets/main.css">-->
+<!--  <link rel="stylesheet" href="/stylesheets/demo.css">
+  <link rel="stylesheet" href="/stylesheets/main.css">
 
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
    <%#= javascript_include_tag 'jquery.autocomplete','jquery-latest','jquery.bgiframe.min','jquery.fileupload-ui','jquery.fileupload' %>
-<script type="text/javascript" src="/javascripts/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.autocomplete.js"></script>-->
 </head>
 	<div class="modal add-item-modal">
 	<div class="modal-top-left"></div>
@@ -75,7 +75,7 @@ var data="2";
 
 
 	   $(document).ready(function(){
-var data = [<% @projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
+var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
 $("#txtInput2").autocomplete(data, {
   formatItem: function(item) {
     return item.text;
@@ -83,8 +83,7 @@ $("#txtInput2").autocomplete(data, {
 }).result(function(event, item) {
   document.getElementById('autocomplete_hidden').value=item.id;
 });
-  });  
-	
+}); 	
 		$(function () {
     $('#form3').fileUploadUI({
     uploadTable: $('#files'),
@@ -135,10 +134,7 @@ document.getElementById('message_message').style.display="block";
 	$('#attach').click(function(){
 	document.getElementById('attach_upload').style.display="block";
 	});
-
-    
-
-function delete_attachment(file)
+	function delete_attachment(file)
 {
  $.ajax({
       url:'/remove_attach/'+file,

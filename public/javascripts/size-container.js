@@ -36,13 +36,13 @@
    {
       var inputHeight;
       var panelHeight;
-      if(document.getElementsByClassName('comment-contain').length>0)
+      if($('.comment-contain').length>0)
       {
-        inputHeight = document.getElementsByClassName('comment-contain')[0].offsetHeight;
-        panelHeight = document.getElementsByClassName('r-panel-contain')[0].offsetHeight;
+        inputHeight = $('.comment-contain')[0].offsetHeight;
+        panelHeight = $('.r-panel-contain')[0].offsetHeight;
       }
-      if(document.getElementsByClassName('chat-container').length>0)
-      document.getElementsByClassName('chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
+      if($('.chat-container').length>0)
+      $('.chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
    }
 
 

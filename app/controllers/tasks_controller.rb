@@ -45,18 +45,18 @@ class TasksController < ApplicationController
 		else
 		  if params[:task][:tasklist].blank?
 			  errors<< "Please Enter the tasklist name"
-				if !params[:task][:recipient].blank? 
-			    #~ errors<<"Please enter To_email address"
-		      if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
-			      errors<<"Please enter valid email for assign"
+				if !params[:task][:recipient].blank?
+					#~ errors<<"Please enter To_email address"
+					if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+						errors<<"Please enter valid email for assign"
 		      end
 	      end
 			else
-			  if !params[:task][:notify].blank? 
-			    #~ errors<<"Please enter To_email address"
-		      if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
-			      errors<<"Please enter valid notify email"
-		      end
+			if !params[:task][:notify].blank?
+				#~ errors<<"Please enter To_email address"
+				if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+					errors<<"Please enter valid notify email"
+					end
 		    end
 		    @tasklist=TaskList.find_by_name(params[:task][:tasklist])
 			  if !@tasklist
@@ -120,41 +120,33 @@ class TasksController < ApplicationController
     task_ids=project.all_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
-  
-  def all_tasks
+	def all_tasks
     render :json=>current_user.group_all_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
-  
-  def my_tasks
+	def my_tasks
     render :json=>current_user.group_my_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
-  
-  def starred_tasks
+	def starred_tasks
     render :json=>current_user.group_starred_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
-  
-  def completed_tasks
+	def completed_tasks
     render :json=>current_user.group_completed_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
-  
-  def complete_task
+	def complete_task
     task=Task.find_by_id(params[:id])
     task.update_attribute(:is_completed,!task.is_completed)
     render :nothing=>true
   end
-  
-  def project_tasks
+	def project_tasks
     project=Project.find_by_id(params[:project_id])
     task_ids=project.all_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
   private
-  
-  def unwanted_columns
+	def unwanted_columns
     [:created_at,:updated_at,:is_read,:user_id,:is_assigned]
   end
-  
-  def task_methods
+	def task_methods
     [:task_list_name,:due_date_value,:assigned_to]
   end
 end
