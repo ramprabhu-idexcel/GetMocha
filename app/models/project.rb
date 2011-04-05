@@ -7,8 +7,8 @@ class Project < ActiveRecord::Base
   has_many :guests,:through=>:project_guests,:source => :user
 	has_many :activities, :through => :messages, :dependent=>:destroy
 	has_many :messages
-  has_many :tasklists
-	has_many :tasks
+  has_many :task_lists
+	has_many :tasks, :through=>:task_lists
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails
 	has_many :chats
@@ -124,4 +124,7 @@ class Project < ActiveRecord::Base
 	def self.verify_project(current_user)
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 	end	
+  def all_task_ids
+    tasks.map(&:id)
+  end
 end

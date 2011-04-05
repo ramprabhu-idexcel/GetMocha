@@ -40,7 +40,7 @@ class MessagesController < ApplicationController
   end
 	def create
 	errors=[]
-		if params[:message][:recipient].blank?
+		if !params[:message][:recipient].blank?
 			#~ errors<<"Please enter To_email address"
 		elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 			errors<<"Please enter valid email"
@@ -79,7 +79,7 @@ class MessagesController < ApplicationController
 					attachment=Attachment.recent_attachments
 					attachment.each do |attach|
 					attach.update_attributes(:attachable=>@message)
-				end
+				  end
 			end
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message

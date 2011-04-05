@@ -1,7 +1,7 @@
 GetMocha::Application.routes.draw do
-    root :to => "home#index"
-    devise_for :users,:controllers =>{:registrations =>"users",:sessions=>"sessions",:confirmations=>"confirmation",:passwords=>"passwords"}
-    devise_scope :user do
+  root :to => "home#index"
+  devise_for :users,:controllers =>{:registrations =>"users",:sessions=>"sessions",:confirmations=>"confirmation",:passwords=>"passwords"}
+  devise_scope :user do
     root :to => "devise/registrations#edit"
     get "signin", :to => "devise/sessions#new",:as=>"new_user_session"
     get "logout",:to=>"devise/sessions#destroy",:as=>"destroy_user_session"
@@ -11,28 +11,40 @@ GetMocha::Application.routes.draw do
     get "signup",:to=>"devise/registrations#new",:as=>"new_user_registration"
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
     get "create" ,:to=>"devise/projects#create"
+end
+  get "admin_panel" =>'admins#new'
+  post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
+  post "admin_settings"=>'admins#settings', :as=>:admin_page
+  get "admins/users"=>'admins#users'
+  get "admins/projects"=>'admins#projects'
+  get "admins/analetics"=>'admins#analetics'
+  resources :admins do
+      member do
+      post 'remove_user'
+      post 'remove_project'
+  end
   end
   resources :projects do
-  collection do
-  post 'remove_people'
-  post 'add_new'
-  post 'update_proj_settings'
-  get 'invite_people_settings'
-  end
-  member do
-  get 'settings_pane'
-  end
+    collection do
+      post 'remove_people'
+      post 'add_new'
+      post 'update_proj_settings'
+      get 'invite_people_settings'
+    end
+    member do
+      get 'settings_pane'
+    end
   end
   resources :updates do
-  collection do
-  put 'edit_profile'
-  put 'edit_password'
-  post 'create_secondary_email'
-  post 'save_image'
-  end
-  member do
-  delete 'delete_email'
-  end
+    collection do
+      put 'edit_profile'
+      put 'edit_password'
+      post 'create_secondary_email'
+      post 'save_image'
+    end
+    member do
+      delete 'delete_email'
+    end
   end
   match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondary_email',:method=>:get
   match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
@@ -41,10 +53,6 @@ GetMocha::Application.routes.draw do
   match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
   match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
   match  '/home/email_reply' =>'home#check_email_reply_and_save', :method => :post
-  #~ match '/:project_id/settings' =>'projects#settings_pane', :as => 'project_settings_pane', :method => :post
-  #~ match '/del_people' =>'projects#remove_people', :as=>'remove_people'
-  #~ match '/update_proj_settings' =>'projects#update_proj_settings', :as=>'update_proj_settings'
-  #~ match '/projects/add_new' =>'projects#add_new', :as=>'add_new'
   # Message routes
   resources :messages
   match 'all_messages'=>'messages#all_messages',:as=>'all_messages',:method=>:get
@@ -62,10 +70,25 @@ GetMocha::Application.routes.draw do
   match '/remove_attach/:id' =>"attachments#remove_attach"
   resource :comments
   resources :attachments do
-  member do
-  get :remove_attach
+    member do
+      get :remove_attach
+    end
   end
+  # task routes
+  resources :tasks do
+    collection do
+      put :complete_task
+      get :all_tasks
+      get :starred_tasks
+      get :completed_tasks
+      get :my_tasks
+    end
+    member do
+      get :project_tasklists
+    end
   end
+  match 'tasks/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
+  resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"
