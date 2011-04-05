@@ -45,12 +45,21 @@
   });
   
   $('.filed-tasklist').live('click',function(){
-    $('.task-dropdown.task_list').toggle();
+    $('.task-dropdown.task_list').fadeToggle();
     return false;
   });
   
   $('a.assigned-to').live('click',function(){
-    $('.task-dropdown.assigned-to').toggle();
+    $('.task-dropdown.assigned-to').fadeToggle();
+    return false;
+  });
+  
+  //subscribe tasks
+  $('.task-subscribe').live('click',function(){
+    return false;
+  });
+  
+  $('.expand_user').live('click',function(){
     return false;
   });
   
@@ -141,11 +150,12 @@
       items.push('<li class="" id="ul:'+v.id+'"><span>'+v.name+'</span></li>');
     });
     items.push('</ul>')
-    items.push('<input type="text" onfocus="this.select()" class="textfield" value="Invite by email" name="assign"/>');
+    
+    items.push('<input type="text" onfocus="this.select()" onclick="this.value=\'\';"class="textfield" value="Invite by email" name="assign"/>');
     items.push('<a class="invite-btn" href="#">+</a>');
     items.push('</div>');
     items.push('<div class="main-content"><p>'+task.description+'<a class="edit" href="#">Edit</a></p></div>');
-    items.push('<p class="subscribers">Subscribed: Jessa Ma and <a href="/subscribed-wrap">11 others</a> | <a href="#">unsubscribe</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('</div>');
     $('.r-panel').html(items.join(''));
   }

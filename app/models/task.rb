@@ -123,6 +123,27 @@ def add_in_activity(to_users,assign,user)
   end
   def third_pane_data
     project=self.task_list.project
-    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list})
+    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users})
+  end
+  def subscribed_users
+    activities.where('is_subscribed=?',true)
+  end
+  def subscribed_user_names
+    subscribed_users.collect{|a| a.user.name if a.user}.sort
+  end
+  def all_subscribed
+    "#{subscribed_user_names.join(',')} | "
+  end
+  def display_subscribed_users
+    case subscribed_user_names.count
+      when 0
+        "Subscribed: none |"
+      when 1
+        "Subscribed: #{subscribed_user_names[0]} |"
+      when 2
+        "Subscribed: #{subscribed_user_names.join(' and ')} |"
+      else
+        "Subscribed: #{subscribed_user_names[0]} and <a class='expand_user' href='#'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
+    end
   end
 end

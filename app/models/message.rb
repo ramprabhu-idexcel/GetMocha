@@ -83,9 +83,6 @@ class Message < ActiveRecord::Base
  	def subscribed_users
     activities.where('is_subscribed=?',true)
   end
-	def subscribed_user_names
-    subscribed_users.collect{|a| a.user.name}.sort
-  end
   def subscribed_user_names
     subscribed_users.collect{|a| a.user.name if a.user}.sort
   end
