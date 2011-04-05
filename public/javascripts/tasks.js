@@ -12,7 +12,7 @@
     var clicked=$(this);
     first_pane_class(clicked);
     var project_id=clicked.attr('id').split('tpi')[1];
-    window.location.hash='#task/'+project_id;
+    window.location.hash='#'+project_id;
     return false;
   });
   
@@ -50,11 +50,11 @@
     '*task/:project_id' : 'projectTask',
     },
     allTask: function(page){
-      var restfulPageUrl = this.restfulUrl + page  
+      var restfulPageUrl = this.restfulUrl+'tasks/'+ page  
       this.loadRestfulData( restfulPageUrl );
     },
     projectTask: function(page){
-      var restfulPageUrl = this.restfulUrl + page  
+      var restfulPageUrl = this.restfulUrl +'tasks/'+ page  
       this.loadRestfulData( restfulPageUrl );
     },
     loadRestfulData: function( pageUrl ){

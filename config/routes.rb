@@ -78,16 +78,16 @@ end
   resources :tasks do
     collection do
       put :complete_task
+      get :all_tasks
+      get :starred_tasks
+      get :completed_tasks
+      get :my_tasks
     end
     member do
       get :project_tasklists
     end
   end
-  match 'all_tasks'=>'tasks#all_tasks',:as=>'all_tasks',:method=>:get
-  match 'my_tasks'=>'tasks#my_tasks',:as=>'my_tasks',:method=>:get
-  match 'starred_tasks'=>'tasks#starred_tasks',:as=>'starred_tasks',:method=>:get
-  match 'completed_tasks'=>'tasks#completed_tasks',:as=>'completed_tasks',:method=>:get
-  match 'task/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
+  match 'tasks/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
   resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"

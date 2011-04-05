@@ -115,6 +115,12 @@ class TasksController < ApplicationController
 	end
   end
 
+  def show
+    project=Project.find_by_id(params[:id])
+    task_ids=project.all_task_ids
+    render :json=>current_user.group_project_tasks(task_ids).to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
+  end
+  
   def all_tasks
     render :json=>current_user.group_all_tasks.to_json(:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}})
   end
