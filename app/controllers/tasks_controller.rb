@@ -31,7 +31,7 @@ class TasksController < ApplicationController
 	def create
 		errors=[]
 		if !session[:project_name].nil?
-		  @project=Project.find(session[:project_name])
+		  @project=Project.find_by_name(session[:project_name])
 		else
 		  @project=Project.find_by_name(params[:task][:project])
 		end
@@ -121,6 +121,18 @@ class TasksController < ApplicationController
     task_ids=project.all_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
+  
+  def update
+    task=Task.find_by_id(params[:id])
+    task.attributes=params[:task]
+    if task.valid?
+      task.update_attributes(params[:task])
+      render :text=>"success"
+    else
+      render :text=>task.errors[0]
+    end
+  end
+  
 	def all_tasks
     render :json=>current_user.group_all_tasks.to_json(options)
   end
