@@ -51,4 +51,13 @@ class Activity < ActiveRecord::Base
   def self.check_starred_task(user_id)
     find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=? AND user_id=?',"Task",false,true,user_id],:order=>"created_at desc")
   end
-  end
+  def self.check_all_unread_messages(user_id)
+  find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=? AND user_id=?',"Message",false,false,user_id])
+end
+ def self.check_all_tasks_info(user_id)
+ find(:all,:conditions=>['resource_type=? AND is_delete=? AND user_id=?',"Task",false,user_id],:order=>"created_at desc")
+ end
+ def self.check_my_tasks_info(user_id)
+  find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=? AND user_id=?',"Task",false,true,user_id],:order=>"created_at desc")
+ end
+ end
