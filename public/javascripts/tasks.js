@@ -198,6 +198,20 @@
   });
   
   
+  $('.message-star.star_comment').live('click',function(){
+    var path=$(this).attr('href');
+    $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
+    $.ajax({
+      url: path,
+      type: 'get',
+      success:function(data)
+      { 
+        display_star_count(data.count);
+      }
+    });
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -356,6 +370,13 @@
   function get_activity_id()
   {
     return $('.task.tsem.open').attr('class').split(' ')[0].split('actk:')[1];
+  }
+  
+  function display_star_count(count){
+    if(count==0)
+      $('a.starred.starred_count').html('<span class="icon"></span>Starred' );
+    else
+      $('a.starred.starred_count').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
   }
   
   var app = new restfulApp;
