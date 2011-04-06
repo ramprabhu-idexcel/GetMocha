@@ -134,11 +134,7 @@ alert('afetrr bt');
       $('.comment-contain').hide();
     }
     
-    function close_comment_area()
-    {
-      $('.comment-contain').toggle('slow');
-      $('#comment-message').val('');
-    }
+
     //find the current url
     function sort_path()
     {
@@ -1219,6 +1215,12 @@ function find_month(month)
     month_number="0"+month_number;
   return month_number;
 }
+function close_comment_area()
+{
+  $('.comment-contain').toggle('slow');
+  $('#comment-message').val('');
+}
+
 //Task & Tasklist
  $('#tl_add').live('click',function(){
  var a=$('#tasklists_tlname').val();
