@@ -155,7 +155,8 @@ class User < ActiveRecord::Base
   end
   def hash_activities_comments(type_ids)
     type_ids=[type_ids] unless type_ids.is_a?(Array)
-    comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
+    #~ comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
+    comment_activities=Activity.check_hash_activities_comments_info(type_ids,self.id)
     values=[]
     comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id,self).merge(t.attributes)}
     values

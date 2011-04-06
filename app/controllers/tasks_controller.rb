@@ -172,7 +172,7 @@ class TasksController < ApplicationController
     [:task_list_name,:due_date_value,:assigned_to]
   end
 	def find_project_task
-	 @task=Task.find_by_id(params[:id])
+		@task=Task.find_by_id(params[:id])
 	 end	
 end
 
