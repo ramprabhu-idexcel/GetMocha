@@ -70,21 +70,45 @@
   });
   
   $('a.edit.task_description').live('click',function(){
-    var content=$('#task_name').siblings('span').text();
+    var content=$(this).siblings('span').text();
     $(this).parent('p').html('<textarea class="textfield" style="height: 160px;" cols="" rows="" onfocus="this.select()" id="task_description" name="task[description]">'+content+'</textarea><a class="edit save_task_desc" href="#" style="display: inline;">Save</a>');
     return false;
   });
   
   $('a.edit.save_taskname').live('click',function(){
     var content=$('#task_name').val();
-    $(this).parent('h2').html(content+'<a class="edit task_name" href="#">Edit</a>');
+    var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
+    var save_link=$(this);
+    $.ajax({
+      url:'/tasks/'+task_id,
+      type:'put',
+      data:{'task[name]':content},
+      success:function(data){
+        if(data=="success")
+          save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
+        else
+          alert(data);
+      }
+    });
     return false;
   });
   
   $('a.edit.save_task_desc').live('click',function(){
     var content=$('#task_description').val();
-    $(this).parent('p').html(content+'<a class="edit task_description" href="#">Edit</a>');
-    return false;
+    var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
+    var save_link=$(this);
+    $.ajax({
+      url:'/tasks/'+task_id,
+      type:'put',
+      data:{'task[description]':content},
+      success:function(data){
+        if(data=="success")
+          save_link.parent('p').html('<span>'+content+'</span><a class="edit task_description" href="#">Edit</a>');
+        else
+          alert(data);
+      }
+    });
+    return false;    
   });
   
   var restfulApp = Backbone.Controller.extend({
@@ -153,6 +177,7 @@
     var items=[];
     task=data.task;
     items.push('<div class="message-body">');
+    items.push('<span style="display:none;" class="tsk-det" id="tk:'+task.id+'"></span>')
     items.push('<div class="checkbox"><span class="icon '+(task.is_completed ? "checked":"")+'"></span></div>');
     items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
     items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
