@@ -1,14 +1,14 @@
 class Project < ActiveRecord::Base
 	Message_email="@#{APP_CONFIG[:message_email]}"
 	Task_email="@#{APP_CONFIG[:task_email]}"
+  has_many :task_lists
+	has_many :tasks, :through=>:task_lists
 	has_many :project_users
 	has_many :project_guests
 	has_many :users, :through=> :project_users
   has_many :guests,:through=>:project_guests,:source => :user
 	has_many :activities, :through => :messages, :dependent=>:destroy
 	has_many :messages
-  has_many :task_lists
-	has_many :tasks, :through=>:task_lists
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails
 	has_many :chats

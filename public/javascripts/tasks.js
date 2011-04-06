@@ -42,6 +42,7 @@
     else
       var secondary_url=(window.location.hash).split('#')[1];
     window.location.hash="#"+secondary_url+"/"+activity_id;
+    $('.task_header').show();
   });
   
   $('.filed-tasklist').live('click',function(){
@@ -120,9 +121,9 @@
     }
     return false;    
   });
-  
+  //subscribe
   $('.task-subscribe').live('click',function(){
-    var id=$('.task.tsem.open').attr('class').split(' ')[0].split('actk:')[1];
+    var id=get_activity_id();
     var content=$(this).text();
     $.ajax({
       url:'/subscribe/'+id,
@@ -131,6 +132,71 @@
     var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
     $(this).text(result);
   });
+  //task comments
+  $('#reply_comment_task').live('click',function(){
+    $('.comment-contain').slideToggle('slow',function(){
+      $('.attachment').remove();	
+      $('#comment-message').focus();
+    });
+    return false;  
+  });
+  
+  
+  
+  $('.blue-33.add_comment').live('click',function(){
+    if($.trim($('#comment-message').val())=="")
+    {
+      alert('Please enter a Comment ');
+    }
+    else
+    {
+      var activity_id=get_activity_id();
+      $('#act').val(activity_id);
+      var reply="";
+      $.ajax({
+        url: '/comments',
+        type: 'post',
+        data: $('form#add_com_msg').serialize(),
+        success:function(data){
+          attach=data.attach;
+          var comment=data.comment[0];
+          reply+=('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
+          if(attach==false)
+          reply+=('<a class="name message_name" href="#">'+comment.user+'</a><span class="message-time">'+comment.created_at+'</span>');
+          else
+          reply+=('<a class="name message_name" href="#">'+comment.user+'</a>');
+          if((comment.attach.attach_image.length>0) || (comment.attach.attached_documents.length>0))
+          reply+='<div class="has-attachment"></div>';
+          reply+=('<span class="message-time">'+comment.created_at+'</span>');
+          reply+=('<div class="comment"><p>'+comment.comment+'</p>');
+          if(comment.attach.attached_documents.length>0)
+          {
+            reply+=('<div style="margin-top:20px;margin-bottom:20px;">')
+            $.each(comment.attach.attached_documents,function(index,value){
+              reply+=('<p>'+value+'</p>');
+            });
+            reply+=('</div>')
+          }
+          if(comment.attach.attach_image.length>0)
+          {
+            reply+=('<div class="attachments">');
+            $.each(comment.attach.attach_image,function(index,value){
+              reply+=('<div class="attachment-thumb-frame">'+value+'</div>');
+            });
+            reply+=('<div class="clear-fix"></div></div>');
+          }
+          reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+          $('.prev-messages').append(reply).show('slow');
+          close_comment_area();
+          if($('.message.message_comments').length>9)
+            $('.expand-all').show();
+          $('.attachment').remove();
+        }
+      });
+    }
+    return false;
+  });
+  
   
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
@@ -197,7 +263,7 @@
   {
     var items=[];
     task=data.task;
-    items.push('<div class="message-body">');
+    items.push('<div class="message-body">')
     items.push('<span style="display:none;" class="tsk-det" id="tk:'+task.id+'"></span>')
     items.push('<div class="checkbox"><span class="icon '+(task.is_completed ? "checked":"")+'"></span></div>');
     items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
@@ -227,7 +293,35 @@
     items.push('<div class="main-content"><p><span>'+task.description+'</span><a class="edit task_description" href="#">Edit</a></p></div>');
     items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('</div>');
-    $('.r-panel').html(items.join(''));
+    //comments
+    items.push('<div class="prev-messages">');
+    $.each(data.comments,function(index,comment){
+      items.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
+      items.push('<a class="name message_name" href="#">'+comment.user+'</a>');
+      if((comment.attach.attached_documents.length>0) || (comment.attach.attach_image.length>0))
+        items.push('<div class="has-attachment"></div>');
+      items.push('<span class="message-time">'+comment.created_at+'</span>');
+      items.push('<div class="comment"><p>'+comment.comment+'</p>');
+      if(comment.attach.attached_documents.length>0)
+      {
+        items.push('<div style="margin-top:20px;margin-bottom:20px;">')
+        $.each(comment.attach.attached_documents,function(index,value){
+          items.push('<p>'+value+'</p>');
+        });
+        items.push('</div>')
+      }
+      if(comment.attach.attach_image.length>0)
+      {
+        items.push('<div class="attachments">');
+        $.each(comment.attach.attach_image,function(index,value){
+          items.push('<div class="attachment-thumb-frame">'+value+'</div>');
+        });
+        items.push('<div class="clear-fix"></div></div>');
+      }
+      items.push('<a class="reply-link" href="#">Reply</a></div></div></div>');
+    });
+    items.push('</div>')
+    $('#comment_area').html(items.join(''));
   }
   
   function due_date_class(date_value)
@@ -251,11 +345,17 @@
     $('#reply_comment').hide();
     $('.star.star_items').hide();
     $('#trash_message').hide();
+    $('.task_header').hide();
   }
   
   function first_pane_class(clicked){
     $('.all-tasks, .my-tasks, .starred, .completed, .project').removeClass('open');
     clicked.addClass('open');
+  }
+  
+  function get_activity_id()
+  {
+    return $('.task.tsem.open').attr('class').split(' ')[0].split('actk:')[1];
   }
   
   var app = new restfulApp;
