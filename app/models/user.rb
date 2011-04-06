@@ -219,4 +219,10 @@ class User < ActiveRecord::Base
   def group_project_tasks(task_ids)
     project_tasks(task_ids).group_by{|a| a.resource.task_list_id}
   end
+  def self.u_count_val
+    find(:all,:conditions=>['is_guest=?',false])
+  end
+  def self.g_count_data
+    find(:all,:conditions=>['is_guest=?',true])
+  end
 end
