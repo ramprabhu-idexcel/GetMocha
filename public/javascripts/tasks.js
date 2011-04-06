@@ -225,9 +225,20 @@
   });
   
   //star the tasks
-  $('.star.task_star').live('click',function(){
-    var id=get_activity_id();
-    $('.actk:'+id).toggleClass('starred')
+  $('.star.task_star, a.task-star').live('click',function(){
+    if($('.task.tsem.open').length>0)
+    {
+      var id=get_activity_id();
+      var parent_div=$('.task.tsem.open');
+      parent_div.children().children('a.task-star').toggle();
+    }
+    else
+    {
+      var id=$(this).parent().parent().attr('class').split(' ')[0].split('actk:')[1];
+      var parent_div=$(this).parent().parent();
+      $(this).toggle();
+    }
+    parent_div.toggleClass('starred')
     $.ajax({
       url: '/star_message/'+id,
       type: 'get',
