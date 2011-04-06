@@ -2,6 +2,7 @@ class TasksController < ApplicationController
 	before_filter :authenticate_user!
 #  before_filter :find_activity,:only=>['subscribe','star_task','show','unsubscribe','destroy','project_task_comment']
 	layout 'application', :except=>['new']
+	 before_filter :find_project_task,:only=>['update','complete_task']
 	def index
 		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
@@ -121,18 +122,16 @@ class TasksController < ApplicationController
     task_ids=project.all_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
-  
-  def update
-    task=Task.find_by_id(params[:id])
-    task.attributes=params[:task]
-    if task.valid?
-      task.update_attributes(params[:task])
+	def update
+    #~ task=Task.find_by_id(params[:id])
+    @task.attributes=params[:task]
+    if @task.valid?
+      @task.update_attributes(params[:task])
       render :text=>"success"
     else
-      render :text=>task.errors[0]
+      render :text=>@task.errors[0]
     end
   end
-  
 	def all_tasks
     render :json=>current_user.group_all_tasks.to_json(options)
   end
@@ -146,8 +145,8 @@ class TasksController < ApplicationController
     render :json=>current_user.group_completed_tasks.to_json(options)
   end
 	def complete_task
-    task=Task.find_by_id(params[:id])
-    task.update_attribute(:is_completed,!task.is_completed)
+    #~ task=Task.find_by_id(params[:id])
+    @task.update_attribute(:is_completed,!@task.is_completed)
     render :nothing=>true
   end
 	def project_tasks
@@ -172,5 +171,8 @@ class TasksController < ApplicationController
 	def task_methods
     [:task_list_name,:due_date_value,:assigned_to]
   end
+	def find_project_task
+	 @task=Task.find_by_id(params[:id])
+	 end	
 end
 

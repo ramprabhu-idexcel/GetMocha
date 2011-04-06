@@ -215,7 +215,7 @@ class User < ActiveRecord::Base
     completed_tasks.group_by{|a| a.resource.task_list_id}
   end
   def project_tasks(task_ids)
-    Activity.user_projects_tasks(task_ids,current_user.id)
+    Activity.user_projects_tasks(task_ids,self.id)
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?)',"Task",false,task_ids],:order=>"created_at desc")
   end
   def group_project_tasks(task_ids)
