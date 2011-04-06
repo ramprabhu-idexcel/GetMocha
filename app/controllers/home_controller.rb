@@ -22,6 +22,8 @@ def check_email_reply_and_save
 				task_create_via_email
 			elsif @dest_address[0].to_s.include?("ctzm")
 				reply_to_message_via_email
+			elsif @dest_address[0].to_s.include?("ctzt")
+				reply_to_task_via_email
 			end
 			render :text => "success"
 	  end
