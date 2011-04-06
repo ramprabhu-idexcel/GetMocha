@@ -310,7 +310,7 @@ layout :change_layout
 			message_id=message_id[0].split('ctzt')
 			message_id=message_id[1]
 			task=Task.find(message_id)		
-			project=Project.find(message.project_id)
+			project=Project.find(task.task_list.project_id)
 			user=User.find_by_email(from_address)
 			content1=params[:html].split("##Type above this line to post a reply to this message##")
 			content=content1[0]
