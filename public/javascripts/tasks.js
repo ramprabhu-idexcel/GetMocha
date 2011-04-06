@@ -63,6 +63,30 @@
     return false;
   });
   
+  $('a.edit.task_name').live('click',function(){
+    var content=$(this).siblings('span').text();
+    $(this).parent('h2').html('<textarea class="textfield" name="task[name]" rows="" cols="" id="task_name">'+content+'</textarea><a class="edit save_taskname" href="#" style="display: inline;">Save</a>');
+    return false;
+  });
+  
+  $('a.edit.task_description').live('click',function(){
+    var content=$('#task_name').siblings('span').text();
+    $(this).parent('p').html('<textarea class="textfield" style="height: 160px;" cols="" rows="" onfocus="this.select()" id="task_description" name="task[description]">'+content+'</textarea><a class="edit save_task_desc" href="#" style="display: inline;">Save</a>');
+    return false;
+  });
+  
+  $('a.edit.save_taskname').live('click',function(){
+    var content=$('#task_name').val();
+    $(this).parent('h2').html(content+'<a class="edit task_name" href="#">Edit</a>');
+    return false;
+  });
+  
+  $('a.edit.save_task_desc').live('click',function(){
+    var content=$('#task_description').val();
+    $(this).parent('p').html(content+'<a class="edit task_description" href="#">Edit</a>');
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -130,7 +154,7 @@
     task=data.task;
     items.push('<div class="message-body">');
     items.push('<div class="checkbox"><span class="icon '+(task.is_completed ? "checked":"")+'"></span></div>');
-    items.push('<h2>'+task.name+'<a class="edit" href="#">Edit</a></h2>');
+    items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
     items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
     //other task-list-names
     items.push('<div class="task-dropdown task_list" style="display:none;">');
@@ -154,7 +178,7 @@
     items.push('<input type="text" onfocus="this.select()" onclick="this.value=\'\';"class="textfield" value="Invite by email" name="assign"/>');
     items.push('<a class="invite-btn" href="#">+</a>');
     items.push('</div>');
-    items.push('<div class="main-content"><p>'+task.description+'<a class="edit" href="#">Edit</a></p></div>');
+    items.push('<div class="main-content"><p><span>'+task.description+'</span><a class="edit task_description" href="#">Edit</a></p></div>');
     items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('</div>');
     $('.r-panel').html(items.join(''));

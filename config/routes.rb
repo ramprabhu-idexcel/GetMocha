@@ -75,7 +75,6 @@ end
     end
   end
   # task routes
-
   resources :tasks do
     collection do
       put :complete_task
@@ -96,7 +95,7 @@ end
   match 'help' =>"home#help"
   match 'email' =>"home#email"
   match '/home/images'=>"home#images"
-   match '*a', :to => 'errors#routing'
+  match '*a', :to => 'errors#routing'
 
 
 
