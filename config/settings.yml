@@ -22,3 +22,11 @@ test:
   message_email: m.test.getmocha.com 
   reply_email: reply.test.getmocha.com 
   
+staging:
+  site_url: http://test.getmocha.com
+  site_name: test.getmocha.com
+  project_email: p.test.getmocha.com
+  task_email: t.test.getmocha.com
+  message_email: m.test.getmocha.com 
+  reply_email: reply.test.getmocha.com 
+  
