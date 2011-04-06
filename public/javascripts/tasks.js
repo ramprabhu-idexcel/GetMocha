@@ -209,6 +209,20 @@
     return false;
   });
   
+  $('#trash_task').live('click',function(){
+  var yes=confirm('Are you sure?');
+  var task_id=get_task_id();
+  if(yes)
+  {
+    var task_id=get_task_id();
+    $('.task.tsem.open').remove();
+    $.ajax({
+      url:'/tasks'+task_id,
+      type:'delete'
+    });
+  }
+  return false;
+  });
   
   $('.message-star.star_comment').live('click',function(){
     var path=$(this).attr('href');

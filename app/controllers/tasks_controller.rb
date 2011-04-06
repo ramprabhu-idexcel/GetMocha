@@ -132,6 +132,11 @@ class TasksController < ApplicationController
       render :text=>@task.errors[0]
     end
   end
+  def destroy
+    task=Task.find_by_id(params[:id])
+    task.delete if task
+    render :nothing=>true
+  end
 	def all_tasks
     render :json=>current_user.group_all_tasks.to_json(options)
   end
