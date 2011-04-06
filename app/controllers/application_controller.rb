@@ -307,7 +307,7 @@ layout :change_layout
 			end
 			#~ from_address=check_from_address_email(params[:from].to_s)
 			message_id=@dest_address[0].to_s.split('@')
-			message_id=message_id[0].split('ctzm')
+			message_id=message_id[0].split('ctzt')
 			message_id=message_id[1]
 			task=Task.find(message_id)		
 			project=Project.find(message.project_id)
