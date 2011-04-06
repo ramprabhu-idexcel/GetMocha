@@ -27,6 +27,16 @@ test:
   username: mochadbuser
   password: 58JKlop1
   socket: /var/run/mysqld/mysqld.sock
+  
+staging:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: getmochatestdb
+  pool: 5
+  username: getmochatestdbuser
+  password: soier423
+  socket: /var/run/mysqld/mysqld.sock
 
 production:
   adapter: mysql2

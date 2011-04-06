@@ -20,8 +20,12 @@ def check_email_reply_and_save
 				message_create_via_email
 			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:task_email]}")
 				task_create_via_email
+			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:invite_email]}")
+				invite_via_email
 			elsif @dest_address[0].to_s.include?("ctzm")
 				reply_to_message_via_email
+			elsif @dest_address[0].to_s.include?("ctzt")
+				reply_to_task_via_email
 			end
 			render :text => "success"
 	  end

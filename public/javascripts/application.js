@@ -449,7 +449,7 @@ alert('afetrr bt');
     
     
     
-    hide_header(); //hide the message headers initially
+//    hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
   }//end of message

@@ -155,7 +155,8 @@ class User < ActiveRecord::Base
   end
   def hash_activities_comments(type_ids)
     type_ids=[type_ids] unless type_ids.is_a?(Array)
-    comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
+    #~ comment_activities=activities.find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=?',"Comment",type_ids,false],:select=>[:is_starred,:is_read,:resource_id,:id])
+    comment_activities=Activity.check_hash_activities_comments_info(type_ids,self.id)
     values=[]
     comment_activities.collect {|t| values<<Comment.find_hash(t.resource_id,self).merge(t.attributes)}
     values
@@ -182,25 +183,29 @@ class User < ActiveRecord::Base
     guest_message_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
   end
   def unread_all_message
-    activities.find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=?',"Message",false,false])
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=?',"Message",false,false])
+    Activity.check_all_unread_messages(self.id)
   end
   def unread_all_message_count
     unread_all_message.count
   end
   def all_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at desc")
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at desc")
+    Activity.check_all_tasks_info(self.id)
   end
   def group_all_tasks
     all_tasks.group_by{|a| a.resource.task_list_id}
   end
   def my_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at desc")
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at desc")
+    Activity.check_my_tasks_info(self.id)
   end
   def group_my_tasks
     my_tasks.group_by{|a| a.resource.task_list_id}
   end
   def starred_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at desc")
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at desc")
+    Activity.check_starred_task(self.id)
   end
   def group_starred_tasks
     starred_tasks.group_by{|a| a.resource.task_list_id}
@@ -214,7 +219,8 @@ class User < ActiveRecord::Base
     completed_tasks.group_by{|a| a.resource.task_list_id}
   end
   def project_tasks(task_ids)
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?)',"Task",false,task_ids],:order=>"created_at desc")
+    Activity.user_projects_tasks(task_ids,self.id)
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?)',"Task",false,task_ids],:order=>"created_at desc")
   end
   def group_project_tasks(task_ids)
     project_tasks(task_ids).group_by{|a| a.resource.task_list_id}

@@ -5,17 +5,35 @@ class Comment < ActiveRecord::Base
   has_many :activities, :as => :resource, :dependent=>:destroy
   after_create :add_in_activity
   def add_in_activity
+<<<<<<< HEAD:app/models/comment.rb
     project=self.commentable.project
     project=self.commentable.task_list.project if self.commentable_type=="Task"
     project.users.each do |user|
       activity=self.activities.create! :user=>user
       activity.update_attribute(:is_read,true) if user.id==self.user_id
+=======
+    if self.commentable_type=="Message"
+      self.commentable.project.users.each do |user|
+        activity=self.activities.create! :user=>user
+        activity.update_attribute(:is_read,true) if user.id==self.user_id
+      end
+    else
+      self.commentable.task_list.project.users.each do |user|
+        activity=self.activities.create! :user=>user
+        activity.update_attribute(:is_read,true) if user.id==self.user_id
+      end
+>>>>>>> e87ca264171966a4f577e7159abd89e8065170f8:app/models/comment.rb
     end
     if self.commentable_type=="Message"
       self.commentable.subscribed_users.each do |activity|
         user=activity.user
         ProjectMailer.delay.message_reply(user,self)
       end
+    else
+      #~ self.commentable.subscribed_users.each do |activity|
+        #~ user=activity.user
+        #~ ProjectMailer.delay.message_reply(user,self)
+      #~ end
     end
   end
    def self.find_hash(id,current_user)
