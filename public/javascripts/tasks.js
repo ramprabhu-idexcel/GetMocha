@@ -224,6 +224,22 @@
   return false;
   });
   
+  //star the tasks
+  $('.star.task_star').live('click',function(){
+    var id=get_activity_id();
+    $('.actk:'+id).toggleClass('starred')
+    $.ajax({
+      url: '/star_message/'+id,
+      type: 'get',
+      success:function(data)
+      { 
+        display_star_count(data.count);
+      }
+    });
+    return false;
+  });
+  
+  //star the comment
   $('.message-star.star_comment').live('click',function(){
     var path=$(this).attr('href');
     $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
