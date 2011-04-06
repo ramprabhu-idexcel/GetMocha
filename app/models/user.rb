@@ -200,7 +200,8 @@ class User < ActiveRecord::Base
     my_tasks.group_by{|a| a.resource.task_list_id}
   end
   def starred_tasks
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at desc")
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at desc")
+    Activity.check_starred_task(self.id)
   end
   def group_starred_tasks
     starred_tasks.group_by{|a| a.resource.task_list_id}
@@ -214,7 +215,8 @@ class User < ActiveRecord::Base
     completed_tasks.group_by{|a| a.resource.task_list_id}
   end
   def project_tasks(task_ids)
-    activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?)',"Task",false,task_ids],:order=>"created_at desc")
+    Activity.user_projects_tasks(task_ids,current_user.id)
+    #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?)',"Task",false,task_ids],:order=>"created_at desc")
   end
   def group_project_tasks(task_ids)
     project_tasks(task_ids).group_by{|a| a.resource.task_list_id}

@@ -115,7 +115,8 @@ def add_in_activity(to_users,assign,user)
     end
   end
   def assigned_to
-    activity=activities.find(:first,:conditions=>['is_assigned=?',true])
+    #activity=activities.find(:first,:conditions=>['is_assigned=?',true])
+    activity=Activity.assigned_project(self.id)
     activity.present? ? activity.user.full_name : ''
   end
   def other_task_lists
