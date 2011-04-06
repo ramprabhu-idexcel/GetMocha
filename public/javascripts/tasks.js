@@ -77,38 +77,59 @@
   
   $('a.edit.save_taskname').live('click',function(){
     var content=$('#task_name').val();
-    var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
-    var save_link=$(this);
-    $.ajax({
-      url:'/tasks/'+task_id,
-      type:'put',
-      data:{'task[name]':content},
-      success:function(data){
-        if(data=="success")
-          save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
-        else
-          alert(data);
-      }
-    });
+    if($.trim(content)=="")
+      alert("Please enter the task name");
+    else
+    {
+      var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
+      var save_link=$(this);
+      $.ajax({
+        url:'/tasks/'+task_id,
+        type:'put',
+        data:{'task[name]':content},
+        success:function(data){
+          if(data=="success")
+            save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
+          else
+            alert(data);
+        }
+      });
+    }
     return false;
   });
   
   $('a.edit.save_task_desc').live('click',function(){
     var content=$('#task_description').val();
-    var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
-    var save_link=$(this);
-    $.ajax({
-      url:'/tasks/'+task_id,
-      type:'put',
-      data:{'task[description]':content},
-      success:function(data){
-        if(data=="success")
-          save_link.parent('p').html('<span>'+content+'</span><a class="edit task_description" href="#">Edit</a>');
-        else
-          alert(data);
-      }
-    });
+    if($.trim(content)=="")
+      alert("Please enter the task description");
+    else
+    {
+      var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
+      var save_link=$(this);
+      $.ajax({
+        url:'/tasks/'+task_id,
+        type:'put',
+        data:{'task[description]':content},
+        success:function(data){
+          if(data=="success")
+            save_link.parent('p').html('<span>'+content+'</span><a class="edit task_description" href="#">Edit</a>');
+          else
+            alert(data);
+        }
+      });
+    }
     return false;    
+  });
+  
+  $('.task-subscribe').live('click',function(){
+    var id=$('.task.tsem.open').attr('class').split(' ')[0].split('actk:')[1];
+    var content=$(this).text();
+    $.ajax({
+      url:'/subscribe/'+id,
+      type: 'get'
+    });
+    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+    $(this).text(result);
   });
   
   var restfulApp = Backbone.Controller.extend({

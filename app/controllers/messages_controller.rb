@@ -127,11 +127,7 @@ end
     @activity.update_attribute(:is_starred,starred)
     render :json=>{:count=>current_user.starred_messages_count}
   end
-  def subscribe
-    subscribed=!@activity.is_subscribed
-    @activity.update_attribute(:is_subscribed,subscribed)
-    render :nothing=>true
-  end
+
 	def unsubscribe
 		@activity.update_attribute(:is_subscribed,false)
     render :nothing=>true
