@@ -20,10 +20,22 @@
   });
   
   //complete/reopen the tasks
-  $(".checkbox > span.icon").live('click',function(){
+  $(".checkbox > span.icon.icon-sec").live('click',function(){
     $(this).toggleClass('checked');
     var tk_id=$(this).attr('class').split(' ')[0];
     var task_id=tk_id.split(':')[1];
+    $.ajax({
+      url:'/tasks/complete_task',
+      type:'put',
+      data:{id : task_id}
+    });
+    return false;
+  });
+
+  $(".checkbox > span.icon.icon-thd").live('click',function(){
+    $(this).toggleClass('checked');
+    $('.task.tsem.open').children('.left-icons').children('.checkbox').children('span').toggleClass('checked');
+    var task_id=get_task_id();
     $.ajax({
       url:'/tasks/complete_task',
       type:'put',
@@ -105,7 +117,7 @@
       alert("Please enter the task description");
     else
     {
-      var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
+      var task_id=get_task_id();
       var save_link=$(this);
       $.ajax({
         url:'/tasks/'+task_id,
@@ -260,7 +272,7 @@
         var starred=v.activity.is_starred;
         items.push('<div class="actk:'+v.activity.id+' task tsem '+(starred ? "starred" : "")+'"><div class="left-icons">');
         items.push('<a class="task-star" href="#" '+(starred ? '' : 'style="display:none;"')+'>Star</a>');    
-        items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
+        items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon icon-sec '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
         items.push('<div class="info">');
         items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value)+'">'+v.activity.resource.due_date_value+'</span>');
         items.push('<span class="name">'+v.activity.resource.assigned_to+'</span>');
@@ -279,7 +291,7 @@
     task=data.task;
     items.push('<div class="message-body">')
     items.push('<span style="display:none;" class="tsk-det" id="tk:'+task.id+'"></span>')
-    items.push('<div class="checkbox"><span class="icon '+(task.is_completed ? "checked":"")+'"></span></div>');
+    items.push('<div class="checkbox"><span class="icon icon-thd '+(task.is_completed ? "checked":"")+'"></span></div>');
     items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
     items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
     //other task-list-names
@@ -370,6 +382,11 @@
   function get_activity_id()
   {
     return $('.task.tsem.open').attr('class').split(' ')[0].split('actk:')[1];
+  }
+  
+  function get_task_id()
+  {
+    return $('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
   }
   
   function display_star_count(count){
