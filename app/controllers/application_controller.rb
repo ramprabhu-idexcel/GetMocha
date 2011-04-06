@@ -98,7 +98,7 @@ layout :change_layout
 				
 				
 				message=params[:html]
-				
+				title=params[:subject].to_s
 				
 				if message.include?("gmail_quote")
 				message=message.split('<div class="gmail_quote">')[0]
@@ -138,37 +138,46 @@ layout :change_layout
 				logger.info proj_user.inspect
 				logger.info user.inspect
 				logger.info message.inspect
-				#~ if ((!proj_user)  &&  project.is_public? )
-					#~ guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
-					#~ if user						
+				task_list=TaskList.find_by_project_id_and_name(project.id, "Default TaskList")
+				if !task_list
+					task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
+				end
+				if ((!proj_user)  &&  project.is_public? )
+					guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
+					if user						
 						#~ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
-						#~ message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
-						#~ else
+						task=Task.create(:name=>title,:description=>message,:user_id=>user.id,:task_list_id=>task_list.id)
+						task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
+						else
 						#~ message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
-						#~ message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id)
-						#~ end
-					 #~ if guest
-						 #~ ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
-					#~ elsif user && user.is_guest
-				  		#~ ProjectGuest.create(:guest_id=>user.id,:project_id=>project.id)
-					#~ end
+						task=Task.create(:name=>title,:description=>message,:user_id=>guest.id,:task_list_id=>task_list.id)
+						task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id)
+						end
+					 if guest
+						 ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
+					elsif user && user.is_guest
+				  		ProjectGuest.create(:guest_id=>user.id,:project_id=>project.id)
+					end
 				
-				#~ elsif ((user && !user.is_guest && proj_user) || project.is_public?)
+				elsif ((user && !user.is_guest && proj_user) || project.is_public?)
 					
 					#~ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
+					task=Task.create(:name=>title,:description=>message,:user_id=>user.id,:task_list_id=>task_list.id)
 					
-				#~ if params[:attachments] && params[:attachments].to_i > 0
-					#~ for count in 1..params[:attachments].to_i
-						#~ attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
-					#~ end
-				#~ end	
-      #~ end
-			#~ if message && message.project
-			#~ message.project.users.each do |user|
-     #~ activity=message.activities.create! :user=>user
-       #~ activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
-		 #~ end
-		 #~ end
+				if params[:attachments] && params[:attachments].to_i > 0
+					for count in 1..params[:attachments].to_i
+						attach=task.attachments.create(:uploaded_data => params["attachment#{count}"])
+					end
+				end	
+      end
+			if task && task.task_list.project
+			task.task_list.project.users.each do |user|
+     activity=task.activities.create! :user=>user
+       activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
+		 end
+		 end
+			logger.info task_list.inspect
+			logger.info task.inspect
 			
 		end
 		

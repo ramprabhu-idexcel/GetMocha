@@ -497,7 +497,7 @@ alert('afetrr bt');
     return false;
   });
     $('.create_task').live('click',function(){
-  /*  $.ajax({
+    $.ajax({
       type :'get',
       url :"/tasks/new",
       success: function(data){
@@ -505,11 +505,11 @@ alert('afetrr bt');
         $('#add_new_mod').show();
       }
     });
-    $('#add_new_mods').hide()*/
+    $('#add_new_mods').hide()
     return false;
   });
   $('.create_task_list').live('click',function(){
-  /*  $.ajax({
+  $.ajax({
       type :'get',
       url :"/task_lists/new",
       success: function(data){
@@ -517,7 +517,7 @@ alert('afetrr bt');
         $('#add_new_mod').show();
       }
     });
-    $('#add_new_mods').hide()*/
+    $('#add_new_mods').hide()
     return false;
   });
   //cancel message modal
