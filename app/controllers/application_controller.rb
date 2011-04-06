@@ -345,7 +345,54 @@ layout :change_layout
 		end
 		
 		
+		  def invite_via_email
 		
+       from_address=params[:from].to_s
+				if(from_address.include?('<'))
+					from_address=from_address.split('<')
+					from_address=from_address[1].split('>')
+					from_address=from_address[0]
+				end
+				#~ from_address=check_from_address_email(params[:from].to_s)
+		
+				to_address=params[:to].split(',')
+				cc_address=params[:cc].split(',') if params[:cc]
+				user=User.find_by_email(from_address)
+				
+				if user
+					message=params[:text]
+					name=params[:subject].to_s
+					#~ project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
+					#~ ProjectUser.create(:user_id => user.id, :project_id => project.id, :status => true)
+					to_address.each do |mail|
+						mail=mail.strip
+						if(mail.include?('<'))
+							mail=mail.split('<')
+							mail=mail[1].split('>')
+							mail=mail[0]
+						end
+						if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
+							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+              ProjectMailer.delay.invite_people(user,invite)
+						end
+					end
+					
+					if cc_address
+					cc_address.each do |mail|
+						mail=mail.strip
+						if(mail.include?('<'))
+							mail=mail.split('<')
+							mail=mail[1].split('>')
+							mail=mail[0]
+						end
+						if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
+							invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+							ProjectMailer.delay.invite_people(user,invite)
+						end
+					end
+					end
+				end
+      end
 		
 		
 		
