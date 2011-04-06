@@ -7,7 +7,11 @@ class ActivitiesController < ApplicationController
   def star_message
     starred=!@activity.is_starred
     @activity.update_attribute(:is_starred,starred)
-    render :json=>{:count=>current_user.starred_messages_count}
+    if params[:task]
+      render :json=>{:count=>current_user.starred_task_count}
+    else
+      render :json=>{:count=>current_user.starred_messages_count}
+    end
   end
   def subscribe
     subscribed=!@activity.is_subscribed

@@ -52,7 +52,7 @@
     if(has_url=="")
       var secondary_url="all_tasks";
     else
-      var secondary_url=(window.location.hash).split('#')[1];
+      var secondary_url=(window.location.hash).split('#')[1].split('/')[0];
     window.location.hash="#"+secondary_url+"/"+activity_id;
     $('.task_header').show();
   });
@@ -231,6 +231,7 @@
     $.ajax({
       url: '/star_message/'+id,
       type: 'get',
+      data:{'task':true},
       success:function(data)
       { 
         display_star_count(data.count);
