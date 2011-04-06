@@ -1,6 +1,6 @@
 $.messages;
  (function($) {
-
+    $('.task_header').hide();
      var restfulApp = Backbone.Controller.extend({
          restfulUrl: $.host,
          routes: {
