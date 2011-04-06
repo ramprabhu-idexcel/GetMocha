@@ -13,7 +13,8 @@ class TasksController < ApplicationController
       Attachment.delete(attach)
 		end
     @users=current_user.my_contacts
-		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+		#~ @projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+		@projects=Project.check_project_users(current_user)
 		@user_emails=[]
 		@t_list=[]
 		@project_names=[]
