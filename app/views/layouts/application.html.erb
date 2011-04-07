@@ -969,11 +969,18 @@ if(is_open=="0")
 					}
 					
 				}
+				else
+				{
+				window.location.hash="#all_tasks";
+						document.getElementById('all_tasks').className="all-tasks open";
+				}
 		 }
 		}
 		
 		function tasks_navigation_right()
 		{
+			task_length=$('.m-panel').children().length;
+			alert(task_length);
 		}
 		
 </script>
