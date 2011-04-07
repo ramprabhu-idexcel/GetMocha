@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 	before_filter :authenticate_user!
 #  before_filter :find_activity,:only=>['subscribe','star_task','show','unsubscribe','destroy','project_task_comment']
 	layout 'application', :except=>['new']
-	 before_filter :find_project_task,:only=>['update','complete_task']
+	 before_filter :find_project_task,:only=>['update','complete_task','destroy']
 	def index
 		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
@@ -132,6 +132,10 @@ class TasksController < ApplicationController
       render :text=>@task.errors[0]
     end
   end
+  def destroy
+    @task.delete if @task
+    render :nothing=>true
+  end
 	def all_tasks
     render :json=>current_user.group_all_tasks.to_json(options)
   end
@@ -159,7 +163,7 @@ class TasksController < ApplicationController
     task=activity.resource
     comment_ids=task.comments.map(&:id)
     task_values=task.third_pane_data
-    render :json=>{:task=>task_values}.to_json
+    render :json=>{:task=>task_values,:comments=>current_user.hash_activities_comments(comment_ids)}.to_json
   end
   private
   def options

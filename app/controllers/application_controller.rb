@@ -410,6 +410,13 @@ layout :change_layout
 				logger.info @from_address
 			
 		end	
+    
+  def remove_timestamps
+    Activity.record_timestamps=false
+  end
+  def set_timestamps
+    Activity.record_timestamps=true
+  end
   protected
   def http_authenticate
     authenticate_or_request_with_http_basic do |user_name, password|

@@ -23,7 +23,7 @@ GetMocha::Application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :staging
+  #config.action_mailer.delivery_method = :staging
     config.action_mailer.default_url_options = { :host => 'test.getmocha.com' }
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
@@ -32,6 +32,10 @@ GetMocha::Application.configure do
   # config.active_record.schema_format = :sql
 
   # Print deprecation notices to the stderr
+  config.middleware.use ExceptionNotifier,
+  :email_prefix => "[Staging Exception] ",
+  :sender_address => %{"Exception Notifier" <admin@getmocha.com>},
+  :exception_recipients => %w{priya@railsfactory.org senthilkumar@sedin.co.in c.selvakumar@sedin.co.in kirubakaran@sedin.co.in ramprabu.n@railsbuddies.com}
   config.active_support.deprecation = :stderr
   ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {

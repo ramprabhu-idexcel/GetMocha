@@ -101,6 +101,12 @@ class User < ActiveRecord::Base
   def all_messages_count
     total_messages.count
   end
+  def starred_tasks
+    activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Task",true,false)
+  end
+  def starred_task_count
+    starred_tasks.count+starred_comments.count
+  end
   #starred messages from the project
   def project_starred_messages(project_id,sort_by,order)
     b=[]

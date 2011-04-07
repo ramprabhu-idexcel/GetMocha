@@ -7,12 +7,21 @@ class ActivitiesController < ApplicationController
   def star_message
     starred=!@activity.is_starred
     @activity.update_attribute(:is_starred,starred)
-    render :json=>{:count=>current_user.starred_messages_count}
+    if params[:task]
+      render :json=>{:count=>current_user.starred_task_count}
+    else
+      render :json=>{:count=>current_user.starred_messages_count}
+    end
   end
   def subscribe
     subscribed=!@activity.is_subscribed
     @activity.update_attribute(:is_subscribed,subscribed)
     render :nothing=>true
+  end
+  def star_message
+    starred=!@activity.is_starred
+    @activity.update_attribute(:is_starred,starred)
+    render :json=>{:count=>current_user.starred_messages_count}
   end
   private
   def find_activity
@@ -20,10 +29,4 @@ class ActivitiesController < ApplicationController
     params[:order] ||="Ascending"
     @activity=Activity.find_by_id(params[:activity_id])  if params[:activity_id]
 	end
-  def remove_timestamps
-    Activity.record_timestamps=false
-  end
-  def set_timestamps
-    Activity.record_timestamps=true
-  end
 end

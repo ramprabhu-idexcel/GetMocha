@@ -16,7 +16,7 @@ module TasksHelper
   end
   def link_to_starred_tasks
     count=current_user.starred_tasks.count
-    link_to form_content(count,"Starred"),"#starred_tasks",:class=>"starred"
+    link_to form_content(count,"Starred"),"#starred_tasks",:class=>"starred starred_count"
   end
   def link_to_completed_tasks
     count=current_user.completed_tasks.count
