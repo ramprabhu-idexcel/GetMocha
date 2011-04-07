@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 	before_filter :authenticate_user!
 #  before_filter :find_activity,:only=>['subscribe','star_task','show','unsubscribe','destroy','project_task_comment']
 	layout 'application', :except=>['new']
-	 before_filter :find_project_task,:only=>['update','complete_task','destroy']
+	 before_filter :find_task,:only=>['update','complete_task','destroy','assign_task']
 	def index
 		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
@@ -164,6 +164,13 @@ class TasksController < ApplicationController
     task_values=task.third_pane_data
     render :json=>{:task=>task_values,:comments=>current_user.hash_activities_comments(comment_ids)}.to_json
   end
+  def assign_task
+    assigned_user=@task.assigned_user
+    assigned_user.update_attribute(:is_assigned,false)
+    activity=Activity.find_task_activity(@task.id,params[:user_id])
+    activity.update_attribute(:is_assigned,true)
+    render :nothing=>true
+  end
   private
   def options
     {:except=>unwanted_columns,:include=>{:resource=>{:methods=>task_methods}}}
@@ -174,7 +181,7 @@ class TasksController < ApplicationController
 	def task_methods
     [:task_list_name,:due_date_value,:assigned_to]
   end
-	def find_project_task
+	def find_task
 		@task=Task.find_by_id(params[:id])
 	 end	
 end
