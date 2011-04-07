@@ -14,11 +14,12 @@ GetMocha::Application.routes.draw do
 end
   get "admin_panel" =>'admins#new'
   post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
-  post "admin_settings"=>'admins#settings', :as=>:admin_page
+  get "admin_settings"=>'admins#settings', :as=>:admin_page
   get "admins/users"=>'admins#users'
   get "admins/projects"=>'admins#projects'
   get "admins/analetics"=>'admins#analetics'
-  resources :admins do
+devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"} 
+ resources :admins do
       member do
       post 'remove_user'
       post 'remove_project'

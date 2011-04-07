@@ -7,11 +7,11 @@ before_filter :find_project
 layout :change_layout
   def change_layout
     if devise_controller?
-      if (controller_name=="confirmations")
+      if (controller_name=="confirmations" || controller_name=="admin_confirmations")
            %w{show}.include?(action_name) ? "before_login" : "application"
       elsif controller_name=="registrations"
          %w{edit}.include?(action_name) ? false : "before_login"
-      elsif controller_name=="sessions"
+      elsif controller_name=="sessions" || controller_name=="admin_sessions"
          %w{edit}.include?(action_name) ? "application" : "before_login"
       else
           %w{edit}.include?(action_name) ? "before_login" : "application"

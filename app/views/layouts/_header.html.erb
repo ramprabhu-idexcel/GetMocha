@@ -1,5 +1,7 @@
 <div class="header">
+	<%if controller_name!="admins"%>
 	<div class="l-header">
+	
 		<ul class="nav">
 			<li><a href="/messages" class="nav-messages"><span class="icon"></span></a></li>
 
@@ -25,7 +27,20 @@
 			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
 			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
 		</ul>
-		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
-    <%=link_to '','#project-settings',:class=>"settings project-settings"%>
+		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%#=current_user.full_name%></a>
+    <%#=link_to '','#project-settings',:class=>"settings project-settings"%>
+		<%else%>
+		<div class="l-header">
+		</div>
+	<div class="m-header">
+	
+	</div>
+
+	
+	<div class="r-header">
+		
+		<a href="#account-dropdown" class="username admin_drop_down"><span class="icon"></span>Admin</a>
+    	</div>
+			<%end%>
 	</div>
 </div>
