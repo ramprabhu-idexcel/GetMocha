@@ -668,6 +668,7 @@ alert('afetrr bt');
     $('body').attr('class','settings');
     $('.sort-by').hide();
     document.title="Settings | Mocha"
+    return false;
   });
   
    /************************************************Edit the User profile*****************************************/
