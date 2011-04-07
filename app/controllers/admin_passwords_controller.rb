@@ -6,7 +6,8 @@ class AdminPasswordsController < Devise::PasswordsController
          errors=[]
          p "-------------------"
          p params
-         self.resource = resource_class.send_reset_password_instructions(params[:resource_name])
+         p resource_name.inspect
+         self.resource = resource_class.send_reset_password_instructions({:email=>Admin.first.email})
          p"---------------------"
          p resource.inspect
          p"-------------"
@@ -21,12 +22,17 @@ class AdminPasswordsController < Devise::PasswordsController
     end
   end
   def edit
+    p"nnnnnnnnnnnnnnnnnnnnnnn"
     self.resource = resource_class.new
-    a=User.find_by_reset_password_token(params[:reset_password_token])
+    a=Admin.find_by_reset_password_token(params[:reset_password_token])
+    p "ppppppppppppppppppppppp"
     resource.reset_password_token = params[:reset_password_token]
+    p "---------------"
     if !a
-      redirect_to '/signin'
+      p "00000000000000000000"
+      redirect_to '/admins/sign_in'
     else
+      p"oooooooooooooooooooooooo"
       render_with_scope :edit
     end
   end
