@@ -156,6 +156,7 @@ end
     logger.info task_list.inspect
     logger.info task.inspect
     logger.info title.inspect
+    logger.info task.errors.inspect
     if task && task.task_list.project
       task.task_list.project.users.each do |user|
         activity=task.activities.create! :user=>user
@@ -369,7 +370,6 @@ end
 end
 end
 end
-    
 end
 def check_from_address_email
 
@@ -399,7 +399,7 @@ else
 end
     end
     warden.custom_failure! if performed?
-  end
+ end
 #~ def from_email_id
 #~ @from_address=(params[:from].to_s)
   #~ end
