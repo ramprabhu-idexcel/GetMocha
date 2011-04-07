@@ -134,7 +134,7 @@ layout :change_layout
 				logger.info ex_task.inspect
 				title=ex_task.name
 				logger.info title.inspect
-				tilte_id=title.split(params[:subject].to_s)[1]
+				title_id=title.split(params[:subject].to_s)[1]
 				logger.info title_id.inspect
 				title_id=title_id.to_i+1
 				logger.info title_id.inspect
