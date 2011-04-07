@@ -42,4 +42,25 @@ class Activity < ActiveRecord::Base
   def unread_all_message(current_user)
     find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=? AND user_id=?',"Message",false,false,current_user.id])
   end
+  def self.user_projects_tasks(task_ids,user_id)
+    find(:all,:conditions=>['resource_type=? AND is_delete=? AND resource_id IN (?) AND user_id=?',"Task",false,task_ids,user_id],:order=>"created_at desc")
+  end
+  def self.assigned_project(user_id)
+    find(:first,:conditions=>['is_assigned=? AND user_id=?',true,user_id])
+  end
+  def self.check_starred_task(user_id)
+    find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=? AND user_id=?',"Task",false,true,user_id],:order=>"created_at desc")
+  end
+  def self.check_all_unread_messages(user_id)
+  find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=? AND user_id=?',"Message",false,false,user_id])
 end
+ def self.check_all_tasks_info(user_id)
+ find(:all,:conditions=>['resource_type=? AND is_delete=? AND user_id=?',"Task",false,user_id],:order=>"created_at desc")
+ end
+ def self.check_my_tasks_info(user_id)
+  find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=? AND user_id=?',"Task",false,true,user_id],:order=>"created_at desc")
+end
+ def self.check_hash_activities_comments_info(resource_id,user_id)
+   find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=? AND user_id=?',"Comment",resource_id,false,user_id],:select=>[:is_starred,:is_read,:resource_id,:id])
+ end
+ end

@@ -1,6 +1,6 @@
 $.messages;
  (function($) {
-
+    $('.task_header').hide();
      var restfulApp = Backbone.Controller.extend({
          restfulUrl: $.host,
          routes: {
@@ -19,11 +19,12 @@ $.messages;
           
           else if((page=="") && ((window.location+"")==$.host+"messages"))
           {
-            var restfulPageUrl = this.restfulUrl+"all_messages";
-            this.loadRestfulData( restfulPageUrl );
-            $('.sort-by').show();
-            $('.message_header').hide();
-            $('#comment_area').html('');
+	  window.location.hash="#all_messages";
+            //var restfulPageUrl = this.restfulUrl+"all_messages";
+            //this.loadRestfulData( restfulPageUrl );
+            //$('.sort-by').show();
+            //$('.message_header').hide();
+            //$('#comment_area').html('');
           }
           else if(page.search(/\d/)==0)
           {

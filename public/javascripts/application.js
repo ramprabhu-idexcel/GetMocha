@@ -172,11 +172,7 @@ alert('afetrr bt');
       $('.comment-contain').hide();
     }
     
-    function close_comment_area()
-    {
-      $('.comment-contain').toggle('slow');
-      $('#comment-message').val('');
-    }
+
     //find the current url
     function sort_path()
     {
@@ -491,7 +487,7 @@ alert('afetrr bt');
     
     
     
-    hide_header(); //hide the message headers initially
+//    hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
   }//end of message
@@ -535,7 +531,7 @@ alert('afetrr bt');
     return false;
   });
     $('.create_task').live('click',function(){
-  /*  $.ajax({
+    $.ajax({
       type :'get',
       url :"/tasks/new",
       success: function(data){
@@ -543,11 +539,11 @@ alert('afetrr bt');
         $('#add_new_mod').show();
       }
     });
-    $('#add_new_mods').hide()*/
+    $('#add_new_mods').hide()
     return false;
   });
   $('.create_task_list').live('click',function(){
-  /*  $.ajax({
+  $.ajax({
       type :'get',
       url :"/task_lists/new",
       success: function(data){
@@ -555,7 +551,7 @@ alert('afetrr bt');
         $('#add_new_mod').show();
       }
     });
-    $('#add_new_mods').hide()*/
+    $('#add_new_mods').hide()
     return false;
   });
   //cancel message modal
@@ -1257,6 +1253,12 @@ function find_month(month)
     month_number="0"+month_number;
   return month_number;
 }
+function close_comment_area()
+{
+  $('.comment-contain').toggle('slow');
+  $('#comment-message').val('');
+}
+
 //Task & Tasklist
  $('#tl_add').live('click',function(){
  var a=$('#tasklists_tlname').val();

@@ -30,13 +30,17 @@ class AdminsController < ApplicationController
 			render :partial=>'projects',:locals=>{:projects=>@projects}
 	end
 	def analetics
-		@p_active_count=Project.find(:all, :conditions=>['status=?',true])
-		@p_completed_count=Project.find(:all, :conditions=>['status=?',false])
+		#~ @p_active_count=Project.find(:all, :conditions=>['status=?',true])
+		@p_active_count=Project.p_count_active
+		#~ @p_completed_count=Project.find(:all, :conditions=>['status=?',false])
+		@p_completed_count=Project.p_count_completed
 		@m_count=Message.find(:all)
 		@tl_count=TaskList.find(:all)
 		@t_count=Task.find(:all)
-		@u_count=User.find(:all,:conditions=>['is_guest=?',false])
-		@g_count=User.find(:all,:conditions=>['is_guest=?',true])
+		#~ @u_count=User.find(:all,:conditions=>['is_guest=?',false])
+		@u_count=User.u_count_val
+		#~ @g_count=User.find(:all,:conditions=>['is_guest=?',true])
+		@g_count=User.g_count_data
 			render :partial=>'analetics',:locals=>{:p_active_count=>@p_active_count,:p_completed_count=>@p_completed_count,:m_count=>@m_count,:tl_count=>@tl_count,:t_count=>@t_count,:u_count=>@u_count,:g_count=>@g_count}
 	end
 		def remove_user

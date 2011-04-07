@@ -62,8 +62,8 @@ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"ad
   match 'project/:project_id/:activity_id'=>'messages#show',:as=>'project_message_comment',:method=>:get
   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
   match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
-  match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
-  match 'subscribe/:activity_id'=>'messages#subscribe',:as=>'subscribe_message',:method=>:get
+  match 'star_message/:activity_id'=>'activities#star_message',:as=>'star_message',:method=>:get
+  match 'subscribe/:activity_id'=>'activities#subscribe',:as=>'subscribe_activity',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
@@ -89,6 +89,7 @@ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"ad
     end
   end
   match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
+  resources :activities
   resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
