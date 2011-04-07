@@ -351,7 +351,7 @@ strong {
 
 .message-body { padding: 20px 20px 10px 20px; }
 .message-body a { color: #1e658a; text-decoration: none; }
-.message-body h2 { float: left; }
+/*.message-body h2 { float: left; }*/ /* modified by railsfactory*/
 .tasks .message-body h2 {  margin-left: 30px; }
 .tasks .message-body .checkbox { margin: 5px 0 -20px 0; }
 .message-body .post-time, .message-body .recipients, .message-body .filed-under { margin-bottom: 6px; padding: 0; font-size: 13px; float: left; clear: both; }
