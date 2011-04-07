@@ -350,7 +350,7 @@
         items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon icon-sec '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
         items.push('<div class="info">');
         items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value)+'">'+v.activity.resource.due_date_value+'</span>');
-        items.push('<span class="name">'+v.activity.resource.assigned_to+'</span>');
+        items.push('<span class="name">'+v.activity.resource.assigned_to[0]+'</span>');
         items.push('</div>');
         items.push('<div class="task-name"><h4>'+v.activity.resource.name+'</h4></div>');
         items.push('<div class="clear-fix"/></div>');        
@@ -379,7 +379,7 @@
     });      
     items.push('</ul>');
     items.push('</div>');
-    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to+'</a></p><hr/>');
+    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to[0]+'</a></p><hr/>');
     //other teammembers
     items.push('<div class="task-dropdown assigned-to" style="display:none;">');
     items.push('<div class="task-dropdown-t"></div>');
