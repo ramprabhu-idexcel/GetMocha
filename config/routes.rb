@@ -18,13 +18,16 @@ end
   get "admins/users"=>'admins#users'
   get "admins/projects"=>'admins#projects'
   get "admins/analetics"=>'admins#analetics'
-devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"} 
+ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"}
+ get "admin_change_password",:to=>"admin_passwords#edit",:as=>"edit_admin_password"
  resources :admins do
       member do
       post 'remove_user'
       post 'remove_project'
   end
-  end
+end
+match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondary_email',:method=>:get
+  match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
   resources :projects do
     collection do
       post 'remove_people'
@@ -98,9 +101,6 @@ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"ad
   match 'email' =>"home#email"
   match '/home/images'=>"home#images"
   match '*a', :to => 'errors#routing'
-
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-	layout "admin_application",:except=>["new","reset_password"]
+	layout "admin_application",:except=>["new"]
 	#layout 'before_login', :only=>["new","reset_password"]
 
  def new
@@ -17,9 +17,6 @@ class AdminsController < ApplicationController
 			end
 	def settings
 		render "settings"
-	end
-	def reset_password
-		
 	end
 	def users
 		@users=User.find(:all)

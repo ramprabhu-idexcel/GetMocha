@@ -287,7 +287,17 @@
     return false;
   });
   
-
+  $('.tkl-down').live('click',function(){
+    $('.tkl-down').removeClass('selected');
+    $(this).addClass('selected');
+    var task_list=$(this).children('span').attr('class').split('tkl:')[1];
+    var task_id=get_task_id();
+    $.ajax({
+      url:'tasks/'+task_id,
+      type:'put',
+      data:{'task[task_list_id]' : task_list}
+    });
+  });
   
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
@@ -365,7 +375,7 @@
     items.push('<div class="task-dropdown-t"></div>');
     items.push('<ul>');
     $.each(task.other_task_lists,function(i,v){
-      items.push('<li '+(task.task_list_id==v.task_list.id ? "class=\"selected\"" : "")+'><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
+      items.push('<li class="tkl-down '+(task.task_list_id==v.task_list.id ? "selected" : "")+'"><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
     });      
     items.push('</ul>');
     items.push('</div>');
