@@ -121,6 +121,26 @@ layout :change_layout
 		if !task_list
 			task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
 		end
+				ex_task=Task.find_by_name(title)
+		logger.info ex_task.inspect
+		if ex_task
+			logger.info "********************"
+			existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
+			logger.info existing_task.inspect
+			if existing_task && existing_task.count > 0
+				logger.info "--------------------------------------------"
+				ex_task=existing_task.last
+				logger.info ex_task.inspect
+				title=ex_task.title
+				tilte_id=title.split(params[:subject].to_s)[1]
+				title_id=title_id.to_i+1
+				title=params[:subject].to_s+"title_id"
+			else
+				logger.info "############################"
+				title=ex_task.title+"1"
+			end
+		logger.info title.inspect
+		end
 		if ((!proj_user)  &&  project.is_public? )
 			guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
 		if user						
