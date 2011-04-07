@@ -313,6 +313,16 @@
   
   $('.invite-btn.dp-down').live('click',function(){
     var email=$.trim($('#invite_email').val());
+    if(email=="")
+    {
+      alert("Please enter a email");
+      return false;
+    }
+    else if(IsValidEmail(email)==false)
+    {
+      alert('Please enter a valid email');
+      return false;
+    }
     var project_id=get_project_id();
     $.ajax({
       url:'/projects/invite_people',
@@ -502,6 +512,13 @@
     else
       $('a.starred.starred_count').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
   }
+  
+  function IsValidEmail(email)
+	{
+    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return filter.test(email);
+	}
+
   
   var app = new restfulApp;
   Backbone.emulateHTTP = true;
