@@ -299,6 +299,32 @@
     });
   });
   
+  $('.user_list').live('click',function(){
+    $('.user_list').removeClass('selected');
+    $(this).addClass('selected');
+    var task_id=get_task_id();
+    var user_id=$(this).attr('id').split('ul:')[1];
+    /*$.ajax({
+      url:'/tasks/'+task_id+'/assign_task',
+      type:'put',
+      data:{'user_id' : user_id}
+    });*/
+  });
+  
+  $('.invite-btn.dp-down').live('click',function(){
+    var email=$.trim($('#invite_email').val());
+    var project_id=get_project_id();
+    $.ajax({
+      url:'/projects/invite_people',
+      type: 'post',
+      data: {'invite[email]':email,
+             'invite[project_id]' :project_id}
+    });
+    $('.task-dropdown.assigned-to').fadeOut();
+    $('#invite_email').val('');
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -385,15 +411,16 @@
     items.push('<div class="task-dropdown-t"></div>');
     items.push('<ul>');
     $.each(task.team_members,function(i,v){
-      items.push('<li class="'+(task.assigned_to[1]==v.id ? "selected" : "")+'" id="ul:'+v.id+'"><span>'+v.name+'</span></li>');
+      items.push('<li class="user_list '+(task.assigned_to[1]==v.id ? "selected" : "")+'" id="ul:'+v.id+'"><span>'+v.name+'</span></li>');
     });
     items.push('</ul>')
     
-    items.push('<input type="text" onfocus="this.select()" onclick="this.value=\'\';"class="textfield" value="Invite by email" name="assign"/>');
-    items.push('<a class="invite-btn" href="#">+</a>');
+    items.push('<input type="text" id="invite_email" onfocus="this.select()" onclick="this.value=\'\';"class="textfield" value="Invite by email" name="assign"/>');
+    items.push('<a class="invite-btn dp-down" href="#">+</a>');
     items.push('</div>');
     items.push('<div class="main-content"><p><span>'+task.description+'</span><a class="edit task_description" href="#">Edit</a></p></div>');
     items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
+    items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments
     items.push('<div class="prev-messages">');
@@ -465,6 +492,10 @@
     return $('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
   }
   
+  function get_project_id()
+  {
+    return $('.pl_tk').attr('id').split('pk:')[1];
+  }
   function display_star_count(count){
     if(count==0)
       $('a.starred.starred_count').html('<span class="icon"></span>Starred' );

@@ -161,6 +161,14 @@ class ProjectsController < ApplicationController
 			end
 		end
 	end
+  def invite_people
+    invitation=Invitation.new(params[:invite])
+    if invitation.valid?
+      invitation.save
+      ProjectMailer.delay.invite_people(current_user,invitation)
+    end
+    render :nothing=>true
+  end
   def join_project
 		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
 		if @invite
