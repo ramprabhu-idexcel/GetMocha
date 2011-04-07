@@ -113,41 +113,41 @@ layout :change_layout
 		if proj_user && proj_user.status==false
 			proj_user.update_attributes(:status=>true)
 		end
-		logger.info project.inspect
-		logger.info proj_user.inspect
-		logger.info user.inspect
-		logger.info message.inspect
+		
+		
+		
+		
 		task_list=TaskList.find_by_project_id_and_name(project.id, "Default TaskList")
 		if !task_list
 			task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
 		end
-		logger.info task_list.inspect
+		
 				#~ ex_task=Task.find_by_name(title)
 				ex_task=Task.find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
-		logger.info ex_task.inspect
+		
 		if ex_task
-			logger.info "********************"
+			
 			#~ existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
 			existing_task=Task.find_by_sql("select * from task_lists,tasks where tasks.name REGEXP '^"+title+"[[:digit:]]+' and task_lists.project_id='"+project.id.to_s+"'")
 
-			logger.info existing_task.inspect
+			
 			if existing_task && existing_task.count > 0
-				logger.info "--------------------------------------------"
+				
 				ex_task=existing_task.last
-				logger.info ex_task.inspect
+				
 				title=ex_task.name
-				logger.info title.inspect
+				
 				title_id=title.split(params[:subject].to_s)[1]
-				logger.info title_id.inspect
+				
 				title_id=title_id.to_i+1
-				logger.info title_id.inspect
+				
 				title=params[:subject].to_s+title_id.to_s
-				logger.info "--------------------------------------------"
+				
 			else
-				logger.info "############################"
+				
 				title=ex_task.name+"1"
 			end
-		logger.info title.inspect
+		
 		end
 		if ((!proj_user)  &&  project.is_public? )
 			guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
@@ -177,8 +177,8 @@ layout :change_layout
 				activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
 			end
 		end
-		logger.info task_list.inspect
-		logger.info task.inspect
+		
+		
 		#~ task.send_task_notification_to_team_members(user,@notify,@tasks)
 	end
 		
@@ -422,15 +422,15 @@ layout :change_layout
 				end
       end
 		def check_from_address_email
-		logger.info "************////////////////////////////////////////////************"
+		
 		@from_address=(params[:from].to_s)
-		logger.info "Start"
+		
 			if(@from_address.include?('<'))
 					@from_address=@from_address.split('<')
 					@from_address=@from_address[1].split('>')
 					@from_address=@from_address[0]
 				end
-				logger.info @from_address
+				
 			
 		end	
     def remove_timestamps
