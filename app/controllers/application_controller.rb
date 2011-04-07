@@ -133,9 +133,13 @@ layout :change_layout
 				ex_task=existing_task.last
 				logger.info ex_task.inspect
 				title=ex_task.name
+				logger.info title.inspect
 				tilte_id=title.split(params[:subject].to_s)[1]
+				logger.info title_id.inspect
 				title_id=title_id.to_i+1
+				logger.info title_id.inspect
 				title=params[:subject].to_s+title_id.to_s
+				logger.info "--------------------------------------------"
 			else
 				logger.info "############################"
 				title=ex_task.name+"1"
@@ -331,7 +335,7 @@ layout :change_layout
 			message_id=message_id[0].split('ctzt')
 			message_id=message_id[1]
 			task=Task.find(message_id)		
-			project=Project.find(task.task_list.project_id)
+			project=Project.find(task.project_id)
 			user=User.find_by_email(from_address)
 			content1=params[:html].split("##Type above this line to post a reply to this message##")
 			content=content1[0]
@@ -414,12 +418,7 @@ layout :change_layout
 					end
 				end
       end
-		
-		
-		
-		
-		
-			def check_from_address_email
+		def check_from_address_email
 		logger.info "************////////////////////////////////////////////************"
 		@from_address=(params[:from].to_s)
 		logger.info "Start"
@@ -431,8 +430,7 @@ layout :change_layout
 				logger.info @from_address
 			
 		end	
-    
-  def remove_timestamps
+    def remove_timestamps
     Activity.record_timestamps=false
   end
   def set_timestamps
@@ -449,8 +447,6 @@ layout :change_layout
     end
     warden.custom_failure! if performed?
   end
-	
-
 	#~ def from_email_id
 	#~ @from_address=(params[:from].to_s)
   #~ end		

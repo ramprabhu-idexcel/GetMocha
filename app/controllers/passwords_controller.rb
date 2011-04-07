@@ -5,6 +5,7 @@ class PasswordsController < Devise::PasswordsController
   # PUT /resource/password
    def create
          errors=[]
+         p params[resource_name].inspect
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions

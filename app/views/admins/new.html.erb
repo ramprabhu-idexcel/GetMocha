@@ -77,7 +77,7 @@ var Login=true;
 $('#fpwd_reset').click(function(){
 $.ajax({
 		     url:'/admins/password',
-         type: "PUT",
+         type: "post",
         success: function(data){
 				if(typeof(data.failure)!="undefined"){
 				alert(data.failure);
