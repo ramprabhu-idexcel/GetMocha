@@ -823,6 +823,7 @@ if(is_open=="0")
 			var class1=$('#comment_area').children('').length;
 			var class_hide=$('#comment_area').css('display');
 			var project="true";
+			
 			if(class1==0 || class_hide=="none")
 			{
 				var all_tasks=document.getElementById('all_tasks').className;
@@ -830,7 +831,7 @@ if(is_open=="0")
 				var starred_tasks=document.getElementById('starred_tasks').className;
 				var completed_tasks=document.getElementById('completed_tasks').className;
 				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
-				{
+				{ 
 				  if(key=="down" || key=="Z")
 					{
 						window.location.hash="#my_tasks";
@@ -843,7 +844,7 @@ if(is_open=="0")
 					document.getElementById('all_tasks').className="all-tasks";
 					project="false";
 				}
-				if(my_tasks=="my-tasks open") // from my_tasks to starred_tasks
+				else if(my_tasks=="my-tasks open") // from my_tasks to starred_tasks
 				{
 					if(key=="down" || key=="Z") //down
 					{
@@ -858,7 +859,7 @@ if(is_open=="0")
 					document.getElementById('my_tasks').className="my-tasks";
 					project="false";
 				}
-				if(starred_tasks=="starred starred_count open") // from starred_tasks to completed_tasks
+				else if(starred_tasks=="starred starred_count open") // from starred_tasks to completed_tasks
 				{
 				  if(key=="down" || key=="Z") //down
 					{
@@ -873,7 +874,7 @@ if(is_open=="0")
 					document.getElementById('starred_tasks').className="starred starred_count";
 					project="false";
 				}
-				if(completed_tasks=="completed open")
+				else if(completed_tasks=="completed open")
 				{
 					if(key=="down" || key=="Z")
 					tasks_projects(key,"2");
@@ -885,18 +886,52 @@ if(is_open=="0")
 					document.getElementById('completed_tasks').className="completed";
 					project="false";
 				}
+				else
+				{
+				  tasks_projects(key,"3");
+				}
 			}
 			else
 			{
 				alert("Second panel");
 			}	
 		}
-		function tasks_projects(key,id)
+		function tasks_projects(key,pid)
 		{
 		 var project_length=$('.projects-list').children().length;
+		 var stop="false";
+		 
+		 if(pid=="2")
+		 {
+						var child=$('.projects-list').children()[0].id;
+						child=child.split('tpi')[1];
+						stop="true"
+						window.location.hash="#"+child;
+						$('.projects-list').children()[0].className="project open";
+						document.getElementById('completed_tasks').className="completed";
+		 }
 		 for(i=0; i<project_length; i++)
 		 {
-			
+				var cn=$('.projects-list').children()[i].className;
+				if(cn=="project open" && stop=="false" && (key=="down" || key=="Z"))
+				{
+					if(i<project_length-1)
+					{
+						var child=$('.projects-list').children('')[i+1].id;
+						child=child.split('tpi')[1];
+						$('.projects-list').children()[i].className="project";
+						$('.projects-list').children()[i+1].className="project open";
+						stop="true"
+						window.location.hash="#"+child;
+					}
+					else
+					{
+						window.location.hash="#all_tasks";
+						document.getElementById('all_tasks').className="all-tasks open";
+						$('.projects-list').children()[i].className="project";
+					}
+					
+				}
 		 }
 		}
 		
