@@ -413,7 +413,11 @@ layout :change_layout
   protected
   def http_authenticate
     authenticate_or_request_with_http_basic do |user_name, password|
+			if RAILS_ENV=="staging"
+				user_name == "railsfactory" && password == "mocha"
+			else
       user_name == "getmocha" && password == "m0cha345"
+			end
     end
     warden.custom_failure! if performed?
   end
