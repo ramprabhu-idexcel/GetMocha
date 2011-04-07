@@ -25,19 +25,17 @@ end
       post 'remove_user'
       post 'remove_project'
   end
-end
-match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondary_email',:method=>:get
-  match '/settings' =>'projects#settings', :as => 'project_settings', :method => :post
+  end
   resources :projects do
+    member do
+      get 'settings_pane'
+    end
     collection do
       post 'remove_people'
       post 'add_new'
       post 'update_proj_settings'
       get 'invite_people_settings'
       post 'invite_people'
-    end
-    member do
-      get 'settings_pane'
     end
   end
   resources :updates do
@@ -81,6 +79,9 @@ match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondar
   end
   # task routes
   resources :tasks do
+       member do
+      get :project_tasklists
+    end
     collection do
       put :complete_task
       get :all_tasks
@@ -88,10 +89,13 @@ match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondar
       get :completed_tasks
       get :my_tasks
     end
+<<<<<<< HEAD:config/routes.rb
     member do
       get :project_tasklists
       put :assign_task
     end
+=======
+>>>>>>> c1908dfa99f3321456e4c93c62869c2afa6d944b:config/routes.rb
   end
   match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
   resources :activities

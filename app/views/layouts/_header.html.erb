@@ -1,8 +1,7 @@
 <div class="header">
 	<%if controller_name!="admins"%>
 	<div class="l-header">
-	
-		<ul class="nav">
+	<ul class="nav">
 			<li><a href="/messages" class="nav-messages"><span class="icon"></span></a></li>
 
 			<li><a href="/tasks" class="nav-tasks"><span class="icon"></span></a></li>
@@ -18,8 +17,6 @@
 		<% end %>
 	<% end %>
 	</div>
-
-	
 	<div class="r-header">
 		<ul>
       <li class="settings_header" style="display:none;"><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" >Invite</a></li>
@@ -32,6 +29,7 @@
 		</ul>
 		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
     <%=link_to '','#project-settings',:class=>"settings project-settings"%>
+		</div>
 		<%else%>
 		<div class="l-header">
 		</div>
