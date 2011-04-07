@@ -3,7 +3,7 @@ class Task < ActiveRecord::Base
 	has_many :activities, :as => :resource, :dependent=>:destroy
 	has_many :comments, :as=>:commentable, :dependent=>:destroy
 	has_many :attachments ,:as => :attachable, :dependent=>:destroy
-	belongs_to :task_list
+	belongs_to :task_list,:touch => true 
 		belongs_to :project
 	belongs_to :guest
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
@@ -11,7 +11,7 @@ class Task < ActiveRecord::Base
 	validates :description , :length => { :within => 6..250 },
 									:presence => true
 validates :name, :presence   => true
-
+  after_create :update_task_list
 def add_in_activity(to_users,assign,user)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
 			assign=assign.split(',')
@@ -61,6 +61,9 @@ def add_in_activity(to_users,assign,user)
 		ProjectMailer.delay.task_notification(@user,@to_user,@task)
 		end
 	end
+  def update_task_list
+    self.task_list.update_attribute(:updated_at,Time.now)
+  end
 	def display_subscribed_users
     case subscribed_user_names.count
       when 0
