@@ -989,9 +989,24 @@ if(is_open=="0")
 				
 				if(task!="sub-header" && stop=="false")
 				{
+				  b=window.location.href;
+					
+					b=b.split("http://localhost:3000/")[1];
+					
+					
+					if(b.search("/")!=-1)
+					{
+			$('#comment_area').show();
+					var a=document.getElementById("tk_"+task_id).className;
+					document.getElementById("tk_"+task_id).className=a+" open";
+					}
+					else
+					{
 					window.location.hash=window.location.hash+"/"+task_id;
 					var a=document.getElementById("tk_"+task_id).className;
 					document.getElementById("tk_"+task_id).className=a+" open";
+						$('#comment_area').show();
+					}
 					stop="true";
 				}
 			}
@@ -1012,6 +1027,9 @@ if(is_open=="0")
 					a=a.split(" open")[0];
 					document.getElementById("tk_"+task_id).className=a;
 					$('#comment_area').hide();
+					a=window.location.hash=window.location.hash;
+					a=a.split("/"+task_id)[0];
+					window.location.hash=a;
 				}
 			}
 		}
