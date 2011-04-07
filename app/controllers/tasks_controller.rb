@@ -17,16 +17,16 @@ class TasksController < ApplicationController
 		#~ @projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		@projects=Project.check_project_users(current_user)
 		@user_emails=[]
-		@t_list=[]
-		@project_names=[]
-		if @users
+		#~ @t_list=[]
+		#~ @project_names=[]
+		#~ if @users
 		  @users.each do |f|
         @user_emails<<"#{f.email}"
 		  end
-		end
-	  @projects.each do |project|
-      @project_names<<"#{project.name}"
-    end
+		#~ end
+	  #~ @projects.each do |project|
+      #~ @project_names<<"#{project.name}"
+    #~ end
 	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:project_names=>@project_names,:t_list=>@t_list}
 	end
 	def create
@@ -34,13 +34,13 @@ class TasksController < ApplicationController
 		if !session[:project_name].nil?
 		  @project=Project.find_by_name(session[:project_name])
 		else
-		  @project=Project.find_by_name(params[:task][:project])
+		  @project=Project.find_by_name(params[:project_id])
 		end
 		if !@project
 			render :update do |page|
 			  if session[:project_name].nil?&&params[:task][:project].blank?
 				  page.alert "Please Enter the Project name"
-			  elsif !params[:task][:project].blank?
+			  elsif !params[:project_id].blank?
 			    page.alert "Please enter existing projects only"
 			  end
 		  end
@@ -60,9 +60,9 @@ class TasksController < ApplicationController
 					errors<<"Please enter valid notify email"
 					end
 		    end
-		    @tasklist=TaskList.find_by_name(params[:task][:tasklist])
+		    @tasklist=TaskList.find_by_name(params[:tasklist_id])
 			  if !@tasklist
-			    if !params[:task][:tasklist].blank?
+			    if !params[:tasklist_id].blank?
 			      errors<<"Please enter existing tasklist only"
 			    end
 		    else
@@ -106,15 +106,14 @@ class TasksController < ApplicationController
 	  end
   end
 	def project_tasklists
-		@t_list=[]
-		@proj=Project.find_by_name(params[:id])
+		@proj=Project.find_by_id(params[:id])
 		@tlist=@proj.task_lists
-		 if !@tlist.nil?
-	@tlist.each do |tl|
-		 @t_list<<"#{tl.name}" if !tl.name.nil?
-		 end
-		render :json=>{:data=>@t_list}.to_json
-	end
+		 #~ if !@tlist.nil?
+	#~ @tlist.each do |tl|
+		 #~ @t_list<<"#{tl.name}" if !tl.name.nil?
+		 #~ end
+		render :json=>{:datas=>@tlist}.to_json
+	#~ end
   end
 
   def show
