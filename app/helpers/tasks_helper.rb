@@ -8,19 +8,19 @@ module TasksHelper
   end
   def link_to_all_tasks
     count=current_user.all_tasks.count
-    link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks"
+    link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks",:id=>"all_tasks"
   end
   def link_to_my_tasks
     count=current_user.my_tasks.count
-    link_to form_content(count,"My Tasks"),"#my_tasks",:class=>"my-tasks"
+    link_to form_content(count,"My Tasks"),"#my_tasks",:class=>"my-tasks", :id=>"my_tasks"
   end
   def link_to_starred_tasks
     count=current_user.starred_tasks.count
-    link_to form_content(count,"Starred"),"#starred_tasks",:class=>"starred starred_count"
+    link_to form_content(count,"Starred"),"#starred_tasks",:class=>"starred starred_count",:id=>"starred_tasks"
   end
   def link_to_completed_tasks
     count=current_user.completed_tasks.count
-    link_to form_content(count,"Completed"),"#completed_tasks",:class=>"completed"
+    link_to form_content(count,"Completed"),"#completed_tasks",:class=>"completed",:id=>"completed_tasks"
   end
   def project_tab(project)
       content_tag(:div,'',:class=>'project',:id=>"tpi#{project.id}") do
