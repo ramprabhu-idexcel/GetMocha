@@ -385,7 +385,7 @@
     items.push('<div class="task-dropdown-t"></div>');
     items.push('<ul>');
     $.each(task.team_members,function(i,v){
-      items.push('<li class="" id="ul:'+v.id+'"><span>'+v.name+'</span></li>');
+      items.push('<li class="'+(task.assigned_to[1]==v.id ? "selected" : "")+'" id="ul:'+v.id+'"><span>'+v.name+'</span></li>');
     });
     items.push('</ul>')
     
