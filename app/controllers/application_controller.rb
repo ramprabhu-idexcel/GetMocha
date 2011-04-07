@@ -117,7 +117,7 @@ layout :change_layout
 		ex_task=Task.find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
 		if ex_task
 			#~ existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
-			existing_task=existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+' and task_list_id='"+task_list.id+"'" )
+			existing_task=existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+' and task_list_id='"+task_list.id.to_s+"'" )
 			#~ existing_task=Task.find_by_sql("select * from task_lists,tasks where tasks.name REGEXP '^"+title+"[[:digit:]]+' and task_lists.project_id='"+project.id.to_s+"'")
 			if existing_task && existing_task.count > 0
 				ex_task=existing_task.last
