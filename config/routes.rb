@@ -34,6 +34,7 @@ match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondar
       post 'add_new'
       post 'update_proj_settings'
       get 'invite_people_settings'
+      post 'invite_people'
     end
     member do
       get 'settings_pane'
@@ -89,6 +90,7 @@ match '/verify/:verification_code'=>'updates#verify_email',:as=>'verify_secondar
     end
     member do
       get :project_tasklists
+      put :assign_task
     end
   end
   match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
