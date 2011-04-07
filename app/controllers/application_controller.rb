@@ -134,7 +134,7 @@ layout :change_layout
 				title=ex_task.name
 				tilte_id=title.split(params[:subject].to_s)[1]
 				title_id=title_id.to_i+1
-				title=params[:subject].to_s+title_id
+				title=params[:subject].to_s+title_id.to_s
 			else
 				logger.info "############################"
 				title=ex_task.name+"1"
