@@ -18,7 +18,7 @@ def add_in_activity(to_users,assign,user)
 			p to_users
      # self.project.users.each do |user|
 		# assign=
-      activity=self.activities.create!(:user=>user, :is_subscribed=>true)
+      activity=self.activities.create!(:user=>user, :is_subscribed=>true, :is_assigned=>true)
       #activity.update_attributes(:is_assigned=>(user.email==assign),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
     to_users.each do |email|
 			email=email.lstrip
