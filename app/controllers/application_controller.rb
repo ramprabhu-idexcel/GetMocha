@@ -364,7 +364,6 @@ end
 end
 end
 end
-    
 end
 def check_from_address_email
 
@@ -394,7 +393,7 @@ else
 end
     end
     warden.custom_failure! if performed?
-  end
+ end
 #~ def from_email_id
 #~ @from_address=(params[:from].to_s)
   #~ end
