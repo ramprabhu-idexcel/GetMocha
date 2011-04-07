@@ -979,8 +979,20 @@ if(is_open=="0")
 		
 		function tasks_navigation_right()
 		{
-			task_length=$('.m-panel').children().length;
-			alert(task_length);
+			var task_length=$('.m-panel').children().length;
+			for(i=0; i<task_length; i++)
+			{
+				var task=$('.m-panel').children()[1].className;
+				var task_id=task.split("actk:")[1];
+				task_id=task_id.split(" task tsem")[0];
+				
+				if(task!="sub-header")
+				{
+					window.location.hash=window.location.hash+"/"+task_id;
+					var a=document.getElementById("tk_"+task_id).className;
+					document.getElementById("tk_"+task_id).className=a+" open";
+				}
+			}
 		}
 		
 </script>
