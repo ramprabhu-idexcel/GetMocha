@@ -79,8 +79,9 @@ end
   end
   # task routes
   resources :tasks do
-       member do
+    member do
       get :project_tasklists
+      put :assign_task
     end
     collection do
       put :complete_task
@@ -89,13 +90,6 @@ end
       get :completed_tasks
       get :my_tasks
     end
-<<<<<<< HEAD:config/routes.rb
-    member do
-      get :project_tasklists
-      put :assign_task
-    end
-=======
->>>>>>> c1908dfa99f3321456e4c93c62869c2afa6d944b:config/routes.rb
   end
   match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
   resources :activities
