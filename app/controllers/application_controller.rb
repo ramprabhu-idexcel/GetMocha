@@ -122,11 +122,14 @@ layout :change_layout
 			task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
 		end
 		logger.info task_list.inspect
-				ex_task=Task.find_by_name(title)
+				#~ ex_task=Task.find_by_name(title)
+				ex_task=Task.find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
 		logger.info ex_task.inspect
 		if ex_task
 			logger.info "********************"
-			existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
+			#~ existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
+			existing_task=Task.find_by_sql("select * from task_lists,tasks where tasks.name REGEXP '^"+title+"[[:digit:]]+' and task_lists.project_id='"+project.id.to_s+"'")
+
 			logger.info existing_task.inspect
 			if existing_task && existing_task.count > 0
 				logger.info "--------------------------------------------"
