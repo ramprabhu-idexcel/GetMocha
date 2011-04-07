@@ -219,6 +219,10 @@
 		{
 			messages_navigation_down(key);
 		}
+		else
+		{
+		tasks_navigation_down(key);
+		}
 		}
 		}
 	}
@@ -282,6 +286,10 @@
 		if(find_loc!=-1)
 		{
 			messages_navigation_down('up');
+		}
+				else
+		{
+		tasks_navigation_down('up');
 		}
 		}
 		}
@@ -809,6 +817,84 @@ if(is_open=="0")
 		$('.message_header').show();
 		
 		}
+		
+		function tasks_navigation_down(key)
+		{
+			var class1=$('#comment_area').children('').length;
+			var class_hide=$('#comment_area').css('display');
+			var project="true";
+			if(class1==0 || class_hide=="none")
+			{
+				var all_tasks=document.getElementById('all_tasks').className;
+				var my_tasks=document.getElementById('my_tasks').className;
+				var starred_tasks=document.getElementById('starred_tasks').className;
+				var completed_tasks=document.getElementById('completed_tasks').className;
+				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
+				{ 
+				  if(key=="down" || key=="Z")
+					{
+						window.location.hash="#my_tasks";
+						document.getElementById('my_tasks').className="my-tasks open";
+					}
+					else
+					{
+						tasks_projects(key, "1")
+					}					
+					document.getElementById('all_tasks').className="all-tasks";
+					project="false";
+				}
+				if(my_tasks=="my-tasks open") // from my_tasks to starred_tasks
+				{
+					if(key=="down" || key=="Z") //down
+					{
+						window.location.hash="#starred_tasks";
+						document.getElementById('starred_tasks').className="starred starred_count open";
+					}
+					else //up
+					{
+					window.location.hash="#all_tasks";
+					document.getElementById('all_tasks').className="all-tasks open";
+					}
+					document.getElementById('my_tasks').className="my-tasks";
+					project="false";
+				}
+				if(starred_tasks=="starred starred_count open") // from starred_tasks to completed_tasks
+				{
+				  if(key=="down" || key=="Z") //down
+					{
+						window.location.hash="#completed_tasks";
+						document.getElementById('completed_tasks').className="completed open";
+					}
+					else //up
+					{
+					window.location.hash="#my_tasks";
+					document.getElementById('my_tasks').className="my-tasks open";
+					}
+					document.getElementById('starred_tasks').className="starred starred_count";
+					project="false";
+				}
+				if(completed_tasks=="completed open")
+				{
+					if(key=="down" || key=="Z")
+					tasks_projects(key,"2");
+					else
+					{
+						window.location.hash="#starred_tasks";
+						document.getElementById('starred_tasks').className="starred starred_count open";
+					}
+					document.getElementById('completed_tasks').className="completed";
+				}
+			}
+			else
+			{
+				alert("Second panel");
+			}	
+		}
+		function tasks_projects(key,id)
+		{
+		alert("projects");
+		}
+		
 		
 </script>
 
