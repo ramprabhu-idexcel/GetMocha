@@ -49,4 +49,9 @@ class TaskListsController < ApplicationController
 		  end
 		end
 	end
+  def update
+    task_list=TaskList.find_by_id(params[:id])
+    task_list.update_attributes(params[:task_list])
+    render :nothing=>true
+  end
 end
