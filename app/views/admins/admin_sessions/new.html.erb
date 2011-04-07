@@ -1,0 +1,91 @@
+<body class="login">
+<div class="wrapper">
+<div class="header">
+<%= render :partial=>'/home/header'%>
+</div>
+<div class="cup-lg-c"></div>
+<div class="wrap under-cup content-bottom" style="position:relative;">
+<div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
+<h1>Forgot your password?</h1>
+<%= form_for :admin, :url =>admin_pswd_change_path,:html => { :method => :post,:id=>"fpwd" ,:class=>"no-labels"} do |f| %>
+<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address",:style=>"width:258px;;height:42px;"%>
+<%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
+<% end %>
+</div>
+<div class="grid-600-c login-form">
+<%# if devise_mapping.rememberable? -%>
+<p class="remember"><input type="checkbox" class="checkbox" id="agree-check" value="" ></input>Remember me on this computer </p><%#end%>
+<h1>Log in to Mocha</h1>
+<div class="clear-both"></div>
+<%= form_for :admin ,:url => admin_session_path,:html=>{:id=>"admin_login",:class=>"no-labels"} do |f| %>
+<%= f.hidden_field :remember_me,:id=>"remember_hidden_id",:value=>0%>
+<%= f.submit "Log in",:class=>"btn login-btn" %>
+<%= f.label :email, "Email"%>
+<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address",:style=>"width:214px;height:36px;"  %>
+<%= f.label :password, "Password"%>
+<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:214px;;height:36px;" %>
+<%end%>
+</div>
+</div>
+<script>
+var Login=true;
+		$('#forgot_pass').live('click',function(){
+	  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var email=$('#login_email').val()
+		if($('login_email').val()=='Account email address')
+		{
+		alert('pls enter your email id');
+		}
+    else if(!emailReg.test(email)) {
+		  alert('pls enter the valid email address');
+		 }
+		else
+		{
+		$.ajax({
+		     url:'/users/password',
+        data: $('form#fpwd').serialize(),
+        type: "POST",
+        success: function(data){
+				if(typeof(data.failure)!="undefined"){
+				alert(data.failure);
+				}
+				else
+		       window.location.href="/";
+          },
+				});
+    }
+		return false;
+		});
+</script>
+<div class="push"></div>
+</div>
+<div class="footer">
+	<div class="container-960">
+		<span class="copy">Copyright &copy; 2011 Mocha</span>
+		<ul>
+			<li><a href="/signin">Login</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="/terms">Terms of Use</a></li>
+			<li><a href="/privacy">Privacy Policy</a></li>
+  <li><a href="#" id="fpwd_reset">Forgot Password?</a></li>
+		</ul>
+	</div>
+</div>
+</body>
+<script>
+$('#fpwd_reset').click(function(){
+$.ajax({
+		     url:'/admins/password',
+				 data:{resource_name : "kiruthiru007@gmail.com"},
+         type: "post",
+        success: function(data){
+				if(typeof(data.failure)!="undefined"){
+				alert(data.failure);
+				}
+				else
+		       window.location.href="/";
+          },
+				});
+				});
+				</script>
