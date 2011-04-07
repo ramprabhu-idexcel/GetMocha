@@ -304,11 +304,14 @@
     $(this).addClass('selected');
     var task_id=get_task_id();
     var user_id=$(this).attr('id').split('ul:')[1];
+    var name=$(this).children('span').text();
     /*$.ajax({
       url:'/tasks/'+task_id+'/assign_task',
       type:'put',
       data:{'user_id' : user_id}
     });*/
+    $('a.assigned-to').text(name);
+    $('div.task.tsem.open').children('div.info').children('span.name').text(name);
   });
   
   $('.invite-btn.dp-down').live('click',function(){
