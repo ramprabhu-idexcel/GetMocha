@@ -30,8 +30,8 @@
 			<li class="task_header"><%=link_to 'Star',"#", :class=>"star task_star",:id=>"task_star"%></li>
 			<li class="task_header"><%=link_to 'Trash',"#", :class=>"trash task_trash",:id=>"trash_task"%></li>
 		</ul>
-		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%#=current_user.full_name%></a>
-    <%#=link_to '','#project-settings',:class=>"settings project-settings"%>
+		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
+    <%=link_to '','#project-settings',:class=>"settings project-settings"%>
 		<%else%>
 		<div class="l-header">
 		</div>

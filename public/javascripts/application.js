@@ -113,7 +113,10 @@ $(document).ready(function() {
   //~ } //end of user edit
 
   // user account-dropdown
-  
+  $('.user_drop_down').click(function(){
+    $('.account-dropdown').toggle();
+    return false;
+  });
   $('.admin_drop_down').click(function(){
     $('.account-dropdown').toggle();
     return false;
