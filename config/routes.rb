@@ -51,7 +51,6 @@ end
   match '/projects/verify_email/:verification_code' =>'projects#verify_email', :as => 'verify_email', :method => :post
   match '/projects/join_project/:invitation_code' =>'projects#join_project', :as => 'join_project', :method => :post
   match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
-  match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
   match  '/home/email_reply' =>'home#check_email_reply_and_save', :method => :post
   # Message routes
   resources :messages
@@ -60,7 +59,7 @@ end
   match 'project/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
   match 'project/:project_id/:activity_id'=>'messages#show',:as=>'project_message_comment',:method=>:get
   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
-  match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
+  match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_starred_message',:method=>:get
   match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
   match 'subscribe/:activity_id'=>'activities#subscribe',:as=>'subscribe_activity',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
@@ -68,7 +67,6 @@ end
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
   resource :comments
   match '/remove_attach/:id' =>"attachments#remove_attach"
-  resource :comments
   resources :attachments do
     member do
       get :remove_attach
