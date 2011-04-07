@@ -19,7 +19,9 @@ end
   get "admins/projects"=>'admins#projects'
   get "admins/analetics"=>'admins#analetics'
  devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"}
+ devise_scope :admin do
  get "admin_change_password",:to=>"admin_passwords#edit",:as=>"edit_admin_password"
+ end
  resources :admins do
       member do
       post 'remove_user'

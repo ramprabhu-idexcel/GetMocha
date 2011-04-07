@@ -227,38 +227,6 @@ layout :change_layout
 					activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 				end
 		 end
-<<<<<<< HEAD
-			end
-		def reply_to_message_via_email
-			from_address=params[:from].to_s
-			if(from_address.include?('<'))
-				from_address=from_address.split('<')
-				from_address=from_address[1].split('>')
-				from_address=from_address[0]
-			end
-			#~ from_address=check_from_address_email(params[:from].to_s)
-			message_id=@dest_address[0].to_s.split('@')
-			message_id=message_id[0].split('ctzm')
-			message_id=message_id[1]
-			message=Message.find(message_id)		
-			project=Project.find(message.project_id)
-			user=User.find_by_email(from_address)
-			content1=params[:html].split("##Type above this line to post a reply to this message##")
-			content=content1[0]
-			content_f = content.split("wrote:")[0]
-			content2=content_f.split("On")
-			content = content2[0...content2.length-1].join("On")
-			if content.include?("gmail_quote")
-				content=content.split('<div class="gmail_quote">')[0]
-			end
-			if content.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
-				content=content.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
-				content=content.split("---")
-				content = content[0...content.length-1].join("---")
-			end
-			if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
-				 content = Sanitize.clean(content, Sanitize::Config::BASIC)
-=======
 	end
 		
 	def reply_to_message_via_email
@@ -298,7 +266,6 @@ layout :change_layout
 			comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
 			message.activities.each do |activity|
 				activity.update_attributes(:is_read=>false)
->>>>>>> a0e038c0986790ddbad1aca8859a2f41b9f0d356
 			end
 		end
 		if params[:attachments] && params[:attachments].to_i > 0
@@ -362,17 +329,14 @@ layout :change_layout
 				from_address=from_address[0]
 			end
 			#~ from_address=check_from_address_email(params[:from].to_s)
-<<<<<<< HEAD
 			message_id=@dest_address[0].to_s.split('@')
 			message_id=message_id[0].split('ctzt')
 			message_id=message_id[1]
 			task=Task.find(message_id)
 			t_list=task.tasklist
 			project=Project.find(t_list.project_id)
-=======
 			to_address=params[:to].split(',')
 			cc_address=params[:cc].split(',') if params[:cc]
->>>>>>> a0e038c0986790ddbad1aca8859a2f41b9f0d356
 			user=User.find_by_email(from_address)
 			if user
 				message=params[:text]
