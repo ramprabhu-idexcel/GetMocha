@@ -64,7 +64,9 @@ class ProjectMailer < ActionMailer::Base
   def message_reply(user,comment)
     @user=user
     @comment=comment
-     custom_email=@comment.commentable.project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
+    message=@comment.commentable
+    project=message.project
+    custom_email=project.message_email_id
     if custom_email && !custom_email.blank?
       from=custom_email.email
     else

@@ -14,25 +14,30 @@ GetMocha::Application.routes.draw do
 end
   get "admin_panel" =>'admins#new'
   post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
-  post "admin_settings"=>'admins#settings', :as=>:admin_page
+  get "admin_settings"=>'admins#settings', :as=>:admin_page
   get "admins/users"=>'admins#users'
   get "admins/projects"=>'admins#projects'
   get "admins/analetics"=>'admins#analetics'
-  resources :admins do
+ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"}
+ devise_scope :admin do
+ get "admin_change_password",:to=>"admin_passwords#edit",:as=>"edit_admin_password"
+ end
+ resources :admins do
       member do
       post 'remove_user'
       post 'remove_project'
   end
   end
   resources :projects do
+    member do
+      get 'settings_pane'
+    end
     collection do
       post 'remove_people'
       post 'add_new'
       post 'update_proj_settings'
       get 'invite_people_settings'
-    end
-    member do
-      get 'settings_pane'
+      post 'invite_people'
     end
   end
   resources :updates do
@@ -59,8 +64,9 @@ end
   match 'project/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
   match 'project/:project_id/:activity_id'=>'messages#show',:as=>'project_message_comment',:method=>:get
   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
+
   match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_starred_message',:method=>:get
-  match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
+  match 'star_message/:activity_id'=>'activities#star_message',:as=>'star_message',:method=>:get
   match 'subscribe/:activity_id'=>'activities#subscribe',:as=>'subscribe_activity',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
@@ -74,15 +80,16 @@ end
   end
   # task routes
   resources :tasks do
+    member do
+      get :project_tasklists
+      put :assign_task
+    end
     collection do
       put :complete_task
       get :all_tasks
       get :starred_tasks
       get :completed_tasks
       get :my_tasks
-    end
-    member do
-      get :project_tasklists
     end
   end
   match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
@@ -95,9 +102,6 @@ end
   match 'email' =>"home#email"
   match '/home/images'=>"home#images"
   match '*a', :to => 'errors#routing'
-
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

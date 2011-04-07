@@ -1,0 +1,126 @@
+ <%= javascript_include_tag 'colorpicker','jquery.fileupload-ui','jquery.fileupload'%>
+<div class="l-panel-contain">
+	<div class="l-panel">
+	<div class="sub-header"> GetMocha Settings</div>
+	<a href="/settings" class="my-account open" onclick="addClass(this);"><span class="icon"></span>Admin</a>
+	</div>
+	</div>
+	<div class="m-panel-contain">
+		<div class="m-panel">
+		<a href="#" class="m-tab open" id="admin_users">Users</a>
+			<a href="#" class="m-tab alt" id="admin_projects">Projects</a>
+			<a href="#" class="m-tab alt" id="analetics">Analytics</a>
+		</div>
+	</div>
+	<div class="r-panel-contain" id="my_profile">
+		<div class="r-panel">
+			
+		</div>
+	</div>
+    <div class="r-panel-contain" id="my_contacts" style="display:none;">
+		<div class="r-panel">
+			<div class="user-list">
+   			</div>
+		</div>
+	</div>
+<script>
+var UserEdit=true;
+$('#admin_users').click(function(){
+$('#admin_users').attr('class','m-tab open');
+        $('#admin_projects').attr('class','m-tab alt');
+				 $('#analetics').attr('class','m-tab alt');
+    $.ajax({
+        url:'/admins/users',
+        type:'get',
+        success :function(data){
+				$('.r-panel').html(data);
+				}
+				});
+		});
+		$('#admin_projects').click(function(){
+	        $('#admin_users').attr('class','m-tab alt');
+        $('#admin_projects').attr('class','m-tab open');
+				 $('#analetics').attr('class','m-tab alt');
+    $.ajax({
+        url:'/admins/projects',
+        type:'get',
+        success :function(data){
+				$('.r-panel').html(data);
+				}
+				});
+		});
+		$('#analetics').click(function(){
+	        $('#admin_users').attr('class','m-tab alt');
+        $('#admin_projects').attr('class','m-tab alt');
+				 $('#analetics').attr('class','m-tab open');
+    $.ajax({
+        url:'/admins/analetics',
+        type:'get',
+        success :function(data){
+				$('.r-panel').html(data);
+				}
+				});
+		});
+		function remove_people_settings(id, proj_id)
+{
+var pars = "user=" + id  + "&project_id=" + proj_id;
+var where_to= confirm("Are you sure to remove this person?");
+if(where_to==true)
+{
+  $.ajax({
+       type :'post',
+       url : "/projects/remove_people?"+pars,
+       success: function(data){
+			 document.getElementById('settings_pane').innerHTML=data;
+			 document.getElementById('settings_people').style.display="block";
+			 document.getElementById('people_anchor').className="m-tab alt open";
+			 }
+    });
+}
+else
+{
+return false;
+}
+}
+function remove_user(id)
+{
+var where_to= confirm("Are you sure to remove this person?");
+if(where_to==true)
+{
+  $.ajax({
+       type :'post',
+       url : "/admins/"+id+"/remove_user",
+       success: function(data){
+			$('.r-panel').html(data);
+			 }
+    });
+}
+else
+{
+return false;
+}
+}
+function remove_project(id)
+{
+
+var where_to= confirm("Are you sure to remove this person?");
+if(where_to==true)
+{
+  $.ajax({
+       type :'post',
+       url : "/admins/"+id+"/remove_project",
+       success: function(data){
+			 $('.r-panel').html(data);
+			 }
+    });
+}
+else
+{
+return false;
+}
+}
+
+		
+</script>
+
+

@@ -62,21 +62,62 @@ $(document).ready(function() {
       return false;
     });
   }
+ /* $('#admin_log_submit').click(function(){
+             
+      if (($('#login_email').val()=="") && ($("#admin_log_password").val()==""))
+       {
+            alert("Email and Password can't be blank");
+       }
+       
+      else if ($('#login_email').val()=="")
+        { 
+           alert("Email can't be blank");
+        }
+       else if ($("#admin_log_password").val()=="")
+       {
+           alert("Password can't be blank");
+       }
+       else
+      {       
+     
+      $.ajax({
+        url:'/admins/sign_in',
+        data: $('form#admin_login').serialize(),
+        type: "POST",
+        success: function(data){
+          alert(data);
+          if(data=="error")
+          {
+            alert(data);
+          }
+          else
+          {
+            window.location.href="/admins/settings";
+          }
+        }
+      });
+    }
+          return false;
+    });
   
+  */
       
 
  
   
- if(typeof UserEdit!="undefined" && UserEdit==true)
-  {
+ //~ if(typeof UserEdit!="undefined" && UserEdit==true)
+  //~ {
         
   
    
-  } //end of user edit
+  //~ } //end of user edit
 
   // user account-dropdown
-  
   $('.user_drop_down').click(function(){
+    $('.account-dropdown').toggle();
+    return false;
+  });
+  $('.admin_drop_down').click(function(){
     $('.account-dropdown').toggle();
     return false;
   });
@@ -134,11 +175,7 @@ alert('afetrr bt');
       $('.comment-contain').hide();
     }
     
-    function close_comment_area()
-    {
-      $('.comment-contain').toggle('slow');
-      $('#comment-message').val('');
-    }
+
     //find the current url
     function sort_path()
     {
@@ -631,6 +668,7 @@ alert('afetrr bt');
     $('body').attr('class','settings');
     $('.sort-by').hide();
     document.title="Settings | Mocha"
+    return false;
   });
   
    /************************************************Edit the User profile*****************************************/
@@ -1219,6 +1257,12 @@ function find_month(month)
     month_number="0"+month_number;
   return month_number;
 }
+function close_comment_area()
+{
+  $('.comment-contain').toggle('slow');
+  $('#comment-message').val('');
+}
+
 //Task & Tasklist
  $('#tl_add').live('click',function(){
  var a=$('#tasklists_tlname').val();

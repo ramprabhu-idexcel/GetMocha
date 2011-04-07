@@ -122,12 +122,6 @@ end
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
   end
-  def star_message
-    starred=!@activity.is_starred
-    @activity.update_attribute(:is_starred,starred)
-    render :json=>{:count=>current_user.starred_messages_count}
-  end
-
 	def unsubscribe
 		@activity.update_attribute(:is_subscribed,false)
     render :nothing=>true
@@ -162,12 +156,6 @@ end
   end
   def resource_columns
     [:message,:project_id,:subject]
-  end
-  def remove_timestamps
-    Activity.record_timestamps=false
-  end
-  def set_timestamps
-    Activity.record_timestamps=true
   end
 	def clear_session_project
 		session[:project_name]=nil
