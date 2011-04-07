@@ -131,13 +131,13 @@ layout :change_layout
 				logger.info "--------------------------------------------"
 				ex_task=existing_task.last
 				logger.info ex_task.inspect
-				title=ex_task.title
+				title=ex_task.name
 				tilte_id=title.split(params[:subject].to_s)[1]
 				title_id=title_id.to_i+1
 				title=params[:subject].to_s+"title_id"
 			else
 				logger.info "############################"
-				title=ex_task.title+"1"
+				title=ex_task.name+"1"
 			end
 		logger.info title.inspect
 		end
