@@ -15,9 +15,6 @@
     return false;
   });
   
-  $('.sub-header').live('click',function(){
-    return false;
-  });
   
   //complete/reopen the tasks
   $(".checkbox > span.icon.icon-sec").live('click',function(){
@@ -266,6 +263,42 @@
     return false;
   });
   
+  //edit task list
+  $('a.sec.task_list').live('click',function(){
+    var content=$(this).text();
+    $(this).parent('.sub-header').html('<input type="text" class="tklist textfield" value="'+content+'"></input>');
+    $('.tklist.textfield').focus();
+    return false;
+  });
+  
+  $('.tklist').live('blur',function(){
+    var task_list_id=$(this).parent('.sub-header').attr('id').split('tl')[1];
+    var content=$(this).val();
+    $.ajax({
+      url: '/task_lists/'+task_list_id,
+      type:'put',
+      data:{'task_list[name]' : content}
+    });
+    $(this).parent('.sub-header').html('<a class="sec task_list" href="#">'+content+'</a>');
+    return false;
+  });
+  
+  $('.sort-by').live('click',function(){
+    return false;
+  });
+  
+  $('.tkl-down').live('click',function(){
+    $('.tkl-down').removeClass('selected');
+    $(this).addClass('selected');
+    var task_list=$(this).children('span').attr('class').split('tkl:')[1];
+    var task_id=get_task_id();
+    $.ajax({
+      url:'tasks/'+task_id,
+      type:'put',
+      data:{'task[task_list_id]' : task_list}
+    });
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -309,7 +342,7 @@
   {
     var items=[];
     $.each(data,function(index,value){
-      items.push('<div class="sub-header"><a href="#">'+value[0].activity.resource.task_list_name+'</a></div>');
+      items.push('<div class="sub-header" id="tl'+value[0].activity.resource.task_list_id+'"><a href="#" class="sec task_list">'+value[0].activity.resource.task_list_name+'</a></div>');
       $.each(value,function(i,v){
         var starred=v.activity.is_starred;
         items.push('<div class="actk:'+v.activity.id+' task tsem '+(starred ? "starred" : "")+'"><div class="left-icons">');
@@ -333,6 +366,7 @@
     task=data.task;
     items.push('<div class="message-body">')
     items.push('<span style="display:none;" class="tsk-det" id="tk:'+task.id+'"></span>')
+    items.push('<span style="display:none;" class="tsk-detlt" id="tklt'+task.task_list_id+'"></span>')
     items.push('<div class="checkbox"><span class="icon icon-thd '+(task.is_completed ? "checked":"")+'"></span></div>');
     items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
     items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
@@ -341,7 +375,7 @@
     items.push('<div class="task-dropdown-t"></div>');
     items.push('<ul>');
     $.each(task.other_task_lists,function(i,v){
-      items.push('<li><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
+      items.push('<li class="tkl-down '+(task.task_list_id==v.task_list.id ? "selected" : "")+'"><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
     });      
     items.push('</ul>');
     items.push('</div>');

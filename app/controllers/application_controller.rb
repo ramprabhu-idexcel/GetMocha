@@ -121,6 +121,27 @@ layout :change_layout
 		if !task_list
 			task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
 		end
+		logger.info task_list.inspect
+				ex_task=Task.find_by_name(title)
+		logger.info ex_task.inspect
+		if ex_task
+			logger.info "********************"
+			existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
+			logger.info existing_task.inspect
+			if existing_task && existing_task.count > 0
+				logger.info "--------------------------------------------"
+				ex_task=existing_task.last
+				logger.info ex_task.inspect
+				title=ex_task.name
+				tilte_id=title.split(params[:subject].to_s)[1]
+				title_id=title_id.to_i+1
+				title=params[:subject].to_s+title_id.to_s
+			else
+				logger.info "############################"
+				title=ex_task.name+"1"
+			end
+		logger.info title.inspect
+		end
 		if ((!proj_user)  &&  project.is_public? )
 			guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password)  if !user
 		if user						
@@ -143,12 +164,12 @@ layout :change_layout
 				end
 			end	
 		end
-		if task && task.task_list.project
-			task.task_list.project.users.each do |user|
-				activity=task.activities.create! :user=>user
-				activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
-			end
-		end
+		#~ if task && task.task_list.project
+			#~ task.task_list.project.users.each do |user|
+				#~ activity=task.activities.create! :user=>user
+				#~ activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
+			#~ end
+		#~ end
 		logger.info task_list.inspect
 		logger.info task.inspect
 		#~ task.send_task_notification_to_team_members(user,@notify,@tasks)
