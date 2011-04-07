@@ -29,47 +29,47 @@ layout :change_layout
   end
   def new_project_via_email
     from_address=params[:from].to_s
-		if(from_address.include?('<'))
-			from_address=from_address.split('<')
-			from_address=from_address[1].split('>')
-			from_address=from_address[0]
-		end
-		#~ from_address=check_from_address_email(params[:from].to_s)
-		to_address=params[:to].split(',')
-		cc_address=params[:cc].split(',') if params[:cc]
-		user=User.find_by_email(from_address)
-		if user
-			message=params[:text]
-			name=params[:subject].to_s
-		project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
-		ProjectUser.create(:user_id => user.id, :project_id => project.id, :status => true)
-		to_address.each do |mail|
-			mail=mail.strip
-			if(mail.include?('<'))
-				mail=mail.split('<')
-				mail=mail[1].split('>')
-				mail=mail[0]
-			end
-			if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
-				invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-				ProjectMailer.delay.invite_people(user,invite)
-			end
-		end
-		if cc_address
-		cc_address.each do |mail|
-		mail=mail.strip
-		if(mail.include?('<'))
-		mail=mail.split('<')
-		mail=mail[1].split('>')
-		mail=mail[0]
-		end
-		if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
-		invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-		ProjectMailer.delay.invite_people(user,invite)
-		end
-		end
-		end
-		end
+if(from_address.include?('<'))
+from_address=from_address.split('<')
+from_address=from_address[1].split('>')
+from_address=from_address[0]
+end
+#~ from_address=check_from_address_email(params[:from].to_s)
+to_address=params[:to].split(',')
+cc_address=params[:cc].split(',') if params[:cc]
+user=User.find_by_email(from_address)
+if user
+message=params[:text]
+name=params[:subject].to_s
+project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
+ProjectUser.create(:user_id => user.id, :project_id => project.id, :status => true)
+to_address.each do |mail|
+mail=mail.strip
+if(mail.include?('<'))
+mail=mail.split('<')
+mail=mail[1].split('>')
+mail=mail[0]
+end
+if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
+invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+ProjectMailer.delay.invite_people(user,invite)
+end
+end
+if cc_address
+cc_address.each do |mail|
+mail=mail.strip
+if(mail.include?('<'))
+mail=mail.split('<')
+mail=mail[1].split('>')
+mail=mail[0]
+end
+if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
+invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
+ProjectMailer.delay.invite_people(user,invite)
+end
+end
+end
+end
 end
   def task_create_via_email
     from_address=params[:from].to_s
@@ -221,139 +221,6 @@ attach=message.attachments.create(:uploaded_data => params["attachment#{count}"]
 end
 end
       end
-<<<<<<< HEAD
-			if message && message.project
-				message.project.users.each do |user|
-					activity=message.activities.create! :user=>user
-					activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
-				end
-		 end
-	end
-		
-	def reply_to_message_via_email
-		from_address=params[:from].to_s
-		if(from_address.include?('<'))
-			from_address=from_address.split('<')
-			from_address=from_address[1].split('>')
-			from_address=from_address[0]
-		end
-		#~ from_address=check_from_address_email(params[:from].to_s)
-		message_id=@dest_address[0].to_s.split('@')
-		message_id=message_id[0].split('ctzm')
-		message_id=message_id[1]
-		message=Message.find(message_id)		
-		project=Project.find(message.project_id)
-		user=User.find_by_email(from_address)
-		content1=params[:html].split("##Type above this line to post a reply to this message##")
-		content=content1[0]
-		content_f = content.split("wrote:")[0]
-		content2=content_f.split("On")
-		content = content2[0...content2.length-1].join("On")
-		if content.include?("gmail_quote")
-			content=content.split('<div class="gmail_quote">')[0]
-		end
-		if content.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
-			content=content.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
-			content=content.split("---")
-			content = content[0...content.length-1].join("---")
-		end
-		if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
-			 content = Sanitize.clean(content, Sanitize::Config::BASIC)
-		end
-		if content.include?("\240")
-			content=content.split("\240").join
-		end
-		if user
-			comment=Comment.create(:commentable_type=>"Message", :commentable_id=>message.id, :user_id=>user.id, :comment=>content)
-			message.activities.each do |activity|
-				activity.update_attributes(:is_read=>false)
-			end
-		end
-		if params[:attachments] && params[:attachments].to_i > 0
-			for count in 1..params[:attachments].to_i
-				attach=comment.attachments.create(:uploaded_data => params["attachment#{count}"])
-			end
-		end
-	end
-		
-	def reply_to_task_via_email
-		from_address=params[:from].to_s
-		if(from_address.include?('<'))
-			from_address=from_address.split('<')
-			from_address=from_address[1].split('>')
-			from_address=from_address[0]
-		end
-		#~ from_address=check_from_address_email(params[:from].to_s)
-		message_id=@dest_address[0].to_s.split('@')
-		message_id=message_id[0].split('ctzt')
-		message_id=message_id[1]
-		task=Task.find(message_id)		
-		project=Project.find(task.project_id)
-		user=User.find_by_email(from_address)
-		content1=params[:html].split("##Type above this line to post a reply to this message##")
-		content=content1[0]
-		content_f = content.split("wrote:")[0]
-		content2=content_f.split("On")
-		content = content2[0...content2.length-1].join("On")
-		if content.include?("gmail_quote")
-			content=content.split('<div class="gmail_quote">')[0]
-		end
-		if content.include?('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')
-			content=content.split('<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;">')[1]
-			content=content.split("---")
-			content = content[0...content.length-1].join("---")
-		end
-		if content.count("Apple-style-span") > 0 or content.count("Apple-converted-space") > 0
-			 content = Sanitize.clean(content, Sanitize::Config::BASIC)
-		end
-		if content.include?("\240")
-			content=content.split("\240").join
-		end
-		if user
-			comment=Comment.create(:commentable_type=>"Task", :commentable_id=>task.id, :user_id=>user.id, :comment=>content)
-			task.activities.each do |activity|
-				activity.update_attributes(:is_read=>false)
-			end
-		end
-		if params[:attachments] && params[:attachments].to_i > 0
-			for count in 1..params[:attachments].to_i
-				attach=comment.attachments.create(:uploaded_data => params["attachment#{count}"])
-			end
-		end
-	end
-		
-	def invite_via_email
-	   from_address=params[:from].to_s
-			if(from_address.include?('<'))
-				from_address=from_address.split('<')
-				from_address=from_address[1].split('>')
-				from_address=from_address[0]
-			end
-			#~ from_address=check_from_address_email(params[:from].to_s)
-			message_id=@dest_address[0].to_s.split('@')
-			message_id=message_id[0].split('ctzt')
-			message_id=message_id[1]
-			task=Task.find(message_id)
-			t_list=task.tasklist
-			project=Project.find(t_list.project_id)
-			to_address=params[:to].split(',')
-			cc_address=params[:cc].split(',') if params[:cc]
-			user=User.find_by_email(from_address)
-			if user
-				message=params[:text]
-				name=params[:subject].to_s
-				#~ project=Project.create(:user_id=>user.id, :name=>name, :is_public=>true)
-				#~ ProjectUser.create(:user_id => user.id, :project_id => project.id, :status => true)
-				to_address.each do |mail|
-					mail=mail.strip
-					if(mail.include?('<'))
-						mail=mail.split('<')
-						mail=mail[1].split('>')
-						mail=mail[0]
-					end
-					if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
-						invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
-=======
 if message && message.project
 message.project.users.each do |user|
 activity=message.activities.create! :user=>user
@@ -479,7 +346,6 @@ mail=mail[0]
 end
 if !mail.to_s.include?("#{APP_CONFIG[:project_email]}")
 invite=Invitation.create(:email=>mail,:message=>message,:project_id=>project.id)
->>>>>>> dfbd436d2a3b7bf317fd1d2b22dcd6e983944ed1
             ProjectMailer.delay.invite_people(user,invite)
 end
 end
