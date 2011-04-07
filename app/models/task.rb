@@ -10,7 +10,7 @@ class Task < ActiveRecord::Base
                     #:length     => { :within => 6..250 }
 	validates :description , :length => { :within => 6..250 },
 									:presence => true
-validates :name, :presence   => true, :uniqueness =>true
+validates :name, :presence   => true
 
 def add_in_activity(to_users,assign,user)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
@@ -114,10 +114,11 @@ def add_in_activity(to_users,assign,user)
         due_date.strftime("%b %e")
     end
   end
+
   def assigned_to
-    #activity=activities.find(:first,:conditions=>['is_assigned=?',true])
-    activity=Activity.assigned_project(self.id)
-    activity.present? ? activity.user.full_name : ''
+    activity=activities.find(:first,:conditions=>['is_assigned=?',true])
+    #~ activity=Activity.assigned_project(self.id)
+    activity.present? ? [activity.user.full_name,activity.user_id] : ['','']
   end
   def other_task_lists
     self.task_list.project.task_lists.select([:id,:name,:project_id])

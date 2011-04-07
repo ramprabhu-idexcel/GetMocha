@@ -3,6 +3,6 @@ class TaskList < ActiveRecord::Base
 	has_many :tasks
 	belongs_to :project
 	validates :name, :presence   => true,
-	:uniqueness =>true,
+	#~ :uniqueness =>true,
 	:length=>{:within=> 1...24}
 end

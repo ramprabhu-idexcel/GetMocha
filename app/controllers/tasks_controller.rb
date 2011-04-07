@@ -123,7 +123,6 @@ class TasksController < ApplicationController
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def update
-    #~ task=Task.find_by_id(params[:id])
     @task.attributes=params[:task]
     if @task.valid?
       @task.update_attributes(params[:task])
