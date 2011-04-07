@@ -26,6 +26,7 @@
       type:'put',
       data:{id : task_id}
     });
+    $(".checkbox > span.icon.icon-thd").toggleClass('checked');
     return false;
   });
 
