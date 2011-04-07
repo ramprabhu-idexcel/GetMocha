@@ -265,13 +265,8 @@ layout :change_layout
        activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 		 end
 		 end
-			
-		end
-		
-		
-		
-		
-	def reply_to_message_via_email
+			end
+		def reply_to_message_via_email
 			from_address=params[:from].to_s
 			if(from_address.include?('<'))
 				from_address=from_address.split('<')
@@ -330,8 +325,9 @@ layout :change_layout
 			message_id=@dest_address[0].to_s.split('@')
 			message_id=message_id[0].split('ctzt')
 			message_id=message_id[1]
-			task=Task.find(message_id)		
-			project=Project.find(task.project_id)
+			task=Task.find(message_id)
+			t_list=task.tasklist
+			project=Project.find(t_list.project_id)
 			user=User.find_by_email(from_address)
 			content1=params[:html].split("##Type above this line to post a reply to this message##")
 			content=content1[0]
