@@ -121,6 +121,7 @@ layout :change_layout
 		if !task_list
 			task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
 		end
+		logger.info task_list.inspect
 				ex_task=Task.find_by_name(title)
 		logger.info ex_task.inspect
 		if ex_task
@@ -163,12 +164,12 @@ layout :change_layout
 				end
 			end	
 		end
-		if task && task.task_list.project
-			task.task_list.project.users.each do |user|
-				activity=task.activities.create! :user=>user
-				activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
-			end
-		end
+		#~ if task && task.task_list.project
+			#~ task.task_list.project.users.each do |user|
+				#~ activity=task.activities.create! :user=>user
+				#~ activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
+			#~ end
+		#~ end
 		logger.info task_list.inspect
 		logger.info task.inspect
 		#~ task.send_task_notification_to_team_members(user,@notify,@tasks)
