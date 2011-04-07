@@ -156,6 +156,7 @@ end
     logger.info task_list.inspect
     logger.info task.inspect
     logger.info title.inspect
+    logger.info task.errors.inspect
     if task && task.task_list.project
       task.task_list.project.users.each do |user|
         activity=task.activities.create! :user=>user
