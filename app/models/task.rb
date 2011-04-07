@@ -15,18 +15,17 @@ validates :name, :presence   => true
 def add_in_activity(to_users,assign,user)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
 			assign=assign.split(',')
-			p to_users
      # self.project.users.each do |user|
 		# assign=
-      activity=self.activities.create!(:user=>user, :is_subscribed=>true, :is_assigned=>true)
-      #activity.update_attributes(:is_assigned=>(user.email==assign),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
+    self.task_list.project.users.each do |user|
+      activity=self.activities.create! :user=>user
+      activity.update_attributes(:is_assigned=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
+    end
     to_users.each do |email|
 			email=email.lstrip
       if email.nil?
-				p email
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
-				p u.inspect
         self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
 				activity.update_attributes(:is_assigned=>true) if user.email==assign
         ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)
@@ -101,6 +100,9 @@ def add_in_activity(to_users,assign,user)
   def task_list_name
     self.task_list.name
   end
+  def project
+    self.task_list.project
+  end
   def due_date_value
     due_date.present? ? get_date_value : ""
   end
@@ -114,9 +116,11 @@ def add_in_activity(to_users,assign,user)
         due_date.strftime("%b %e")
     end
   end
-
+  def assigned_user
+    activities.find(:first,:conditions=>['is_assigned=?',true])
+  end
   def assigned_to
-    activity=activities.find(:first,:conditions=>['is_assigned=?',true])
+    activity=assigned_user
     #~ activity=Activity.assigned_project(self.id)
     activity.present? ? [activity.user.full_name,activity.user_id] : ['','']
   end
@@ -125,7 +129,7 @@ def add_in_activity(to_users,assign,user)
   end
   def third_pane_data
     project=self.task_list.project
-    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users})
+    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users,:project_id=>self.task_list.project_id})
   end
   def subscribed_users
     activities.where('is_subscribed=?',true)
