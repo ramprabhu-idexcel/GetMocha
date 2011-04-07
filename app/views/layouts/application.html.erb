@@ -242,6 +242,10 @@
 		{
 			messages_navigation_right();
 		}
+		else
+		{
+			tasks_navigation_right();
+		}
 		}
 	}
 	
@@ -260,6 +264,10 @@
 		if(find_loc!=-1)
 		{
 			messages_navigation_left();
+		}
+				else
+		{
+			tasks_navigation_left();
 		}
 		}
 	}
@@ -896,7 +904,7 @@ if(is_open=="0")
 				alert("Second panel");
 			}	
 		}
-		function tasks_projects(key,pid)
+		function tasks_projects(key,pid) //first_panel
 		{
 		 var project_length=$('.projects-list').children().length;
 		 var stop="false";
@@ -964,6 +972,9 @@ if(is_open=="0")
 		 }
 		}
 		
+		function tasks_navigation_right()
+		{
+		}
 		
 </script>
 
