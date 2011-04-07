@@ -63,4 +63,7 @@ end
  def self.check_hash_activities_comments_info(resource_id,user_id)
    find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=? AND user_id=?',"Comment",resource_id,false,user_id],:select=>[:is_starred,:is_read,:resource_id,:id])
  end
- end
+  def self.find_task_activity(task_id,user_id)
+    find(:first,:conditions=>['resource_type=? AND resource_id=? AND user_id=?',"Task",task_id,user_id])
+  end
+end
