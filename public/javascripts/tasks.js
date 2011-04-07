@@ -282,6 +282,13 @@
     $(this).parent('.sub-header').html('<a class="sec task_list" href="#">'+content+'</a>');
     return false;
   });
+  
+  $('.sort-by').live('click',function(){
+    return false;
+  });
+  
+
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -349,6 +356,7 @@
     task=data.task;
     items.push('<div class="message-body">')
     items.push('<span style="display:none;" class="tsk-det" id="tk:'+task.id+'"></span>')
+    items.push('<span style="display:none;" class="tsk-detlt" id="tklt'+task.task_list_id+'"></span>')
     items.push('<div class="checkbox"><span class="icon icon-thd '+(task.is_completed ? "checked":"")+'"></span></div>');
     items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
     items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
@@ -357,7 +365,7 @@
     items.push('<div class="task-dropdown-t"></div>');
     items.push('<ul>');
     $.each(task.other_task_lists,function(i,v){
-      items.push('<li><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
+      items.push('<li '+(task.task_list_id==v.task_list.id ? "class=\"selected\"" : "")+'><span class="tkl:'+v.task_list.id+'">'+v.task_list.name+'</span></li>');
     });      
     items.push('</ul>');
     items.push('</div>');
