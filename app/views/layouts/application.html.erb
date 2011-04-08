@@ -838,6 +838,16 @@ if(is_open=="0")
 				var my_tasks=document.getElementById('my_tasks').className;
 				var starred_tasks=document.getElementById('starred_tasks').className;
 				var completed_tasks=document.getElementById('completed_tasks').className;
+				var project_tasks="project_tasks";
+				var pl=$('.projects-list').children().length;
+				for(i=0; i<pl; i++)
+				{
+					var cn=$('.projects-list').children()[i].className;
+					if(cn=="project open")
+					{
+						project_tasks=cn;
+					}
+				}
 				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
 				{ 
 				  if(key=="down" || key=="Z")
@@ -896,33 +906,56 @@ if(is_open=="0")
 				}
 				else
 				{
+				
+				if(all_tasks=="all-tasks" && my_tasks=="my-tasks" && starred_tasks=="starred starred_count" && completed_tasks=="completed" && project_tasks=="project_tasks")
+				{
+				window.location.hash="#all_tasks";
+						document.getElementById('all_tasks').className="all-tasks open";
+				}
+				else
 				  tasks_projects(key,"3");
 				}
 			}
 			else
 			{
-				alert("Second panel");
+				var task_length=$('.m-panel').children().length;
+				var stop="false";
+				for(i=0; i<task_length; i++)
+				{	
+					var task=$('.m-panel').children()[1].className;
+					var task_id=task.split("actk:")[1];
+					task_id=task_id.split(" task tsem")[0];
+					if(task=="actk:"+task_id+" task tsem  open" && stop=="false")
+					{
+						alert(task_id);
+						stop="true";
+					}
+				}
+				
 			}	
 		}
 		function tasks_projects(key,pid) //first_panel
 		{
 		 var project_length=$('.projects-list').children().length;
 		 var stop="false";
-		 
+		 var project1="false";
 		 if(pid=="2")
 		 {
 						var child=$('.projects-list').children()[0].id;
 						child=child.split('tpi')[1];
 						stop="true"
+							project="true";
 						window.location.hash="#"+child;
 						$('.projects-list').children()[0].className="project open";
 						document.getElementById('completed_tasks').className="completed";
+					
 		 }
 			if(pid=="1")
 		 {
 						var child=$('.projects-list').children()[project_length-1].id;
 						child=child.split('tpi')[1];
 						stop="true"
+						project1="true";
 						window.location.hash="#"+child;
 						$('.projects-list').children()[project_length-1].className="project open";
 						document.getElementById('all_tasks').className="all-tasks";
@@ -939,6 +972,7 @@ if(is_open=="0")
 						$('.projects-list').children()[i].className="project";
 						$('.projects-list').children()[i+1].className="project open";
 						stop="true"
+						project="true";
 						window.location.hash="#"+child;
 					}
 					else if(key=="down" || key=="Z")
@@ -957,22 +991,25 @@ if(is_open=="0")
 						child=child.split('tpi')[1];
 						$('.projects-list').children()[i].className="project";
 						$('.projects-list').children()[i-1].className="project open";
-						stop="true"
+						stop="true";
+						project="true";
 						window.location.hash="#"+child;
 					}
 					else if(key=="up" || key=="A")
 					{
 						var child=$('.projects-list').children()[0].className="project";
 						stop="true"
+						project="true";
 						window.location.hash="#completed_tasks";
 						document.getElementById('completed_tasks').className="completed open";
 					}
 					
 				}
-				else
+				else if(pid !="2" && project1=="false")
 				{
-				window.location.hash="#all_tasks";
-						document.getElementById('all_tasks').className="all-tasks open";
+				//alert(project1);
+					//	window.location.hash="#all_tasks";
+					//	document.getElementById('all_tasks').className="all-tasks open";
 				}
 		 }
 		}
@@ -989,9 +1026,24 @@ if(is_open=="0")
 				
 				if(task!="sub-header" && stop=="false")
 				{
+				  b=window.location.href;
+					
+					b=b.split("http://localhost:3000/")[1];
+					
+					
+					if(b.search("/")!=-1)
+					{
+			$('#comment_area').show();
+					var a=document.getElementById("tk_"+task_id).className;
+					document.getElementById("tk_"+task_id).className=a+" open";
+					}
+					else
+					{
 					window.location.hash=window.location.hash+"/"+task_id;
 					var a=document.getElementById("tk_"+task_id).className;
 					document.getElementById("tk_"+task_id).className=a+" open";
+						$('#comment_area').show();
+					}
 					stop="true";
 				}
 			}
@@ -1012,6 +1064,9 @@ if(is_open=="0")
 					a=a.split(" open")[0];
 					document.getElementById("tk_"+task_id).className=a;
 					$('#comment_area').hide();
+					a=window.location.hash=window.location.hash;
+					a=a.split("/"+task_id)[0];
+					window.location.hash=a;
 				}
 			}
 		}

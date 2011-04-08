@@ -267,7 +267,7 @@ alert('afetrr bt');
     });
     
     //first panel change the class
-    $('.project,.all-messages,.starred').click(function(){
+    $('.project,.all-messages,.starred').live('click',function(){
       $('.expand-all').hide();
       $('.project.open,.all-messages,.starred').removeClass('open'); 
       $(this).addClass('open');
@@ -584,13 +584,14 @@ alert('afetrr bt');
          $('.add-item-modal').hide();
           ref=window.location.href
           p=ref.search(/settings/)
+          alert(data);
           if(p>=0)
           {
           document.getElementById('projects_list').innerHTML=data;
           }
         else
           {
-          document.getElementById('messages_projects_list').innerHTML=data;
+          document.getElementById('projects_list').innerHTML=data;
           }
         }
       },
@@ -632,7 +633,7 @@ alert('afetrr bt');
           else
           {
             date_header='<div class="date-bar"><a class="date-title" href="#">'+data.date_header+'</a></div>';
-            $(date_header+message).appendTo('#message_area')
+            $(date_header+message).prependTo('#message_area')
           }
           $('.add-item-modal').hide();
         }

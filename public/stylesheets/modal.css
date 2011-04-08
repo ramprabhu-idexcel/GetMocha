@@ -152,8 +152,8 @@
 }
 
 .sort-by-tooltip { top: 45px; left: 453px; }
-.task-dropdown { top: 107px; left: 75px; }
-.task-dropdown.assigned-to { top: 107px; left: 218px; }
+.task-dropdown { top: 30px; left: 75px; } /* modified by railsfactory*/
+.task-dropdown.assigned-to { top: 30px; left: 218px; } /* modified by railsfactory*/
 .settings-dropdown { top: 45px; right: 20px; }
 .account-dropdown { top: 45px; right: 29px; }
 

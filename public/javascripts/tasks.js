@@ -56,11 +56,20 @@
   });
   
   $('.filed-tasklist').live('click',function(){
+    var width=$('.filed-tasklist').width();
+    var half=parseInt(width)/2.0;
+    var left=half+37.25;
+    $('.task-dropdown.task_list').css('left',left)
     $('.task-dropdown.task_list').fadeToggle();
     return false;
   });
   
   $('a.assigned-to').live('click',function(){
+    var width=$('a.assigned-to').width();
+    var left_pos=$('a.assigned-to').position().left;
+    var half=parseInt(width)/2.0;
+    var left=left_pos+half-107;
+    $('.task-dropdown.assigned-to').css('left',left);
     $('.task-dropdown.assigned-to').fadeToggle();
     return false;
   });
@@ -409,6 +418,7 @@
     items.push('<span style="display:none;" class="tsk-detlt" id="tklt'+task.task_list_id+'"></span>')
     items.push('<div class="checkbox"><span class="icon icon-thd '+(task.is_completed ? "checked":"")+'"></span></div>');
     items.push('<h2><span>'+task.name+'</span><a class="edit task_name" href="#">Edit</a></h2>');
+    items.push('<div style="position:relative">');
     items.push('<p class="filed-under">Filed under <a class="filed-tasklist" href="#">'+task.task_list_name+'</a></p>');
     //other task-list-names
     items.push('<div class="task-dropdown task_list" style="display:none;">');
@@ -419,7 +429,9 @@
     });      
     items.push('</ul>');
     items.push('</div>');
-    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to[0]+'</a></p><hr/>');
+    items.push('</div>');
+    items.push('<div style="position:relative">');
+    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to[0]+'</a></p>');
     //other teammembers
     items.push('<div class="task-dropdown assigned-to" style="display:none;">');
     items.push('<div class="task-dropdown-t"></div>');
@@ -432,6 +444,8 @@
     items.push('<input type="text" id="invite_email" onfocus="this.select()" onclick="this.value=\'\';"class="textfield" value="Invite by email" name="assign"/>');
     items.push('<a class="invite-btn dp-down" href="#">+</a>');
     items.push('</div>');
+    items.push('</div>');
+    items.push('<hr/>');
     items.push('<div class="main-content"><p><span>'+task.description+'</span><a class="edit task_description" href="#">Edit</a></p></div>');
     items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');

@@ -183,10 +183,8 @@ $.ajax({
 			 $.each(data.datas,function(index,value){
 				dat.push({text : value.task_list.name,id : value.task_list.id})
 			 });
-			 
 			// document.getElementById('attachment_'+file).style.display="none";
-			
-//			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
+	//			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
 			$("#t_list").autocomplete(dat, {
   formatItem: function(item) {
     return item.text;
@@ -212,9 +210,7 @@ $.ajax({
 			 $.each(data.datas,function(index,value){
 				dat.push({text : value.task_list.name,id : value.task_list.id})
 			 });
-			 
-			// document.getElementById('attachment_'+file).style.display="none";
-			
+				// document.getElementById('attachment_'+file).style.display="none";
 //			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
 			$("#t_list").autocomplete(dat, {
   formatItem: function(item) {
@@ -238,6 +234,5 @@ $.ajax({
   document.getElementById('t_list_hidden').value=item.id;
 });
 			 }
-			 
-			  });
+				  });
 </script>
