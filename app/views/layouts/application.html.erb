@@ -918,19 +918,57 @@ if(is_open=="0")
 			}
 			else
 			{
+			
+			
+			
+			
+			
 				var task_length=$('.m-panel').children().length;
 				var stop="false";
 				for(i=0; i<task_length; i++)
 				{	
-					var task=$('.m-panel').children()[1].className;
-					var task_id=task.split("actk:")[1];
-					task_id=task_id.split(" task tsem")[0];
-					if(task=="actk:"+task_id+" task tsem  open" && stop=="false")
+					var task=$('.m-panel').children()[i].className;
+					if(task!="sub-header")
 					{
-						alert(task_id);
-						stop="true";
+						var task_id=task.split("actk:")[1];
+						task_id=task_id.split(" task tsem")[0];
+						if(task=="actk:"+task_id+" task tsem  open" && stop=="false")
+						{
+							var move_task=$('.m-panel').children()[i+1].className;
+							
+							if(move_task=="sub-header")
+							move_task=$('.m-panel').children()[i+2].className;
+							
+							move_task_id=move_task.split("actk:")[1];
+							move_task_id=move_task_id.split(" task tsem")[0];
+							var b=window.location.href;
+							b=b.split("<%= APP_CONFIG[:site_url] %>/")[1];
+							b=b.split("/")
+							var c=b.length;
+							if(c=="2")
+							var d=b[0];
+							else
+							var d=b[0]+b[1];
+							
+							window.location.hash=d+"/"+move_task_id;
+							var a=document.getElementById("tk_"+move_task_id).className;
+							var aa=document.getElementById("tk_"+task_id).className;
+							aa=aa.split(" open")[0];
+							document.getElementById("tk_"+move_task_id).className=a+" open";
+							document.getElementById("tk_"+task_id).className=aa;
+						$('#comment_area').show();
+							stop="true";
+						}
 					}
 				}
+				
+				
+				
+				
+				
+				
+				
+				
 				
 			}	
 		}
@@ -1028,7 +1066,7 @@ if(is_open=="0")
 				{
 				  b=window.location.href;
 					
-					b=b.split("http://localhost:3000/")[1];
+					b=b.split("<%= APP_CONFIG[:site_url] %>/")[1];
 					
 					
 					if(b.search("/")!=-1)
