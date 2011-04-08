@@ -40,8 +40,9 @@ class MessagesController < ApplicationController
 	session[:attaches_id]=params[:attach_id]
 		if !params[:message][:recipient].blank?
 			#~ errors<<"Please enter To_email address"
-		elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+		  if !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 			errors<<"Please enter valid email"
+		end
 		end
 		if !session[:project_name].nil?
 		  @project=Project.find(session[:project_selected])
@@ -74,11 +75,8 @@ class MessagesController < ApplicationController
           @message.add_in_activity(@to_users)
 					Message.send_notification_to_team_members(current_user,@to_users,@message)
 					if !session[:attaches_id].nil?
-					attachment=Attachment.recent_attachments
-					attachment.each do |attach|
-					attach.update_attributes(:attachable=>@message)
-				  end
-			end
+					attachment=Attachment.update_attachments(session[:attaches_id],@message)
+				 end
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message
 				#attachment.save

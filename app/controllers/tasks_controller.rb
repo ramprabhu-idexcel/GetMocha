@@ -8,11 +8,8 @@ class TasksController < ApplicationController
 		@projects=current_user.user_active_projects
 	end
   def new
+		attachs=Attachment.delete_attachments(session[:attaches_id]) if !session[:attaches_id].nil?
 		session[:attaches_id]=nil
-		attachs=Attachment.recent_attachments
-		attachs.each do |attach|
-      Attachment.delete(attach)
-		end
     @users=current_user.my_contacts
 		#~ @projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		@projects=Project.check_project_users(current_user)
@@ -31,10 +28,11 @@ class TasksController < ApplicationController
 	end
 	def create
 		errors=[]
+		session[:attaches_id]=params[:attach_id]
 		if !session[:project_name].nil?
-		  @project=Project.find_by_name(session[:project_name])
+		  @project=Project.(session[:project_selected])
 		else
-		  @project=Project.find_by_name(params[:project_id])
+		  @project=Project.(params[:project_id])
 		end
 		if !@project
 			render :update do |page|
@@ -60,7 +58,7 @@ class TasksController < ApplicationController
 					errors<<"Please enter valid notify email"
 					end
 		    end
-		    @tasklist=TaskList.find_by_name(params[:tasklist_id])
+		    @tasklist=TaskList.find(params[:tasklist_id])
 			  if !@tasklist
 			    if !params[:tasklist_id].blank?
 			      errors<<"Please enter existing tasklist only"
@@ -87,11 +85,8 @@ class TasksController < ApplicationController
           @tasks.add_in_activity(@notify,params[:task][:recipient],current_user)
 					Task.send_task_notification_to_team_members(current_user,@notify,@tasks)
 					if !session[:attaches_id].nil?
-					  attachment=Attachment.recent_attachments
-					  attachment.each do |attach|
-				  	attach.update_attributes(:attachable=>@tasks)
-				    end
-			    end
+					  attachment=Attachment.update_attachments(session[:attaches_id],@tasks)
+					 end
 				  session[:attaches_id]=nil
 			  	#	attachment.attachable=@message
 				  #attachment.save

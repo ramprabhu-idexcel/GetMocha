@@ -17,6 +17,12 @@ attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id
 attach.delete if attach
 end
 end
+def update_attachments(ids,attachable)
+  ids.each do |id|
+attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id IS NULL',id])
+attach.update_attributes(:attachable=>attachable) if attach
+end
+end
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
   #~ after_save :resize_image_for_thumbnail
