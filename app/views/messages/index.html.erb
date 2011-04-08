@@ -3,7 +3,7 @@ var Message=true;
 $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
 </script>
 <%=javascript_include_tag "message"%>
-<div class="l-panel-contain" id="messages_projects_list">
+<div class="l-panel-contain" id="projects_list">
 	<% if @projects %>
 		<%= render :partial=>'project_list' %>
 	<% end %>
