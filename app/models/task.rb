@@ -119,7 +119,7 @@ def add_in_activity(to_users,assign,user)
     end
   end
   def assigned_user
-    activities.find(:first,:conditions=>['is_assigned=?',true])
+    activities.t_assigned_user
   end
   def assigned_to
     activity=assigned_user
@@ -153,5 +153,8 @@ def add_in_activity(to_users,assign,user)
       else
         "Subscribed: #{subscribed_user_names[0]} and <a class='expand_user' href='#'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
     end
+  end
+  def ex_task(title,project)
+    find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
   end
 end
