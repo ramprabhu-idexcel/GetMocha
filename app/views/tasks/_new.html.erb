@@ -54,6 +54,7 @@ t_list=@t_list
 			    <fieldset id="task_txtarea">
 					<label>Message:</label>
 		       		<%=f.text_area 'message', :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
+							<input type="hidden" id="attach_hidden" name="attach_id" value=""/>
 			    </fieldset>
 				<% end %>
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
@@ -79,6 +80,8 @@ t_list=@t_list
 	<div class="modal-bottom-right"></div>
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
+ 	var attachitem=[];
+
 $(document).ready(function(){
 var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
 $("#project_val").autocomplete(data, {
@@ -153,6 +156,8 @@ if(d.length > 12)
    var e=d.substring(original,10)
    var file1=e.concat(c)
  }
+  		 attachitem.push(a);
+			 document.getElementById('attach_hidden').value=attachitem;
  	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file+ '</span></div>');
     },
 			onComplete:function (event, files, index, xhr, handler) {
@@ -198,7 +203,7 @@ $.ajax({
 			 }
 			 }
 			 });
-	$('#t_list').click(function(event){
+	$('#t_list').focus(function(event){
 if (document.getElementById("project_val").value!="")
 {
  proj=document.getElementById("autocomplete1_hidden").value
