@@ -114,7 +114,7 @@ end
       task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
     end
     #~ ex_task=Task.find_by_name(title)
-    ex_task=Task.find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
+    ex_task=Task.ex_task(title,project)
     if ex_task
     #~ existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
     existing_task=existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+' and task_list_id='"+task_list.id.to_s+"'" )
@@ -145,11 +145,7 @@ end
       end
       elsif ((user && !user.is_guest && proj_user) || project.is_public?)
       task=Task.create(:name=>title,:description=>message,:user_id=>user.id,:task_list_id=>task_list.id)
-      if params[:attachments] && params[:attachments].to_i > 0
-        for count in 1..params[:attachments].to_i
-          attach=task.attachments.create(:uploaded_data => params["attachment#{count}"])
-        end
-      end
+
     end
     logger.info user.inspect
     logger.info project.inspect
@@ -163,6 +159,11 @@ end
         activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
       end
     end
+          if params[:attachments] && params[:attachments].to_i > 0
+        for count in 1..params[:attachments].to_i
+          attach=task.attachments.create(:uploaded_data => params["attachment#{count}"])
+        end
+      end
     #~ task.send_task_notification_to_team_members(user,@notify,@tasks)
   end
 def message_create_via_email
@@ -221,16 +222,17 @@ end
 elsif ((user && !user.is_guest && proj_user) || project.is_public?)
 message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 #~ activity=Activity.create(:user_id=>user.id, :resource_type=>"Message", :resource_id=>message.id)
-if params[:attachments] && params[:attachments].to_i > 0
-for count in 1..params[:attachments].to_i
-attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
-end
-end
+
       end
 if message && message.project
 message.project.users.each do |user|
 activity=message.activities.create! :user=>user
 activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
+end
+end
+if params[:attachments] && params[:attachments].to_i > 0
+for count in 1..params[:attachments].to_i
+attach=message.attachments.create(:uploaded_data => params["attachment#{count}"])
 end
 end
 end

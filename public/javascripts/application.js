@@ -586,7 +586,6 @@ alert('afetrr bt');
          $('.add-item-modal').hide();
           ref=window.location.href
           p=ref.search(/settings/)
-          alert(data);
           if(p>=0)
           {
           document.getElementById('projects_list').innerHTML=data;
