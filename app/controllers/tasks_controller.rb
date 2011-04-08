@@ -30,9 +30,9 @@ class TasksController < ApplicationController
 		errors=[]
 		session[:attaches_id]=params[:attach_id]
 		if !session[:project_name].nil?
-		  @project=Project.(session[:project_selected])
+		  @project=Project.find_by_id(session[:project_selected])
 		else
-		  @project=Project.(params[:project_id])
+		  @project=Project.find_by_id(params[:project_id])
 		end
 		if !@project
 			render :update do |page|
