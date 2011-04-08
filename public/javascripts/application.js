@@ -516,6 +516,7 @@ alert('afetrr bt');
       success: function(data){
         $('#add_new_mod').html(data); 
         $('#add_new_mod').show();
+        $('#txtInput1').focus();
       }
     });
     $('#add_new_mods').hide();
@@ -530,6 +531,7 @@ alert('afetrr bt');
       success: function(data){
 			 $('#add_new_mod').html(data); 
         $('#add_new_mod').show();
+        $('#txtInput1').focus();
       }
     });
     $('#add_new_mods').hide()
