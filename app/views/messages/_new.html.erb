@@ -45,7 +45,7 @@
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
 						<fieldset id="attach" class="open">
 						<div id="loader1" style="display:none;">
-	           <img src="/images/ajax-loader(2).gif" />
+	           <img src="/images/spinner.gif" />
        </div>
 					<label>Attachments:</label>
 					<div  id="attach_upload" class="attachment-upload" style="display:none;min-height:62px;">
@@ -148,7 +148,6 @@ document.getElementById('message_message').style.display="block";
 	function delete_attachment(file)
 {
 attachitem.pop(file);
-alert(attachitem);
  $.ajax({
       url:'/remove_attach/'+file,
       type: 'get',
