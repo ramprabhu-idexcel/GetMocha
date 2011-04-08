@@ -960,7 +960,8 @@ if(is_open=="0")
 							var d=b[0];
 							else
 							var d=b[0]+b[1];
-							window.location.hash=d+"/"+move_task_id;
+							
+							window.location.location=d+"/"+move_task_id;
 							var a=document.getElementById("tk_"+move_task_id).className;
 							var aa=document.getElementById("tk_"+task_id).className;
 							aa=aa.split(" open")[0];
