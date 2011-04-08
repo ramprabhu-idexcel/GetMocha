@@ -743,6 +743,7 @@ alert('afetrr bt');
          if(data.success!="undefined")
          {
             $('#label_first_name').text(data.success)
+           changename();            
            }
          else
          {
@@ -758,7 +759,13 @@ alert('afetrr bt');
     }
   });
     
-    
+    function changename()
+    {
+      a=$('#label_first_name').text()
+      b=$('#label_last_name').text() 
+      $('.username.user_drop_down').html('<span class="icon></span>'+a+b)       
+    }
+  
   //To edit the last_name  
     $('#last_name').live('click',function(){
       $('#label_last_name').hide();
@@ -783,6 +790,7 @@ alert('afetrr bt');
           if(data.success!="undefined")
            {
               $('#label_last_name').text(data.success)
+              changename();            
              }
            else
            {
@@ -800,6 +808,9 @@ alert('afetrr bt');
   
    });
    
+   $('.username.user_drop_down').change(function(){
+         $('.username.user_drop_down').html('<span class="icon></span>ramprabhu')
+   });
 
     
     //To edit the title
@@ -1085,7 +1096,7 @@ else
     }
   }
 
-
+  
 /* $('#attach').fileUploadUI({
         uploadTable: $('#files'),
         downloadTable: $('#files'),
