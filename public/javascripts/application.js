@@ -138,7 +138,7 @@ alert('afetrr bt');
   $('.delete.delete_new').live('click',function(){
           $.ajax({
          url: $(this).attr('href'),
-         type: 'delete',
+         type: 'delete'
        });
     $(this).parent().parent().parent().parent().next().remove()
         $(this).parent().parent().parent().parent().remove();
