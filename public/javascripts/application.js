@@ -761,9 +761,10 @@ alert('afetrr bt');
     
     function changename()
     {
-      a=$('#label_first_name').text()
-      b=$('#label_last_name').text() 
-      $('.username.user_drop_down').html('<span class="icon></span>'+a+' '+b)       
+      var a=$('#label_first_name').text();
+      var b=$('#label_last_name').text() ;
+      var name=a+' '+b;
+      $('.username.user_drop_down').html('<span class="icon"></span>'+name);
     }
   
   //To edit the last_name  
