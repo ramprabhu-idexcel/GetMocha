@@ -352,7 +352,7 @@
     restfulUrl: $.host,
     routes: {
     ':all_task'   : 'allTask',
-    ':all_task/:activity_id' : 'taskComment',
+    ':all_task/:activity_id' : 'taskComment'
     },
     allTask: function(page){
       if(page=="")
