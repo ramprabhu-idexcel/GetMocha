@@ -11,10 +11,16 @@ class Attachment < ActiveRecord::Base
     has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   end
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
-def delete_attachments(ids)
+def self.delete_attachments(ids)
   ids.each do |id|
 attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id IS NULL',id])
 attach.delete if attach
+end
+end
+def self.update_attachments(ids,attachable)
+  ids.each do |id|
+attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id IS NULL',id])
+attach.update_attributes(:attachable=>attachable) if attach
 end
 end
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
