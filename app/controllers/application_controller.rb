@@ -212,7 +212,7 @@ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>nam
 message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
 else
 message=Message.create(:user_id=>guest.id, :project_id=>project.id, :subject=>name, :message=>message)
-message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id)
+#~ message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id)
 end
 if guest
 ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
