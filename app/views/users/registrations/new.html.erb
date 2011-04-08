@@ -1,8 +1,11 @@
 <body class="signup">
+
 <div class="wrapper">
+
 <div class="header">
-<%= render :partial=>'/home/header'%>
+		<%= render :partial=>'/home/header'%>
 </div>
+
 <div class="container-960 alpha-m content-bottom">
 	<div class="grid-260">
 		<div class="info-box">
@@ -14,38 +17,34 @@
 			<div class="grid-630">
 		<h1>Sign up for a free 60-day trial</h1>
 		<hr class="light-hr" />
-		<table>
-  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-		
-		<tr><td><%=f.label "First_Name", "First Name",:class=>"last"%></td><td><%=f.label "Last_Name","Last Name",:class=>"last" %></td></tr>
-	 <tr><td><%=f.text_field :first_name,:class=>"textfield",:id=>"signup-fname"%></td>
-	  <td><%= f.text_field :last_name,:class=>"textfield last",:id=>"signup-lname"%></td></tr>
-		<tr><td><%= f.label "Email_Address","Email Address",:class=>"last" %></td><td><%= f.label "Password","Password",:class=>"last"  %></td></tr>
-    <%if session[:invite_email].present?%>
-      <tr><td><%= f.text_field :email,:class=>"textfield",:value=>session[:invite_email] %></td>
-      <%session[:invite_email]=nil%>
-    <%else%>
-      <tr><td><%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com"%></td>
-    <%end%>
-	  <td><%= f.password_field :password,:class=>"textfield last"%></td></tr>
-	</table>
-	<hr class="light-hr" />
-	 <%=f.check_box "terms_conditions",:class=>"checkbox"%> I agree to the Mocha <a href="/terms">Terms of Use.</a>
-   <%= f.submit "Sign up",:class=>"btn signup-btn",:id=>"user_signup"%>
-	  <%end%>
-  	</div>	
+	  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+			<%=f.label "First_Name", "First Name"%><%=f.label "Last_Name","Last Name",:class=>"last" %>
+			<%=f.text_field :first_name,:class=>"textfield",:id=>"signup-fname"%>
+			<%= f.text_field :last_name,:class=>"textfield last",:id=>"signup-lname"%>
+			<%= f.label "Email_Address","Email Address" %><%= f.label "Password","Password",:class=>"last"  %>
+			<%if session[:invite_email].present?%>
+				<%= f.text_field :email,:class=>"textfield",:value=>session[:invite_email] %>
+				<%session[:invite_email]=nil%>
+			<%else%>
+				<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:onfocus=>"this.select()", :onblur=>"this.value=!this.value?'name@example.com':this.value;",:value=>"name@example.com"%>
+			<%end%>
+			<%= f.password_field :password,:class=>"textfield last"%>
+			<hr class="light-hr" />
+	   <%= f.submit "Sign up",:class=>"btn signup-btn",:id=>"user_signup"%>
+			<p> <%=f.check_box "terms_conditions",:class=>"checkbox"%> I agree to the Mocha <a href="/terms">Terms of Use.</a></p>
+		<%end%>
+	</div>
 	
-<script>
-var Signup=true;
-</script>
-
-<div class="clear-fix"></div>
-</div>
-
-<div class="push"></div>
-</div>
-</div>
+	<div class="clear-fix"></div>
+  </div>
+	<div class="push"></div>
+  </div>
+	
 <div class="footer">
 		<%= render :partial=>'/home/footer'%>
 </div>
 </body>
+
+<script>
+var Signup=true;
+</script>
