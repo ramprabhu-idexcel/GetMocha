@@ -172,6 +172,7 @@ else
                   $('.expand-all').show();
                   else
                    $('.expand-all').hide();
+                  $('.message_header').show();
                 }
 }
                });

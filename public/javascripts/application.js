@@ -271,6 +271,8 @@ alert('afetrr bt');
       $('.expand-all').hide();
       $('.project.open,.all-messages,.starred').removeClass('open'); 
       $(this).addClass('open');
+      $('#comment_area').html('');
+      $('.message_header').hide();
     });
     
     //display the sort message
