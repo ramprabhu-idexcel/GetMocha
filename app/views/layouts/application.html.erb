@@ -932,8 +932,9 @@ if(is_open=="0")
 				{	
 					var task=$('.m-panel').children()[i].className;
 					
-					if(task!="sub-header" && (key="down" || key=="up" || key=="S" || key=="X"))
+					if(task!="sub-header" && (key=="down" || key=="up" || key=="S" || key=="X"))
 					{
+					
 					var task_id=task.split("actk:")[1];
 						task_id=task_id.split(" task tsem")[0];
 					
