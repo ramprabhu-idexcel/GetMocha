@@ -779,7 +779,7 @@ alert('afetrr bt');
         url:"/updates/edit_profile",
         type: "put",
           data:{"user[last_name]" : $('#txt_lastname').val()},
-        uccess:function(data){
+        success:function(data){
           if(data.success!="undefined")
            {
               $('#label_last_name').text(data.success)
