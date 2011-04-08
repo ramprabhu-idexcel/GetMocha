@@ -13,11 +13,8 @@ class MessagesController < ApplicationController
 		@projects=current_user.user_active_projects
 	end
 	def new
+		Attachment.delete_attachments(session[:attaches_id]) if !session[:attaches_id].nil?
 		session[:attaches_id]=nil
-		attachs=Attachment.recent_attachments
-		attachs.each do |attach|
-		Attachment.delete(attach)
-		end
 		if session[:project_name]
 			project=Project.find(session[:project_selected])
 			@users=project.users
@@ -40,6 +37,7 @@ class MessagesController < ApplicationController
   end
 	def create
 	errors=[]
+	session[:attaches_id]=params[:attach_id]
 		if !params[:message][:recipient].blank?
 			#~ errors<<"Please enter To_email address"
 		elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
@@ -84,7 +82,7 @@ class MessagesController < ApplicationController
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message
 				#attachment.save
-        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
+        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id)
 				render :json=>@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url,:has_attachment=>@message.attachments.present?})
 			else
 				render :update do |page|
@@ -107,11 +105,11 @@ end
   def starred_messages
 		#~ session[:project_name]=nil
 		#~ session[:project_selected]=nil
-		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time,:has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time, :has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def project_messages
 		session[:project_selected]=params[:project_id]
-		render :json=>current_user.group_project_messages(params[:project_id],params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time,:has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.group_project_messages(params[:project_id],params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time, :has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def show
     @activity.update_attribute(:is_read,true)
