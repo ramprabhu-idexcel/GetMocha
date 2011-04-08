@@ -148,7 +148,6 @@ document.getElementById('message_message').style.display="block";
 	function delete_attachment(file)
 {
 attachitem.pop(file);
-alert(attachitem);
  $.ajax({
       url:'/remove_attach/'+file,
       type: 'get',
