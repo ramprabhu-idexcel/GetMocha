@@ -12,22 +12,22 @@ GetMocha::Application.routes.draw do
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
     get "create" ,:to=>"devise/projects#create"
 end
-  get "admin_panel" =>'admins#new'
-  post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
-  get "admin_settings"=>'admins#settings', :as=>:admin_page
-  get "admins/users"=>'admins#users'
-  get "admins/projects"=>'admins#projects'
-  get "admins/analetics"=>'admins#analetics'
- devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"}
- devise_scope :admin do
- get "admin_change_password",:to=>"admin_passwords#edit",:as=>"edit_admin_password"
- end
- resources :admins do
-      member do
-      post 'remove_user'
-      post 'remove_project'
-  end
-  end
+  #~ get "admin_panel" =>'admins#new'
+  #~ post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
+  #~ get "admin_settings"=>'admins#settings', :as=>:admin_page
+  #~ get "admins/users"=>'admins#users'
+  #~ get "admins/projects"=>'admins#projects'
+  #~ get "admins/analetics"=>'admins#analetics'
+ #~ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"}
+ #~ devise_scope :admin do
+ #~ get "admin_change_password",:to=>"admin_passwords#edit",:as=>"edit_admin_password"
+ #~ end
+ #~ resources :admins do
+      #~ member do
+      #~ post 'remove_user'
+      #~ post 'remove_project'
+  #~ end
+  #~ end
   resources :projects do
     member do
       get 'settings_pane'
@@ -79,22 +79,22 @@ end
     end
   end
   # task routes
-  resources :tasks do
-    member do
-      get :project_tasklists
-      put :assign_task
-    end
-    collection do
-      put :complete_task
-      get :all_tasks
-      get :starred_tasks
-      get :completed_tasks
-      get :my_tasks
-    end
-  end
-  match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
+  #~ resources :tasks do
+    #~ member do
+      #~ get :project_tasklists
+      #~ put :assign_task
+    #~ end
+    #~ collection do
+      #~ put :complete_task
+      #~ get :all_tasks
+      #~ get :starred_tasks
+      #~ get :completed_tasks
+      #~ get :my_tasks
+    #~ end
+  #~ end
+  #~ match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
   resources :activities
-  resources :task_lists
+  #~ resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"
