@@ -187,6 +187,17 @@ class User < ActiveRecord::Base
   def guest_update_message(project_id)
     project_id=project_id.to_i
     guest_message_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
+    project=Project.find_by_id(project_id)
+    project.messages.each do |message|
+      create_old(message)
+      message.comments.each do |comment|
+        create_old(comment)
+      end
+    end
+  end
+  def create_old(object)
+    activity=activities.find_or_create_by_resource_type_and_resource_id(object.class.to_s,object.id)
+    activity.update_attributes(:created_at=>object.created_at,:updated_at=>object.updated_at)
   end
   def unread_all_message
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=?',"Message",false,false])
