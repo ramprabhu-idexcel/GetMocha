@@ -329,9 +329,9 @@ alert('afetrr bt');
       });
       new_content=$('#message_message').val();
       message_content=$('#message_message').val();
-      if(new_content.length>77)
+      if(new_content.length>197)
       {
-        new_content=new_content.substring(0,77)+"...";
+        new_content=new_content.substring(0,197)+"...";
       }
       $('.message.messow.open').children('.excerpt').children('p').text(new_content);
       $(this).parent().html(message_content+'<a class="edit message_edit" href="#">Edit</a><div class="clear-fix"></div>');
