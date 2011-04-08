@@ -127,7 +127,7 @@ class Message < ActiveRecord::Base
     time.strftime("%I:%M %P")
   end
 	def message_trucate
-    message.truncate(80)
+    message.truncate(200)
   end
 def author
 	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
