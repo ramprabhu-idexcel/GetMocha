@@ -58,7 +58,7 @@ class TasksController < ApplicationController
 					errors<<"Please enter valid notify email"
 					end
 		    end
-		    @tasklist=TaskList.find(params[:tasklist_id])
+		    @tasklist=TaskList.find_by_id(params[:tasklist_id])
 			  if !@tasklist
 			    if !params[:tasklist_id].blank?
 			      errors<<"Please enter existing tasklist only"
