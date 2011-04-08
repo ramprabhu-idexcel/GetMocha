@@ -45,9 +45,9 @@ class MessagesController < ApplicationController
 		end
 		end
 		if !session[:project_name].nil?
-		  @project=Project.find(session[:project_selected])
+		  @project=Project.find_by_id(session[:project_selected])
 		else
-		  @project=Project.find(params[:project_id])
+		  @project=Project.find_by_id(params[:project_id])
 		end
 	if !@project
 			 render :update do |page|
