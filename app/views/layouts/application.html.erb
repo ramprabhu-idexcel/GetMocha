@@ -828,12 +828,14 @@ if(is_open=="0")
 		
 		function tasks_navigation_down(key)
 		{
+		 
 			var class1=$('#comment_area').children('').length;
 			var class_hide=$('#comment_area').css('display');
 			var project="true";
 			
 			if(class1==0 || class_hide=="none")
 			{
+			
 				var all_tasks=document.getElementById('all_tasks').className;
 				var my_tasks=document.getElementById('my_tasks').className;
 				var starred_tasks=document.getElementById('starred_tasks').className;
@@ -848,6 +850,7 @@ if(is_open=="0")
 						project_tasks=cn;
 					}
 				}
+				
 				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
 				{ 
 				  if(key=="down" || key=="Z")
@@ -928,17 +931,25 @@ if(is_open=="0")
 				for(i=0; i<task_length; i++)
 				{	
 					var task=$('.m-panel').children()[i].className;
+					
 					if(task!="sub-header")
 					{
-						var task_id=task.split("actk:")[1];
+					var task_id=task.split("actk:")[1];
 						task_id=task_id.split(" task tsem")[0];
-						if(task=="actk:"+task_id+" task tsem  open" && stop=="false")
+					
+					
+						
+						if((task=="actk:"+task_id+" task tsem open" && stop=="false") || (task=="actk:"+task_id+" task tsem  open" && stop=="false"))
 						{
+						  if(key=="down" || key=="Z")
 							var move_task=$('.m-panel').children()[i+1].className;
-							
+							else
+							var move_task=$('.m-panel').children()[i-1].className;
 							if(move_task=="sub-header")
+							if(key=="down" || key=="Z")
 							move_task=$('.m-panel').children()[i+2].className;
-							
+							else
+							move_task=$('.m-panel').children()[i-2].className;
 							move_task_id=move_task.split("actk:")[1];
 							move_task_id=move_task_id.split(" task tsem")[0];
 							var b=window.location.href;
@@ -949,14 +960,13 @@ if(is_open=="0")
 							var d=b[0];
 							else
 							var d=b[0]+b[1];
-							
 							window.location.hash=d+"/"+move_task_id;
 							var a=document.getElementById("tk_"+move_task_id).className;
 							var aa=document.getElementById("tk_"+task_id).className;
 							aa=aa.split(" open")[0];
 							document.getElementById("tk_"+move_task_id).className=a+" open";
 							document.getElementById("tk_"+task_id).className=aa;
-						$('#comment_area').show();
+							$('#comment_area').show();
 							stop="true";
 						}
 					}
