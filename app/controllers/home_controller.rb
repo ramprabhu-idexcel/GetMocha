@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
 layout "before_login"
-  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy']
+  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy','message_create_via_email','check_from_address_email']
 	before_filter :check_from_address_email,:only=>['message_create_via_email']
-	protect_from_forgery  :except=>:check_email_reply_and_save
+	protect_from_forgery  :except=>:check_email_reply_and_save, :check_from_address_email, :message_create_via_email
 def index
 	redirect_to '/messages' if current_user
 end	
@@ -384,8 +384,8 @@ end
 end
 end
 
-protected:
-	  def check_from_address_email
+
+ def check_from_address_email
   logger.info "********************************"
 logger.info params[:from].inspect
 logger.info "********************************"
