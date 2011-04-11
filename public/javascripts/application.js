@@ -1288,19 +1288,12 @@ function close_comment_area()
       url :"/task_lists",
       data : {tlname : a, project : b},
       success: function(data){
-        a=data.search(/alert/);
-      	if(a!=0 && a!=6){
-         $('.add-item-modal').hide();
-         /* ref=window.location.href
-          p=ref.search(/settings/)
-          if(p>=0)
-          {
-          document.getElementById('projects_list').innerHTML=data;
-          }
-        else
-          {
-          document.getElementById('messages_projects_list').innerHTML=data;
-          }*/
+        if(typeof(data)=="object"){
+        {
+          $('.add-item-modal').hide();
+          $('#tpi'+data.project_id).children('ul').append('<li><span>'+data.name+'</span></li>')
+        }
+         
         }
       },
       failure: function(){

@@ -41,7 +41,7 @@ class TaskListsController < ApplicationController
 		end
 	if tasklist
 				@tasklist.save
-				render :nothing=>true
+				render :json=>{:name=>@tasklist.name,:project_id=>@tasklist.project_id}.to_json
 				else
 								render :update do |page|
 				page.alert errors.join("\n")
