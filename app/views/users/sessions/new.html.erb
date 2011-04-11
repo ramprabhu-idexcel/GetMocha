@@ -9,56 +9,26 @@
 <div class="grid-400-c reset-form" style="left: 9000px; display: none; margin-left: 0px;">
 <h1>Forgot your password?</h1>
 <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:html => { :method => :post,:id=>"fpwd" ,:class=>"no-labels"}) do |f| %>
-<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address",:style=>"width:258px;;height:42px;"%>
+<%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address"%>
 <%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
 <% end %>
 </div>
 <div class="grid-600-c login-form">
 <% if devise_mapping.rememberable? -%>
-<p class="remember"><input type="checkbox" class="checkbox" id="agree-check" value="" ></input>Remember me on this computer </p><%end%>
+<p class="remember"><input type="checkbox" class="checkbox" id="remember_me" value="" ></input>Remember me on this computer </p><%end%>
 <h1>Log in to Mocha</h1>
 <div class="clear-both"></div>
 <%= form_for(resource, :as => resource_name,:class=>"no-labels",:url => session_path(resource_name),:html=>{:id=>"user_login",:class=>"no-labels"}) do |f| %>
 <%= f.hidden_field :remember_me,:id=>"remember_hidden_id",:value=>0%>
 <%= f.submit "Log in",:class=>"btn login-btn" %>
 <%= f.label :email, "Email"%>
-<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address",:style=>"width:214px;height:36px;"  %>
+<%= f.text_field :email, :class=>"textfield",:id=>"login_email",:onclick=>"this.value='';",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Email Address':this.value;",:value=>"Email Address" %>
 <%= f.label :password, "Password"%>
-<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:214px;;height:36px;" %>
+<%= f.password_field :password,:class=>"textfield",:onclick=>"this.value='';", :onfocus=>"this.select()", :onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password"%>
 <%end%>
 </div>
 </div>
-<script>
-var Login=true;
 
-    $('#forgot_pass').live('click',function(){
-	  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var email=$('#forgot_email').val()
-		if($('#forgot_email').val()=='Account email address')
-		{
-		alert('pls enter your email id');
-		}
-    else if(!emailReg.test(email)) {
-		  alert('pls enter the valid email address');
-		 }
-		else
-		{
-		$.ajax({
-		     url:'/users/password',
-        data: $('form#fpwd').serialize(),
-        type: "POST",
-        success: function(data){
-				if(typeof(data.failure)!="undefined"){
-				alert(data.failure);
-				}
-				else
-		       window.location.href="/";
-          },
-				});
-    }
-		return false;
-		});
-</script>
 <div class="push"></div>
 </div>
 <div class="footer">
@@ -75,3 +45,59 @@ var Login=true;
 	</div>
 </div>
 </body>
+<script>
+$(document).ready(function() {
+$('#user_signup').live('click',function(){
+      $.ajax({
+        url:'/users',
+        data: $('form#user_new').serialize(),
+        type: "POST"
+				});
+      return false;
+    });
+		$('#remember_me').live('click',function(){
+      if($('#remember_me').is(':checked'))
+      {
+         $('#remember_hidden_id').val("1")
+      }
+       else
+       {
+           $('#remember_hidden_id').val("0")
+       }
+     });
+		 $('#user_submit').live('click',function(){
+		 if (($('#user_email').val()=="") && ($("#user_password").val()==""))
+       {
+            alert("Email and Password can't be blank");
+       }
+			 else if ($('#user_email').val()=="")
+        {
+				alert("Email can't be blank");
+        }
+				else if ($("#user_password").val()=="")
+       {
+           alert("Password can't be blank");
+       }
+       else
+      {
+			$.ajax({
+        url:'/users/sign_in',
+        data: $('form#user_login').serialize(),
+        type: "POST",
+        success: function(data){
+          if(data!="redirect")
+          {
+            alert(data);
+          }
+          else
+          {
+            window.location.href="/messages";
+          }
+        }
+      });
+    }
+      return false;
+    });
+  });
+  </script>
+

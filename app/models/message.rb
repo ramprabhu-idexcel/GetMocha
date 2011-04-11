@@ -83,9 +83,6 @@ class Message < ActiveRecord::Base
  	def subscribed_users
     activities.where('is_subscribed=?',true)
   end
-	def subscribed_user_names
-    subscribed_users.collect{|a| a.user.name}.sort
-  end
   def subscribed_user_names
     subscribed_users.collect{|a| a.user.name if a.user}.sort
   end
@@ -130,7 +127,7 @@ class Message < ActiveRecord::Base
     time.strftime("%I:%M %P")
   end
 	def message_trucate
-    message.truncate(80)
+    message.truncate(200)
   end
 def author
 	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"

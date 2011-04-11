@@ -214,7 +214,7 @@
 				if (left + 356 > viewPort.l + viewPort.w) {
 					left -= 356;
 				}
-				cal.css({left: left + 'px', top: top + 'px',	position: "absolute",zIndex: 500,});
+				cal.css({left: left + 'px', top: top + 'px',	position: "absolute",zIndex: 500});
 				if (cal.data('colorpicker').onShow.apply(this, [cal.get(0)]) != false) {
 					cal.show();
 				}

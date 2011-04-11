@@ -13,11 +13,8 @@ class MessagesController < ApplicationController
 		@projects=current_user.user_active_projects
 	end
 	def new
+		Attachment.delete_attachments(session[:attaches_id]) if !session[:attaches_id].nil?
 		session[:attaches_id]=nil
-		attachs=Attachment.recent_attachments
-		attachs.each do |attach|
-		Attachment.delete(attach)
-		end
 		if session[:project_name]
 			project=Project.find(session[:project_selected])
 			@users=project.users
@@ -40,15 +37,17 @@ class MessagesController < ApplicationController
   end
 	def create
 	errors=[]
+	session[:attaches_id]=params[:attach_id]
 		if !params[:message][:recipient].blank?
 			#~ errors<<"Please enter To_email address"
-		elsif !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+		  if !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 			errors<<"Please enter valid email"
 		end
+		end
 		if !session[:project_name].nil?
-		  @project=Project.find(session[:project_selected])
+		  @project=Project.find_by_id(session[:project_selected])
 		else
-		  @project=Project.find(params[:project_id])
+		  @project=Project.find_by_id(params[:project_id])
 		end
 	if !@project
 			 render :update do |page|
@@ -76,15 +75,12 @@ class MessagesController < ApplicationController
           @message.add_in_activity(@to_users)
 					Message.send_notification_to_team_members(current_user,@to_users,@message)
 					if !session[:attaches_id].nil?
-					attachment=Attachment.recent_attachments
-					attachment.each do |attach|
-					attach.update_attributes(:attachable=>@message)
-				  end
-			end
+					attachment=Attachment.update_attachments(session[:attaches_id],@message)
+				 end
 				session[:attaches_id]=nil
 				#	attachment.attachable=@message
 				#attachment.save
-        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id)
+        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
 				render :json=>@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url,:has_attachment=>@message.attachments.present?})
 			else
 				render :update do |page|
@@ -107,11 +103,11 @@ end
   def starred_messages
 		#~ session[:project_name]=nil
 		#~ session[:project_selected]=nil
-		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time, :has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def project_messages
 		session[:project_selected]=params[:project_id]
-		render :json=>current_user.group_project_messages(params[:project_id],params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
+		render :json=>current_user.group_project_messages(params[:project_id],params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time, :has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def show
     @activity.update_attribute(:is_read,true)
@@ -121,16 +117,6 @@ end
     comment_ids=@activity.resource.comments.collect{|x| x.id}
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
-  end
-  def star_message
-    starred=!@activity.is_starred
-    @activity.update_attribute(:is_starred,starred)
-    render :json=>{:count=>current_user.starred_messages_count}
-  end
-  def subscribe
-    subscribed=!@activity.is_subscribed
-    @activity.update_attribute(:is_subscribed,subscribed)
-    render :nothing=>true
   end
 	def unsubscribe
 		@activity.update_attribute(:is_subscribed,false)
@@ -166,12 +152,6 @@ end
   end
   def resource_columns
     [:message,:project_id,:subject]
-  end
-  def remove_timestamps
-    Activity.record_timestamps=false
-  end
-  def set_timestamps
-    Activity.record_timestamps=true
   end
 	def clear_session_project
 		session[:project_name]=nil

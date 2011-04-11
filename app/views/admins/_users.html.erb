@@ -1,7 +1,7 @@
 <div class="user-info">
 <div class="label_contain"><br/>
 <h3>Users</h3><br/>
-<%@users.each do |user|%>
+<%users.each do |user|%>
 <span class="name" id="#{user.id}"><%="#{user.first_name} #{user.last_name} (#{user.email})"%></span><a onclick="javascript:remove_user('<%= user.id %>');" class="remove" href="#">[x]</a><br/>
 <%end%>
 </div>

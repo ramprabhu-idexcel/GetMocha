@@ -10,10 +10,10 @@
   <meta name="robots" content="INDEX,FOLLOW" />
   <meta charset="utf-8" />
   <%= csrf_meta_tag %>
-	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
   <%=stylesheet_link_tag "base","modal","scrollbar",'colorpicker','jquery.autocomplete'%>
 	<script src="/closure-library/closure/goog/base.js"></script>
-	  <link rel="stylesheet" href="/stylesheets/demo.css">
+
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
   <script>
     goog.require('goog.dom');
@@ -101,6 +101,10 @@
       {
         short_modal2('/messages');
       }
+			if(event.identifier=='W')
+      {
+        short_modal2('/tasks');
+      }
       if(event.identifier=='SHIFT_M')
       {
         short_modal1('/messages/new');
@@ -154,6 +158,10 @@
 			{
 			short_modal_down('X')
 			}
+			if(event.identifier=='SHIFT_T')
+			{
+			short_modal1('/tasks/new');
+			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
   var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
@@ -169,6 +177,7 @@
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
+	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
@@ -177,6 +186,7 @@
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z)
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
 	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
+	shortcutHandler.registerShortcut('W',goog.events.KeyCodes.W)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -219,6 +229,10 @@
 		{
 			messages_navigation_down(key);
 		}
+		else
+		{
+		tasks_navigation_down(key);
+		}
 		}
 		}
 	}
@@ -238,6 +252,10 @@
 		{
 			messages_navigation_right();
 		}
+		else
+		{
+			tasks_navigation_right();
+		}
 		}
 	}
 	
@@ -256,6 +274,10 @@
 		if(find_loc!=-1)
 		{
 			messages_navigation_left();
+		}
+				else
+		{
+			tasks_navigation_left();
 		}
 		}
 	}
@@ -282,6 +304,10 @@
 		if(find_loc!=-1)
 		{
 			messages_navigation_down('up');
+		}
+				else
+		{
+		tasks_navigation_down('up');
 		}
 		}
 		}
@@ -333,8 +359,11 @@
   {
 if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
       $('.comment-contain').slideToggle('slow');
+else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
+$('.comment-contain').slideToggle('slow');
 			 $('.attachment').remove();	
   }
+	
 	function short_modal4(key)
 	{
 	a=$('#submsg').css('display');
@@ -808,6 +837,306 @@ if(is_open=="0")
 
 		$('.message_header').show();
 		
+		}
+		
+		function tasks_navigation_down(key)
+		{
+		var class1=$('#comment_area').children('').length;
+			var class_hide=$('#comment_area').css('display');
+			var project="true";
+			
+			if(class1==0 || class_hide=="none")
+			{
+			
+				var all_tasks=document.getElementById('all_tasks').className;
+				var my_tasks=document.getElementById('my_tasks').className;
+				var starred_tasks=document.getElementById('starred_tasks').className;
+				var completed_tasks=document.getElementById('completed_tasks').className;
+				var project_tasks="project_tasks";
+				var pl=$('.projects-list').children().length;
+				for(i=0; i<pl; i++)
+				{
+					var cn=$('.projects-list').children()[i].className;
+					if(cn=="project open")
+					{
+						project_tasks=cn;
+					}
+				}
+				
+				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
+				{
+				  if(key=="down" || key=="Z")
+					{
+						window.location.hash="#my_tasks";
+						document.getElementById('my_tasks').className="my-tasks open";
+					}
+					else
+					{
+						tasks_projects(key, "1")
+					}					
+					document.getElementById('all_tasks').className="all-tasks";
+					project="false";
+				}
+				else if(my_tasks=="my-tasks open") // from my_tasks to starred_tasks
+				{
+					if(key=="down" || key=="Z") //down
+					{
+						window.location.hash="#starred_tasks";
+						document.getElementById('starred_tasks').className="starred starred_count open";
+					}
+					else //up
+					{
+					window.location.hash="#all_tasks";
+					document.getElementById('all_tasks').className="all-tasks open";
+					}
+					document.getElementById('my_tasks').className="my-tasks";
+					project="false";
+				}
+				else if(starred_tasks=="starred starred_count open") // from starred_tasks to completed_tasks
+				{
+				  if(key=="down" || key=="Z") //down
+					{
+						window.location.hash="#completed_tasks";
+						document.getElementById('completed_tasks').className="completed open";
+					}
+					else //up
+					{
+					window.location.hash="#my_tasks";
+					document.getElementById('my_tasks').className="my-tasks open";
+					}
+					document.getElementById('starred_tasks').className="starred starred_count";
+					project="false";
+				}
+				else if(completed_tasks=="completed open")
+				{
+					if(key=="down" || key=="Z")
+					tasks_projects(key,"2");
+					else
+					{
+						window.location.hash="#starred_tasks";
+						document.getElementById('starred_tasks').className="starred starred_count open";
+					}
+					document.getElementById('completed_tasks').className="completed";
+					project="false";
+				}
+				else
+				{
+				
+				if(all_tasks=="all-tasks" && my_tasks=="my-tasks" && starred_tasks=="starred starred_count" && completed_tasks=="completed" && project_tasks=="project_tasks")
+				{
+				window.location.hash="#all_tasks";
+						document.getElementById('all_tasks').className="all-tasks open";
+				}
+				else
+				  tasks_projects(key,"3");
+				}
+			}
+			else
+			{
+			
+			
+			
+			
+			
+				var task_length=$('.m-panel').children().length;
+				var stop="false";
+				for(i=0; i<task_length; i++)
+				{	
+					var task=$('.m-panel').children()[i].className;
+					
+					if(task!="sub-header" && (key=="down" || key=="up" || key=="S" || key=="X"))
+					{
+					
+					var task_id=task.split("actk:")[1];
+						task_id=task_id.split(" task tsem")[0];
+					
+					
+						
+						if((task=="actk:"+task_id+" task tsem open" && stop=="false") || (task=="actk:"+task_id+" task tsem  open" && stop=="false"))
+						{
+						  if(key=="down" || key=="X")
+							var move_task=$('.m-panel').children()[i+1].className;
+							else
+							var move_task=$('.m-panel').children()[i-1].className;
+							if(move_task=="sub-header")
+							if(key=="down" || key=="X")
+							move_task=$('.m-panel').children()[i+2].className;
+							else
+							move_task=$('.m-panel').children()[i-2].className;
+							move_task_id=move_task.split("actk:")[1];
+							move_task_id=move_task_id.split(" task tsem")[0];
+							var b=window.location.href;
+							b=b.split("<%= APP_CONFIG[:site_url] %>/")[1];
+							b=b.split("/")
+							var c=b.length;
+							if(c=="2")
+							var d=b[0];
+							else
+							var d=b[0]+b[1];
+							
+							window.location.href=d+"/"+move_task_id;
+							var a=document.getElementById("tk_"+move_task_id).className;
+							var aa=document.getElementById("tk_"+task_id).className;
+							aa=aa.split(" open")[0];
+							document.getElementById("tk_"+move_task_id).className=a+" open";
+							document.getElementById("tk_"+task_id).className=aa;
+							$('#comment_area').show();
+							$('.task_header').show();
+							stop="true";
+						}
+					}
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			}	
+		}
+		function tasks_projects(key,pid) //first_panel
+		{
+		 var project_length=$('.projects-list').children().length;
+		 var stop="false";
+		 var project1="false";
+		 if(pid=="2")
+		 {
+						var child=$('.projects-list').children()[0].id;
+						child=child.split('tpi')[1];
+						stop="true"
+							project="true";
+						window.location.hash="#"+child;
+						$('.projects-list').children()[0].className="project open";
+						document.getElementById('completed_tasks').className="completed";
+					
+		 }
+			if(pid=="1")
+		 {
+						var child=$('.projects-list').children()[project_length-1].id;
+						child=child.split('tpi')[1];
+						stop="true"
+						project1="true";
+						window.location.hash="#"+child;
+						$('.projects-list').children()[project_length-1].className="project open";
+						document.getElementById('all_tasks').className="all-tasks";
+		 }
+		 for(i=0; i<project_length; i++)
+		 {
+				var cn=$('.projects-list').children()[i].className;
+				if(cn=="project open" && stop=="false" && (key=="down" || key=="Z"))
+				{
+					if(i<project_length-1)
+					{
+						var child=$('.projects-list').children('')[i+1].id;
+						child=child.split('tpi')[1];
+						$('.projects-list').children()[i].className="project";
+						$('.projects-list').children()[i+1].className="project open";
+						stop="true"
+						project="true";
+						window.location.hash="#"+child;
+					}
+					else if(key=="down" || key=="Z")
+					{
+						window.location.hash="#all_tasks";
+						document.getElementById('all_tasks').className="all-tasks open";
+						$('.projects-list').children()[i].className="project";
+					}
+					
+				}
+				else if(cn=="project open" && stop=="false" && (key=="up" || key=="A"))
+				{
+					if(i>0)
+					{
+						var child=$('.projects-list').children('')[i-1].id;
+						child=child.split('tpi')[1];
+						$('.projects-list').children()[i].className="project";
+						$('.projects-list').children()[i-1].className="project open";
+						stop="true";
+						project="true";
+						window.location.hash="#"+child;
+					}
+					else if(key=="up" || key=="A")
+					{
+						var child=$('.projects-list').children()[0].className="project";
+						stop="true"
+						project="true";
+						window.location.hash="#completed_tasks";
+						document.getElementById('completed_tasks').className="completed open";
+					}
+					
+				}
+				else if(pid !="2" && project1=="false")
+				{
+				//alert(project1);
+					//	window.location.hash="#all_tasks";
+					//	document.getElementById('all_tasks').className="all-tasks open";
+				}
+		 }
+		}
+		
+		function tasks_navigation_right()
+		{
+			var task_length=$('.m-panel').children().length;
+			var stop="false";
+			for(i=0; i<task_length; i++)
+			{
+				var task=$('.m-panel').children()[1].className;
+				var task_id=task.split("actk:")[1];
+				task_id=task_id.split(" task tsem")[0];
+				
+				if(task!="sub-header" && stop=="false")
+				{
+				  b=window.location.href;
+					
+					b=b.split("<%= APP_CONFIG[:site_url] %>/")[1];
+					
+					
+					if(b.search("/")!=-1)
+					{
+					$('.task_header').show();
+			$('#comment_area').show();
+					var a=document.getElementById("tk_"+task_id).className;
+					document.getElementById("tk_"+task_id).className=a+" open";
+					}
+					else
+					{
+					window.location.hash=window.location.hash+"/"+task_id;
+					var a=document.getElementById("tk_"+task_id).className;
+					document.getElementById("tk_"+task_id).className=a+" open";
+						$('#comment_area').show();
+						$('.task_header').show();
+					}
+					stop="true";
+				}
+			}
+		}
+		
+		function tasks_navigation_left()
+		{
+			var task_length=$('.m-panel').children().length;
+			for(i=0; i<task_length; i++)
+			{
+				var task=$('.m-panel').children()[i].className;
+				
+				
+				if(task!="sub-header")
+				{
+				var task_id=task.split("actk:")[1];
+				task_id=task_id.split(" task tsem")[0];
+					var a=document.getElementById("tk_"+task_id).className;
+					a=a.split(" open")[0];
+					
+					document.getElementById("tk_"+task_id).className=a;
+					$('#comment_area').hide();
+					$('.task_header').hide();
+					a=window.location.hash=window.location.hash;
+					a=a.split("/"+task_id)[0];
+					window.location.hash=a;
+				}
+			}
 		}
 		
 </script>

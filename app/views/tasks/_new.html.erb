@@ -1,7 +1,3 @@
-<%user_emails=@user_emails
-project_names=@project_names
-t_list=@t_list
-%>
 <head>
   <link rel="stylesheet" href="/stylesheets/demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -28,8 +24,10 @@ t_list=@t_list
 		       		<% p session[:project_name] %>
 					<% if session[:project_name] %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" , :value=>"#{session[:project_name]}", :disabled=>true%>
+							<input type="hidden" id="autocomplete1_hidden" name="project_id" value="<%=session[:project_selected]%>"/>
 					 <% else %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" %>
+							<input type="hidden" id="autocomplete1_hidden" name="project_id" value=""/>
 					 <% end %>
 			    </fieldset>
 					<fieldset>
@@ -38,19 +36,21 @@ t_list=@t_list
 						    </fieldset>
 					<fieldset>
 					<label>Notify:</label>
-						<%=f.text_field  'notify', :class=>"textfield", :id=>"t_notify"%>
+						<%=f.text_field  'notify', :class=>"textfield" , :id=>"notifys" %>
 			    </fieldset>
 					<fieldset>
 					<label>Tasklist:</label>
 						<%=f.text_field  'tasklist', :class=>"textfield", :id=>"t_list"  %>
+						<input type="hidden" id="t_list_hidden" name="tasklist_id" value=""/>
 					</fieldset>
 					<fieldset>
 					<label>Due_Date:</label>
-						<%=f.text_field  'due_date', :class=>"textfield" ,:id=>"txtInput3"%>
+						<%=f.text_field  'due_date', :class=>"textfield",:id=>"txtInput3"%>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
 					<label>Message:</label>
 		       		<%=f.text_area 'message', :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
+							<input type="hidden" id="attach_hidden" name="attach_id" value=""/>
 			    </fieldset>
 				<% end %>
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
@@ -76,37 +76,39 @@ t_list=@t_list
 	<div class="modal-bottom-right"></div>
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
-var tlist;
+ 	var attachitem=[];
+
+$(document).ready(function(){
+var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
+$("#project_val").autocomplete(data, {
+  formatItem: function(item) {
+    return item.text;
+  }
+}).result(function(event, item) {
+  document.getElementById('autocomplete1_hidden').value=item.id;
+});
+}); 	
+
 <%=names=[]%>
 <%=tlist=[]%>
 <%=projects=[]%>
 	<% user_emails.each do |f|%>
 		<%names<<f <<","%>
 		<%end%>
-			<%project_names.each do |f|%>
-			  <%projects<<f <<","%>
-	<%end%>
-	if(tlist==null){
-	<%t_list.each do |f|%>
-			  <%tlist<<f <<","%>
-	<%end%>
-	var tasklist="<%= tlist %>";
-	}
-	else
-	{
-	alert(tlist);
-	tlist=tlist.split(',');
-	var tasklist=tlist;
-	}
+			<%#project_names.each do |f|%>
+			  <%#projects<<f <<","%>
+	<%#end%>
+	<%#t_list.each do |f|%>
+			  <%#tlist<<f <<","%>
+	<%#end%>
 	var userEmails = "<%= names %>";	
-var projectNames = "<%= projects %>";
-var tasklist="<%= tlist %>";
+var projectNames = "<%#= projects %>";
+var tasklist="<%#= tlist %>";
 userEmails=userEmails.split(',');
-	projectNames=projectNames.split(',');
+	//projectNames=projectNames.split(',');
     var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('assign_to'), true);
-		var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('t_notify'), true);
-    var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
-		 var ac2 = new goog.ui.AutoComplete.Basic(tasklist, document.getElementById('t_list'),false);
+  //  var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
+	 var ac3= new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('notifys'),true);
 		</script>
 		<script>
 	$('#task_txtarea').click(function(){
@@ -150,6 +152,8 @@ if(d.length > 12)
    var e=d.substring(original,10)
    var file1=e.concat(c)
  }
+  		 attachitem.push(a);
+			 document.getElementById('attach_hidden').value=attachitem;
  	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file+ '</span></div>');
     },
 			onComplete:function (event, files, index, xhr, handler) {
@@ -171,16 +175,66 @@ $('#project_val').keydown(function(event){
 if (event.keyCode == 9){
 if (document.getElementById("project_val").value!="")
 {
-proj=document.getElementById("project_val").value
+ proj=document.getElementById("autocomplete1_hidden").value
 $.ajax({
-      url:'/tasks/'+proj+'/project_tasklists',
+      url:"/tasks/"+proj+"/project_tasklists",
       type: 'get',
 			 success: function(data){
-		  tlist=data.data;
+			 a=data.datas.length
+			 var dat=[];
+			 $.each(data.datas,function(index,value){
+				dat.push({text : value.task_list.name,id : value.task_list.id})
+			 });
 			// document.getElementById('attachment_'+file).style.display="none";
+//			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
+			$("#t_list").autocomplete(dat, {
+  formatItem: function(item) {
+    return item.text;
+  }
+}).result(function(event, item) {
+  document.getElementById('t_list_hidden').value=item.id;
+});
 			 }
 			 });
 			 }
 			 }
 			 });
+	$('#t_list').focus(function(event){
+if (document.getElementById("project_val").value!="")
+{
+ proj=document.getElementById("autocomplete1_hidden").value
+$.ajax({
+      url:"/tasks/"+proj+"/project_tasklists",
+      type: 'get',
+			 success: function(data){
+			 a=data.datas.length
+			 var dat=[];
+			 $.each(data.datas,function(index,value){
+				dat.push({text : value.task_list.name,id : value.task_list.id})
+			 });
+				// document.getElementById('attachment_'+file).style.display="none";
+	//			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
+			$("#t_list").autocomplete(dat, {
+  formatItem: function(item) {
+    return item.text;
+  }
+}).result(function(event, item) {
+  document.getElementById('t_list_hidden').value=item.id;
+});
+			 }
+			 });
+			 }
+			 else
+			 {
+			 alert("Please select project name first");
+			 var dat=[];
+			 $("#t_list").autocomplete(dat, {
+  formatItem: function(item) {
+    return item.text;
+  }
+}).result(function(event, item) {
+  document.getElementById('t_list_hidden').value=item.id;
+});
+			 }
+					  });
 </script>

@@ -13,6 +13,7 @@ $(document).ready(function() {
 			$('.reset-form').animate({ left : '50%', marginLeft : '-180' }, {duration:1000, easing:"easeInOutQuart" });
 			$('#pass-reset-js').replaceWith('<a href="#" id="pass-reset-js">Forgot Password?</a>');
 	});
+	  
  
 });
 

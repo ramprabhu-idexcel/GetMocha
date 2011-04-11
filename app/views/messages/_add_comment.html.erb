@@ -6,6 +6,7 @@
       <%=label_tag "Message:",nil,:class=>"hidden"%>
       <%=text_area_tag "comment[comment]",nil,:cols=>"",:rows=>"",:onfocus=>"this.select()",:id=>"comment-message",:class=>"textarea comment-message"%>
       <%=clear_fix%>
+			<input type="hidden" id="attachs_hidden" name="attach_id" value=""/>
     </div>
     <%end%>
     <% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f4| %>
@@ -30,6 +31,7 @@
   <%=clear_fix%>
 </div>
 <script>
+var attachitem=[];
 /*$('.drag-drop').fileUploadUI({
     uploadTable: $('#files1'),
     downloadTable: $('#attchment_files1'),
@@ -64,6 +66,8 @@
         return false;    },
     buildDownloadRow: function (file) {
 a=file.id;
+ attachitem.push(a);
+     document.getElementById('attachs_hidden').value=attachitem;
         return $('<div id="attachment1_' + a + '" class="attachment">'+'<span class="filename">' + file.file + '</span>'+'<a href="javascript:delete_attachments('+a+');"> Remove </a></div>');
     },
 			onComplete:function (event, files, index, xhr, handler) {

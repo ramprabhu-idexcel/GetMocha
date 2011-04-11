@@ -1,6 +1,8 @@
 <div class="header">
+	<%if controller_name!="admins"%>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 	<div class="l-header">
-		<ul class="nav">
+	<ul class="nav">
 			<li><a href="/messages" class="nav-messages"><span class="icon"></span></a></li>
 
 			<li><a href="/tasks" class="nav-tasks"><span class="icon"></span></a></li>
@@ -16,16 +18,31 @@
 		<% end %>
 	<% end %>
 	</div>
-
-	
 	<div class="r-header">
 		<ul>
       <li class="settings_header" style="display:none;"><a href="#add_contact" class="invite" onclick="javascript:add_people_settings();" id="people_settings_popup" >Invite</a></li>
 			<li class="message_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment"%></li>
 			<li class="message_header"><%=link_to 'Star',"#", :class=>"star star_items"%></li>
 			<li class="message_header"><%=link_to 'Trash',"#", :class=>"trash",:id=>"trash_message"%></li>
+      <li class="task_header"><%=link_to 'Reply',"#", :class=>"reply", :id=>"reply_comment_task"%></li>
+			<li class="task_header"><%=link_to 'Star',"#", :class=>"star task_star",:id=>"task_star"%></li>
+			<li class="task_header"><%=link_to 'Trash',"#", :class=>"trash task_trash",:id=>"trash_task"%></li>
 		</ul>
 		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
     <%=link_to '','#project-settings',:class=>"settings project-settings"%>
+		</div>
+		<%else%>
+		<div class="l-header">
+		</div>
+	<div class="m-header">
+	
+	</div>
+
+	
+	<div class="r-header">
+		
+		<a href="#account-dropdown" class="username admin_drop_down"><span class="icon"></span>Admin</a>
+    	</div>
+			<%end%>
 	</div>
 </div>

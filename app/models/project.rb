@@ -1,14 +1,14 @@
 class Project < ActiveRecord::Base
 	Message_email="@#{APP_CONFIG[:message_email]}"
 	Task_email="@#{APP_CONFIG[:task_email]}"
+  has_many :task_lists
+	has_many :tasks, :through=>:task_lists
 	has_many :project_users
 	has_many :project_guests
 	has_many :users, :through=> :project_users
   has_many :guests,:through=>:project_guests,:source => :user
 	has_many :activities, :through => :messages, :dependent=>:destroy
 	has_many :messages
-  has_many :task_lists
-	has_many :tasks, :through=>:task_lists
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails
 	has_many :chats
@@ -35,7 +35,7 @@ class Project < ActiveRecord::Base
 		self.update_attributes(:status=>ProjectStatus::ACTIVE, :message_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Message_email, :task_email_id=>"#{self.name.gsub(" ","")}-#{self.id}"+Task_email)
 	end
 	def is_member?(user_id)
-		project_users.find(:first, :conditions=>['user_id=? AND status=?', user_id,true]).present?
+		project_users.is_project_member?(user_id)
 	end
 		def has_custom_message_id?
 		custom_emails.find_by_custom_type("Message").present?
@@ -128,4 +128,21 @@ class Project < ActiveRecord::Base
   def all_task_ids
     tasks.map(&:id)
   end
+  def team_members
+    User.find(:all,:conditions=>['project_users.status=:value AND users.status=:value',{:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
+  end
+  def members_list
+    users=[]
+    team_members.collect{|user| users<<{:id=>user.id,:name=>user.full_name}}
+    users
+  end
+	def self.p_count_active
+		find(:all, :conditions=>['status=?',true])
+  end
+	def self.p_count_completed
+		find(:all, :conditions=>['status=?',false])
+	end	
+	def self.check_project_users(current_user)
+		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+	end	
 end

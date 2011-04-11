@@ -62,21 +62,62 @@ $(document).ready(function() {
       return false;
     });
   }
+ /* $('#admin_log_submit').click(function(){
+             
+      if (($('#login_email').val()=="") && ($("#admin_log_password").val()==""))
+       {
+            alert("Email and Password can't be blank");
+       }
+       
+      else if ($('#login_email').val()=="")
+        { 
+           alert("Email can't be blank");
+        }
+       else if ($("#admin_log_password").val()=="")
+       {
+           alert("Password can't be blank");
+       }
+       else
+      {       
+     
+      $.ajax({
+        url:'/admins/sign_in',
+        data: $('form#admin_login').serialize(),
+        type: "POST",
+        success: function(data){
+          alert(data);
+          if(data=="error")
+          {
+            alert(data);
+          }
+          else
+          {
+            window.location.href="/admins/settings";
+          }
+        }
+      });
+    }
+          return false;
+    });
   
+  */
       
 
  
   
- if(typeof UserEdit!="undefined" && UserEdit==true)
-  {
+ //~ if(typeof UserEdit!="undefined" && UserEdit==true)
+  //~ {
         
   
    
-  } //end of user edit
+  //~ } //end of user edit
 
   // user account-dropdown
-  
   $('.user_drop_down').click(function(){
+    $('.account-dropdown').toggle();
+    return false;
+  });
+  $('.admin_drop_down').click(function(){
     $('.account-dropdown').toggle();
     return false;
   });
@@ -97,7 +138,7 @@ alert('afetrr bt');
   $('.delete.delete_new').live('click',function(){
           $.ajax({
          url: $(this).attr('href'),
-         type: 'delete',
+         type: 'delete'
        });
     $(this).parent().parent().parent().parent().next().remove()
         $(this).parent().parent().parent().parent().remove();
@@ -134,11 +175,7 @@ alert('afetrr bt');
       $('.comment-contain').hide();
     }
     
-    function close_comment_area()
-    {
-      $('.comment-contain').toggle('slow');
-      $('#comment-message').val('');
-    }
+
     //find the current url
     function sort_path()
     {
@@ -230,10 +267,12 @@ alert('afetrr bt');
     });
     
     //first panel change the class
-    $('.project,.all-messages,.starred').click(function(){
+    $('.project,.all-messages,.starred').live('click',function(){
       $('.expand-all').hide();
       $('.project.open,.all-messages,.starred').removeClass('open'); 
       $(this).addClass('open');
+      $('#comment_area').html('');
+      $('.message_header').hide();
     });
     
     //display the sort message
@@ -290,9 +329,9 @@ alert('afetrr bt');
       });
       new_content=$('#message_message').val();
       message_content=$('#message_message').val();
-      if(new_content.length>77)
+      if(new_content.length>197)
       {
-        new_content=new_content.substring(0,77)+"...";
+        new_content=new_content.substring(0,197)+"...";
       }
       $('.message.messow.open').children('.excerpt').children('p').text(new_content);
       $(this).parent().html(message_content+'<a class="edit message_edit" href="#">Edit</a><div class="clear-fix"></div>');
@@ -453,7 +492,7 @@ alert('afetrr bt');
     
     
     
-    hide_header(); //hide the message headers initially
+//    hide_header(); //hide the message headers initially
     hide_comment(); //hide the comment header initially
   
   }//end of message
@@ -477,6 +516,7 @@ alert('afetrr bt');
       success: function(data){
         $('#add_new_mod').html(data); 
         $('#add_new_mod').show();
+        $('#txtInput1').focus();
       }
     });
     $('#add_new_mods').hide();
@@ -491,13 +531,14 @@ alert('afetrr bt');
       success: function(data){
 			 $('#add_new_mod').html(data); 
         $('#add_new_mod').show();
+        $('#txtInput1').focus();
       }
     });
     $('#add_new_mods').hide()
     return false;
   });
     $('.create_task').live('click',function(){
-  /*  $.ajax({
+    $.ajax({
       type :'get',
       url :"/tasks/new",
       success: function(data){
@@ -505,11 +546,11 @@ alert('afetrr bt');
         $('#add_new_mod').show();
       }
     });
-    $('#add_new_mods').hide()*/
+    $('#add_new_mods').hide()
     return false;
   });
   $('.create_task_list').live('click',function(){
-  /*  $.ajax({
+  $.ajax({
       type :'get',
       url :"/task_lists/new",
       success: function(data){
@@ -517,7 +558,7 @@ alert('afetrr bt');
         $('#add_new_mod').show();
       }
     });
-    $('#add_new_mods').hide()*/
+    $('#add_new_mods').hide() 
     return false;
   });
   //cancel message modal
@@ -553,7 +594,7 @@ alert('afetrr bt');
           }
         else
           {
-          document.getElementById('messages_projects_list').innerHTML=data;
+          document.getElementById('projects_list').innerHTML=data;
           }
         }
       },
@@ -595,7 +636,7 @@ alert('afetrr bt');
           else
           {
             date_header='<div class="date-bar"><a class="date-title" href="#">'+data.date_header+'</a></div>';
-            $(date_header+message).appendTo('#message_area')
+            $(date_header+message).prependTo('#message_area')
           }
           $('.add-item-modal').hide();
         }
@@ -631,6 +672,7 @@ alert('afetrr bt');
     $('body').attr('class','settings');
     $('.sort-by').hide();
     document.title="Settings | Mocha"
+    return false;
   });
   
    /************************************************Edit the User profile*****************************************/
@@ -704,6 +746,7 @@ alert('afetrr bt');
          if(data.success!="undefined")
          {
             $('#label_first_name').text(data.success)
+           changename();            
            }
          else
          {
@@ -719,7 +762,14 @@ alert('afetrr bt');
     }
   });
     
-    
+    function changename()
+    {
+      var a=$('#label_first_name').text();
+      var b=$('#label_last_name').text() ;
+      var name=a+' '+b;
+      $('.username.user_drop_down').html('<span class="icon"></span>'+name);
+    }
+  
   //To edit the last_name  
     $('#last_name').live('click',function(){
       $('#label_last_name').hide();
@@ -740,10 +790,11 @@ alert('afetrr bt');
         url:"/updates/edit_profile",
         type: "put",
           data:{"user[last_name]" : $('#txt_lastname').val()},
-        uccess:function(data){
+        success:function(data){
           if(data.success!="undefined")
            {
               $('#label_last_name').text(data.success)
+              changename();            
              }
            else
            {
@@ -761,6 +812,9 @@ alert('afetrr bt');
   
    });
    
+   $('.username.user_drop_down').change(function(){
+         $('.username.user_drop_down').html('<span class="icon></span>ramprabhu')
+   });
 
     
     //To edit the title
@@ -1046,7 +1100,7 @@ else
     }
   }
 
-
+  
 /* $('#attach').fileUploadUI({
         uploadTable: $('#files'),
         downloadTable: $('#files'),
@@ -1219,6 +1273,12 @@ function find_month(month)
     month_number="0"+month_number;
   return month_number;
 }
+function close_comment_area()
+{
+  $('.comment-contain').toggle('slow');
+  $('#comment-message').val('');
+}
+
 //Task & Tasklist
  $('#tl_add').live('click',function(){
  var a=$('#tasklists_tlname').val();

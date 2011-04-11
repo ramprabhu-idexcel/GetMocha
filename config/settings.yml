@@ -5,6 +5,7 @@ development: &non_production_settings
   task_email: t.rfmocha.com
   message_email: m.rfmocha.com 
   reply_email: reply.rfmocha.com 
+  invite_email: i.rfmocha.com 
   
 production:
   site_url: http://getmocha.com
@@ -13,6 +14,7 @@ production:
   task_email: t.getmocha.com
   message_email: m.getmocha.com 
   reply_email: reply.getmocha.com 
+  invite_email: i.getmocha.com 
   
 test:
   site_url: http://test.getmocha.com
@@ -21,4 +23,14 @@ test:
   task_email: t.test.getmocha.com
   message_email: m.test.getmocha.com 
   reply_email: reply.test.getmocha.com 
+  invite_email: i.test.getmocha.com 
+  
+staging:
+  site_url: http://test.getmocha.com
+  site_name: test.getmocha.com
+  project_email: p.test.getmocha.com
+  task_email: t.test.getmocha.com
+  message_email: m.test.getmocha.com 
+  reply_email: reply.test.getmocha.com 
+  invite_email: i.test.getmocha.com 
   

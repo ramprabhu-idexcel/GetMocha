@@ -1,7 +1,15 @@
 <div class="account-dropdown" style="display:none;">
+<%if controller_name!="admins"%>
 	<div class="account-dropdown-t"></div>
+	
 	<ul>
 		<li class="selected"><span><a id="my_account" href="/settings-profile">My Account</a></span></li>
 		<li><span><a href="/logout">Logout</a></span></li>
 	</ul>
+	<%else%>
+	<div class="account-dropdown-t"></div>
+		<ul>
+		<li><span><a href="/admins/sign_out">Logout</a></span></li>
+	</ul>
+<%end%>
 </div>

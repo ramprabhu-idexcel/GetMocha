@@ -64,7 +64,9 @@ class ProjectMailer < ActionMailer::Base
   def message_reply(user,comment)
     @user=user
     @comment=comment
-     custom_email=@comment.commentable.project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
+    message=@comment.commentable
+    project=message.project
+    custom_email=project.message_email_id
     if custom_email && !custom_email.blank?
       from=custom_email.email
     else
@@ -101,7 +103,7 @@ class ProjectMailer < ActionMailer::Base
       @people<<activity.user.full_name<<"," if activity.user
      end
     end
-    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} assigned a new task to #{to_user}",:content_type=>"text/html")
+    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzt#{task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} assigned a new task to #{to_user}",:content_type=>"text/html")
     @content_type="text/html"
   end
 end

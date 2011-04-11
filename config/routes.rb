@@ -12,27 +12,32 @@ GetMocha::Application.routes.draw do
     get "settings-profile",:to=>"devise/registrations#edit",:as=>"edit_user_registration"
     get "create" ,:to=>"devise/projects#create"
 end
-  #~ get "admin_panel" =>'admins#new'
-  #~ post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
-  #~ post "admin_settings"=>'admins#settings', :as=>:admin_page
-  #~ get "admins/users"=>'admins#users'
-  #~ get "admins/projects"=>'admins#projects'
-  #~ get "admins/analetics"=>'admins#analetics'
-  #~ resources :admins do
-      #~ member do
-      #~ post 'remove_user'
-      #~ post 'remove_project'
-  #~ end
-  #~ end
+  get "admin_panel" =>'admins#new'
+  post "admin_pasword_reset"=>'admins#reset_password', :as=>:admin_pswd_change
+  get "admin_settings"=>'admins#settings', :as=>:admin_page
+  get "admins/users"=>'admins#users'
+  get "admins/projects"=>'admins#projects'
+  get "admins/analetics"=>'admins#analetics'
+ devise_for :admins, :controllers =>{ :sessions=>"admin_sessions",:passwords=>"admin_passwords"}
+ devise_scope :admin do
+ get "admin_change_password",:to=>"admin_passwords#edit",:as=>"edit_admin_password"
+ end
+ resources :admins do
+      member do
+      post 'remove_user'
+      post 'remove_project'
+  end
+  end
   resources :projects do
+    member do
+      get 'settings_pane'
+    end
     collection do
       post 'remove_people'
       post 'add_new'
       post 'update_proj_settings'
       get 'invite_people_settings'
-    end
-    member do
-      get 'settings_pane'
+      post 'invite_people'
     end
   end
   resources :updates do
@@ -51,7 +56,6 @@ end
   match '/projects/verify_email/:verification_code' =>'projects#verify_email', :as => 'verify_email', :method => :post
   match '/projects/join_project/:invitation_code' =>'projects#join_project', :as => 'join_project', :method => :post
   match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
-  match '/file_download_from_email/:id' =>'projects#file_download_from_email', :as => 'file_download_from_email', :method => :post
   match  '/home/email_reply' =>'home#check_email_reply_and_save', :method => :post
   # Message routes
   resources :messages
@@ -60,45 +64,44 @@ end
   match 'project/:project_id'=>'messages#project_messages',:as=>'project_messages',:method=>:get
   match 'project/:project_id/:activity_id'=>'messages#show',:as=>'project_message_comment',:method=>:get
   match 'all_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
-  match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_message',:method=>:get
-  match 'star_message/:activity_id'=>'messages#star_message',:as=>'star_message',:method=>:get
-  match 'subscribe/:activity_id'=>'messages#subscribe',:as=>'subscribe_message',:method=>:get
+
+  match 'starred_messages/:activity_id'=>'messages#show',:as=>'activity_starred_message',:method=>:get
+  match 'star_message/:activity_id'=>'activities#star_message',:as=>'star_message',:method=>:get
+  match 'subscribe/:activity_id'=>'activities#subscribe',:as=>'subscribe_activity',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
   resource :comments
   match '/remove_attach/:id' =>"attachments#remove_attach"
-  resource :comments
   resources :attachments do
     member do
       get :remove_attach
     end
   end
-  # task routes
-  #~ resources :tasks do
-    #~ collection do
-      #~ put :complete_task
-      #~ get :all_tasks
-      #~ get :starred_tasks
-      #~ get :completed_tasks
-      #~ get :my_tasks
-    #~ end
-    #~ member do
-      #~ get :project_tasklists
-    #~ end
-  #~ end
-  #~ match 'tasks/:project_id'=>'tasks#project_tasks',:as=>'project_tasks',:method=>:get
-  #~ resources :task_lists
+  #~ # task routes
+  resources :tasks do
+    member do
+      get :project_tasklists
+      put :assign_task
+    end
+    collection do
+      put :complete_task
+      get :all_tasks
+      get :starred_tasks
+      get :completed_tasks
+      get :my_tasks
+    end
+  end
+  match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
+  resources :activities
+  resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"
   match 'help' =>"home#help"
   match 'email' =>"home#email"
   match '/home/images'=>"home#images"
-   match '*a', :to => 'errors#routing'
-
-
-
+  match '*a', :to => 'errors#routing'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
