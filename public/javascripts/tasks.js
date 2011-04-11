@@ -374,6 +374,11 @@
     return false;
   });
   
+  $('.cancel_comment').live('click',function(){
+    close_comment_area();
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
