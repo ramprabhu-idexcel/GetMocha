@@ -277,7 +277,7 @@ alert('afetrr bt');
     
     //display the sort message
     $('.sort-by.message-sort').click(function(){
-      $('.sort-by-tooltip').slideToggle('slow');
+      $('.sort-by-tooltip.message-sort-down').slideToggle('slow');
       return false;
     });
     
@@ -389,7 +389,7 @@ alert('afetrr bt');
       $(this).removeClass('unread');
       $(this).addClass('open');
       //hide the header and the sort drop down
-      $('.sort-by-tooltip').hide();
+      $('.sort-by-tooltip.message-sort-down').hide();
       $('.message_header').show(); 
       
     });
