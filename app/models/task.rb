@@ -30,7 +30,7 @@ def add_in_activity(to_users,assigns)
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
 				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.task_list.project.is_member?(u.id) && u && u.id && !a
+        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if !self.task_list.project.is_member?(u.id) && u && u.id && !a
 				ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) if u && u.id && !self.task_list.project.project_member?(u.id)
       end
     end
