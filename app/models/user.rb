@@ -229,7 +229,7 @@ class User < ActiveRecord::Base
   end
   def completed_tasks
     activities=[]
-    all_tasks.collect{|t| activities << t if t.resource.is_completed==true}
+    all_tasks.collect{|t| activities << t if t.resource && t.resource.is_completed}
     activities
   end
   def group_completed_tasks
