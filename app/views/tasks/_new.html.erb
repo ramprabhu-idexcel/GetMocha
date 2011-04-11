@@ -101,7 +101,7 @@
 					<fieldset>
 					<label>Due_Date:</label>
 						<span id='txtInput3'>   </span>
-						<a href="#"><img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'></a>
+						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
 					<label>Message:</label>
@@ -467,6 +467,7 @@ function ds_sh(t) {
 	ds_ce.style.top = the_top + 'px';
 	// Scroll it into view.
 	ds_ce.scrollIntoView();
+	
 }
 
 // Hide the calendar.
@@ -549,7 +550,16 @@ function ds_onclick(d, m, y) {
 }
 
 // And here is the end.
-
-
+$('#assign_to').keydown(function(event){
+	if (event.keyCode == 9) {
+c=userEmails.indexOf(document.getElementById('assign_to').value)
+if(c<0)
+{
+alert("Please select from autolist only");
+$('#assign_to').val('');
+$('#assign_to').focus();
+}
+}
+});
 
 </script>
