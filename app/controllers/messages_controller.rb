@@ -114,7 +114,8 @@ end
     msg=Message.find_by_id(@activity.resource_id)
     message=Message.find_hash(@activity.resource_id,current_user)
     message.merge!({:subscribed_user=>msg.display_subscribed_users,:is_subscribed=>current_user.is_message_subscribed?(msg.id),:all_subscribed=>msg.all_subscribed})
-    comment_ids=@activity.resource.comments.collect{|x| x.id}
+		info_activity_resource=@activity.resource
+    comment_ids=info_activity_resource.comments.collect{|x| x.id}
     activities=current_user.hash_activities_comments(comment_ids)
     render :json=>{:message=>message,:comments=>activities}.to_json
   end
@@ -140,7 +141,8 @@ end
 			if @activity.resource_type=="Comment"
 				valid_member=true
 			else
-      @project=@activity.resource.project
+			check_activity_resource=@activity.resource	
+      @project=check_activity_resource.project
       valid_member=@project.is_member?(current_user.id)
 		end
 		
