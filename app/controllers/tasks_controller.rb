@@ -115,7 +115,7 @@ class TasksController < ApplicationController
     project=Project.find_by_id(params[:id])
 		session[:project_name]=project.name if project
     session[:project_selected]=project.id if project
-    task_ids=project.all_task_ids
+    task_ids=project.all_uncompleted_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def update
@@ -154,7 +154,7 @@ class TasksController < ApplicationController
   end
 	def project_tasks
     project=Project.find_by_id(params[:project_id])
-    task_ids=project.all_task_ids
+    task_ids=project.all_uncompleted_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
   def task_comments
