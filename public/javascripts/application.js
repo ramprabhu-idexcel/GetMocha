@@ -164,7 +164,7 @@ alert('afetrr bt');
     //hide the message headers 
     function hide_header(){
       $('.message_header').hide(); 
-      $('.sort-by').hide(); 
+      $('.sort-by.message-sort').hide(); 
       $('.comment-contain').hide();
     }
     
@@ -276,7 +276,7 @@ alert('afetrr bt');
     });
     
     //display the sort message
-    $('.sort-by').click(function(){
+    $('.sort-by.message-sort').click(function(){
       $('.sort-by-tooltip').slideToggle('slow');
       return false;
     });
@@ -670,7 +670,7 @@ alert('afetrr bt');
     });
     $('.message_header').hide();
     $('body').attr('class','settings');
-    $('.sort-by').hide();
+    $('.sort-by.message-sort').hide();
     document.title="Settings | Mocha"
     return false;
   });

@@ -12,7 +12,7 @@ $.messages;
           if( /all_messages/.test(page) || /starred_messages/.test(page)) {
               var restfulPageUrl = this.restfulUrl + page  
               this.loadRestfulData( restfulPageUrl );
-              $('.sort-by').show();
+              $('.sort-by.message-sort').show();
               $('.message_header').hide();
               $('#comment_area').html('');
           }
@@ -60,7 +60,7 @@ $.messages;
                 this.loadCommentData( restfulPageUrl );     
               }
             }
-            $('.sort-by').show();
+            $('.sort-by.message-sort').show();
          },
          loadRestfulData: function( pageUrl ){
              $.ajax({

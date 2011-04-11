@@ -293,7 +293,7 @@
     return false;
   });
   
-  $('.sort-by').live('click',function(){
+  $('.sort-by.task-sort').live('click',function(){
     return false;
   });
   
@@ -406,7 +406,7 @@
       });
     });
     $('.m-panel').html(items.join(''));
-    $('.sort-by').show();
+    $('.sort-by.task-sort').show();
   }
   
   function load_third_pane(data)
@@ -498,7 +498,7 @@
   {
     $('body').attr('class','tasks');
     document.title= "Tasks | Mocha";
-    $('.sort-by').hide();
+    $('.sort-by.task-sort').hide();
     $('#reply_comment').hide();
     $('.star.star_items').hide();
     $('#trash_message').hide();
