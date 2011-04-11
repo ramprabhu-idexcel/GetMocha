@@ -107,7 +107,8 @@ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>nam
 
       end
 if message && message.project
-message.project.users.each do |user|
+info_message_project=message.project  
+info_message_project.users.each do |user|
 activity=message.activities.create! :user=>user
 activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 end

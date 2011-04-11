@@ -106,7 +106,8 @@ class ProjectMailer < ActionMailer::Base
     end
     @existing_user=User.find_by_email(to_user)
     @task=task
-    @project=task.task_list.project
+    info_task_tasklist=task.task_list
+    @project=info_task_tasklist.project
     custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     if custom_email && !custom_email.blank?
       from=custom_email.email
@@ -117,7 +118,8 @@ class ProjectMailer < ActionMailer::Base
     @people=[]
     if subscribed_list
     subscribed_list.each do|activity|
-      @people<<activity.user.full_name<<"," if activity.user
+      info_activity_user=activity.user
+      @people<<info_activity_user.full_name<<"," if activity.user
      end
     end
     mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzt#{task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} assigned a new task to #{to_user}",:content_type=>"text/html")

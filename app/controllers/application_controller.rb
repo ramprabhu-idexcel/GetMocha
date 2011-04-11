@@ -23,16 +23,11 @@ layout :change_layout
       "application"
     end
   end
-  
-
-
   def find_project
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
     session[:project_selected]=@project.id if @project
   end
-
-
     def remove_timestamps
     Activity.record_timestamps=false
   end
