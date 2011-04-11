@@ -48,7 +48,8 @@ class ProjectMailer < ActionMailer::Base
     @people=[]
     if subscribed_list
     subscribed_list.each do|activity|
-      @people<<activity.user.full_name<<"," if activity.user
+      activity_name=activity.user
+      @people<<activity_name.full_name<<"," if activity.user
      end
     end
     mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}",:content_type=>"text/html")
@@ -80,7 +81,8 @@ class ProjectMailer < ActionMailer::Base
     @user=user
     @comment=comment
     task=@comment.commentable
-    project=task.task_list.project
+    check_task_task_list=task.task_list
+    project=check_task_task_list.project
     custom_email=project.task_email_id
     if custom_email && !custom_email.blank?
       from=custom_email

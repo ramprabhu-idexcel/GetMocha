@@ -31,7 +31,7 @@ layout :change_layout
     session[:project_name]=@project.name if @project
     session[:project_selected]=@project.id if @project
   end
-  
+
 
     def remove_timestamps
     Activity.record_timestamps=false
