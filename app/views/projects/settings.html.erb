@@ -1,7 +1,7 @@
 
-  <div class="l-panel-contain" id="project_list">
+  <div class="l-panel-contain" id="projects_list">
 	<% if @projects %>
-		<%= render :partial=>'project_list' %>
+		<%= render :partial=>'project_list',:locals=>{:projects=>@projects,:completed_projects=>@completed_projects} %>
 	<% end %>
 	</div>
 	<div class="m-panel-contain" id="settings_secondpanel">
@@ -12,7 +12,7 @@
 		</div>
   </div>
 	<div id="add_people" style="display:none;">
-		<%= render :partial=>'invite' %>
+		<%= render :partial=>'invite',:locals=>{:user_emails=>@user_emails} %>
 		<div>
 		
 		<script>
@@ -119,7 +119,9 @@ if(where_to==true)
        type :'post',
        url : "/projects/remove_people?"+pars,
        success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
+			 $('#settings_people').remove();
+			 $('#settings_people').remove();
+			$('#container').append(data);
 			 document.getElementById('settings_people').style.display="block";
 			 document.getElementById('people_anchor').className="m-tab alt open";
 			 }
@@ -142,7 +144,9 @@ var pars = "project_id=" + proj_id +  "&checked="+ access;
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
+			 $('#settings_general').remove();
+			 $('#settings_people').remove();
+			$('#container').append(data);
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
@@ -174,8 +178,10 @@ var pars = "project_id=" + proj_id  + "&project_name="+ name;
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
-			 document.getElementById('settings_general').style.display="block";
+			 $('#settings_general').remove();
+			 $('#settings_people').remove();
+			$('#container').append(data);
+			$('#settings_general').show();
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
     });
@@ -208,7 +214,7 @@ var pars = "project_id=" + proj_id +  "&proj_status="+ status;
 			 else
 			 show_status="Completed"
 			 a=$('#completed_list').css('display');
-			 document.getElementById('project_list').innerHTML=data;
+			 document.getElementById('projects_list').innerHTML=data;
 			 if(a=="block")
 			 show_completed_projects();
 			 document.getElementById('settings_general').style.display="block";
@@ -249,7 +255,9 @@ var pars = "project_id=" + proj_id +  "&email="+ message_email;
        success: function(data){
 			  if(data.length!=167) //length of data returning with alert message
 				{
-			 document.getElementById('settings_pane').innerHTML=data;
+			 $('#settings_general').remove();
+			 $('#settings_people').remove();
+			$('#container').append(data);
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
@@ -285,7 +293,9 @@ var pars = "project_id=" + proj_id +  "&task_email="+ message_email;
        success: function(data){
 			 if(data.length!=167) //length of data returning with alert message
 			 {
-			 document.getElementById('settings_pane').innerHTML=data;
+			 $('#settings_general').remove();
+			 $('#settings_people').remove();
+			$('#container').append(data);
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }
@@ -301,7 +311,9 @@ $.ajax({
        type :'post',
        url : "/projects/update_proj_settings?"+pars,
        success: function(data){
-			 document.getElementById('settings_pane').innerHTML=data;
+			 $('#settings_general').remove();
+			 $('#settings_people').remove();
+			$('#container').append(data);
 			 document.getElementById('settings_general').style.display="block";
 			 document.getElementById('general_anchor').className="m-tab alt open";
 			 }

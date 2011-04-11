@@ -12,10 +12,10 @@
 	<h1>Change your password</h1>
  <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => {:method => :put,:id=>"reset_password" }) do |f| %>
     <%= f.hidden_field :reset_password_token %>
-    <%= f.text_field :password,:class=>"textfield",:id=>"password_pwd",:onfocus=>"pass()",:onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:270px;;height:42px;" %><br/>
-   <%= f.password_field :password,:class=>"textfield",:id=>"pass_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;width:270px;;height:42px;" %>
-  <%= f.text_field :password_confirmation,:class=>"textfield",:id=>"password_confirm",:onfocus=>"confirm_pass()",:onblur=>"this.value=!this.value?'Confirm':this.value;",:value=>"Confirm",:style=>"width:270px;;height:42px;"%>
-		   <%= f.password_field :password_confirmation,:class=>"textfield",:id=>"confirm_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;width:270px;;height:42px;"%><br/>
+    <%= f.text_field :password,:class=>"textfield",:id=>"password_pwd",:onfocus=>"pass()",:onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password"%><br/>
+   <%= f.password_field :password,:class=>"textfield",:id=>"pass_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;"%>
+  <%= f.text_field :password_confirmation,:class=>"textfield",:id=>"password_confirm",:onfocus=>"confirm_pass()",:onblur=>"this.value=!this.value?'Confirm':this.value;",:value=>"Confirm"%>
+		   <%= f.password_field :password_confirmation,:class=>"textfield",:id=>"confirm_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;"%><br/>
 	    <%= f.submit "Reset",:class=>"btn pass-reset-btn",:id=>"forgot_password"%><br/>
   <% end %>
 	<div class="push"></div>

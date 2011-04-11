@@ -1,0 +1,88 @@
+<body class="login">
+
+<div class="header">
+	<%= render :partial=>'/home/header'%>
+</div>
+
+			
+<div class="cup-lg-c"></div>
+
+<div class="wrap under-cup content-bottom" style="position:relative;">
+<div class="grid-400-c reset-form">
+	<h1>Change your password</h1>
+ <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:class=>"no-labels",:html => {:method => :put,:id=>"reset_password" }) do |f| %>
+    <%= f.hidden_field :reset_password_token %>
+    <%= f.text_field :password,:class=>"textfield",:id=>"password_pwd",:onfocus=>"pass()",:onblur=>"this.value=!this.value?'Password':this.value;",:value=>"Password",:style=>"width:270px;;height:42px;" %><br/>
+   <%= f.password_field :password,:class=>"textfield",:id=>"pass_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;width:270px;;height:42px;" %>
+  <%= f.text_field :password_confirmation,:class=>"textfield",:id=>"password_confirm",:onfocus=>"confirm_pass()",:onblur=>"this.value=!this.value?'Confirm':this.value;",:value=>"Confirm",:style=>"width:270px;;height:42px;"%>
+		   <%= f.password_field :password_confirmation,:class=>"textfield",:id=>"confirm_pwd",:onclick=>"this.value='';",:onfocus=>"this.select()",:style=>"display:none;width:270px;;height:42px;"%><br/>
+	    <%= f.submit "Reset",:class=>"btn pass-reset-btn",:id=>"forgot_password"%><br/>
+  <% end %>
+	<div class="push"></div>
+</div>
+</div>
+
+<script>
+function pass()
+{
+$('#password_pwd').hide();
+$('#pass_pwd').show();
+}
+function confirm_pass()
+{
+$('#password_confirm').hide();
+$('#confirm_pwd').show();
+}
+
+</script>
+
+<div class="footer">
+	<div class="container-960">
+		<span class="copy">Copyright &copy; 2011 Mocha</span>
+		<ul>
+			<li><a href="/signin">Login</a></li>
+			<li><a href="#">Blog</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/terms">Terms of Use</a></li>
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><span id="pass-reset-js" style="position: relative;">Forgot Password?</span></li>
+		</ul>
+	</div>
+</div>
+
+
+<script>
+  $('#forgot_password').click(function(){
+     // $('#fpwd').submit();
+		 var reset_token=window.location.href.split('?')[1];
+		 var reset=reset_token.split('=')[1]
+		 var pcn=$('#user_password_confirmation').val();
+		 var pwd=$('#user_password').val();
+		 if(($('#pass_pwd').val().length) < 6)
+       {
+          alert('password should be minimum 6 characters');
+       }
+		 else if(($('#confirm_pwd').val().length) < 6)
+       {
+          alert('confirm password should be minimum 6 characters');
+       }
+		 	else if(($('#pass_pwd').val())!=($('#confirm_pwd').val()))
+		 {
+				   alert('password and confirm password should be same');
+				 }
+				 else
+				 {
+				 $.ajax({
+				 data: $('#reset_password').serialize(),
+				 type: "PUT",
+				 url:"/admins/password",
+				 success: function(data){
+				 window.location.href="/admin_settings";
+				 }
+				 });
+				 }
+				 return false;
+				 });
+</script>
+</body>
+

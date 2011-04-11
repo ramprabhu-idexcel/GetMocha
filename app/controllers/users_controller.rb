@@ -6,6 +6,7 @@ class UsersController <  Devise::RegistrationsController
           resource.time_zone="(GMT-05:00) Eastern Standard Time"
     user=User.find_by_email_and_is_guest(params[:user][:email],true)
     if user
+      user.time_zone="(GMT-05:00) Eastern Standard Time"
       resource=user
       params[:user][:is_guest]=false
       resource.attributes=params[:user]

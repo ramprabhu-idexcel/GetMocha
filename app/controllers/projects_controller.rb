@@ -42,9 +42,9 @@ class ProjectsController < ApplicationController
 			@invite=@project.invitations.build(:email=>invite_user,:message=>params[:invite][:message])
 			@invite.save
 			ProjectMailer.delay.invite_people(current_user,@invite)
-    end
+	   end
 		@projects=current_user.user_active_projects
-		render :partial=>"messages/project_list"
+		render :partial=>"messages/project_list",:locals=>{:projects=>@projects}
 		else
 		render :update do |page|
 			page.alert errors.join("\n")
@@ -68,7 +68,7 @@ class ProjectsController < ApplicationController
 		@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
 		session[:project_name]=@project.name
 		session[:project_selected]=@project.id
-		render :partial=>'settings_pane'
+		render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
   end
 	def remove_people
 		#~ @project=Project.find(params[:project_id])
@@ -81,7 +81,7 @@ class ProjectsController < ApplicationController
 			@guest_user.update_attributes(:status=>false)
 			@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
 		end
-		render :partial=>'settings_pane'
+		render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
 	end
 	def update_proj_settings
 		#~ @project=Project.find(params[:project_id])
@@ -126,9 +126,9 @@ class ProjectsController < ApplicationController
 			if params[:proj_status]
 				@projects=current_user.user_active_projects
 		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
-				render :partial=>'project_list'
+				render :partial=>'project_list',:locals=>{:projects=>@projects,:completed_projects=>@completed_projects}
 			else
-			render :partial=>'settings_pane'
+			render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
 			end
 		end
 		end
@@ -161,6 +161,14 @@ class ProjectsController < ApplicationController
 			end
 		end
 	end
+  def invite_people
+    invitation=Invitation.new(params[:invite])
+    if invitation.valid?
+      invitation.save
+      ProjectMailer.delay.invite_people(current_user,invitation)
+    end
+    render :nothing=>true
+  end
   def join_project
 		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
 		if @invite

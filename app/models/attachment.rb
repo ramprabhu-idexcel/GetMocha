@@ -5,13 +5,25 @@ class Attachment < ActiveRecord::Base
   include AWS::S3
   belongs_to :attachable, :polymorphic => true
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
-  named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
   if Rails.env.development?
     has_attachment :size => 1.megabyte..2.megabytes,:resize=>"500x500>",:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"70x70",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
     has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   end
-
+  named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
+def self.delete_attachments(ids)
+  ids.each do |id|
+attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id IS NULL',id])
+attach.delete if attach
+end
+end
+def self.update_attachments(ids,attachable)
+  ids=ids.split(',')
+  ids.each do |id|
+attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id IS NULL',id])
+attach.update_attributes(:attachable=>attachable) if attach
+end
+end
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
   #~ after_save :resize_image_for_thumbnail

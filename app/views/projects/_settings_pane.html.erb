@@ -1,8 +1,4 @@
-<%project=@project
-project_guest=@project_guest
-%>
-
-
+<!--<div id="settings_pane">-->
 	<div class="r-panel-contain" id="settings_general" style="display:none;">
 	<input type="hidden" id="project_name"/>
 		<div class="r-panel">
@@ -51,7 +47,7 @@ project_guest=@project_guest
 							<label>Tasks:</label>
 						</div>
 						<div class="info-right">
-						<span class="info"><%= project.message_email_id %></span><br />
+						<span class="info"><%= project.task_email_id %></span><br />
 							<% project.custom_emails.each do |mail| %>
 						<% if mail.custom_type=="Task" %><span class="info"><%= mail.email %><%= !mail.verification_code ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= project.id %>');">Delete</a>		<br/>				<% end %>
 						<% end %>
@@ -112,3 +108,4 @@ project_guest=@project_guest
 			<% end %>
 		</div>
   </div>
+	<!--</div>-->

@@ -5,7 +5,9 @@ class Comment < ActiveRecord::Base
   has_many :activities, :as => :resource, :dependent=>:destroy
   after_create :add_in_activity
   def add_in_activity
-    self.commentable.project.users.each do |user|
+    project=self.commentable.project
+    project=self.commentable.task_list.project if self.commentable_type=="Task"
+    project.users.each do |user|
       activity=self.activities.create! :user=>user
       activity.update_attribute(:is_read,true) if user.id==self.user_id
     end
@@ -13,6 +15,11 @@ class Comment < ActiveRecord::Base
       self.commentable.subscribed_users.each do |activity|
         user=activity.user
         ProjectMailer.delay.message_reply(user,self)
+      end
+    elsif  self.commentable_type=="Task"
+      self.commentable.subscribed_users.each do |activity|
+        user=activity.user
+        ProjectMailer.delay.task_reply(user,self)
       end
     end
   end
@@ -52,5 +59,11 @@ class Comment < ActiveRecord::Base
       end
     end
     {:attach_image=>images,:attached_documents=>documents}
+  end
+  def author
+    "#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
+  end
+  def task_comment_notify
+    "Author: #{self.author} <br/> Comment: #{self.comment}"
   end
 end

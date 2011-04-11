@@ -4,8 +4,15 @@ $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
 </script>
 <%=javascript_include_tag "tasks"%>
 
-<%=render "first_pane"%>
+<%=render :partial=>"first_pane",:locals=>{:projects=>@projects}%>
 <div class="m-panel-contain">
   <div class="m-panel">
+  </div>
+</div>
+<div class="r-panel-contain">
+  <div class="r-panel">
+    <%= render :partial=>"messages/add_comment"%>
+    <div id="comment_area">
+    </div>
   </div>
 </div>
