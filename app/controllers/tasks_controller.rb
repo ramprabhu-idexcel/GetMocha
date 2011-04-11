@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 #  before_filter :find_activity,:only=>['subscribe','star_task','show','unsubscribe','destroy','project_task_comment']
 	layout 'application', :except=>['new']
 	 before_filter :find_task,:only=>['update','complete_task','destroy','assign_task']
+	 before_filter :clear_session_project,:only=>['all_tasks','starred_tasks','my_tasks','completed_tasks']
 	def index
 		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
@@ -112,6 +113,8 @@ class TasksController < ApplicationController
 
   def show
     project=Project.find_by_id(params[:id])
+		session[:project_name]=project.name if project
+    session[:project_selected]=project.id if project
     task_ids=project.all_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end

@@ -155,10 +155,6 @@ end
   def resource_columns
     [:message,:project_id,:subject]
   end
-	def clear_session_project
-		session[:project_name]=nil
-		session[:project_selected]=nil
-	end
 	def session_project_name
   session[:project_name]=nil
   #~ session[:project_selected]=nil
