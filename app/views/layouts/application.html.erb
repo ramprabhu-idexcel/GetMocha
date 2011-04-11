@@ -1103,14 +1103,16 @@ if(is_open=="0")
 			var task_length=$('.m-panel').children().length;
 			for(i=0; i<task_length; i++)
 			{
-				var task=$('.m-panel').children()[1].className;
-				var task_id=task.split("actk:")[1];
-				task_id=task_id.split(" task tsem")[0];
+				var task=$('.m-panel').children()[i].className;
+				
 				
 				if(task!="sub-header")
 				{
+				var task_id=task.split("actk:")[1];
+				task_id=task_id.split(" task tsem")[0];
 					var a=document.getElementById("tk_"+task_id).className;
 					a=a.split(" open")[0];
+					
 					document.getElementById("tk_"+task_id).className=a;
 					$('#comment_area').hide();
 					a=window.location.hash=window.location.hash;
