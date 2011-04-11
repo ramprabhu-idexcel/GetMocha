@@ -1,0 +1,10 @@
+##Type above this line to post a reply to this message##
+     <%=raw @comment.task_comment_notify%><br/>
+			<% @comment.attachments.each do |attach| %>
+			<br/>
+						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%=attach.filename%></a> <br/>
+					<% end %>
+			<br/>
+			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_task_email/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/>
+--<br/>
+Powered by GetMocha.com
