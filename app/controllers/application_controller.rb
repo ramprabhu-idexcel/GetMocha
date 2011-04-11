@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 skip_before_filter :verify_authenticity_token
 #~ protect_from_forgery layout :change_layout
-before_filter :http_authenticate, :except=>['']
+before_filter :http_authenticate, :except=>['message_create_via_email','check_from_address_email']
 before_filter :check_from_address_email,:only=>['new_project_via_email','message_create_via_email','reply_to_message_via_email']
 before_filter :find_project
 
@@ -23,6 +23,23 @@ layout :change_layout
       "application"
     end
   end
+  
+  def check_from_address_email
+  logger.info "********************************"
+logger.info params[:from].inspect
+logger.info "********************************"
+@from_address=(params[:from].to_s)
+
+if(@from_address.include?('<'))
+@from_address=@from_address.split('<')
+@from_address=@from_address[1].split('>')
+@from_address=@from_address[0]
+end
+logger.info @from_address.inspect
+logger.info "********************************"
+
+end
+
   def find_project
     @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
@@ -374,21 +391,7 @@ end
 end
 end
 end
-def check_from_address_email
-  logger.info "********************************"
-logger.info params[:from].inspect
-logger.info "********************************"
-@from_address=(params[:from].to_s)
 
-if(@from_address.include?('<'))
-@from_address=@from_address.split('<')
-@from_address=@from_address[1].split('>')
-@from_address=@from_address[0]
-end
-logger.info @from_address.inspect
-logger.info "********************************"
-
-end
     def remove_timestamps
     Activity.record_timestamps=false
   end
