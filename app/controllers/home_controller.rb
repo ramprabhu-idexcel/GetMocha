@@ -15,6 +15,10 @@ def check_email_reply_and_save
 				@dest_address=@dest_address[1].split('>')
 				@dest_address=@dest_address[0].to_s
 			end
+          project_id=@dest_address[0].to_s
+project_id=project_id.split('@')
+project_id=project_id[0].split('-').last
+
 			if @dest_address[0].to_s.include?("#{APP_CONFIG[:project_email]}")
 				new_project_via_email
 			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:message_email]}")
@@ -42,10 +46,8 @@ from_add=from[1].split('>')
 from_address1=from_add[0]
 end
 #~ from_address=check_from_address_email(params[:from].to_s)
-    project_id=@dest_address[0].to_s
-project_id=project_id.split('@')
-project_id=project_id[0].split('-').last
 project=Project.find(project_id)
+logger.info project.inspect
 #user=User.find_by_email(from_address)
 #~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
 user=User.verify_email_id(from_address1)
