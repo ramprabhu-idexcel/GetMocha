@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 layout "before_login"
-  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy']
+  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy','message_create_via_email','check_from_address_email']
 	before_filter :check_from_address_email,:only=>['message_create_via_email']
 	protect_from_forgery  :except=>:check_email_reply_and_save
 def index
@@ -32,21 +32,7 @@ def check_email_reply_and_save
 	  end
 	end
 	
-	  def check_from_address_email
-  logger.info "********************************"
-logger.info params[:from].inspect
-logger.info "********************************"
-@from_address=(params[:from].to_s)
 
-if(@from_address.include?('<'))
-@from_address=@from_address.split('<')
-@from_address=@from_address[1].split('>')
-@from_address=@from_address[0]
-end
-logger.info @from_address.inspect
-logger.info "********************************"
-
-end
 
 def message_create_via_email
     from_address=params[:from].to_s
@@ -107,8 +93,8 @@ message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>nam
 
       end
 if message && message.project
-info_message_project=message.project  
-info_message_project.users.each do |user|
+  info_message_project=message.project
+  info_message_project.users.each do |user|
 activity=message.activities.create! :user=>user
 activity.update_attributes(:is_read=>(user.id==message.user_id),:is_subscribed=>true) if user.id==message.user_id
 end
@@ -246,8 +232,9 @@ end
     logger.info task.inspect
     logger.info title.inspect
     logger.info task.errors.inspect
-    if task && task.task_list.project
-      task.task_list.project.users.each do |user|
+    find_task_tasklist=task.task_list
+    if task && find_task_tasklist.project
+      find_task_tasklist.project.users.each do |user|
         activity=task.activities.create! :user=>user
         activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
       end
@@ -398,6 +385,21 @@ end
 end
 
 
+ def check_from_address_email
+  logger.info "********************************"
+logger.info params[:from].inspect
+logger.info "********************************"
+@from_address=(params[:from].to_s)
+
+if(@from_address.include?('<'))
+@from_address=@from_address.split('<')
+@from_address=@from_address[1].split('>')
+@from_address=@from_address[0]
+end
+logger.info @from_address.inspect
+logger.info "********************************"
+
+end
 	
 end
 
