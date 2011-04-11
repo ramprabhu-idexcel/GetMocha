@@ -35,11 +35,11 @@ def check_email_reply_and_save
 
 
 def message_create_via_email
-    from_address=params[:from].to_s
-if(from_address.include?('<'))
-from_address=from_address.split('<')
-from_address=from_address[1].split('>')
-from_address=from_address[0]
+    from_address1=params[:from].to_s
+if(from_address1.include?('<'))
+from=from_address.split('<')
+from_add=from[1].split('>')
+from_address1=from_add[0]
 end
 #~ from_address=check_from_address_email(params[:from].to_s)
     project_id=@dest_address[0].to_s
@@ -48,7 +48,7 @@ project_id=project_id[0].split('-').last
 project=Project.find(project_id)
 #user=User.find_by_email(from_address)
 #~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
-user=User.verify_email_id(from_address)
+user=User.verify_email_id(from_address1)
   proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
 proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
 message=params[:html]
@@ -74,7 +74,7 @@ if proj_user && proj_user.status==false
 proj_user.update_attributes(:status=>true)
 end
 if ((!proj_user) && project.is_public? )
-guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password) if !user
+guest=User.create(:email=>from_address1,:is_guest=>true, :password=>Encrypt.default_password) if !user
 if user
 message=Message.create(:user_id=>user.id, :project_id=>project.id, :subject=>name, :message=>message)
 message.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
@@ -109,9 +109,9 @@ end
 def new_project_via_email
     from_address=params[:from].to_s
 if(from_address.include?('<'))
-from_address=from_address.split('<')
-from_address=from_address[1].split('>')
-from_address=from_address[0]
+from_add=from_address.split('<')
+from=from_add[1].split('>')
+from_address=from[0]
 end
 #~ from_address=check_from_address_email(params[:from].to_s)
 to_address=params[:to].split(',')
@@ -151,11 +151,11 @@ end
 end
 end
   def task_create_via_email
-    from_address=params[:from].to_s
-    if(from_address.include?('<'))
-      from_address=from_address.split('<')
-      from_address=from_address[1].split('>')
-      from_address=from_address[0]
+    from_address2=params[:from].to_s
+    if(from_address2.include?('<'))
+      from2=from_address2.split('<')
+      from_add2=from2[1].split('>')
+      from_address2=from_add2[0]
     end
     project_id=@dest_address[0].to_s
     project_id=project_id.split('@')
@@ -163,7 +163,7 @@ end
     project=Project.find(project_id)
     #user=User.find_by_email(from_address)
     #~ user=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
-    user=User.verify_email_id(from_address)
+    user=User.verify_email_id(from_address2)
     proj_user=ProjectUser.find_by_project_id_and_user_id(project.id, user.id) if user
     proj_user=ProjectGuest.find_by_project_id_and_guest_id(project.id, user.id) if !proj_user && user
     message=params[:html]
@@ -209,7 +209,7 @@ end
       end
     end
     if ((!proj_user) && project.is_public? )
-      guest=User.create(:email=>from_address,:is_guest=>true, :password=>Encrypt.default_password) if !user
+      guest=User.create(:email=>from_address2,:is_guest=>true, :password=>Encrypt.default_password) if !user
       if user
       task=Task.create(:name=>title,:description=>message,:user_id=>user.id,:task_list_id=>task_list.id)
       task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
@@ -248,11 +248,11 @@ end
   end
 
 def reply_to_message_via_email
-from_address=params[:from].to_s
-if(from_address.include?('<'))
-from_address=from_address.split('<')
-from_address=from_address[1].split('>')
-from_address=from_address[0]
+from_address_reply=params[:from].to_s
+if(from_address_reply.include?('<'))
+from_reply=from_address_reply.split('<')
+from_add_reply=from_reply[1].split('>')
+from_address_reply=from_add_reply[0]
 end
 #~ from_address=check_from_address_email(params[:from].to_s)
 message_id=@dest_address[0].to_s.split('@')
@@ -260,7 +260,7 @@ message_id=message_id[0].split('ctzm')
 message_id=message_id[1]
 message=Message.find(message_id)
 project=Project.find(message.project_id)
-user=User.find_by_email(from_address)
+user=User.find_by_email(from_address_reply)
 content1=params[:html].split("##Type above this line to post a reply to this message##")
 content=content1[0]
 content_f = content.split("wrote:")[0]
@@ -294,11 +294,11 @@ end
 end
 
 def reply_to_task_via_email
-from_address=params[:from].to_s
-if(from_address.include?('<'))
-from_address=from_address.split('<')
-from_address=from_address[1].split('>')
-from_address=from_address[0]
+from_address_reply_task=params[:from].to_s
+if(from_address_reply_task.include?('<'))
+from_address_task=from_address_reply_task.split('<')
+from_reply_task=from_address_task[1].split('>')
+from_address_reply_task=from_reply_task[0]
 end
 #~ from_address=check_from_address_email(params[:from].to_s)
 message_id=@dest_address[0].to_s.split('@')
@@ -306,7 +306,7 @@ message_id=message_id[0].split('ctzt')
 message_id=message_id[1]
 task=Task.find(message_id)
 project=Project.find(task.project_id)
-user=User.find_by_email(from_address)
+user=User.find_by_email(from_address_reply_task)
 content1=params[:html].split("##Type above this line to post a reply to this message##")
 content=content1[0]
 content_f = content.split("wrote:")[0]
@@ -340,16 +340,16 @@ end
 end
 
 def invite_via_email
-from_address=params[:from].to_s
-if(from_address.include?('<'))
-from_address=from_address.split('<')
-from_address=from_address[1].split('>')
-from_address=from_address[0]
+from_address_invite=params[:from].to_s
+if(from_address_invite.include?('<'))
+from_invite=from_address_invite.split('<')
+from_add_invite=from_invite[1].split('>')
+from_address_invite=from_add_invite[0]
 end
 #~ from_address=check_from_address_email(params[:from].to_s)
 to_address=params[:to].split(',')
 cc_address=params[:cc].split(',') if params[:cc]
-user=User.find_by_email(from_address)
+user=User.find_by_email(from_address_invite)
 if user
 message=params[:text]
 name=params[:subject].to_s
@@ -385,21 +385,21 @@ end
 end
 
 
- def check_from_address_email
-  logger.info "********************************"
-logger.info params[:from].inspect
-logger.info "********************************"
-@from_address=(params[:from].to_s)
+ #~ def check_from_address_email
+  #~ logger.info "********************************"
+#~ logger.info params[:from].inspect
+#~ logger.info "********************************"
+#~ @from_address=(params[:from].to_s)
 
-if(@from_address.include?('<'))
-@from_address=@from_address.split('<')
-@from_address=@from_address[1].split('>')
-@from_address=@from_address[0]
-end
-logger.info @from_address.inspect
-logger.info "********************************"
+#~ if(@from_address.include?('<'))
+#~ @from_address=@from_address.split('<')
+#~ @from_address=@from_address[1].split('>')
+#~ @from_address=@from_address[0]
+#~ end
+#~ logger.info @from_address.inspect
+#~ logger.info "********************************"
 
-end
+#~ end
 	
 end
 
