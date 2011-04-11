@@ -153,7 +153,8 @@ end
     logger.info task.inspect
     logger.info title.inspect
     logger.info task.errors.inspect
-    if task && task.task_list.project
+    project_task=task.task_list
+    if task && project_task.project
       task.task_list.project.users.each do |user|
         activity=task.activities.create! :user=>user
         activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
