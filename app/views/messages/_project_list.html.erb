@@ -1,4 +1,3 @@
-<%projects=@projects%>
 <div class="l-panel" id= "projectslist">
 	<%unless current_user.unread_all_message_count<1%>
 	<a class="all-messages has-unread <%=session[:project_selected] ? "" : "open"%>" href="#all_messages" id="all_messages"><span class="num-unread"><%= current_user.unread_all_message_count%></span><span class="icon"></span>All Messages </a>

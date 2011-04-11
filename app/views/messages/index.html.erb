@@ -5,7 +5,7 @@ $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
 <%=javascript_include_tag "message"%>
 <div class="l-panel-contain" id="projects_list">
 	<% if @projects %>
-		<%= render :partial=>'project_list' %>
+		<%= render :partial=>'project_list',:locals=>{:projects=>@projects} %>
 	<% end %>
 </div>
 <div class="m-panel-contain">
