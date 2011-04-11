@@ -455,7 +455,7 @@
     items.push('</div>');
     items.push('<hr/>');
     items.push('<div class="main-content"><p><span>'+task.description+'</span><a class="edit task_description" href="#">Edit</a></p></div>');
-    items.push('<p class="subscribers">'+task.subscribe+' <a class="task-subscribe" href="#">unsubscribe</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+' <a id="subscribe_task" class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments
