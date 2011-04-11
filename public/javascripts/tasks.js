@@ -161,6 +161,7 @@
     });
     var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
     $(this).text(result);
+return false;
   });
   //task comments
   $('#reply_comment_task').live('click',function(){
