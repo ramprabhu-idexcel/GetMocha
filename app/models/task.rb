@@ -12,24 +12,25 @@ class Task < ActiveRecord::Base
 									:presence => true
 validates :name, :presence   => true, :uniqueness =>true
 
-def add_in_activity(to_users,assign,user)
+def add_in_activity(to_users,assigns)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
-			assign=assign.split(',')
-			p to_users
-     # self.project.users.each do |user|
-		# assign=
-      activity=self.activities.create!(:user=>user, :is_subscribed=>true)
-      #activity.update_attributes(:is_assigned=>(user.email==assign),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
+		  self.task_list.project.users.each do |user|
+      activity=self.activities.create! :user=>user
+      activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
+			if !assigns.blank?
+			self.activities.update_attributes(:is_assigned=>true) if user.email==assigns
+			else
+				self.activities.update_attributes(:is_assigned=>true) if user==self.user
+			end
+		end
     to_users.each do |email|
 			email=email.lstrip
-      if email.nil?
-				p email
+      if email.present?
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
-				p u.inspect
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
-				activity.update_attributes(:is_assigned=>true) if user.email==assign
-        ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)
+				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
+        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.task_list.project.is_member?(u.id) && u && u.id && !a
+				ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) if u && u.id && !self.task_list.project.project_member?(u.id)
       end
     end
   end
