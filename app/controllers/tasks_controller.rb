@@ -50,7 +50,16 @@ class TasksController < ApplicationController
 					#~ errors<<"Please enter To_email address"
 					if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 						errors<<"Please enter valid email for assign"
-		      end
+						else
+							u_email=[]
+							@project.users.each do |user|
+								u_email<<user.email
+							end
+							e=u_email.indexOf(params[:task][:recipient])
+							if !e
+								errors<<"Please select existing user only"
+							end
+						end
 	      end
 			else
 			if !params[:task][:notify].blank?

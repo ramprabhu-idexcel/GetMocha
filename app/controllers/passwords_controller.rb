@@ -5,15 +5,29 @@ class PasswordsController < Devise::PasswordsController
   # PUT /resource/password
    def create
          errors=[]
-         p params[resource_name].inspect
-    self.resource = resource_class.send_reset_password_instructions(params[resource_name])
-    if resource.errors.empty?
-      set_flash_message :notice, :send_instructions
-      redirect_to new_session_path(resource_name)
+         user=User.find_by_email_and_is_guest(params[:user][:email],false)
+         if user
+        self.resource = resource_class.send_reset_password_instructions(params[resource_name])
+        if resource.errors.empty?
+        set_flash_message :notice, :send_instructions
+      #~ redirect_to new_session_path(resource_name)
+         render :update do |f|
+           f.redirect_to '/signin'
+           end
+     else
+      p "^^^^^^^^^"
+      puts resource.errors.inspect
+      #~ resource.errors.each_full{|msg| errors<<msg }
+      #~ render :json=>{:success=>errors.join("\n")}.to_json
+    #~ end
+    render :update do |f|
+      f.alert("Email not found")
+    end
+    end
     else
-      puts resource.errors
-      resource.errors.each_full{|msg| errors<<msg }
-      render :json=>{:failure=>errors.join("\n")}.to_json
+      render :update do |f|
+      f.alert("Email not found")
+    end
     end
   end
   def edit

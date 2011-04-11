@@ -10,7 +10,7 @@
 <h1>Forgot your password?</h1>
 <%= form_for(resource, :as => resource_name, :url =>password_path(resource_name),:html => { :method => :post,:id=>"fpwd" ,:class=>"no-labels"}) do |f| %>
 <%= f.text_field :email,:class=>"textfield",:onclick=>"this.value='';",:id=>"forgot_email",:onfocus=>"this.select()",:onblur=>"this.value=!this.value?'Account email address':this.value;",:value=>"Account email address"%>
-<%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_pass" %></p>
+<%= f.submit "Reset",:class=>"btn login-btn" ,:id=>"forgot_email_pass" %></p>
 <% end %>
 </div>
 <div class="grid-600-c login-form">
@@ -98,6 +98,24 @@ $('#user_signup').live('click',function(){
     }
       return false;
     });
+		
+		
+		$('#forgot_email_pass').live('click',function(){
+		 var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+     var email=$('#forgot_email').val();
+		 if(!emailReg.test(email)) {
+		  alert('Please enter the valid email address');
+		 }
+      else
+			{
+			$.ajax({
+			  url:'/users/password',
+        data: $('form#fpwd').serialize(),
+        type: "POST",
+				});
+				}
+				return false;
+		});
   });
   </script>
 
