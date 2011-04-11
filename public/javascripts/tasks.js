@@ -117,7 +117,10 @@
         data:{'task[name]':content},
         success:function(data){
           if(data=="success")
+          {
             save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
+            $('.task.tsem.open').children('.task-name').children('h4').text(truncate_task_name(content));
+          }
           else
             alert(data);
         }
@@ -432,7 +435,7 @@
         items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value)+'">'+v.activity.resource.due_date_value+'</span>');
         items.push('<span class="name">'+v.activity.resource.assigned_to[0]+'</span>');
         items.push('</div>');
-        items.push('<div class="task-name"><h4>'+v.activity.resource.name+'</h4></div>');
+        items.push('<div class="task-name"><h4>'+truncate_task_name(v.activity.resource.name)+'</h4></div>');
         items.push('<div class="clear-fix"/></div>');        
       });
     });
@@ -596,6 +599,14 @@
       $('#my_tasks').html('<span class="icon"></span>My Tasks');
     else
       $('#my_tasks').html('<span class="num-tasks">'+data.my_count+'</span><span class="icon"></span>My Tasks');
+  }
+  
+  function truncate_task_name(name)
+  {
+    if(name.length>55)
+      return name.substring(0,55)+"...";
+    else
+      return name;
   }
   
   var app = new restfulApp;
