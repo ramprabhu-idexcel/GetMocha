@@ -32,21 +32,7 @@ def check_email_reply_and_save
 	  end
 	end
 	
-	  def check_from_address_email
-  logger.info "********************************"
-logger.info params[:from].inspect
-logger.info "********************************"
-@from_address=(params[:from].to_s)
 
-if(@from_address.include?('<'))
-@from_address=@from_address.split('<')
-@from_address=@from_address[1].split('>')
-@from_address=@from_address[0]
-end
-logger.info @from_address.inspect
-logger.info "********************************"
-
-end
 
 def message_create_via_email
     from_address=params[:from].to_s
@@ -398,7 +384,22 @@ end
 end
 end
 
+protected:
+	  def check_from_address_email
+  logger.info "********************************"
+logger.info params[:from].inspect
+logger.info "********************************"
+@from_address=(params[:from].to_s)
 
+if(@from_address.include?('<'))
+@from_address=@from_address.split('<')
+@from_address=@from_address[1].split('>')
+@from_address=@from_address[0]
+end
+logger.info @from_address.inspect
+logger.info "********************************"
+
+end
 	
 end
 
