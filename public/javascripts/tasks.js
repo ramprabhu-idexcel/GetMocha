@@ -224,7 +224,7 @@
     var task_id=get_task_id();
     $('.task.tsem.open').remove();
     $.ajax({
-      url:'/tasks'+task_id,
+      url:'/tasks/'+task_id,
       type:'delete'
     });
   }

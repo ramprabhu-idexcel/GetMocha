@@ -126,6 +126,10 @@ class TasksController < ApplicationController
     end
   end
   def destroy
+    activities=@task.activities
+    activities.each do |activity|
+      activity.delete
+    end
     @task.delete if @task
     render :nothing=>true
   end
