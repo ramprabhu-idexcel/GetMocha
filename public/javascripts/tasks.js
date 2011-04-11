@@ -295,12 +295,19 @@
   $('.tklist').live('blur',function(){
     var task_list_id=$(this).parent('.sub-header').attr('id').split('tl')[1];
     var content=$(this).val();
+    var task_header=$(this);
     $.ajax({
       url: '/task_lists/'+task_list_id,
       type:'put',
-      data:{'task_list[name]' : content}
+      data:{'task_list[name]' : content},
+      success:function(data){
+        if(typeof(data)=="object")
+          alert(data.error);
+        else
+        task_header.parent('.sub-header').html('<a class="sec task_list" href="#">'+content+'</a>');
+      }
     });
-    $(this).parent('.sub-header').html('<a class="sec task_list" href="#">'+content+'</a>');
+    
     return false;
   });
   
