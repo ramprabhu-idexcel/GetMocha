@@ -331,7 +331,7 @@ var ds_oe = ds_getel('ds_calclass');
 var ds_ce = ds_getel('ds_conclass');
 
 // Output Buffering
-var ds_ob = ''; 
+var ds_ob = '';
 function ds_ob_clean() {
 	ds_ob = '';
 }
@@ -481,7 +481,7 @@ function ds_nm() {
 	// We have passed December, let's go to the next year.
 	// Increase the current year, and set the current month to January.
 	if (ds_c_month > 12) {
-		ds_c_month = 1; 
+		ds_c_month = 1;
 		ds_c_year++;
 	}
 	// Redraw the calendar.
@@ -494,7 +494,7 @@ function ds_pm() {
 	// We have passed January, let's go back to the previous year.
 	// Decrease the current year, and set the current month to December.
 	if (ds_c_month < 1) {
-		ds_c_month = 12; 
+		ds_c_month = 12;
 		ds_c_year = ds_c_year - 1; // Can't use dash-dash here, it will make the page invalid.
 	}
 	// Redraw the calendar.
