@@ -150,7 +150,7 @@ class TasksController < ApplicationController
 	def complete_task
     #~ task=Task.find_by_id(params[:id])
     @task.update_attribute(:is_completed,!@task.is_completed)
-    render :json=>{:completed_count=>current_user.completed_tasks.count}.to_json
+    render :json=>current_user.all_tasks_count.to_json
   end
 	def project_tasks
     project=Project.find_by_id(params[:project_id])

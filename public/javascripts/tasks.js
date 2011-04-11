@@ -29,7 +29,7 @@
         tasks_count(data);
       }
     });
-    //$(".checkbox > span.icon.icon-thd").toggleClass('checked');
+    $(".checkbox > span.icon.icon-thd").toggleClass('checked');
     $(this).parent().parent().parent().fadeOut(700,function(){
       $('#comment_area').fadeOut('fast');
     });
@@ -579,6 +579,18 @@
       $('#completed_tasks').html('<span class="icon"></span>Completed');
     else
       $('#completed_tasks').html('<span class="num-tasks">'+data.completed_count+'</span><span class="icon"></span>Completed');
+    if(data.starred_count<1)
+      $('#starred_tasks').html('<span class="icon"></span>Starred');
+    else
+      $('#starred_tasks').html('<span class="num-tasks">'+data.starred_count+'</span><span class="icon"></span>Starred');
+    if(data.all_count<1)
+      $('#all_tasks').html('<span class="icon"></span>All Tasks');
+    else
+      $('#all_tasks').html('<span class="num-tasks">'+data.all_count+'</span><span class="icon"></span>All Tasks');
+    if(data.my_count<1)
+      $('#my_tasks').html('<span class="icon"></span>My Tasks');
+    else
+      $('#my_tasks').html('<span class="num-tasks">'+data.my_count+'</span><span class="icon"></span>My Tasks');
   }
   
   var app = new restfulApp;

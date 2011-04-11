@@ -211,6 +211,7 @@ class User < ActiveRecord::Base
   end
   def all_tasks
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at desc")
+
     not_completed_tasks(find_all_tasks)
   end
   def group_all_tasks
@@ -264,5 +265,8 @@ class User < ActiveRecord::Base
   end
   def self.project_team_members(project_id)
     find(:all,:conditions=>['project_users.project_id=:project_id AND project_users.status=:value AND users.status=:value',{:project_id=>project_id,:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
+  end
+  def all_tasks_count
+    {:completed_count=>completed_tasks.count,:all_count=>all_tasks.count,:starred_count=>starred_tasks.count,:my_count=>my_tasks.count}
   end
 end
