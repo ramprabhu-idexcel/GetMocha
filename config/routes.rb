@@ -93,6 +93,7 @@ end
     end
   end
   match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
+  match 'unsubscribe_task_email/:user_id/:task_id'=>'activities#unsubscribe',:as=>'unsubscribe',:method=>:get
   resources :activities
   resources :task_lists
   match 'faq' =>"home#faq"
