@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!,:except=>[:unsubscribe]
   UPDATE_METHODS=['star_message','subscribe']
   before_filter :find_activity,:only=>UPDATE_METHODS
   before_filter :remove_timestamps,:only=>UPDATE_METHODS
@@ -22,6 +22,11 @@ class ActivitiesController < ApplicationController
     starred=!@activity.is_starred
     @activity.update_attribute(:is_starred,starred)
     render :json=>{:count=>current_user.starred_messages_count}
+  end
+  def unsubscribe
+    activity=Activity.find_by_user_id_and_resource_type_and_resource_id(params[:user_id],"Task",params[:task_id])
+    activity.update_attribute(:is_subscribed,false) if activity
+    render :nothing=>true
   end
   private
   def find_activity

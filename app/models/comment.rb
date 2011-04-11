@@ -16,11 +16,11 @@ class Comment < ActiveRecord::Base
         user=activity.user
         ProjectMailer.delay.message_reply(user,self)
       end
-    else
-      #~ self.commentable.subscribed_users.each do |activity|
-        #~ user=activity.user
-        #~ ProjectMailer.delay.message_reply(user,self)
-      #~ end
+    elsif  self.commentable_type=="Task"
+      self.commentable.subscribed_users.each do |activity|
+        user=activity.user
+        ProjectMailer.delay.task_reply(user,self)
+      end
     end
   end
    def self.find_hash(id,current_user)
@@ -59,5 +59,11 @@ class Comment < ActiveRecord::Base
       end
     end
     {:attach_image=>images,:attached_documents=>documents}
+  end
+  def author
+    "#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
+  end
+  def task_comment_notify
+    "Author: #{self.author} <br/> Comment: #{self.comment}"
   end
 end

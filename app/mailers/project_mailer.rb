@@ -76,6 +76,21 @@ class ProjectMailer < ActionMailer::Base
     mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject,:content_type=>"text/html")
     @content_type="multipart/html"
   end
+  def task_reply(user,comment)
+    @user=user
+    @comment=comment
+    task=@comment.commentable
+    project=task.task_list.project
+    custom_email=project.task_email_id
+    if custom_email && !custom_email.blank?
+      from=custom_email
+    else
+     from="mochabot@getmocha.com"
+    end
+    @task=comment.commentable
+    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Reply to #{@task.name}",:content_type=>"text/html")
+    @content_type="multipart/html"
+  end
  	def author
     	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
     end
