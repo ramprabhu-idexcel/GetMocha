@@ -23,7 +23,6 @@ layout :change_layout
       "application"
     end
   end
-  
   def check_from_address_email
   logger.info "********************************"
 logger.info params[:from].inspect
