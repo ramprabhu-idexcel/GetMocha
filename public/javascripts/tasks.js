@@ -116,13 +116,13 @@
         type:'put',
         data:{'task[name]':content},
         success:function(data){
-          if(data=="success")
+          if(typeof(data)=="object")
+            alert(data.error);
+          else
           {
             save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
             $('.task.tsem.open').children('.task-name').children('h4').text(truncate_task_name(content));
           }
-          else
-            alert(data);
         }
       });
     }
