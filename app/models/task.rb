@@ -128,7 +128,7 @@ def add_in_activity(to_users,assigns)
   def assigned_to
     activity=assigned_user
     #~ activity=Activity.assigned_project(self.id)
-    fullname=activity.user
+    fullname=activity.user if activity.present?
     activity.present? ? [fullname.full_name,activity.user_id] : ['','']
   end
   def other_task_lists
