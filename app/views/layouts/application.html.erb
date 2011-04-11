@@ -375,10 +375,18 @@ else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list
 $('.comment-contain').slideToggle('slow');
 			 $('.attachment').remove();	
   }
-	
+
 	function short_modal4(key)
 	{
-	a=$('#submsg').css('display');
+	var a=$('#submsg').css('display');
+	var location1=window.location.href;
+	var cpage="task";
+	var find_loc=location1.search(/messages/);
+	
+	if(find_loc!=-1)
+	{
+	cpage="message";
+	}
 	if(a=="inline")
 	{
 	if(key=="U")
@@ -399,7 +407,32 @@ $('.comment-contain').slideToggle('slow');
 		}
 		
 		}
+		else
+		{
+		
+		if(key=="T")
+		{
+		
+		if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
+		{
+		
+		  var yes=confirm('Are you sure?');
+  var task_id=$('div.message-body').children('span.tsk-det').attr('id').split('tk:')[1];
+  if(yes)
+  {
+   // var task_id=get_task_id();
+    $('.task.tsem.open').remove();
+    $.ajax({
+      url:'/tasks'+task_id,
+      type:'delete'
+    });
+  }
+  return false;
 	}
+		}
+		}
+	}
+		
 		
 		//for settings page navigation
 		function settings_navigation_down(key)
