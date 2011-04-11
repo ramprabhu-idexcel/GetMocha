@@ -332,6 +332,11 @@
     $('div.task.tsem.open').children('div.info').children('span.name').text(name);
   });
   
+  $('.name.message_name').live('click',function(){
+    $(this).parent('div.message-body').parent('div.message.message_comments').toggleClass('open');
+    return false;
+  });
+  
   $('.invite-btn.dp-down').live('click',function(){
     var email=$.trim($('#invite_email').val());
     if(email=="")
