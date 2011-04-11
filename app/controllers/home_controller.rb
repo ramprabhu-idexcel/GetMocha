@@ -246,8 +246,9 @@ end
     logger.info task.inspect
     logger.info title.inspect
     logger.info task.errors.inspect
-    if task && task.task_list.project
-      task.task_list.project.users.each do |user|
+    find_task_tasklist=task.task_list
+    if task && find_task_tasklist.project
+      find_task_tasklist.project.users.each do |user|
         activity=task.activities.create! :user=>user
         activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
       end
