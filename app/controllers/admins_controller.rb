@@ -1,20 +1,17 @@
 class AdminsController < ApplicationController
 	layout "admin_application",:except=>["new"]
 	#layout 'before_login', :only=>["new","reset_password"]
-
- def new
+	def new
 
 	end
 	def admin_panel
 		layout 'before_login'
-		p params.inspect
-	
 		if params[:email]=='admin@getmocha.com' && params[:password]=='admin123'
 			redirect_to 'settings'
-			else
-				render :nothing=>true
-			end
-			end
+		else
+			render :nothing=>true
+		end
+	end
 	def settings
 		render "settings"
 	end
@@ -40,17 +37,15 @@ class AdminsController < ApplicationController
 		@g_count=User.g_count_data
 			render :partial=>'analetics',:locals=>{:p_active_count=>@p_active_count,:p_completed_count=>@p_completed_count,:m_count=>@m_count,:tl_count=>@tl_count,:t_count=>@t_count,:u_count=>@u_count,:g_count=>@g_count}
 	end
-		def remove_user
-			puts params.inspect
-			@user=User.delete(params[:id])
-			@users=User.find(:all)
-			
-render :partial=>'users',:locals=>{:users=>@users}
-		end
-		def remove_project
-			p params.inspect
-			@project=Project.delete(params[:id])
-			@projects=Project.find(:all)
-			render :partial=>'projects',:locals=>{:projects=>@projects}
-end
+	def remove_user
+		puts params.inspect
+		@user=User.delete(params[:id])
+		@users=User.find(:all)
+		render :partial=>'users',:locals=>{:users=>@users}
+	end
+	def remove_project
+		@project=Project.delete(params[:id])
+		@projects=Project.find(:all)
+		render :partial=>'projects',:locals=>{:projects=>@projects}
+  end
 end
