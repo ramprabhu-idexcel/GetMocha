@@ -19,7 +19,9 @@ class Project < ActiveRecord::Base
 	validates :name, :length     => { :within => 4..40, :message=>"Please enter a project name with more than 3 characters and less than 20 characters" }
 	after_create :create_email_ids
   #~ named_scope :verify_project,:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users
-
+  def all_task_ids
+    tasks.map(&:id)
+  end
   def self.user_projects(user_id)
     find(:all,:conditions=>['project_users.user_id=? AND project_users.status=?',user_id,true],:include=>:project_users)
   end
@@ -125,10 +127,7 @@ class Project < ActiveRecord::Base
 	def self.verify_project(current_user)
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 	end	
-  def all_task_ids
-    tasks.map(&:id)
-  end
-  def team_members
+    def team_members
     User.project_team_members(self.id)
   end
   def members_list

@@ -1304,6 +1304,7 @@ function close_comment_area()
   });
   $('#t_can').live('click',function(){
     $('.add-item-modal').hide();
+    $('.ds_tbl').hide();
     return false;
   });
   $('#tl_can').live('click',function(){

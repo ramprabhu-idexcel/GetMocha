@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" href="/stylesheets/demo.css">
+ 
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
    <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
 	 <style type="text/css">
@@ -76,8 +76,7 @@
 		    </fieldset>
 			    <fieldset>
 					<label>Project:</label>
-		       		<% p session[:project_name] %>
-					<% if session[:project_name] %>
+		     					<% if session[:project_name] %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" , :value=>"#{session[:project_name]}", :disabled=>true%>
 							<input type="hidden" id="autocomplete1_hidden" name="project_id" value="<%=session[:project_selected]%>"/>
 					 <% else %>
