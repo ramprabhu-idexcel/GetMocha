@@ -298,6 +298,18 @@
     return false;
   });
   
+  $('.sort.sort-task').live('click',function(){
+    $('.sort.sort-task').removeClass('selected');
+    $(this).addClass('selected');
+    return false;
+  });
+
+  $('.asc-desc.sort-task').live('click',function(){
+    $('.asc-desc.sort-task').removeClass('selected');
+    $(this).addClass('selected');
+    return false;
+  });
+  
   $('.tkl-down').live('click',function(){
     $('.tkl-down').removeClass('selected');
     $(this).addClass('selected');
