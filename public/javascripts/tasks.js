@@ -73,12 +73,7 @@
     $('.task-dropdown.assigned-to').fadeToggle();
     return false;
   });
-  
-  //subscribe tasks
-  $('.task-subscribe').live('click',function(){
-    return false;
-  });
-  
+    
   $('.expand_user').live('click',function(){
     return false;
   });
