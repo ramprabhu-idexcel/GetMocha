@@ -78,23 +78,23 @@ end
       get :remove_attach
     end
   end
-  # task routes
-  #~ resources :tasks do
-    #~ member do
-      #~ get :project_tasklists
-      #~ put :assign_task
-    #~ end
-    #~ collection do
-      #~ put :complete_task
-      #~ get :all_tasks
-      #~ get :starred_tasks
-      #~ get :completed_tasks
-      #~ get :my_tasks
-    #~ end
-  #~ end
-  #~ match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
+  #~ # task routes
+  resources :tasks do
+    member do
+      get :project_tasklists
+      put :assign_task
+    end
+    collection do
+      put :complete_task
+      get :all_tasks
+      get :starred_tasks
+      get :completed_tasks
+      get :my_tasks
+    end
+  end
+  match 'tasks/task_comment/:activity_id'=>'tasks#task_comments',:as=>'task_comments',:method=>:get
   resources :activities
-  #~ resources :task_lists
+  resources :task_lists
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"

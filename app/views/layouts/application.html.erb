@@ -101,6 +101,10 @@
       {
         short_modal2('/messages');
       }
+			if(event.identifier=='W')
+      {
+        short_modal2('/tasks');
+      }
       if(event.identifier=='SHIFT_M')
       {
         short_modal1('/messages/new');
@@ -154,6 +158,10 @@
 			{
 			short_modal_down('X')
 			}
+			if(event.identifier=='SHIFT_T')
+			{
+			short_modal1('/tasks/new');
+			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
   var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
@@ -169,6 +177,7 @@
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
+	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
@@ -177,6 +186,7 @@
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z)
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
 	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
+	shortcutHandler.registerShortcut('W',goog.events.KeyCodes.W)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
@@ -349,8 +359,11 @@
   {
 if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
       $('.comment-contain').slideToggle('slow');
+else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
+$('.comment-contain').slideToggle('slow');
 			 $('.attachment').remove();	
   }
+	
 	function short_modal4(key)
 	{
 	a=$('#submsg').css('display');
@@ -968,6 +981,7 @@ if(is_open=="0")
 							document.getElementById("tk_"+move_task_id).className=a+" open";
 							document.getElementById("tk_"+task_id).className=aa;
 							$('#comment_area').show();
+							$('.task_header').show();
 							stop="true";
 						}
 					}
@@ -1082,6 +1096,7 @@ if(is_open=="0")
 					
 					if(b.search("/")!=-1)
 					{
+					$('.task_header').show();
 			$('#comment_area').show();
 					var a=document.getElementById("tk_"+task_id).className;
 					document.getElementById("tk_"+task_id).className=a+" open";
@@ -1092,6 +1107,7 @@ if(is_open=="0")
 					var a=document.getElementById("tk_"+task_id).className;
 					document.getElementById("tk_"+task_id).className=a+" open";
 						$('#comment_area').show();
+						$('.task_header').show();
 					}
 					stop="true";
 				}
@@ -1103,16 +1119,19 @@ if(is_open=="0")
 			var task_length=$('.m-panel').children().length;
 			for(i=0; i<task_length; i++)
 			{
-				var task=$('.m-panel').children()[1].className;
-				var task_id=task.split("actk:")[1];
-				task_id=task_id.split(" task tsem")[0];
+				var task=$('.m-panel').children()[i].className;
+				
 				
 				if(task!="sub-header")
 				{
+				var task_id=task.split("actk:")[1];
+				task_id=task_id.split(" task tsem")[0];
 					var a=document.getElementById("tk_"+task_id).className;
 					a=a.split(" open")[0];
+					
 					document.getElementById("tk_"+task_id).className=a;
 					$('#comment_area').hide();
+					$('.task_header').hide();
 					a=window.location.hash=window.location.hash;
 					a=a.split("/"+task_id)[0];
 					window.location.hash=a;
