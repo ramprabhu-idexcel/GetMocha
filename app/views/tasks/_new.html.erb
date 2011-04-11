@@ -226,7 +226,8 @@ function delete_attachment(file)
     });
 }
 $('#project_val').blur(function(event){
-if (document.getElementById("project_val").value!="")
+proj=document.getElementById("autocomplete1_hidden").value
+if (document.getElementById("project_val").value!="" && proj!="")
 {
  proj=document.getElementById("autocomplete1_hidden").value
 $.ajax({
@@ -251,7 +252,8 @@ $.ajax({
 			 });
 			 }
 			 });
-	$('#t_list').click(function(event){
+	$('.document').ready(function(){
+	<% if !session[:project_selected].nil?%>
 if (document.getElementById("project_val").value!="")
 {
  proj=document.getElementById("autocomplete1_hidden").value
@@ -288,6 +290,7 @@ $.ajax({
   document.getElementById('t_list_hidden').value=item.id;
 });
 			 }
+			 <%end%>
 					  });
 						
 // <!-- <![CDATA[
