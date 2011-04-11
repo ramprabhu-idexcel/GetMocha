@@ -24,7 +24,10 @@
     $.ajax({
       url:'/tasks/complete_task',
       type:'put',
-      data:{id : task_id}
+      data:{id : task_id},
+      success:function(data){
+        tasks_count(data);
+      }
     });
     $(".checkbox > span.icon.icon-thd").toggleClass('checked');
     return false;
@@ -37,7 +40,10 @@
     $.ajax({
       url:'/tasks/complete_task',
       type:'put',
-      data:{id : task_id}
+      data:{id : task_id},
+      success:function(data){
+        tasks_count(data);
+      }
     });
     return false;
   });
@@ -558,7 +564,14 @@
     var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return filter.test(email);
 	}
-
+  
+  function tasks_count(data)
+  {
+    if(data.completed_count<1)
+      $('#completed_tasks').html('<span class="icon"></span>Completed');
+    else
+      $('#completed_tasks').html('<span class="num-tasks">'+data.completed_count+'</span><span class="icon"></span>Completed');
+  }
   
   var app = new restfulApp;
   Backbone.emulateHTTP = true;
