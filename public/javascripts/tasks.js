@@ -29,7 +29,10 @@
         tasks_count(data);
       }
     });
-    $(".checkbox > span.icon.icon-thd").toggleClass('checked');
+    //$(".checkbox > span.icon.icon-thd").toggleClass('checked');
+    $(this).parent().parent().parent().fadeOut(700,function(){
+      $('#comment_area').fadeOut('fast');
+    });
     return false;
   });
 
@@ -45,8 +48,12 @@
         tasks_count(data);
       }
     });
+    $('.task.tsem.open').fadeOut(700,function(){
+      $('#comment_area').fadeOut('fast');
+    });
     return false;
   });
+  
   
   $('.task.tsem').live('click',function(){
     var activity_id=$(this).attr('class').split(' ')[0].split('actk:')[1];
@@ -518,6 +525,7 @@
     });
     items.push('</div>')
     $('#comment_area').html(items.join(''));
+    $('#comment_area').show();
   }
   
 
