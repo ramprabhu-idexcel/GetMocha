@@ -69,4 +69,7 @@ end
   def self.t_assigned_user
     find(:first,:conditions=>['is_assigned=?',true])
   end
+ def self.task_activity(task_id)
+    find(:first,:conditions=>['is_assigned=? AND resource_type=? AND resource_id=?',true,"Task",task_id])
+  end
 end

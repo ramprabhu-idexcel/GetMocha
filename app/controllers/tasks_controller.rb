@@ -90,7 +90,7 @@ class TasksController < ApplicationController
 			  	#	attachment.attachable=@message
 				  #attachment.save
           activity_id=current_user.activities.find_by_resource_type_and_resource_id("Task",@tasks.id)
-	        render :nothing=>true
+	        render :json=>@tasks.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id])
 			  else
 			    render :update do |page|
 				  page.alert errors.join("\n")

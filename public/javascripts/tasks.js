@@ -489,18 +489,7 @@
     $('#comment_area').html(items.join(''));
   }
   
-  function due_date_class(date_value)
-  {
-    switch(date_value)
-    {
-    case "Today":
-      return "today";
-    case "Yesterday":
-      return "overdue";
-    default:
-      return "";
-    }
-  }
+
   
   function initial_setup()
   {

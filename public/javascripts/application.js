@@ -1310,27 +1310,29 @@ function close_comment_area()
     $('.add-item-modal').hide();
     return false;
   });
- $('#t_add').live('click',function(){
- //var a=$('#tasklists_tlname').val();
- //   var b=$('#txtInput2').val();
-       $.ajax({
+  $('#t_add').live('click',function(){
+    $.ajax({
       type :'post',
       url :"/tasks",
       data :$('#taskf').serialize(),
       success: function(data){
-        a=data.search(/alert/);
-      	if(a!=0 && a!=6){
-         $('.add-item-modal').hide();
-         /* ref=window.location.href
-          p=ref.search(/settings/)
-          if(p>=0)
-          {
-          document.getElementById('projects_list').innerHTML=data;
-          }
-        else
-          {
-          document.getElementById('messages_projects_list').innerHTML=data;
-          }*/
+      	if(typeof(data)=="object")
+        {
+          $('.add-item-modal').hide();
+          var items=[];
+          var task=data.task
+          if($('#tl'+task.task_list_id).length==0)
+            items.push('<div class="sub-header" id="tl'+task.task_list_id+'"><a href="#" class="sec task_list">'+task.task_list_name+'</a></div>');
+          items.push('<div id="tk_'+ task.activity_id+'" class="actk:'+task.activity_id+' task tsem "><div class="left-icons">');
+          items.push('<a class="task-star" href="#" style="display:none;">Star</a>');    
+          items.push('<div class="checkbox"><span class="tk:'+task.id+' icon icon-sec "></span></div></div>');
+          items.push('<div class="info">');
+          items.push('<span class="task-time '+due_date_class(task.due_date_value)+'">'+task.due_date_value+'</span>');
+          items.push('<span class="name">'+task.assigned_to[0]+'</span>');
+          items.push('</div>');
+          items.push('<div class="task-name"><h4>'+task.name+'</h4></div>');
+          items.push('<div class="clear-fix"/></div>');   
+          $('.m-panel').append(items.join(''));          
         }
       },
       failure: function(){
@@ -1339,3 +1341,16 @@ function close_comment_area()
     });
     return false;
   });
+
+  function due_date_class(date_value)
+  {
+    switch(date_value)
+    {
+    case "Today":
+      return "today";
+    case "Yesterday":
+      return "overdue";
+    default:
+      return "";
+    }
+  }

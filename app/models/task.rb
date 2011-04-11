@@ -123,7 +123,7 @@ def add_in_activity(to_users,assigns)
     end
   end
   def assigned_user
-    activities.t_assigned_user
+    Activity.task_activity(self.id)
   end
   def assigned_to
     activity=assigned_user
