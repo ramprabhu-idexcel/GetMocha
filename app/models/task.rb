@@ -8,8 +8,7 @@ class Task < ActiveRecord::Base
 	belongs_to :guest
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
                     #:length     => { :within => 6..250 }
-	validates :description , :length => { :within => 6..250 },
-									:presence => true
+	validates :presence => true
 validates :name, :presence   => true
 
 def add_in_activity(to_users,assigns)
