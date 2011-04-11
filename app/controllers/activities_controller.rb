@@ -18,11 +18,11 @@ class ActivitiesController < ApplicationController
     @activity.update_attribute(:is_subscribed,subscribed)
     render :nothing=>true
   end
-  def star_message
-    starred=!@activity.is_starred
-    @activity.update_attribute(:is_starred,starred)
-    render :json=>{:count=>current_user.starred_messages_count}
-  end
+  #~ def star_message
+    #~ starred=!@activity.is_starred
+    #~ @activity.update_attribute(:is_starred,starred)
+    #~ render :json=>{:count=>current_user.starred_messages_count}
+  #~ end
   private
   def find_activity
     params[:sort_by] ||="Date"
