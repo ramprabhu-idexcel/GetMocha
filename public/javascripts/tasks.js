@@ -30,6 +30,9 @@
       }
     });
     $(".checkbox > span.icon.icon-thd").toggleClass('checked');
+    $(this).parent().parent().parent().fadeOut(700,function(){
+      $('#comment_area').fadeOut('fast');
+    });
     return false;
   });
 
@@ -45,8 +48,12 @@
         tasks_count(data);
       }
     });
+    $('.task.tsem.open').fadeOut(700,function(){
+      $('#comment_area').fadeOut('fast');
+    });
     return false;
   });
+  
   
   $('.task.tsem').live('click',function(){
     var activity_id=$(this).attr('class').split(' ')[0].split('actk:')[1];
@@ -110,7 +117,10 @@
         data:{'task[name]':content},
         success:function(data){
           if(data=="success")
+          {
             save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
+            $('.task.tsem.open').children('.task-name').children('h4').text(truncate_task_name(content));
+          }
           else
             alert(data);
         }
@@ -367,6 +377,11 @@
     return false;
   });
   
+  $('.cancel_comment').live('click',function(){
+    close_comment_area();
+    return false;
+  });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
@@ -420,7 +435,7 @@
         items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value)+'">'+v.activity.resource.due_date_value+'</span>');
         items.push('<span class="name">'+v.activity.resource.assigned_to[0]+'</span>');
         items.push('</div>');
-        items.push('<div class="task-name"><h4>'+v.activity.resource.name+'</h4></div>');
+        items.push('<div class="task-name"><h4>'+truncate_task_name(v.activity.resource.name)+'</h4></div>');
         items.push('<div class="clear-fix"/></div>');        
       });
     });
@@ -518,6 +533,7 @@
     });
     items.push('</div>')
     $('#comment_area').html(items.join(''));
+    $('#comment_area').show();
   }
   
 
@@ -571,6 +587,26 @@
       $('#completed_tasks').html('<span class="icon"></span>Completed');
     else
       $('#completed_tasks').html('<span class="num-tasks">'+data.completed_count+'</span><span class="icon"></span>Completed');
+    if(data.starred_count<1)
+      $('#starred_tasks').html('<span class="icon"></span>Starred');
+    else
+      $('#starred_tasks').html('<span class="num-tasks">'+data.starred_count+'</span><span class="icon"></span>Starred');
+    if(data.all_count<1)
+      $('#all_tasks').html('<span class="icon"></span>All Tasks');
+    else
+      $('#all_tasks').html('<span class="num-tasks">'+data.all_count+'</span><span class="icon"></span>All Tasks');
+    if(data.my_count<1)
+      $('#my_tasks').html('<span class="icon"></span>My Tasks');
+    else
+      $('#my_tasks').html('<span class="num-tasks">'+data.my_count+'</span><span class="icon"></span>My Tasks');
+  }
+  
+  function truncate_task_name(name)
+  {
+    if(name.length>55)
+      return name.substring(0,55)+"...";
+    else
+      return name;
   }
   
   var app = new restfulApp;

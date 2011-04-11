@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" href="/stylesheets/demo.css">
+ 
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
    <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
 	 <style type="text/css">
@@ -76,8 +76,7 @@
 		    </fieldset>
 			    <fieldset>
 					<label>Project:</label>
-		       		<% p session[:project_name] %>
-					<% if session[:project_name] %>
+		     					<% if session[:project_name] %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" , :value=>"#{session[:project_name]}", :disabled=>true%>
 							<input type="hidden" id="autocomplete1_hidden" name="project_id" value="<%=session[:project_selected]%>"/>
 					 <% else %>
@@ -251,7 +250,7 @@ $.ajax({
 			 }
 			 });
 			 }
-			 });
+			});
 	$('.document').ready(function(){
 	<% if !session[:project_selected].nil?%>
 if (document.getElementById("project_val").value!="")
@@ -553,7 +552,7 @@ function ds_onclick(d, m, y) {
 }
 
 // And here is the end.
-$('#assign_to').keydown(function(event){
+/*$('#assign_to').keydown(function(event){
 	if (event.keyCode == 9) {
 c=userEmails.indexOf(document.getElementById('assign_to').value)
 if(c<0)
@@ -563,6 +562,6 @@ $('#assign_to').val('');
 $('#assign_to').focus();
 }
 }
-});
+});*/
 
 </script>

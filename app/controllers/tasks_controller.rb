@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 #  before_filter :find_activity,:only=>['subscribe','star_task','show','unsubscribe','destroy','project_task_comment']
 	layout 'application', :except=>['new']
 	 before_filter :find_task,:only=>['update','complete_task','destroy','assign_task']
+	 before_filter :clear_session_project,:only=>['all_tasks','starred_tasks','my_tasks','completed_tasks']
 	def index
 		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
@@ -38,7 +39,7 @@ class TasksController < ApplicationController
 			render :update do |page|
 			  if session[:project_name].nil?&&params[:task][:project].blank?
 				  page.alert "Please Enter the Project name"
-			  elsif !params[:project_id].blank?
+			  elsif params[:project_id].blank?
 			    page.alert "Please enter existing projects only"
 			  end
 		  end
@@ -49,7 +50,16 @@ class TasksController < ApplicationController
 					#~ errors<<"Please enter To_email address"
 					if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 						errors<<"Please enter valid email for assign"
-		      end
+						else
+							u_email=[]
+							@project.users.each do |user|
+								u_email<<user.email
+							end
+							e=u_email.indexOf(params[:task][:recipient])
+							if !e
+								errors<<"Please select existing user only"
+							end
+						end
 	      end
 			else
 			if !params[:task][:notify].blank?
@@ -112,6 +122,8 @@ class TasksController < ApplicationController
 
   def show
     project=Project.find_by_id(params[:id])
+		session[:project_name]=project.name if project
+    session[:project_selected]=project.id if project
     task_ids=project.all_task_ids
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
@@ -147,7 +159,7 @@ class TasksController < ApplicationController
 	def complete_task
     #~ task=Task.find_by_id(params[:id])
     @task.update_attribute(:is_completed,!@task.is_completed)
-    render :json=>{:completed_count=>current_user.completed_tasks.count}.to_json
+    render :json=>current_user.all_tasks_count.to_json
   end
 	def project_tasks
     project=Project.find_by_id(params[:project_id])

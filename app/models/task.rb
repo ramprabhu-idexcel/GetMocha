@@ -10,7 +10,7 @@ class Task < ActiveRecord::Base
                     #:length     => { :within => 6..250 }
 	validates :description , :length => { :within => 6..250 },
 									:presence => true
-validates :name, :presence   => true, :uniqueness =>true
+validates :name, :presence   => true
 
 def add_in_activity(to_users,assigns)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
@@ -128,7 +128,7 @@ def add_in_activity(to_users,assigns)
   def assigned_to
     activity=assigned_user
     #~ activity=Activity.assigned_project(self.id)
-    fullname=activity.user
+    fullname=activity.user if activity.present?
     activity.present? ? [fullname.full_name,activity.user_id] : ['','']
   end
   def other_task_lists

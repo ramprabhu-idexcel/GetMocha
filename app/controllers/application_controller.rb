@@ -24,7 +24,7 @@ layout :change_layout
     end
   end
   def find_project
-    @project=Project.find_by_id(params[:project_id]) if params[:project_id]
+   @project=Project.find_by_id(params[:project_id]) if params[:project_id]
     session[:project_name]=@project.name if @project
     session[:project_selected]=@project.id if @project
   end
@@ -44,7 +44,11 @@ else
 end
     end
     warden.custom_failure! if performed?
- end
+  end
+  def clear_session_project
+		session[:project_name]=nil
+		session[:project_selected]=nil
+	end
 #~ def from_email_id
 #~ @from_address=(params[:from].to_s)
   #~ end
