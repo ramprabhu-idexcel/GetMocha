@@ -18,9 +18,9 @@ def add_in_activity(to_users,assigns)
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
 			if !assigns.blank?
-			self.activities.update_attributes(:is_assigned=>true) if user.email==assigns
+        activity.update_attributes(:is_assigned=>true) if user.email==assigns
 			else
-				self.activities.update_attributes(:is_assigned=>true) if user==self.user
+				activity.update_attributes(:is_assigned=>true) if user==self.user
 			end
 		end
     to_users.each do |email|
@@ -160,5 +160,8 @@ def add_in_activity(to_users,assigns)
   end
   def ex_task(title,project)
     find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
+  end
+  def activity_id
+    activities.find_by_user_id(self.user_id).id
   end
 end
