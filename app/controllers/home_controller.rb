@@ -41,7 +41,7 @@ project_id=project_id[0].split('-').last
 def message_create_via_email
     from_address1=params[:from].to_s
 if(from_address1.include?('<'))
-from=from_address.split('<')
+from=from_address1.split('<')
 from_add=from[1].split('>')
 from_address1=from_add[0]
 end
