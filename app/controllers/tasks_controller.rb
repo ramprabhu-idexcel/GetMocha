@@ -136,13 +136,22 @@ class TasksController < ApplicationController
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def update
-    @task.attributes=params[:task]
-    if @task.valid?
-      @task.update_attributes(params[:task])
-      render :text=>"success"
+		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
+		 if @task.name == t_name.name
+			 render :nothing=>true
     else
-      render :text=>@task.errors[0]
-    end
+			if !t_name
+			@task.attributes=params[:task]
+         if @task.valid?
+           @task.update_attributes(params[:task])
+           render :nothing=>true
+			   else
+				render :json=>{:error=>@task.errors[0]}.to_json
+			end
+			else
+			render :json=>{:error=>"Task name already exist!"}.to_json
+			end
+	end
   end
   def destroy
     activities=@task.activities
