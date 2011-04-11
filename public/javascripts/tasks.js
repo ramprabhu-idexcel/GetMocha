@@ -460,6 +460,26 @@
     items.push('</div>');
     items.push('<hr/>');
     items.push('<div class="main-content"><p><span>'+task.description+'</span><a class="edit task_description" href="#">Edit</a></p></div>');
+     //Document attachment
+    if(data.attach.attached_documents.length>0)
+    {
+      items.push('<div style="margin-top:20px;margin-bottom:20px;">')
+      $.each(data.attach.attached_documents,function(index,value){
+        items.push('<p>'+value+'</a></p>');
+      });
+      items.push('</div>')
+    }
+    
+    //Image attachments
+    if(data.attach.attach_image.length>0)
+    {
+      items.push('<div class="attachments">');
+      $.each(data.attach.attach_image,function(index,value){
+        items.push('<div class="attachment-thumb-frame">'+value+'</div>');
+      });
+      items.push('<div class="clear-fix"></div>')
+      items.push('</div>');
+    }
     items.push('<p class="subscribers">'+task.subscribe+' <a id="subscribe_task" class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
