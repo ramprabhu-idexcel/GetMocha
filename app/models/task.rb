@@ -8,7 +8,6 @@ class Task < ActiveRecord::Base
 	belongs_to :guest
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
                     #:length     => { :within => 6..250 }
-<<<<<<< HEAD
 	validates :description , :length => { :within => 6..250 },
 									:presence => true
 validates :name, :presence   => true, :uniqueness =>true
@@ -32,28 +31,6 @@ def add_in_activity(to_users,assigns)
 				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
         self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.task_list.project.is_member?(u.id) && u && u.id && !a
 				ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) if u && u.id && !self.task_list.project.project_member?(u.id)
-=======
-	#~ validates :description ,	:presence => true
-validates :name, :presence   => true
-  after_create :update_task_list
-def add_in_activity(to_users,assign,user)
-	    to_users=to_users.split(',') unless to_users.is_a?(Array)
-			assign=assign.split(',')
-     # self.project.users.each do |user|
-		# assign=
-    self.task_list.project.users.each do |user|
-      activity=self.activities.create! :user=>user
-      activity.update_attributes(:is_assigned=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
-    end
-    to_users.each do |email|
-			email=email.lstrip
-      if email.nil?
-        u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
-        u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id
-				activity.update_attributes(:is_assigned=>true) if user.email==assign
-        ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)
->>>>>>> 7c94d137c07d70654a7cda6441afeeab5cdc8b5e
       end
     end
   end
