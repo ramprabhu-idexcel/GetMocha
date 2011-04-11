@@ -24,7 +24,7 @@ class TasksController < ApplicationController
 	  #~ @projects.each do |project|
       #~ @project_names<<"#{project.name}"
     #~ end
-	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:project_names=>@project_names}
+	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:projects=>@projects}
 	end
 	def create
 		errors=[]
