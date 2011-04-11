@@ -39,7 +39,7 @@ class TasksController < ApplicationController
 			render :update do |page|
 			  if session[:project_name].nil?&&params[:task][:project].blank?
 				  page.alert "Please Enter the Project name"
-			  elsif !params[:project_id].blank?
+			  elsif params[:project_id].blank?
 			    page.alert "Please enter existing projects only"
 			  end
 		  end

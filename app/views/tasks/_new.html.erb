@@ -250,7 +250,7 @@ $.ajax({
 			 }
 			 });
 			 }
-			 });
+			});
 	$('.document').ready(function(){
 	<% if !session[:project_selected].nil?%>
 if (document.getElementById("project_val").value!="")
@@ -552,7 +552,7 @@ function ds_onclick(d, m, y) {
 }
 
 // And here is the end.
-$('#assign_to').keydown(function(event){
+/*$('#assign_to').keydown(function(event){
 	if (event.keyCode == 9) {
 c=userEmails.indexOf(document.getElementById('assign_to').value)
 if(c<0)
@@ -562,6 +562,6 @@ $('#assign_to').val('');
 $('#assign_to').focus();
 }
 }
-});
+});*/
 
 </script>
