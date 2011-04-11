@@ -101,6 +101,10 @@
       {
         short_modal2('/messages');
       }
+			if(event.identifier=='W')
+      {
+        short_modal2('/tasks');
+      }
       if(event.identifier=='SHIFT_M')
       {
         short_modal1('/messages/new');
@@ -177,6 +181,7 @@
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z)
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S)
 	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X)
+	shortcutHandler.registerShortcut('W',goog.events.KeyCodes.W)
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
   shortcutHandler.registerShortcut('BACK_SPACE', goog.events.KeyCodes.BACKSPACE);
