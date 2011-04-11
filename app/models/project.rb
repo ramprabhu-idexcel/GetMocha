@@ -129,7 +129,7 @@ class Project < ActiveRecord::Base
     tasks.map(&:id)
   end
   def team_members
-    User.find(:all,:conditions=>['project_users.status=:value AND users.status=:value',{:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
+    User.project_team_members(self.id)
   end
   def members_list
     users=[]

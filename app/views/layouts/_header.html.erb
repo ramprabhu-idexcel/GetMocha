@@ -14,7 +14,8 @@
 	<div class="m-header">
 	<% if action_name !="settings"%>
 	<%if controller_name!="registrations" && action_name !="edit" %>
-	       <%=link_to 'Sort by','#sort',:class=>"sort-by"%>
+	       <%=link_to 'Sort by','#sort',:class=>"sort-by message-sort",:style=>"display:none;"%>
+	       <%=link_to 'Sort by','#sort',:class=>"sort-by task-sort",:style=>"display:none;"%>
 		<% end %>
 	<% end %>
 	</div>

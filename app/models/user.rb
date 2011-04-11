@@ -248,4 +248,7 @@ class User < ActiveRecord::Base
   def self.g_count_data
     find(:all,:conditions=>['is_guest=?',true])
   end
+  def self.project_team_members(project_id)
+    find(:all,:conditions=>['project_users.project_id=:project_id AND project_users.status=:value AND users.status=:value',{:project_id=>project_id,:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
+  end
 end

@@ -164,7 +164,7 @@ alert('afetrr bt');
     //hide the message headers 
     function hide_header(){
       $('.message_header').hide(); 
-      $('.sort-by').hide(); 
+      $('.sort-by.message-sort').hide(); 
       $('.comment-contain').hide();
     }
     
@@ -276,8 +276,8 @@ alert('afetrr bt');
     });
     
     //display the sort message
-    $('.sort-by').click(function(){
-      $('.sort-by-tooltip').slideToggle('slow');
+    $('.sort-by.message-sort').click(function(){
+      $('.sort-by-tooltip.message-sort-down').slideToggle('slow');
       return false;
     });
     
@@ -389,7 +389,7 @@ alert('afetrr bt');
       $(this).removeClass('unread');
       $(this).addClass('open');
       //hide the header and the sort drop down
-      $('.sort-by-tooltip').hide();
+      $('.sort-by-tooltip.message-sort-down').hide();
       $('.message_header').show(); 
       
     });
@@ -670,7 +670,7 @@ alert('afetrr bt');
     });
     $('.message_header').hide();
     $('body').attr('class','settings');
-    $('.sort-by').hide();
+    $('.sort-by.message-sort').hide();
     document.title="Settings | Mocha"
     return false;
   });

@@ -293,7 +293,20 @@
     return false;
   });
   
-  $('.sort-by').live('click',function(){
+  $('.sort-by.task-sort').live('click',function(){
+    $('.sort-by-tooltip.task-sort-down').toggle();
+    return false;
+  });
+  
+  $('.sort.sort-task').live('click',function(){
+    $('.sort.sort-task').removeClass('selected');
+    $(this).addClass('selected');
+    return false;
+  });
+
+  $('.asc-desc.sort-task').live('click',function(){
+    $('.asc-desc.sort-task').removeClass('selected');
+    $(this).addClass('selected');
     return false;
   });
   
@@ -315,11 +328,11 @@
     var task_id=get_task_id();
     var user_id=$(this).attr('id').split('ul:')[1];
     var name=$(this).children('span').text();
-    /*$.ajax({
+    $.ajax({
       url:'/tasks/'+task_id+'/assign_task',
       type:'put',
       data:{'user_id' : user_id}
-    });*/
+    });
     $('a.assigned-to').text(name);
     $('div.task.tsem.open').children('div.info').children('span.name').text(name);
   });
@@ -406,7 +419,7 @@
       });
     });
     $('.m-panel').html(items.join(''));
-    $('.sort-by').show();
+    $('.sort-by.task-sort').show();
   }
   
   function load_third_pane(data)
@@ -498,7 +511,7 @@
   {
     $('body').attr('class','tasks');
     document.title= "Tasks | Mocha";
-    $('.sort-by').hide();
+    $('.sort-by.task-sort').hide();
     $('#reply_comment').hide();
     $('.star.star_items').hide();
     $('#trash_message').hide();
