@@ -192,8 +192,8 @@ end
     if !task_list
       task_list=TaskList.create(:project_id=>project.id, :user_id=>user.id, :name=>"Default TaskList")
     end
-    #~ ex_task=Task.find_by_name(title)
-    ex_task=Task.ex_task(title,project)
+    ex_task=Task.find_by_name(title)
+    #~ ex_task=Task.ex_task(title,project)
     if ex_task
     #~ existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+'")
     existing_task=existing_task=Task.find_by_sql("select * from tasks where name REGEXP '^"+title+"[[:digit:]]+' and task_list_id='"+task_list.id.to_s+"'" )
