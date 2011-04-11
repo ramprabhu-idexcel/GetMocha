@@ -1,7 +1,7 @@
 
   <div class="l-panel-contain" id="projects_list">
 	<% if @projects %>
-		<%= render :partial=>'project_list' %>
+		<%= render :partial=>'project_list',:locals=>{:projects=>@projects,:completed_projects=>@completed_projects} %>
 	<% end %>
 	</div>
 	<div class="m-panel-contain" id="settings_secondpanel">
@@ -12,7 +12,7 @@
 		</div>
   </div>
 	<div id="add_people" style="display:none;">
-		<%= render :partial=>'invite' %>
+		<%= render :partial=>'invite',:locals=>{:user_emails=>@user_emails} %>
 		<div>
 		
 		<script>
