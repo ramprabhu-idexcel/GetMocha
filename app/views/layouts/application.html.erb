@@ -158,6 +158,10 @@
 			{
 			short_modal_down('X')
 			}
+			if(event.identifier=='SHIFT_T')
+			{
+			short_modal1('/tasks/new');
+			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
   var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
@@ -173,6 +177,7 @@
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
+	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q)
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R)
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U)
