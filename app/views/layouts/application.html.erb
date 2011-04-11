@@ -409,11 +409,11 @@ $('.comment-contain').slideToggle('slow');
 		}
 		else
 		{
-		
-		if(key=="T")
+				if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
+
 		{
 		
-		if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
+		if(key=="T")
 		{
 		
 		  var yes=confirm('Are you sure?');
@@ -423,11 +423,25 @@ $('.comment-contain').slideToggle('slow');
    // var task_id=get_task_id();
     $('.task.tsem.open').remove();
     $.ajax({
-      url:'/tasks'+task_id,
+      url:'/tasks/'+task_id,
       type:'delete'
     });
   }
   return false;
+	}
+	else if(key=="U")
+	{
+	    var id=$('.task.tsem.open').attr('class').split(' ')[0].split('actk:')[1];
+			
+    var content=document.getElementById('subscribe_task').innerHTML;
+		
+    $.ajax({
+      url:'/subscribe/'+id,
+      type: 'get'
+    });
+    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+		
+    document.getElementById('subscribe_task').innerHTML=result;
 	}
 		}
 		}

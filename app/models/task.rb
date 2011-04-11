@@ -134,7 +134,7 @@ def add_in_activity(to_users,assign,user)
     self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users,:project_id=>self.task_list.project_id})
   end
   def subscribed_users
-    activities.where('is_subscribed=?',true)
+    activities.where('is_subscribed=? and users.status=?',true,true).includes(:user)
   end
   def subscribed_user_names
     subscribed_users.collect{|a| a.user.name if a.user}.sort
