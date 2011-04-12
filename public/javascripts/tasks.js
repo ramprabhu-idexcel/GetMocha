@@ -327,12 +327,28 @@ return false;
   $('.sort.sort-task').live('click',function(){
     $('.sort.sort-task').removeClass('selected');
     $(this).addClass('selected');
+    if(window.location.hash.split('#').length>1)
+    {
+      var first_url=window.location.hash.split('#')[1].split('/')[0];
+      var has_url=first_url.split('?')[0];
+    }
+    else
+      var has_url=window.location.hash.split('#')[0]+'all_tasks';
+    window.location.hash=has_url+'?sort_by='+$(this).children('span').attr('class')+'&order='+$('.asc-desc.sort-task.selected').children('span').attr('class');
     return false;
   });
 
   $('.asc-desc.sort-task').live('click',function(){
     $('.asc-desc.sort-task').removeClass('selected');
     $(this).addClass('selected');
+    if(window.location.hash.split('#').length>1)
+    {
+      var first_url=window.location.hash.split('#')[1].split('/')[0];
+      var has_url=first_url.split('?')[0];
+    }
+    else
+      var has_url=window.location.hash.split('#')[0]+'all_tasks';
+    window.location.hash=has_url+'?sort_by='+$('.sort.sort-task.selected').children('span').attr('class')+'&order='+$(this).children('span').attr('class');
     return false;
   });
   
@@ -445,6 +461,7 @@ return false;
       this.loadCommentData( restfulPageUrl );
     },
     loadRestfulData: function( pageUrl ){
+      
       $.ajax({
         url: pageUrl,
         success: function(data){
