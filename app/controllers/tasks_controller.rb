@@ -137,19 +137,19 @@ class TasksController < ApplicationController
   end
 	def update
 		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
-		 if @task.name == t_name.name
-			 render :nothing=>true
-    else
-			if !t_name
+		if t_name
+			if @task.name == t_name.name && t_name
+				 render :nothing=>true
+			else
+				render :json=>{:error=>"Task name already exist!"}.to_json
+			end
+		else
 			@task.attributes=params[:task]
          if @task.valid?
            @task.update_attributes(params[:task])
            render :nothing=>true
 			   else
 				render :json=>{:error=>@task.errors[0]}.to_json
-			end
-			else
-			render :json=>{:error=>"Task name already exist!"}.to_json
 			end
 	end
   end
