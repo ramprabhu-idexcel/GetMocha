@@ -60,7 +60,7 @@ class TasksController < ApplicationController
           @project.users.each do |user|
             u_email<<user.email
           end
-          e=u_email.indexOf(params[:task][:recipient])
+          e=u_email.include?(params[:task][:recipient])
           if !e
             errors<<"Please select existing user only"
           end
