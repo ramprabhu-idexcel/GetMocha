@@ -17,7 +17,7 @@ staging:
   #~ distribution_domain: XXXX.cloudfront.net
 
 production:
-  bucket_name: getmocha-production
+  bucket_name: getmocha-staging
   access_key_id: AKIAJQ575MT55SYOALSA
   secret_access_key: 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
   #~ distribution_domain: XXXX.cloudfront.net
