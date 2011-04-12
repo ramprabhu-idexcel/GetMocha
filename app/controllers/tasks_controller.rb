@@ -48,20 +48,19 @@ class TasksController < ApplicationController
 			  end
 		  end
 		else
-			if params[:task][:tasklist].blank?
+			 if params[:task][:tasklist].blank?
 			  errors<< "Please Enter the tasklist name"
-			end
-		  if !params[:task][:tasklist].blank?			
+				
 					if !params[:task][:recipient].blank?
 					#~ errors<<"Please enter To_email address"
-					if params[:task][:recipient].match(/\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i).nil?
+					if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 						errors<<"Please enter valid email for assign"
 						else
 							u_email=[]
 							@project.users.each do |user|
 								u_email<<user.email
 							end
-							e=u_email.include?(params[:task][:recipient])
+							e=u_email.indexOf(params[:task][:recipient])
 							if !e
 								errors<<"Please select existing user only"
 							end
