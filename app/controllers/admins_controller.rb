@@ -16,9 +16,11 @@ class AdminsController < ApplicationController
 		render "settings"
 	end
 	def users
-	 @users=User.find(:all,:conditions=>['is_guest=?',false])
-	 @guests=User.find(:all,:conditions=>['is_guest=?',true])
-				render :partial=>'users',:locals=>{:users=>@users,:guests=>@guests}			
+	 #~ @users=User.find(:all,:conditions=>['is_guest=?',false])
+	 #~ @guests=User.find(:all,:conditions=>['is_guest=?',true])
+	 @users=User.find_all_user_except_guest
+	 @guests=User.find_all_user_with_guest
+	  	render :partial=>'users',:locals=>{:users=>@users,:guests=>@guests}			
 	end			
 	def projects
 		@projects=Project.find(:all)

@@ -269,4 +269,10 @@ class User < ActiveRecord::Base
   def all_tasks_count
     {:completed_count=>completed_tasks.count,:all_count=>all_tasks.count,:starred_count=>starred_tasks.count,:my_count=>my_tasks.count}
   end
-end
+  def self.find_all_user_except_guest
+    find(:all,:conditions=>['is_guest=?',false])
+  end
+  def self.find_all_user_with_guest
+    find(:all,:conditions=>['is_guest=?',true])
+  end
+  end
