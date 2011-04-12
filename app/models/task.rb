@@ -109,16 +109,18 @@ def add_in_activity(to_users,assigns)
     self.task_list.project
   end
   def due_date_value
-    due_date.present? ? get_date_value : ""
+    get_date_value
   end
   def get_date_value
     case due_date
+      when nil
+        ['','']
       when Date.today
-        "Today"
+        ["Today",'present']
       when Date.yesterday
-        "Yesterday"
+        ["Yesterday",'past']
       else
-        due_date.strftime("%b %e")
+        due_date.to_date > Date.today ? [due_date.strftime("%b %e"),'future'] : [due_date.strftime("%b %e"),'past']
     end
   end
   def assigned_user

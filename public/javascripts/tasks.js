@@ -459,7 +459,7 @@ return false;
         items.push('<a class="task-star" href="#" '+(starred ? '' : 'style="display:none;"')+'>Star</a>');    
         items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon icon-sec '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
         items.push('<div class="info">');
-        items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value)+'">'+v.activity.resource.due_date_value+'</span>');
+        items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value[1])+'">'+v.activity.resource.due_date_value[0]+'</span>');
         items.push('<span class="name">'+v.activity.resource.assigned_to[0]+'</span>');
         items.push('</div>');
         items.push('<div class="task-name"><h4>'+truncate_task_name(v.activity.resource.name)+'</h4></div>');

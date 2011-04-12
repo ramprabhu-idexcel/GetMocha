@@ -1328,7 +1328,7 @@ function close_comment_area()
           items.push('<a class="task-star" href="#" style="display:none;">Star</a>');    
           items.push('<div class="checkbox"><span class="tk:'+task.id+' icon icon-sec "></span></div></div>');
           items.push('<div class="info">');
-          items.push('<span class="task-time '+due_date_class(task.due_date_value)+'">'+task.due_date_value+'</span>');
+          items.push('<span class="task-time '+due_date_class(task.due_date_value[1])+'">'+task.due_date_value[0]+'</span>');
           items.push('<span class="name">'+task.assigned_to[0]+'</span>');
           items.push('</div>');
           items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
@@ -1347,9 +1347,9 @@ function close_comment_area()
   {
     switch(date_value)
     {
-    case "Today":
+    case "present":
       return "today";
-    case "Yesterday":
+    case "past":
       return "overdue";
     default:
       return "";
