@@ -363,12 +363,21 @@
       $('#container').html(data);
     });
     $('.account-dropdown').hide();
+		    $('.settings_header').hide();
+        $('.task_header').hide();
+    $('.sort-by').hide();
+     $('body').attr('class','settings');
+     document.title="Settings | Mocha"
   }
   function project_settings(){
     $.get('/settings', function(data) {
       $('#container').html(data);
     });
     $('.message_header').hide();
+		    $('.task_header').hide();
+    $('body').attr('class','settings');
+    $('.sort-by').hide();
+    document.title="Settings | Mocha"
   }
   function short_model3()
   {
