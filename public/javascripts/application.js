@@ -578,6 +578,9 @@ alert('afetrr bt');
     var a=$('#data_name').val();
     var b=$('#data_invites').val();
     var c=$('#data_message').val();
+    var task=window.location.href.search(/task/)
+    if(task>-1)
+      $('#form1').append('<input type="hidden" name="task" id="task_hidden_id" value="true"></input>');
     $.ajax({
       type :'post',
       url :"/projects",
@@ -585,7 +588,9 @@ alert('afetrr bt');
       success: function(data){
         a=data.search(/alert/);
       	if(a!=0 && a!=6){
-         $('.add-item-modal').hide();
+          $('.add-item-modal').hide();
+          if($('#task_hidden_id').length>0)
+            $('#task_hidden_id').remove();
           ref=window.location.href
           p=ref.search(/settings/)
           if(p>=0)

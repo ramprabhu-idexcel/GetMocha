@@ -44,7 +44,11 @@ class ProjectsController < ApplicationController
 			ProjectMailer.delay.invite_people(current_user,@invite)
 	   end
 		@projects=current_user.user_active_projects
-		render :partial=>"messages/project_list",:locals=>{:projects=>@projects}
+    if params[:task]
+      render :partial=>"tasks/first_pane",:locals=>{:projects=>@projects}
+    else
+      render :partial=>"messages/project_list",:locals=>{:projects=>@projects}
+    end
 		else
 		render :update do |page|
 			page.alert errors.join("\n")
