@@ -7,8 +7,8 @@
 	<div class="m-panel-contain" id="settings_secondpanel">
 		<!-- Second and Third panel to come here -->
     <div class="m-panel" style="display:none;">
-			<a href="#general" onclick="javascript:settings_thirdpanel('general');" class="m-tab alt" id="general_anchor" style="font-size:14px;">General</a>
-			<a href="#people" onclick="javascript:settings_thirdpanel('people');" class="m-tab alt" id="people_anchor" style="font-size:14px;">People</a>
+			<a href="javascript:settings_thirdpanel('general');" class="m-tab alt" id="general_anchor" style="font-size:14px;">General</a>
+			<a href="javascript:settings_thirdpanel('people');" class="m-tab alt" id="people_anchor" style="font-size:14px;">People</a>
 		</div>
   </div>
 	<div id="add_people" style="display:none;">
@@ -81,6 +81,7 @@ function settings_secondpanel(project_id)
            $('#container').append(data);
          }
       });
+			return false;
 }
 // Function for displaying third panel in project settings
 function settings_thirdpanel(page)
