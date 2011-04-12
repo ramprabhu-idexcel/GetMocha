@@ -98,10 +98,13 @@ class TasksController < ApplicationController
 			if tasks && errors.empty?
 		      @tasks.save
 					@notify=params[:task][:notify].split(',')
+					@to_user=@notify
+					@to_user<<params[:task][:recipient]
+					p @to_user
 					#@project=Project.find_by_name(params[:message][:project])
 					#~ Message.send_message_to_team_members(@project,@message,@to_users)
           @tasks.add_in_activity(@notify,params[:task][:recipient])
-					Task.send_task_notification_to_team_members(current_user,@notify,@tasks)
+					Task.send_task_notification_to_team_members(current_user,@to_user,@tasks)
 					if !session[:attaches_id].nil?
 					  attachment=Attachment.update_attachments(session[:attaches_id],@tasks)
 					 end
