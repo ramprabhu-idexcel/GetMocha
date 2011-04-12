@@ -139,10 +139,10 @@ class Project < ActiveRecord::Base
     users
   end
 	def self.p_count_active
-		find(:all, :conditions=>['status=?',true])
+		find(:all, :conditions=>['status=? OR status=?',1,2])
   end
 	def self.p_count_completed
-		find(:all, :conditions=>['status=?',2])
+		find(:all, :conditions=>['status=?',3])
 	end	
 	def self.check_project_users(current_user)
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
