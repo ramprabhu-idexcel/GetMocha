@@ -344,13 +344,15 @@ return false;
       type:'put',
       data:{'task[task_list_id]' : task_list_id},
       success:function(data){
-        $('.task.tsem.open').remove();
+        if(task_list_content.prev().hasClass('sub-header') && task_list_content.next().hasClass('sub-header'))
+          task_list_content.prev().remove();
+        task_list_content.remove();
+        $('.tsk-detlt').attr('id','tklt'+task_list_id)
         if($('#tl'+task_list_id).length==0)
         {
           var  html_content='<div id="tl'+task_list_id+'" class="sub-header"><a class="sec task_list" href="#">'+task_list_name+'</a></div>';
           html_content+=div+sec_pan_content+'</div>';
           $('.m-panel').append(html_content);
-          
         }
         else
           $(task_list_content).insertAfter($('#tl'+task_list_id));    
