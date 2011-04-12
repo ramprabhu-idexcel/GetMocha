@@ -11,9 +11,9 @@ class DeviseCreateAdmins < ActiveRecord::Migration
       # t.token_authenticatable
       t.timestamps
     end
-      admin = Admin.create!(:username=>"Rajesh",:email=>"rajesh.rathinasamy@sedin.co.in", :password=>"railsfactory", :password_confirmation=> "railsfactory")
+      admin = Admin.create!(:username=>"JesseMa",:email=>"jessema@gmail.com", :password=>"getmocha", :password_confirmation=> "getmocha")
     admin.save!
-    add_index (:admins, [:email,:reset_password_token]), :unique => true
+    add_index (:admins, [:email,:reset_password_token])
     #~ add_index :admins, , :unique => true
     # add_index :admins, :confirmation_token,   :unique => true
     # add_index :admins, :unlock_token,         :unique => true
