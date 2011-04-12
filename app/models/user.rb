@@ -104,6 +104,12 @@ class User < ActiveRecord::Base
   def starred_tasks
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Task",true,false)
   end
+  def total_starred_tasks
+    (starred_tasks+starred_task_com).uniq
+  end
+  def starred_task_com
+    Activity.find_all_task_activity(self.all_starred_comment_tasks,self.id)
+  end
   def starred_task_count
     starred_tasks.count+starred_task_comments.count
   end
@@ -116,6 +122,13 @@ class User < ActiveRecord::Base
   end
   def starred_task_comments
     activities.find(:all,:conditions=>['resource_type=? AND resource_id IN (?) AND is_starred=?',"Comment",all_task_comments,true])
+  end
+  def all_starred_comment_tasks
+    task_ids=[]
+    starred_task_comments.each do |activity|
+     task_ids<< activity.resource.commentable_id
+   end
+   task_ids.uniq
   end
   #starred messages from the project
   def project_starred_messages(project_id,sort_by,order)
@@ -245,7 +258,7 @@ class User < ActiveRecord::Base
     not_completed_tasks(find_starred_tasks)
   end
   def group_starred_tasks
-    starred_tasks.group_by{|a| a.resource.task_list_id}
+    total_starred_tasks.group_by{|a| a.resource.task_list_id}
   end
   def completed_tasks
     activities=[]

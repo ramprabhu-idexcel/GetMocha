@@ -73,5 +73,8 @@ class Activity < ActiveRecord::Base
     def task_activity(task_id)
       find(:first,:conditions=>['is_assigned=? AND resource_type=? AND resource_id=?',true,"Task",task_id])
     end
+    def find_all_task_activity(task_ids,user_id)
+      find(:all,:conditions=>['resource_type=? AND resource_id IN (?) AND user_id=?',"Task",task_ids,user_id])
+    end
   end
 end
