@@ -80,7 +80,7 @@ class TasksController < ApplicationController
 					if name
 						errors<<"Task name already exist"
 						else
-		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:task][:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
+		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
 			    tasks=@tasks.valid?
 					if @tasks.errors[:name][1]=="can't be blank"
 				    errors<<"Please enter task name"

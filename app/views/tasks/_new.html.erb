@@ -100,6 +100,7 @@
 					<fieldset>
 					<label>Due_Date:</label>
 						<span style="width:100px;" class="textfield" id="txtInput3">   </span>
+						<input type="hidden" id="date_hidden" name="due_date" />
 						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
@@ -549,6 +550,7 @@ function ds_onclick(d, m, y) {
 		alert (ds_format_date(d, m, y));
 	}
 	document.getElementById('txtInput3').innerHTML=ds_format_date(d, m, y);
+	document.getElementById('date_hidden').value=ds_format_date(d, m, y);
 }
 
 // And here is the end.
