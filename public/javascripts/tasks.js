@@ -409,6 +409,13 @@ return false;
     return false;
   });
   
+  $('.reply-link').live('click',function(){
+      $('.comment-contain').slideToggle('slow',function(){
+        $('#comment-message').focus();
+      });
+      return false;  
+    });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
