@@ -86,7 +86,7 @@ class TasksController < ApplicationController
 				    errors<<"Please enter task name"
 						
 					elsif !@tasks.errors[:name][0].nil?
-						errors<<"task name already exist in this task list"
+						errors<<"Task name already exist in this task list"
 		  	  elsif @tasks.errors[:description][1]=="can't be blank"
 				    errors<<"Please enter description message"
 					elsif !@tasks.errors[:description][0].nil?
