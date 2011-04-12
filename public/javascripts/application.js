@@ -1338,8 +1338,11 @@ function close_comment_area()
           items.push('<span class="name">'+task.assigned_to[0]+'</span>');
           items.push('</div>');
           items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
-          items.push('<div class="clear-fix"/></div>');   
-          $('.m-panel').append(items.join(''));          
+          items.push('<div class="clear-fix"/></div>'); 
+          if($('#tl'+task.task_list_id).length==0)
+            $('.m-panel').append(items.join('')); 
+          else
+            $(items.join('')).insertAfter($('#tl'+task.task_list_id));              
         }
       },
       failure: function(){
