@@ -195,7 +195,7 @@ class TasksController < ApplicationController
   end
   def assign_task
     assigned_user=@task.assigned_user
-    assigned_user.update_attribute(:is_assigned,false)
+    assigned_user.update_attribute(:is_assigned,false) if assigned_user
     activity=Activity.find_task_activity(@task.id,params[:user_id])
     activity.update_attributes(:is_assigned=>true,:is_subscribed=>true)
     @task.subscribed_users.each do |activity|
