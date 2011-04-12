@@ -99,7 +99,7 @@
 									<%end%>	
 </p>									
 									</span>
-							    <input type="text" name="secondary-email" value="" class="textfield hidden" />
+							    <input type="text" name="secondary-email" value="" class="textfield hidden" /><%if current_user.secondary_emails.present?%><br/><% end %>
                    <span id="semail"></span>
 				      	   <a href="#" class="add-email" id="add_new_email">+ Add another email</a>
 				       	</div>
