@@ -169,7 +169,11 @@ class TasksController < ApplicationController
     render :nothing=>true
   end
 	def all_tasks
-    render :json=>current_user.group_all_tasks.to_json(options)
+    if(params[:sort_by] && params[:sort_by]=="star-task")
+      render :json=>current_user.group_starred_tasks.to_json(options)
+    else
+      render :json=>current_user.group_all_tasks.to_json(options)
+    end
   end
 	def my_tasks
     render :json=>current_user.group_my_tasks.to_json(options)
