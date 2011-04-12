@@ -674,6 +674,7 @@ alert('afetrr bt');
       $('#container').html(data);
     });
     $('.message_header').hide();
+    $('.task_header').hide();
     $('body').attr('class','settings');
     $('.sort-by.message-sort').hide();
     document.title="Settings | Mocha"
