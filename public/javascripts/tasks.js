@@ -4,6 +4,7 @@
   //first pane
   $('.all-tasks, .my-tasks, .starred, .completed').live('click',function(){
     var clicked=$(this);
+    $('#comment_area').hide();
     first_pane_class(clicked);
   });
 
