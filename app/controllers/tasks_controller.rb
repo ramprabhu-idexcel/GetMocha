@@ -194,7 +194,10 @@ class TasksController < ApplicationController
     assigned_user=@task.assigned_user
     assigned_user.update_attribute(:is_assigned,false)
     activity=Activity.find_task_activity(@task.id,params[:user_id])
-    activity.update_attribute(:is_assigned,true)
+    activity.update_attributes(:is_assigned=>true,:is_subscribed=>true)
+    @task.subscribed_users.each do |activity|
+      ProjectMailer.delay.task_reassigned(@task,activity.user)
+    end
     render :nothing=>true
   end
   private

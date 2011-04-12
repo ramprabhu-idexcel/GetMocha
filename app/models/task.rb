@@ -178,4 +178,7 @@ def add_in_activity(to_users,assigns)
     end
     {:attach_image=>images,:attached_documents=>documents}
   end
+  def due_date_mail
+    due_date ? "Due Date: #{due_date.strftime("%B %e, %Y")}" : nil
+  end
 end
