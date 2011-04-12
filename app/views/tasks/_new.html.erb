@@ -115,7 +115,7 @@ var projectNames = "<%#= projects %>";
 var tasklist="<%#= tlist %>";
 userEmails=userEmails.split(',');
 	//projectNames=projectNames.split(',');
-    var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('assign_to'), true);
+    var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('assign_to'),false);
   //  var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
 	 var ac3= new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('notifys'),true);
 	$('#task_txtarea').click(function(){

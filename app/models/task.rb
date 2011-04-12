@@ -13,13 +13,14 @@ validates :name, :presence   => true
 
 def add_in_activity(to_users,assigns)
 	    to_users=to_users.split(',') unless to_users.is_a?(Array)
+      assigns=assigns.split(',')
 		  self.task_list.project.users.each do |user|
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
 			if !assigns.blank?
-        activity.update_attributes(:is_assigned=>true) if user.email==assigns
+        activity.update_attributes(:is_assigned=>true) if user.email==assigns.to_s
 			else
-				activity.update_attributes(:is_assigned=>true) if user==self.user
+				activity.update_attributes(:is_assigned=>true) if user.id==self.user_id
 			end
       send_task_notification_to_team_members(self.user,to_users,self) if user.email==assigns
 		end
