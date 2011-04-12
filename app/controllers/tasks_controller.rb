@@ -41,19 +41,20 @@ class TasksController < ApplicationController
 			end
 		elsif !@project
 			render :update do |page|
-			  if session[:project_name].nil?&&params[:task][:project].blank?
+			  if session[:project_name].nil? && params[:task][:project].blank?
 				  page.alert "Please Enter the Project name"
 			  elsif params[:project_id].blank?
 			    page.alert "Please enter existing projects only"
 			  end
 		  end
 		else
-		  if params[:task][:tasklist].blank?
+			if params[:task][:tasklist].blank?
 			  errors<< "Please Enter the tasklist name"
-				
+			end
+		  if !params[:task][:tasklist].blank?			
 					if !params[:task][:recipient].blank?
 					#~ errors<<"Please enter To_email address"
-					if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+					if params[:task][:recipient].match(/\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i).nil?
 						errors<<"Please enter valid email for assign"
 						else
 							u_email=[]
@@ -104,7 +105,6 @@ class TasksController < ApplicationController
 					@notify=params[:task][:notify].split(',')
 					@to_user=@notify
 					@to_user<<params[:task][:recipient]
-					p @to_user
 					#@project=Project.find_by_name(params[:message][:project])
 					#~ Message.send_message_to_team_members(@project,@message,@to_users)
           @tasks.add_in_activity(@notify,params[:task][:recipient])

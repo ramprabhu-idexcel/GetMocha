@@ -18,7 +18,7 @@ def add_in_activity(to_users,assigns)
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
 			if !assigns.blank?
-        activity.update_attributes(:is_assigned=>true) if user.email==assigns.to_s
+        activity.update_attributes(:is_assigned=>true) if user.email==assigns[0]
 			else
 				activity.update_attributes(:is_assigned=>true) if user.id==self.user_id
 			end
