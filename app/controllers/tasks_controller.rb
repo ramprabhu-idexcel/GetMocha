@@ -35,7 +35,11 @@ class TasksController < ApplicationController
 		else
 		  @project=Project.find_by_id(params[:project_id])
 		end
-		if !@project
+		if params[:task][:name].blank?
+			render :update do |page|
+				page.alert "Please Enter the Task name"
+			end
+		elsif !@project
 			render :update do |page|
 			  if session[:project_name].nil?&&params[:task][:project].blank?
 				  page.alert "Please Enter the Project name"
