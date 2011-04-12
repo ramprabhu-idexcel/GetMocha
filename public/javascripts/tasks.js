@@ -31,7 +31,10 @@
       }
     });
     $(".checkbox > span.icon.icon-thd").toggleClass('checked');
-    $(this).parent().parent().parent().fadeOut(700,function(){
+    var second_pane=$(this).parent().parent().parent();
+    second_pane.fadeOut(700,function(){
+      if(second_pane.prev().hasClass('sub-header') && second_pane.next().hasClass('sub-header'))
+        second_pane.prev().remove();
       $('#comment_area').fadeOut('fast');
     });
     return false;
@@ -49,7 +52,10 @@
         tasks_count(data);
       }
     });
+    var secondpane=$('.task.tsem.open')
     $('.task.tsem.open').fadeOut(700,function(){
+    if(second_pane.prev().hasClass('sub-header') && second_pane.next().hasClass('sub-header'))
+      second_pane.prev().remove();
       $('#comment_area').fadeOut('fast');
     });
     return false;
@@ -500,10 +506,8 @@ return false;
     items.push('</div>');
     items.push('</div>');
     items.push('<div style="position:relative">');
-     if(task.assigned_to[0].length!=0)
-    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to[0]+'</a></p>');
-    //else
-    //tems.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.guest_email+'</a></p>');
+     //if(task.assigned_to[0].length!=0)
+    items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task_assigned_name(task.assigned_to[0])+'</a></p>');
     
     //other teammembers
     items.push('<div class="task-dropdown assigned-to" style="display:none;">');
@@ -648,7 +652,13 @@ return false;
       return name;
   }
   
-  
+  function task_assigned_name(name)
+  {
+    if(name=="")
+      return "None"
+    else
+      return name
+  }
   
   var app = new restfulApp;
   Backbone.emulateHTTP = true;
