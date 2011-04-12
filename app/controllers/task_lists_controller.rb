@@ -36,6 +36,8 @@ class TaskListsController < ApplicationController
 			 	tasklist=@tasklist.valid?
 		if @tasklist.errors[:name][0]=="can't be blank"
 			errors<<"Please enter project name"
+		elsif @tasklist.errors[:name][0]=="is too long (maximum is 23 characters)"
+			errors<<"Please enter a subject less than 24 characters"
 		elsif !@tasklist.errors[:name][0].nil?
 			errors<<@tasklist.errors[:name][0]
 		end
