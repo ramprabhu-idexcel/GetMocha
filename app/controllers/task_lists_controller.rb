@@ -51,7 +51,17 @@ class TaskListsController < ApplicationController
 	end
   def update
     task_list=TaskList.find_by_id(params[:id])
-    task_list.update_attributes(params[:task_list])
-    render :nothing=>true
+    if task_list.name==params[:task_list][:name]
+      render :nothing=>true
+    else
+      project=task_list.project
+      other_task_list=project.task_lists.find_by_name(params[:task_list][:name])
+      if other_task_list
+        render :json=>{:error=>"Sorry already a task list with that name exist"}.to_json
+      else
+        task_list.update_attributes(params[:task_list])
+        render :nothing=>true
+      end
+    end
   end
 end

@@ -116,13 +116,13 @@
         type:'put',
         data:{'task[name]':content},
         success:function(data){
-          if(data=="success")
+          if(typeof(data)=="object")
+            alert(data.error);
+          else
           {
             save_link.parent('h2').html('<span>'+content+'</span><a class="edit task_name" href="#">Edit</a>');
             $('.task.tsem.open').children('.task-name').children('h4').text(truncate_task_name(content));
           }
-          else
-            alert(data);
         }
       });
     }
@@ -296,12 +296,19 @@ return false;
   $('.tklist').live('blur',function(){
     var task_list_id=$(this).parent('.sub-header').attr('id').split('tl')[1];
     var content=$(this).val();
+    var task_header=$(this);
     $.ajax({
       url: '/task_lists/'+task_list_id,
       type:'put',
-      data:{'task_list[name]' : content}
+      data:{'task_list[name]' : content},
+      success:function(data){
+        if(typeof(data)=="object")
+          alert(data.error);
+        else
+        task_header.parent('.sub-header').html('<a class="sec task_list" href="#">'+content+'</a>');
+      }
     });
-    $(this).parent('.sub-header').html('<a class="sec task_list" href="#">'+content+'</a>');
+    
     return false;
   });
   

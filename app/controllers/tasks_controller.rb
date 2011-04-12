@@ -46,7 +46,8 @@ class TasksController < ApplicationController
 		else
 		  if params[:task][:tasklist].blank?
 			  errors<< "Please Enter the tasklist name"
-				if !params[:task][:recipient].blank?
+				
+					if !params[:task][:recipient].blank?
 					#~ errors<<"Please enter To_email address"
 					if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 						errors<<"Please enter valid email for assign"
@@ -68,16 +69,22 @@ class TasksController < ApplicationController
 					errors<<"Please enter valid notify email"
 					end
 		    end
-		    @tasklist=TaskList.find_by_id(params[:tasklist_id])
+		    @tasklist=@project.task_lists.find_by_id(params[:tasklist_id])
 			  if !@tasklist
-			    if !params[:tasklist_id].blank?
+					#~ if !params[:tasklist_id].blank?
 			      errors<<"Please enter existing tasklist only"
-			    end
+			    #~ end
 		    else
-		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:task][:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
+					
+					name=@tasklist.tasks.find_by_name(params[:task][:name])
+					if name
+						errors<<"Task name already exist"
+						else
+		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
 			    tasks=@tasks.valid?
 					if @tasks.errors[:name][1]=="can't be blank"
 				    errors<<"Please enter task name"
+						
 					elsif !@tasks.errors[:name][0].nil?
 						errors<<"task name already exist in this task list"
 		  	  elsif @tasks.errors[:description][1]=="can't be blank"
@@ -86,6 +93,7 @@ class TasksController < ApplicationController
 						errors<<"Enter more than 6 charecter in task description message"
 			    end
 			  end
+				end
 		  	if tasks && errors.empty?
 		      @tasks.save
 					@notify=params[:task][:notify].split(',')
@@ -128,13 +136,22 @@ class TasksController < ApplicationController
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def update
-    @task.attributes=params[:task]
-    if @task.valid?
-      @task.update_attributes(params[:task])
-      render :text=>"success"
+		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
+		 if @task.name == t_name.name
+			 render :nothing=>true
     else
-      render :text=>@task.errors[0]
-    end
+			if !t_name
+			@task.attributes=params[:task]
+         if @task.valid?
+           @task.update_attributes(params[:task])
+           render :nothing=>true
+			   else
+				render :json=>{:error=>@task.errors[0]}.to_json
+			end
+			else
+			render :json=>{:error=>"Task name already exist!"}.to_json
+			end
+	end
   end
   def destroy
     activities=@task.activities

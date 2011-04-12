@@ -1331,7 +1331,7 @@ function close_comment_area()
           items.push('<span class="task-time '+due_date_class(task.due_date_value)+'">'+task.due_date_value+'</span>');
           items.push('<span class="name">'+task.assigned_to[0]+'</span>');
           items.push('</div>');
-          items.push('<div class="task-name"><h4>'+task.name+'</h4></div>');
+          items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
           items.push('<div class="clear-fix"/></div>');   
           $('.m-panel').append(items.join(''));          
         }
@@ -1354,4 +1354,12 @@ function close_comment_area()
     default:
       return "";
     }
+  }
+
+  function truncate_task_name(name)
+  {
+    if(name.length>55)
+      return name.substring(0,55)+"...";
+    else
+      return name;
   }
