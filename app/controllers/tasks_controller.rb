@@ -93,8 +93,9 @@ class TasksController < ApplicationController
 						errors<<"Enter more than 6 charecter in task description message"
 			    end
 			  end
-				end
-		  	if tasks && errors.empty?
+			end
+		end
+			if tasks && errors.empty?
 		      @tasks.save
 					@notify=params[:task][:notify].split(',')
 					#@project=Project.find_by_name(params[:message][:project])
@@ -114,7 +115,6 @@ class TasksController < ApplicationController
 				  page.alert errors.join("\n")
 				  end
 	      end
-  	  end
 	  end
   end
 	def project_tasklists
