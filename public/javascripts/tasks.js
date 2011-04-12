@@ -330,14 +330,31 @@ return false;
   });
   
   $('.tkl-down').live('click',function(){
-    $('.tkl-down').removeClass('selected');
-    $(this).addClass('selected');
-    var task_list=$(this).children('span').attr('class').split('tkl:')[1];
+    var task_list_content=$('.task.tsem.open');
+    var sec_pan_content=$('.task.tsem.open').html();
+    var task_list_id=$(this).children('span').attr('class').split('tkl:')[1];
     var task_id=get_task_id();
+    var task_list_name=$(this).children('span').text();
+    $('.tkl-down').removeClass('selected');
+    var div='<div id="tk_'+task_id+'" class="actk:'+task_id+' task tsem open">'
+    $(this).addClass('selected');
+    $('.filed-tasklist').text(task_list_name);
     $.ajax({
       url:'tasks/'+task_id,
       type:'put',
-      data:{'task[task_list_id]' : task_list}
+      data:{'task[task_list_id]' : task_list_id},
+      success:function(data){
+        $('.task.tsem.open').remove();
+        if($('#tl'+task_list_id).length==0)
+        {
+          var  html_content='<div id="tl'+task_list_id+'" class="sub-header"><a class="sec task_list" href="#">'+task_list_name+'</a></div>';
+          html_content+=div+sec_pan_content+'</div>';
+          $('.m-panel').append(html_content);
+          
+        }
+        else
+          $(task_list_content).insertAfter($('#tl'+task_list_id));    
+      }
     });
   });
   
@@ -616,6 +633,8 @@ return false;
     else
       return name;
   }
+  
+  
   
   var app = new restfulApp;
   Backbone.emulateHTTP = true;
