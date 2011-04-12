@@ -3,9 +3,11 @@ var Task=true;
 $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
 </script>
 <%=javascript_include_tag "tasks"%>
-<span id="projects_list">
+<div class="l-panel-contain">
+  <div class="l-panel">
   <%=render :partial=>"first_pane",:locals=>{:projects=>@projects}%>
-</span>
+</div>
+</div>
 <div class="m-panel-contain">
   <div class="m-panel">
   </div>
