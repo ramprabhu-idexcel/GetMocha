@@ -346,11 +346,17 @@ $.ajax({
 			  success: function(data){
 				if(data.length==1)
 				document.getElementById('add_people').style.display="none";
+							document.getElementById('invite_name').value="";
+			document.getElementById('invite_email').value="";
+			document.getElementById('message').value="";
 				}
     });
 }
 function cancel_people_invite()
 {
 			document.getElementById('add_people').style.display="none";
+			document.getElementById('invite_name').value="";
+			document.getElementById('invite_email').value="";
+			document.getElementById('message').value="";
 }
 </script>

@@ -142,11 +142,11 @@
         type:'put',
         data:{'task[description]':content},
         success:function(data){
-          if(data=="success")
-            save_link.parent('p').html('<span>'+content+'</span><a class="edit task_description" href="#">Edit</a>');
+          if(typeof(data)=="object")
+            alert(data.error);
           else
-            alert(data);
-        }
+            save_link.parent('p').html('<span>'+content+'</span><a class="edit task_description" href="#">Edit</a>');
+          }
       });
     }
     return false;    

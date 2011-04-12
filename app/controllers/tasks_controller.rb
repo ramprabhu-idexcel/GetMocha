@@ -86,15 +86,16 @@ class TasksController < ApplicationController
 				    errors<<"Please enter task name"
 						
 					elsif !@tasks.errors[:name][0].nil?
-						errors<<"task name already exist in this task list"
+						errors<<"Task name already exist in this task list"
 		  	  elsif @tasks.errors[:description][1]=="can't be blank"
 				    errors<<"Please enter description message"
 					elsif !@tasks.errors[:description][0].nil?
 						errors<<"Enter more than 6 charecter in task description message"
 			    end
 			  end
-				end
-		  	if tasks && errors.empty?
+			end
+		end
+			if tasks && errors.empty?
 		      @tasks.save
 					@notify=params[:task][:notify].split(',')
 					#@project=Project.find_by_name(params[:message][:project])
@@ -114,7 +115,6 @@ class TasksController < ApplicationController
 				  page.alert errors.join("\n")
 				  end
 	      end
-  	  end
 	  end
   end
 	def project_tasklists
@@ -136,10 +136,9 @@ class TasksController < ApplicationController
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def update
-		find_task_tasklist_new=@task.task_list
-		t_name=find_task_tasklist_new.tasks.find_by_name(params[:task][:name])
+		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
 		if t_name
-			if @task.name == t_name.name && t_name
+			if @task.name == t_name.name
 				 render :nothing=>true
 			else
 				render :json=>{:error=>"Task name already exist!"}.to_json
@@ -148,9 +147,9 @@ class TasksController < ApplicationController
 			@task.attributes=params[:task]
          if @task.valid?
            @task.update_attributes(params[:task])
-           render :nothing=>true
+					 render :nothing=>true
 			   else
-				render :json=>{:error=>@task.errors[0]}.to_json
+					render :json=>{:error=>@task.errors[0]}.to_json
 			end
 	end
   end
