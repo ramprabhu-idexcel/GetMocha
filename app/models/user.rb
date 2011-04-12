@@ -105,7 +105,17 @@ class User < ActiveRecord::Base
     activities.where('resource_type=? AND is_starred=? AND is_delete=?',"Task",true,false)
   end
   def starred_task_count
-    starred_tasks.count+starred_comments.count
+    starred_tasks.count+starred_task_comments.count
+  end
+  def all_task_comments
+    comments=[]
+    find_all_tasks.each do |activity|
+      comments<<activity.resource.comments.map(&:id)
+    end
+    comments.flatten!
+  end
+  def starred_task_comments
+    activities.find(:all,:conditions=>['resource_type=? AND resource_id IN (?) AND is_starred=?',"Comment",all_task_comments,true])
   end
   #starred messages from the project
   def project_starred_messages(project_id,sort_by,order)
@@ -267,7 +277,7 @@ class User < ActiveRecord::Base
     find(:all,:conditions=>['project_users.project_id=:project_id AND project_users.status=:value AND users.status=:value',{:project_id=>project_id,:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
   end
   def all_tasks_count
-    {:completed_count=>completed_tasks.count,:all_count=>all_tasks.count,:starred_count=>starred_tasks.count,:my_count=>my_tasks.count}
+    {:completed_count=>completed_tasks.count,:all_count=>all_tasks.count,:starred_count=>starred_task_count,:my_count=>my_tasks.count}
   end
   def self.find_all_user_except_guest
     find(:all,:conditions=>['is_guest=?',false])

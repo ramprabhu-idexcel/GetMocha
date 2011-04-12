@@ -99,7 +99,7 @@
   
   $('a.edit.task_description').live('click',function(){
     var content=$(this).siblings('span').text();
-    $(this).parent('p').html('<textarea class="textfield" style="height: 160px;" cols="" rows="" onfocus="this.select()" id="task_description" name="task[description]">'+content+'</textarea><a class="edit save_task_desc" href="#" style="display: inline;">Save</a>');
+    $(this).parent('p').html('<textarea class="textfield" style="height: 160px;" cols="" rows="" onfocus="this.select()" id="task_description" name="task[description]">'+content+'</textarea><a class="edit save_task_desc" href="#" >Save</a><div class="clear-fix"></div>');
     return false;
   });
   
@@ -259,7 +259,7 @@ return false;
     }
     parent_div.toggleClass('starred')
     $.ajax({
-      url: '/star_message/'+id,
+      url: '/star_message/'+id+'?task=true',
       type: 'get',
       data:{'task':true},
       success:function(data)
@@ -272,7 +272,7 @@ return false;
   
   //star the comment
   $('.message-star.star_comment').live('click',function(){
-    var path=$(this).attr('href');
+    var path=$(this).attr('href')+'?task=true';
     $(this).parent('div.message-body').parent('div.message').toggleClass('starred');
     $.ajax({
       url: path,
