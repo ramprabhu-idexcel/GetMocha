@@ -492,18 +492,23 @@ function ds_onclick(d, m, y) {
 	ds_hi();
 	// Set the value of it, if we can.
 	if (typeof(ds_element.value) != 'undefined') {
-		ds_element.value = ds_format_date(d, m, y);
+	
+	//	ds_element.value = ds_format_date(d, m, y);
 	//	document.getElementById('txtInput3').value=ds_element.value;
 	// Maybe we want to set the HTML in it.
 	} else if (typeof(ds_element.innerHTML) != 'undefined') {
-		ds_element.innerHTML = ds_format_date(d, m, y);
+	
+	//	ds_element.innerHTML = ds_format_date(d, m, y);
 	//	document.getElementById('txtInput3').value=ds_element.value;
 	// I don't know how should we display it, just alert it to user.
 	} else {
+	
 		alert (ds_format_date(d, m, y));
 	}
-	document.getElementById('txtInput3').innerHTML=ds_format_date(d, m, y);
+	
+	$('#txtInput3').html(ds_format_date(d, m, y));
 	document.getElementById('date_hidden').value=ds_format_date(d, m, y);
+	
 }
 
 // And here is the end.
