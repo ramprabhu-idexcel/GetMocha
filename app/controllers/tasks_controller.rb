@@ -176,13 +176,13 @@ class TasksController < ApplicationController
     end
   end
 	def my_tasks
-    render :json=>current_user.group_my_tasks.to_json(options)
+    render :json=>current_user.group_my_tasks(params[:sort_by],params[:order]).to_json(options)
   end
 	def starred_tasks
     render :json=>current_user.group_starred_tasks.to_json(options)
   end
 	def completed_tasks
-    render :json=>current_user.group_completed_tasks.to_json(options)
+    render :json=>current_user.group_completed_tasks(params[:sort_by],params[:order]).to_json(options)
   end
 	def complete_task
     #~ task=Task.find_by_id(params[:id])

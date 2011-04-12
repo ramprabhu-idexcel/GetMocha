@@ -55,11 +55,23 @@ class Activity < ActiveRecord::Base
     def check_all_unread_messages(user_id)
       find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=? AND user_id=?',"Message",false,false,user_id])
     end
-    def check_all_tasks_info(user_id)
-      find(:all,:conditions=>['resource_type=? AND is_delete=? AND user_id=?',"Task",false,user_id],:order=>"created_at desc")
+    def check_all_tasks_info(user_id,sort_by=nil,order=nil)
+      if sort_by=="star-task"
+        sort_by="is_starred"
+      else
+        sort_by="created_at"
+      end
+      order="asc" if order.nil?
+      find(:all,:conditions=>['resource_type=? AND is_delete=? AND user_id=?',"Task",false,user_id],:order=>"#{sort_by} #{order}")
     end
-    def check_my_tasks_info(user_id)
-      find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=? AND user_id=?',"Task",false,true,user_id],:order=>"created_at desc")
+    def check_my_tasks_info(user_id,sort_by=nil,order=nil)
+      if sort_by=="star-task"
+        sort_by="is_starred"
+      else
+        sort_by="created_at"
+      end
+      order="asc" if order.nil?
+      find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=? AND user_id=?',"Task",false,true,user_id],:order=>"#{sort_by} #{order}")
     end
     def check_hash_activities_comments_info(resource_id,user_id)
       find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=? AND user_id=?',"Comment",resource_id,false,user_id],:select=>[:is_starred,:is_read,:resource_id,:id])
