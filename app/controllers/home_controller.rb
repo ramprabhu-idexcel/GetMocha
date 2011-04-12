@@ -212,10 +212,10 @@ end
       guest=User.create(:email=>from_address2,:is_guest=>true, :password=>Encrypt.default_password) if !user
       if user
       task=Task.create(:name=>title,:description=>message,:user_id=>user.id,:task_list_id=>task_list.id)
-      task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id)
+      task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>user.id,:is_assigned=>true)
       else
       task=Task.create(:name=>title,:description=>message,:user_id=>guest.id,:task_list_id=>task_list.id)
-      task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id)
+      task.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>guest.id,:is_assigned=>true)
       end
       if guest
       ProjectGuest.create(:guest_id=>guest.id,:project_id=>project.id)
@@ -236,7 +236,7 @@ end
     if task && find_task_tasklist.project
       find_task_tasklist.project.users.each do |user|
         activity=task.activities.create! :user=>user
-        activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true) if user.id==task.user_id
+        activity.update_attributes(:is_read=>(user.id==task.user_id),:is_subscribed=>true,:is_assigned=>true) if user.id==task.user_id
       end
     end
           if params[:attachments] && params[:attachments].to_i > 0
