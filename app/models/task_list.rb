@@ -2,7 +2,7 @@ class TaskList < ActiveRecord::Base
 	belongs_to :user
 	has_many :tasks
 	belongs_to :project
-	validates :name, :presence   => true,:length=>{:within=> 1...24}
+	validates :name, :presence   => true,:length=>{:within=> 1...25}
   validate :unique_name,:on=>:create
   def unique_name
     project=self.project
