@@ -69,7 +69,7 @@ class TasksController < ApplicationController
 			else
 			if !params[:task][:notify].blank?
 				#~ errors<<"Please enter To_email address"
-				if !params[:task][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+				if !params[:task][:notify].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 					errors<<"Please enter valid notify email"
 					end
 		    end
