@@ -122,7 +122,7 @@ class ProjectMailer < ActionMailer::Base
       @people<<info_activity_user.full_name<<"," if activity.user
      end
    end
-   if @existing_user==to_user
+   if @existing_user.is_assigned==true
     mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzt#{task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} assigned a new task to #{to_user}",:content_type=>"text/html")
     @content_type="text/html"
     else
