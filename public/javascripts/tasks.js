@@ -492,7 +492,11 @@ return false;
     items.push('</div>');
     items.push('</div>');
     items.push('<div style="position:relative">');
+     if(task.assigned_to[0].length!=0)
     items.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.assigned_to[0]+'</a></p>');
+    //else
+    //tems.push('<p class="recipients">Assigned to <a class="assigned-to" href="#">'+task.guest_email+'</a></p>');
+    
     //other teammembers
     items.push('<div class="task-dropdown assigned-to" style="display:none;">');
     items.push('<div class="task-dropdown-t"></div>');
