@@ -136,7 +136,8 @@ class TasksController < ApplicationController
     render :json=>current_user.group_project_tasks(task_ids).to_json(options)
   end
 	def update
-		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
+		find_task_tasklist_new=@task.task_list
+		t_name=find_task_tasklist_new.tasks.find_by_name(params[:task][:name])
 		if t_name
 			if @task.name == t_name.name && t_name
 				 render :nothing=>true
