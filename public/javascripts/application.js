@@ -664,6 +664,7 @@ alert('afetrr bt');
     });
     $('.account-dropdown').hide();
     $('.settings_header').hide();
+    $('.sort-by').hide();
      $('body').attr('class','settings');
      document.title="Settings | Mocha"
     return false;
@@ -676,7 +677,7 @@ alert('afetrr bt');
     $('.message_header').hide();
     $('.task_header').hide();
     $('body').attr('class','settings');
-    $('.sort-by.message-sort').hide();
+    $('.sort-by').hide();
     document.title="Settings | Mocha"
     return false;
   });

@@ -37,7 +37,7 @@ class TasksController < ApplicationController
 		end
 		if params[:task][:name].blank?
 			render :update do |page|
-				page.alert "Please Enter the Task name"
+				page.alert "Please enter a task"
 			end
 		elsif !@project
 			render :update do |page|
