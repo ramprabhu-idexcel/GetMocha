@@ -142,7 +142,7 @@ class Project < ActiveRecord::Base
 		find(:all, :conditions=>['status=?',true])
   end
 	def self.p_count_completed
-		find(:all, :conditions=>['status=?',false])
+		find(:all, :conditions=>['status=?',2])
 	end	
 	def self.check_project_users(current_user)
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
