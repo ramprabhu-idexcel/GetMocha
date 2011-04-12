@@ -1,6 +1,6 @@
 <html>
 <body>
- <!--<% if  @existing_user && !@existing_user.is_guest %>
+ <% if  @existing_user && !@existing_user.is_guest %>
 			Project: <%="#{@project.name}" %> <br/>
 			<%= raw @task.task_notification %><br/>
 			<%@task.attachments.each do |attach| %>
@@ -10,7 +10,7 @@
 Subscribed: <%= @people %>			<br/>
 			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= @task.id %>"> Unsubscribe from this  message </a>to stop recieving email notifications about this message thread<br/><br/>
 --<br/>
-Post new message to this project via email: <%= "{@project.task_email_id} or custom email" %><br/>
+Post new task to this project via email: <%= "{@project.task_email_id} or custom email" %><br/>
 Powered by GetMocha.com
 <% else %>
 		   Author: <%= @task.author%> <br/>
@@ -22,7 +22,7 @@ Powered by GetMocha.com
 			<br/>
 			Subscribed: <%= @people %>			<br/>
 			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @existing_user.id %>/<%= @task.id %>"> Unsubscribe from this message </a>to stop recieving email notifications about this message thread<br/><br/>
-			--<br/>-->
+			--<br/>
 			Powered by GetMocha.com
 	<% end %>
 </body>
