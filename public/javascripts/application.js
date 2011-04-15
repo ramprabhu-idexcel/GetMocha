@@ -1349,23 +1349,26 @@ function close_comment_area()
           if(typeof(data)=="object")
           {
             $('.add-item-modal').hide();
-            var items=[];
-            var task=data.task
-            if($('#tl'+task.task_list_id).length==0)
-              items.push('<div class="sub-header" id="tl'+task.task_list_id+'"><a href="#" class="sec task_list">'+task.task_list_name+'</a></div>');
-            items.push('<div id="tk_'+ task.activity_id+'" class="actk:'+task.activity_id+' task tsem "><div class="left-icons">');
-            items.push('<a class="task-star" href="#" style="display:none;">Star</a>');    
-            items.push('<div class="checkbox"><span class="tk:'+task.id+' icon icon-sec "></span></div></div>');
-            items.push('<div class="info">');
-            items.push('<span class="task-time '+due_date_class(task.due_date_value[1])+'">'+task.due_date_value[0]+'</span>');
-            items.push('<span class="name">'+task.assigned_to[0]+'</span>');
-            items.push('</div>');
-            items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
-            items.push('<div class="clear-fix"/></div>'); 
-            if($('#tl'+task.task_list_id).length==0)
-              $('.m-panel').append(items.join('')); 
-            else
-              $(items.join('')).insertAfter($('#tl'+task.task_list_id));              
+            if($('body').hasClass('tasks'))
+            {
+              var items=[];
+              var task=data.task
+              if($('#tl'+task.task_list_id).length==0)
+                items.push('<div class="sub-header" id="tl'+task.task_list_id+'"><a href="#" class="sec task_list">'+task.task_list_name+'</a></div>');
+              items.push('<div id="tk_'+ task.activity_id+'" class="actk:'+task.activity_id+' task tsem "><div class="left-icons">');
+              items.push('<a class="task-star" href="#" style="display:none;">Star</a>');    
+              items.push('<div class="checkbox"><span class="tk:'+task.id+' icon icon-sec "></span></div></div>');
+              items.push('<div class="info">');
+              items.push('<span class="task-time '+due_date_class(task.due_date_value[1])+'">'+task.due_date_value[0]+'</span>');
+              items.push('<span class="name">'+task.assigned_to[0]+'</span>');
+              items.push('</div>');
+              items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
+              items.push('<div class="clear-fix"/></div>'); 
+              if($('#tl'+task.task_list_id).length==0)
+                $('.m-panel').append(items.join('')); 
+              else
+                $(items.join('')).insertAfter($('#tl'+task.task_list_id));    
+            }
           }
         },
         failure: function(){
