@@ -18,7 +18,7 @@ class Task < ActiveRecord::Base
     task ? errors.add(:name,"A task with that name already exists") : true
   end
   def create_activities(assigned_email,susbscribe)
-    susbscribe_emails=get_emails(susbscribe)
+    susbscribe_emails=get_emails(susbscribe,assigned_email)
     assigned_email=self.user.email unless assigned_email.present?
     project=self.task_list.project
     project.all_members.each do |user|
@@ -38,16 +38,18 @@ class Task < ActiveRecord::Base
     end
     self.send_assign_notification(assigned_email)
   end
-  def get_emails(emails)
+  def get_emails(emails,assigned_email)
     subscribe_emails=emails.split(',').collect{ |arr| arr.strip }
     subscribe_emails=subscribe_emails.reject{ |arr| arr.all?(&:blank?) }
     subscribe_emails<<self.user.email
+    subscribe_emails<<assigned_email
     return subscribe_emails.uniq
   end
   def send_task_notification(user)
     ProjectMailer.delay.task_notification(user,self)
   end
-  def send_assign_notification(user)
+  def send_assign_notification(email)
+    user=User.verify_email_id(email)
     ProjectMailer.delay.task_assign_notification(user,self)
   end
   #~ def add_in_activity(subscribe_emails,assigned_email)
