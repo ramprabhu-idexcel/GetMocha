@@ -231,6 +231,7 @@ end
     logger.info task_list.inspect
     logger.info task.inspect
     logger.info title.inspect
+    logger.info message.inspect
     logger.info task.errors.inspect
     find_task_tasklist=task.task_list
     if task && find_task_tasklist.project
