@@ -172,6 +172,9 @@ class User < ActiveRecord::Base
   def self.members_as_guest(project_id)
     find(:all,:conditions=>['project_guests.project_id=? AND project_guests.status=?',project_id,true],:include=>:project_guests)
   end
+  def self.all_members(project_id)
+    (self.members_in_project(project_id)+self.members_as_guest(project_id)).uniq
+  end
   def name
     first_name && last_name ? full_name : email
   end

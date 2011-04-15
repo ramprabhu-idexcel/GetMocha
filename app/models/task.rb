@@ -9,32 +9,67 @@ class Task < ActiveRecord::Base
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
                     #:length     => { :within => 6..250 }
 	validates :description, :presence => true
-validates :name, :presence   => true
+  validates :name, :presence   => true
+  validate :unique_name,:on=>:create
 
-def add_in_activity(to_users,assigns)
-	    to_users=to_users.split(',') unless to_users.is_a?(Array)
-      assigns=assigns.split(',')
-		  self.task_list.project.users.each do |user|
+  def unique_name
+    task_list=self.task_list
+    task=task_list.tasks.find(:first,:conditions=>['tasks.name=?',self.name])
+    task ? errors.add(:name,"A task with that name already exists") : true
+  end
+  def create_activities(assigned_email,susbscribe)
+    susbscribe_emails=get_emails(susbscribe)
+    assigned_email=self.user.email unless assigned_email.present?
+    project=self.task_list.project
+    project.all_members.each do |user|
       activity=self.activities.create! :user=>user
-      activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
-			if !assigns.blank?
-        activity.update_attributes(:is_assigned=>true) if user.email==assigns[0]
-			else
-				activity.update_attributes(:is_assigned=>true) if user.id==self.user_id
-			end
-      send_task_notification_to_team_members(self.user,to_users,self) if user.email==assigns
-		end
-    to_users.each do |email|
-			email=email.lstrip
-      if email.present?
-        u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
-        u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
-				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if !self.task_list.project.is_member?(u.id) && u && u.id && !a
-				ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) if u && u.id && !self.task_list.project.project_member?(u.id)
+      activity.update_attributes(:is_subscribed=>susbscribe_emails.include?(user.email),:is_assigned=>(assigned_email==user.email)) 
+    end
+    susbscribe_emails.each do |email|
+      user=User.verify_email_id(email)
+      user= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless user
+      activity=Activity.find_or_create_by_user_id_and_resource_type_and_resource_id(user.id,self.class.name,self.id)
+      activity.update_attributes(:is_subscribed=>true)
+      if !project.project_member?(user.id)
+        ProjectGuest.create(:guest_id=>user.id,:project_id=>self.task_list.project_id) 
+        activity.update_attributes(:is_delete=>true)
       end
+      self.send_task_notification(user)
     end
   end
+  def get_emails(emails)
+    subscribe_emails=emails.split(',').collect{ |arr| arr.strip }
+    subscribe_emails=subscribe_emails.reject{ |arr| arr.all?(&:blank?) }
+    subscribe_emails<<self.user.email
+    return subscribe_emails.uniq
+  end
+  def send_task_notification(user)
+    ProjectMailer.delay.task_notification(user,self)
+  end
+  def send_assign_notification(user)
+    ProjectMailer.delay.send_task_assign_notification(user,self)
+  end
+  #~ def add_in_activity(subscribe_emails,assigned_email)
+    #~ subscribe_emails=get_emails(subscribe_emails)
+    #~ assigned_email=assigned_email.strip
+    #~ self.task_list.project.users.each do |user|
+      #~ activity=self.activities.create! :user=>user
+      #~ activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || subscribe_emails.include?(user.email)
+      #~ activity.update_attributes(:is_assigned=>true) if user.email==assigned_email
+      #~ send_task_notification_to_team_members(self,user) if user.email==assigned_email
+		#~ end
+    #~ subscribe_emails.each do |email|
+			#~ email=email.strip
+      #~ if email.present?
+        #~ u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
+        #~ u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
+				#~ a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Task", self.id])
+        #~ if u && u.id && !self.task_list.project.is_member?(u.id)
+          #~ self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id)
+          #~ ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) 
+      #~ end
+    #~ end
+  #~ end
 	def self.task_due_time(time,current_user)
     user_time=current_user.user_time(time)
     diff=current_user.user_time(Time.now)-current_user.user_time(time)
@@ -181,5 +216,13 @@ def add_in_activity(to_users,assigns)
   end
   def due_date_mail
     due_date ? "Due Date: #{due_date.strftime("%B %e, %Y")}" : nil
+  end
+  def mail_content(user_id)
+    project=self.task_list.project
+    if project.is_a_guest?(user_id) 
+      ["Author: #{self.author} <br/>#{self.description} <br/>","Powered by GetMocha.com" ]
+    else
+      ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]
+    end
   end
 end

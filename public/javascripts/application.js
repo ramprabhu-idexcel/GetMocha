@@ -1320,37 +1320,63 @@ function close_comment_area()
     return false;
   });
   $('#t_add').live('click',function(){
-    $.ajax({
-      type :'post',
-      url :"/tasks",
-      data :$('#taskf').serialize(),
-      success: function(data){
-      	if(typeof(data)=="object")
-        {
-          $('.add-item-modal').hide();
-          var items=[];
-          var task=data.task
-          if($('#tl'+task.task_list_id).length==0)
-            items.push('<div class="sub-header" id="tl'+task.task_list_id+'"><a href="#" class="sec task_list">'+task.task_list_name+'</a></div>');
-          items.push('<div id="tk_'+ task.activity_id+'" class="actk:'+task.activity_id+' task tsem "><div class="left-icons">');
-          items.push('<a class="task-star" href="#" style="display:none;">Star</a>');    
-          items.push('<div class="checkbox"><span class="tk:'+task.id+' icon icon-sec "></span></div></div>');
-          items.push('<div class="info">');
-          items.push('<span class="task-time '+due_date_class(task.due_date_value[1])+'">'+task.due_date_value[0]+'</span>');
-          items.push('<span class="name">'+task.assigned_to[0]+'</span>');
-          items.push('</div>');
-          items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
-          items.push('<div class="clear-fix"/></div>'); 
-          if($('#tl'+task.task_list_id).length==0)
-            $('.m-panel').append(items.join('')); 
-          else
-            $(items.join('')).insertAfter($('#tl'+task.task_list_id));              
+    var task_name=$('#task_name').val();
+    var project_id=$('#autocomplete1_hidden').val();
+    var task_list_id=$('#t_list_hidden').val();
+    var notification_emails=$('#notifys').val();
+    var assign_email=$.trim($('#assign_to').val());
+    var description=$.trim($('#task_description').val());
+    var errors=[];
+    if($.trim(task_name)=="")
+      errors.push('Task name cannot be empty');
+    if($.trim(project_id)=="")
+      errors.push('Please select a project');
+    if($.trim(task_list_id)=="")
+      errors.push('Please select a task list');
+    if(!IsValidMultipleEmail(notification_emails))
+      errors.push("Please enter valid notification emails");
+    if(assign_email!="" && !IsValidEmail(assign_email))
+      errors.push("Please enter a valid assign to email");
+    if(description=="")
+      errors.push("Please enter the description for the task");
+    if(errors.length==0)
+    {
+      $.ajax({
+        type :'post',
+        url :"/tasks",
+        data :$('#taskf').serialize(),
+        success: function(data){
+          if(typeof(data)=="object")
+          {
+            $('.add-item-modal').hide();
+            var items=[];
+            var task=data.task
+            if($('#tl'+task.task_list_id).length==0)
+              items.push('<div class="sub-header" id="tl'+task.task_list_id+'"><a href="#" class="sec task_list">'+task.task_list_name+'</a></div>');
+            items.push('<div id="tk_'+ task.activity_id+'" class="actk:'+task.activity_id+' task tsem "><div class="left-icons">');
+            items.push('<a class="task-star" href="#" style="display:none;">Star</a>');    
+            items.push('<div class="checkbox"><span class="tk:'+task.id+' icon icon-sec "></span></div></div>');
+            items.push('<div class="info">');
+            items.push('<span class="task-time '+due_date_class(task.due_date_value[1])+'">'+task.due_date_value[0]+'</span>');
+            items.push('<span class="name">'+task.assigned_to[0]+'</span>');
+            items.push('</div>');
+            items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
+            items.push('<div class="clear-fix"/></div>'); 
+            if($('#tl'+task.task_list_id).length==0)
+              $('.m-panel').append(items.join('')); 
+            else
+              $(items.join('')).insertAfter($('#tl'+task.task_list_id));              
+          }
+        },
+        failure: function(){
+          alert("Sorry your request cannot be processed");
         }
-      },
-      failure: function(){
-        alert("Error");
-      }
-    });
+      });
+    }
+    else
+    {
+      alert(errors.join('\n'));
+    }
     return false;
   });
 
@@ -1373,4 +1399,23 @@ function close_comment_area()
       return name.substring(0,55)+"...";
     else
       return name;
+  }
+  
+  function IsValidEmail(email)
+	{
+    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return filter.test(email);
+	}
+  
+  //for comma seperated multiple emails
+  function IsValidMultipleEmail(emails)
+  {
+    var email_array=emails.split(',');
+    var valid=true;
+    $.each(email_array,function(index,value){
+      var email=$.trim(value);
+      if(email!="")
+        valid=valid && IsValidEmail(email);
+    });
+    return valid;
   }

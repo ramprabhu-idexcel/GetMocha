@@ -25,6 +25,9 @@ class Project < ActiveRecord::Base
   def all_uncompleted_task_ids
     tasks.find(:all,:conditions=>['is_completed=?',false]).map(&:id)
   end
+  def all_members
+    User.all_members(self.id)
+  end
   def self.user_projects(user_id)
     find(:all,:conditions=>['project_users.user_id=? AND project_users.status=?',user_id,true],:include=>:project_users)
   end

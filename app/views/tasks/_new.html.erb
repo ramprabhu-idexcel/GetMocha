@@ -24,41 +24,41 @@
 			<div class="modal-input">
 <%form_for :task, :url=>({ :controller => "tasks", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true,:id=>"taskf"}) do |f|%>
 				<fieldset>
-					<label>Task</label>
+					<label>Name:</label>
 							<%=f.text_field  'name', :class=>"textfield" %>
 		    </fieldset>
 			    <fieldset>
 					<label>Project:</label>
 		     					<% if session[:project_name] %>
-					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" , :value=>"#{session[:project_name]}", :disabled=>true%>
+					 		<%=text_field_tag  'project',session[:project_name], :class=>"textfield", :id=>"project_val" , :disabled=>true%>
 							<input type="hidden" id="autocomplete1_hidden" name="project_id" value="<%=session[:project_selected]%>"/>
 					 <% else %>
-					 		<%=f.text_field  'project', :class=>"textfield", :id=>"project_val" %>
+					 		<%=text_field_tag  'project',nil, :class=>"textfield", :id=>"project_val" %>
 							<input type="hidden" id="autocomplete1_hidden" name="project_id" value=""/>
 					 <% end %>
 			    </fieldset>
-					<fieldset>
-					<label>Assign:</label>
-						<%=f.text_field  'recipient', :class=>"textfield", :id=>"assign_to"  %>
-						    </fieldset>
-					<fieldset>
-					<label>Notify:</label>
-						<%=f.text_field  'notify', :class=>"textfield" , :id=>"notifys" %>
-			    </fieldset>
-					<fieldset>
-					<label>Tasklist:</label>
-						<%=f.text_field  'tasklist', :class=>"textfield", :id=>"t_list"  %>
-						<input type="hidden" id="t_list_hidden" name="tasklist_id" value=""/>
+          <fieldset>
+            <label>Tasklist:</label>
+						<%=text_field_tag  'tasklist',nil, :class=>"textfield", :id=>"t_list"  %>
+						<input type="hidden" id="t_list_hidden" name="task[task_list_id]" value=""/>
 					</fieldset>
+					<fieldset>
+            <label>Assign:</label>
+						<%=text_field_tag  'recipient',nil, :class=>"textfield", :id=>"assign_to"  %>
+          </fieldset>
+					<fieldset>
+            <label>Notify:</label>
+						<%=text_field_tag  'notify',nil, :class=>"textfield" , :id=>"notifys" %>
+			    </fieldset>
 					<fieldset>
 					<label>Due_Date:</label>
 						<span style="width:100px;" class="textfield" id="txtInput3">   </span>
-						<input type="hidden" id="date_hidden" name="due_date" />
+						<input type="hidden" id="date_hidden" name="task[due_date]" />
 						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
 					<label>Message:</label>
-		       		<%=f.text_area 'message', :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
+		       		<%=f.text_area 'description', :class=>'textarea', :rows=>"", :cols=>"", :display=>"none"%>
 							<input type="hidden" id="attach_hidden" name="attach_id" value=""/>
 			    </fieldset>
 				<% end %>
@@ -119,20 +119,20 @@ userEmails=userEmails.split(',');
   //  var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
 	 var ac3= new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('notifys'),true);
 	$('#task_txtarea').click(function(){
-document.getElementById('task_message').style.display="block";
+document.getElementById('task_description').style.display="block";
 	document.getElementById('task_txtarea').className="open";
 	});
 	$('#txtInput3').keydown(function(event){
 	if (event.keyCode == 9) {
-  document.getElementById('task_message').style.display="block";
+  document.getElementById('task_description').style.display="block";
 	document.getElementById('task_txtarea').className="open";
 	$('.drag-drop').focus();
 	}
 	});
-	$('#task_message').keydown(function(event){
+	$('#task_description').keydown(function(event){
 	if (event.keyCode == 9) {
   document.getElementById('attach_upload').style.display="block";
-	$('#task_message').focus();
+	$('#task_description').focus();
 	}
 	});
 	$('#attach').click(function(){
