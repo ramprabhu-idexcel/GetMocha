@@ -15,7 +15,7 @@
 		<div class="modal-body">
 			<div class="modal-input">
 <%form_for :tasklists, :url=>{ :controller => "task_lists", :action => "create" }, :html=>{:id=>"form4"} do |f4|%>
-				<fieldset>
+				<fieldset style="border-top:medium none;">
 					<label>Name</label>
 							<%=f4.text_field 'tlname', :class=>"textfield"%>
 		    </fieldset>

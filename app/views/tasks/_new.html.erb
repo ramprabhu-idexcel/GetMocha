@@ -23,7 +23,7 @@
 		<div class="modal-body">
 			<div class="modal-input">
 <%form_for :task, :url=>({ :controller => "tasks", :action => "create" }), :html=>({:target=>"upload_frame",:multipart=>true,:id=>"taskf"}) do |f|%>
-				<fieldset>
+				<fieldset style="border-top:medium none;">
 					<label>Name:</label>
 							<%=f.text_field  'name', :class=>"textfield" %>
 		    </fieldset>
