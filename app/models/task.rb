@@ -18,9 +18,11 @@ class Task < ActiveRecord::Base
     task ? errors.add(:name,"A task with that name already exists") : true
   end
   def create_activities(assigned_email,susbscribe)
+    assigned_user=User.verify_email_id(assigned_email)
+    project=self.task_list.project
+    assigned_email=self.user.email unless assigned_user && project.is_member?(assigned_user.id)
     susbscribe_emails=get_emails(susbscribe,assigned_email)
     assigned_email=self.user.email unless assigned_email.present?
-    project=self.task_list.project
     project.all_members.each do |user|
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_subscribed=>susbscribe_emails.include?(user.email),:is_assigned=>(assigned_email==user.email)) 
