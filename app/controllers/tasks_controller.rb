@@ -34,8 +34,10 @@ class TasksController < ApplicationController
       task.create_activities(params[:recipient],params[:notify])
       render :json=>task.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id])
     else
+      errors=[]
+      task.errors.each_full{|msg| errors<< msg }
       render :update do |page|
-        page.alert task.errors.entries.first[1]
+        page.alert errors.join('\n')
       end
     end
   end
