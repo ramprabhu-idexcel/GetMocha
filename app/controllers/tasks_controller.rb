@@ -37,73 +37,7 @@ class TasksController < ApplicationController
       render :update do |page|
         page.alert task.errors.entries.first[1]
       end
-<<<<<<< HEAD:app/controllers/tasks_controller.rb
     end
-=======
-			else
-			if !params[:task][:notify].blank?
-				#~ errors<<"Please enter To_email address"
-				if !params[:task][:notify].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
-					errors<<"Please enter valid notify email"
-					end
-		    end
-		    @tasklist=@project.task_lists.find_by_id(params[:tasklist_id])
-			  if !@tasklist
-					#~ if !params[:tasklist_id].blank?
-			      errors<<"Please enter existing tasklist only"
-			    #~ end
-		    else
-					
-					name=@tasklist.tasks.find_by_name(params[:task][:name])
-					if name
-						errors<<"Task name already exist"
-						else
-		      @tasks=Task.new(:name=>params[:task][:name],:description=>params[:task][:message],:user_id=>current_user.id,:due_date=>params[:due_date],:task_list_id=>@tasklist.id) if !@tasklist.nil?
-			    tasks=@tasks.valid?
-					if @tasks.errors[:name][1]=="can't be blank"
-				    errors<<"Please enter task name"
-						
-					elsif !@tasks.errors[:name][0].nil?
-						errors<<"Task name already exist in this task list"
-		  	  elsif @tasks.errors[:description][1]=="can't be blank"
-				    errors<<"Please enter description message"
-					elsif !@tasks.errors[:description][0].nil?
-						errors<<"Enter more than 6 charecter in task description message"
-			    end
-			  end
-			end
-		end
-			if tasks && errors.empty?
-		      @tasks.save
-					@notify=params[:task][:notify].strip
-					if @notify.include?(', ')
-						@notify=@notify.split(', ')
-					elsif @notify.include?(',')
-						@notify=@notify.split(',')
-					end
-					
-					@to_user=@notify
-					@to_user<<params[:task][:recipient] if params[:task][:recipient]
-					
-					#@project=Project.find_by_name(params[:message][:project])
-					#~ Message.send_message_to_team_members(@project,@message,@to_users)
-          @tasks.add_in_activity(@notify,params[:task][:recipient])
-					Task.send_task_notification_to_team_members(current_user,@to_user,@tasks)
-					if !session[:attaches_id].nil?
-					  attachment=Attachment.update_attachments(session[:attaches_id],@tasks)
-					 end
-				  session[:attaches_id]=nil
-			  	#	attachment.attachable=@message
-				  #attachment.save
-          activity_id=current_user.activities.find_by_resource_type_and_resource_id("Task",@tasks.id)
-	        render :json=>@tasks.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id])
-			  else
-			    render :update do |page|
-				  page.alert errors.join("\n")
-				  end
-	      end
-	  end
->>>>>>> 2ce3e5e8b6e1935b249cd3cc768d63964352ffdb:app/controllers/tasks_controller.rb
   end
 	def project_tasklists
 		@proj=Project.find_by_id(params[:id])

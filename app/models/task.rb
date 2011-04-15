@@ -23,7 +23,6 @@ class Task < ActiveRecord::Base
     project=self.task_list.project
     project.all_members.each do |user|
       activity=self.activities.create! :user=>user
-<<<<<<< HEAD:app/models/task.rb
       activity.update_attributes(:is_subscribed=>susbscribe_emails.include?(user.email),:is_assigned=>(assigned_email==user.email)) 
     end
     susbscribe_emails.each do |email|
@@ -34,27 +33,10 @@ class Task < ActiveRecord::Base
       if !project.project_member?(user.id)
         ProjectGuest.create(:guest_id=>user.id,:project_id=>self.task_list.project_id) 
         activity.update_attributes(:is_delete=>true)
-=======
-      activity.update_attributes(:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
-			if !assigns.blank?
-        activity.update_attributes(:is_assigned=>true) if user.email==assigns[0]
-			else
-				activity.update_attributes(:is_assigned=>true) if user.id==self.user_id
-			end
-      #~ self.send_task_notification_to_team_members(self.user,to_users,self) if user.email==assigns[0]
-		end
-    to_users.each do |email|
-			email=email.lstrip
-      if email.present?
-        u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
-        u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
-				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if !self.task_list.project.is_member?(u.id) && u && u.id && !a
-				ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) if u && u.id && !self.task_list.project.project_member?(u.id)
->>>>>>> 2ce3e5e8b6e1935b249cd3cc768d63964352ffdb:app/models/task.rb
       end
       self.send_task_notification(user)
     end
+    self.send_assign_notification(assigned_email)
   end
   def get_emails(emails)
     subscribe_emails=emails.split(',').collect{ |arr| arr.strip }
@@ -66,7 +48,7 @@ class Task < ActiveRecord::Base
     ProjectMailer.delay.task_notification(user,self)
   end
   def send_assign_notification(user)
-    ProjectMailer.delay.send_task_assign_notification(user,self)
+    ProjectMailer.delay.task_assign_notification(user,self)
   end
   #~ def add_in_activity(subscribe_emails,assigned_email)
     #~ subscribe_emails=get_emails(subscribe_emails)

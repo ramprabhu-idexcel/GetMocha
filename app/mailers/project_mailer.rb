@@ -110,6 +110,12 @@ class ProjectMailer < ActionMailer::Base
     @footer_details=details.last
     mail(:from=>from,:to=>user.email, :reply_to=>"ctzt#{task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{task.user.first_name} created a new task #{task.name}",:content_type=>"text/html")
   end
+  def task_assign_notification(task,user)
+    @user = user
+    @task=task
+    @project=task.task_list.project
+    mail(:to=>user.email, :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+  end
   def task_reassigned(task,user)
     @user=user
     @task=task
