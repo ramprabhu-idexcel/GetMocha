@@ -22,7 +22,7 @@ def add_in_activity(to_users,assigns)
 			else
 				activity.update_attributes(:is_assigned=>true) if user.id==self.user_id
 			end
-      send_task_notification_to_team_members(self.user,to_users,self) if user.email==assigns
+      #~ self.send_task_notification_to_team_members(self.user,to_users,self) if user.email==assigns[0]
 		end
     to_users.each do |email|
 			email=email.lstrip

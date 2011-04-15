@@ -100,9 +100,16 @@ class TasksController < ApplicationController
 		end
 			if tasks && errors.empty?
 		      @tasks.save
-					@notify=params[:task][:notify].split(',')
+					notify=params[:task][:notify].strip
+					if notify.include?(', ')
+						@notify=notify.split(', ')
+					else
+						@notify=notify.split(',')
+					end
+					p @notify
 					@to_user=@notify
 					@to_user<<params[:task][:recipient]
+					p @to_user 
 					#@project=Project.find_by_name(params[:message][:project])
 					#~ Message.send_message_to_team_members(@project,@message,@to_users)
           @tasks.add_in_activity(@notify,params[:task][:recipient])
