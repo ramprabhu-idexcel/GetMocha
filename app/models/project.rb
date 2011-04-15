@@ -52,7 +52,12 @@ class Project < ActiveRecord::Base
 	def has_custom_task_id?
 		custom_emails.find_by_custom_type("Task").present?
 	end
-
+  def modified_task_email_id
+    "#{task_email_id.split('@')[0]}@#{APP_CONFIG[:task_email]}"
+  end
+  def modified_message_email_id
+    "#{message_email_id.split('@')[0]}@#{APP_CONFIG[:message_email]}"
+  end
   def project_unread_message(user_id)
     activities.where('activities.user_id=? AND is_read=? AND is_delete=?',user_id,false,false)
   end

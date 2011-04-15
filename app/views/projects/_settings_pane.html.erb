@@ -30,7 +30,7 @@
 							<label>Messages:</label>
 						</div>
 						<div class="info-right">
-						<span class="info"><%= project.message_email_id %></span><br />
+						<span class="info"><%= project.modified_message_email_id %></span><br />
 						<% project.custom_emails.each do |mail| %>
 							<% if mail.custom_type=="Message" %>
 							<span class="info"><%= mail.email %><%= !mail.verification_code ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= project.id %>');">Delete</a>		<br/>		
@@ -47,7 +47,7 @@
 							<label>Tasks:</label>
 						</div>
 						<div class="info-right">
-						<span class="info"><%= project.task_email_id %></span><br />
+						<span class="info"><%= project.modified_task_email_id %></span><br />
 							<% project.custom_emails.each do |mail| %>
 						<% if mail.custom_type=="Task" %><span class="info"><%= mail.email %><%= !mail.verification_code ? "(verified)" : "(unverified)" %></span><a href="#" class="edit" onclick="javascript:delete_custom_mail('<%= mail.id %>','<%= project.id %>');">Delete</a>		<br/>				<% end %>
 						<% end %>
