@@ -39,8 +39,8 @@ class Comment < ActiveRecord::Base
        "#{user_time.strftime("%l:%M%p")} (#{pluralize((diff/60).to_i,"minute")} ago)"
       when 3600..86399
        "#{user_time.strftime("%l:%M%p")} (#{pluralize((diff/3600).to_i,"hour")} ago)"
-      when 86400..108000
-       "#{user_time.strftime("%b %d")} (#{pluralize((diff/3600).to_i,"day")} ago)"
+      when 86400..1296000
+       "#{user_time.strftime("%b %d")} (#{pluralize((diff/86400).to_i,"day")} ago)"
       else
         user_time.strftime("%d/%m/%y")
       end
