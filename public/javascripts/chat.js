@@ -5,8 +5,8 @@
     data = JSON.parse(msg);	
     if(data[3]==$('#chat_project_id').val())
     {
-      var chat_content='<div class="message recent"><div class="color"></div>';
-      chat_content+='<div class="name"><span>'+data[1]+'</span></div>';
+      var chat_content='<div class="message recent"><div class="color" style="background-color:#'+data[1].color+'"></div>';
+      chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
       chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
       $('.chat-container').prepend(chat_content);
     }

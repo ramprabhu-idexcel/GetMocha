@@ -4,11 +4,11 @@ class ChatsController < ApplicationController
     @projects=Project.user_active_projects(current_user.id)
   end
   def create
-    send_to_clients ["message", current_user.chat_name, params[:chat][:message],params[:chat][:project_id]]
+    send_to_clients ["message", {:name=>current_user.chat_name,:color=>current_user.color}, params[:chat][:message],params[:chat][:project_id]]
     render :nothing=>true
   end
   private
   def send_to_clients(data)	
-    Socky.send(data.collect{|d| CGI.escapeHTML(d)}.to_json)
+    Socky.send(data.to_json)
 	end
 end
