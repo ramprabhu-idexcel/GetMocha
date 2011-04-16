@@ -34,6 +34,10 @@
   });
   
   
+  $('#chat-message').live('keypress',function(){
+    var chat=$('#chat-message').val();
+  });
+  
   
   function initial_setup()
   {
