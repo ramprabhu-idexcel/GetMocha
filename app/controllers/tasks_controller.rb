@@ -44,11 +44,12 @@ class TasksController < ApplicationController
 	def project_tasklists
 		@proj=Project.find_by_id(params[:id])
 		@tlist=@proj.task_lists
+		@users=@proj.users
 		 #~ if !@tlist.nil?
 	#~ @tlist.each do |tl|
 		 #~ @t_list<<"#{tl.name}" if !tl.name.nil?
 		 #~ end
-		render :json=>{:datas=>@tlist}.to_json
+		render :json=>{:datas=>@tlist, :users=>@users}.to_json
 	#~ end
   end
 
