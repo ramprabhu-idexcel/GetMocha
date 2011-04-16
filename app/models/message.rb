@@ -31,7 +31,7 @@ class Message < ActiveRecord::Base
 	#~ end
 	#~ end
   def add_in_activity(to_users)
-    to_users=to_users.split(',') unless to_users.is_a?(Array)
+    to_users=to_users.split(', ') unless to_users.is_a?(Array)
       self.project.users.each do |user|
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_read=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
@@ -42,7 +42,7 @@ class Message < ActiveRecord::Base
         u=User.find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>email}],:include=>:secondary_emails)
         u= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless u
 				a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Message", self.id])
-        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if self.project.is_member?(u.id) && u && u.id && !a
+        self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id) if !self.project.is_member?(u.id) && u && u.id && !a
         ProjectGuest.create(:guest_id=>u.id,:project_id=>self.project_id) if u && u.id && !self.project.project_member?(u.id)
       end
     end
@@ -51,7 +51,7 @@ class Message < ActiveRecord::Base
 		@user=user
 		@message=message
 		to_users.each do |to_user|
-			@to_user=to_user
+			@to_user=to_user.lstrip
 		ProjectMailer.delay.message_notification(@user,@to_user,@message)
 		end
 	end
