@@ -9,6 +9,6 @@ class ChatsController < ApplicationController
   end
   private
   def send_to_clients(data)	
-    Socky.send(data.collect{|d| CGI.escapeHTML(d)}.to_json,:to=>{:channels=>1})
+    Socky.send(data.collect{|d| CGI.escapeHTML(d)}.to_json)
 	end
 end
