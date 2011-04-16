@@ -3,8 +3,13 @@
   
   Socky.prototype.respond_to_message = function(msg) {
     data = JSON.parse(msg);	
-
-    alert(data);
+    if(data[3]==$('#chat_project_id').val())
+    {
+      var chat_content='<div class="message recent"><div class="color"></div>';
+      chat_content+='<div class="name"><span>'+data[1]+'</span></div>';
+      chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
+      $('.chat-container').prepend(chat_content);
+    }
   }
   
   

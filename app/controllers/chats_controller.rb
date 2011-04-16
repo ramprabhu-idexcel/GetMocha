@@ -4,7 +4,7 @@ class ChatsController < ApplicationController
     @projects=Project.user_active_projects(current_user.id)
   end
   def create
-    send_to_clients ["message", current_user.full_name, params[:chat][:message]]
+    send_to_clients ["message", current_user.chat_name, params[:chat][:message],params[:chat][:project_id]]
     render :nothing=>true
   end
   private
