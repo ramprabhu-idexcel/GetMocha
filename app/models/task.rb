@@ -198,7 +198,7 @@ class Task < ActiveRecord::Base
       when 2
         "Subscribed: #{subscribed_user_names.join(' and ')} |"
       else
-        "Subscribed: #{subscribed_user_names[0]} and <a class='expand_user' href='#'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
+        "Subscribed: #{subscribed_user_names[0]} and <a class='expand_user' href='#'>#{pluralize(subscribed_user_names.count, "others")}</a> |"
     end
   end
   def ex_task(title,project)

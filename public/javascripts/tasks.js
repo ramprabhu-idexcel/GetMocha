@@ -95,6 +95,10 @@
   });
     
   $('.expand_user').live('click',function(){
+    //~ for(i=0;i<subscribed_user_names.count;i++)
+    //~ {
+    //~ $(this).parent('subscribed').html('<span id="all_subscribed" style="display:none;">'+subscribed_user_names[i]+'</span>');
+    //~ }
     return false;
   });
   
