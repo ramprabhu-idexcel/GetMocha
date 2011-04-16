@@ -211,7 +211,7 @@ class User < ActiveRecord::Base
     activities.where('resource_type=?',"Message")
   end
   def guest_task_activities
-    activities.where('resource_type=?',"Message")
+    activities.where('resource_type=?',"Task")
   end
   def guest_update_message(project_id)
     project_id=project_id.to_i
