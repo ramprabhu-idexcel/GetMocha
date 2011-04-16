@@ -212,7 +212,7 @@ class User < ActiveRecord::Base
   end
   def guest_update_message(project_id)
     project_id=project_id.to_i
-    guest_message_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
+    activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
     project=Project.find_by_id(project_id)
     project.messages.each do |message|
       create_old(message)
