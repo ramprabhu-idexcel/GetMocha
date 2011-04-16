@@ -443,6 +443,13 @@ return false;
       return false;  
     });
   
+   $('#sub_other_users').live('click',function(){
+      var subscribe=$('#submsg').text();
+      var content=$('#all_subscribed').html();
+      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="submsg">'+subscribe+'</a>');
+      return false;
+    });
+  
   var restfulApp = Backbone.Controller.extend({
     restfulUrl: $.host,
     routes: {
