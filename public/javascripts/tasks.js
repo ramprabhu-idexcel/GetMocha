@@ -95,10 +95,6 @@
   });
     
   $('.expand_user').live('click',function(){
-    //~ for(i=0;i<subscribed_user_names.count;i++)
-    //~ {
-    //~ $(this).parent('subscribed').html('<span id="all_subscribed" style="display:none;">'+subscribed_user_names[i]+'</span>');
-    //~ }
     return false;
   });
   
@@ -572,7 +568,7 @@ return false;
       items.push('<div class="clear-fix"></div>')
       items.push('</div>');
     }
-    items.push('<p class="subscribers">'+task.subscribe+' <a id="subscribe_task" class="task-subscribe" href="#">unsubscribe</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#">unsubscribe</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments

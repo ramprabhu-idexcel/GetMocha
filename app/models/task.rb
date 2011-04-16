@@ -116,7 +116,7 @@ class Task < ActiveRecord::Base
       when 2
         "Subscribed: #{subscribed_user_names.join(' and ')} |"
       else
-        "Subscribed: #{subscribed_user_names[0]} and <a href='#'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
+        "Subscribed: #{subscribed_user_names[0]} and <a href='#' id='sub_other_users'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
     end
   end
 	 def has_attachments
@@ -230,4 +230,5 @@ class Task < ActiveRecord::Base
       ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]
     end
   end
+
 end
