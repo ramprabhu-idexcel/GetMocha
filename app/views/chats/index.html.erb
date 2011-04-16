@@ -1,15 +1,7 @@
-
+<%= socky %>
 <%=javascript_include_tag "chat"%>
-<% content_for :head do %>
-  <%= socky :channels => 1 %>
-<% end %>
-<script>
-Socky.prototype.respond_to_message = function(msg) {
-    data = JSON.parse(msg);	
 
-    alert(data);
-  }
-</script>
+    
 <div class="l-panel-contain">
   <div class="l-panel">
     <div class="projects-list">
@@ -41,10 +33,11 @@ Socky.prototype.respond_to_message = function(msg) {
 
 
 <div class="r-panel-contain">
-		<div class="r-panel">
+		<div class="r-panel" style="display:none;">
 			<div class="comment-contain">
 				<div class="comment-input no-attach">
 					<label class="hidden">Message:</label> 
+					<%=hidden_field_tag "chat[project_id]",:id=>"chat_project_id"%>
 					<textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
 					<div class="chat-right">
 						<a class="attach" href="/chats-1"></a>

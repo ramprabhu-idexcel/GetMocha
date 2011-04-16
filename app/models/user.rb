@@ -210,9 +210,13 @@ class User < ActiveRecord::Base
   def guest_message_activities
     activities.where('resource_type=?',"Message")
   end
+  def guest_task_activities
+    activities.where('resource_type=?',"Task")
+  end
   def guest_update_message(project_id)
     project_id=project_id.to_i
-    activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
+    guest_message_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.project_id==project_id}
+    guest_task_activities.collect{|a| a.update_attribute(:is_delete,false) if a.resource.task_list.project_id==project_id}
     project=Project.find_by_id(project_id)
     project.messages.each do |message|
       create_old(message)
@@ -220,9 +224,15 @@ class User < ActiveRecord::Base
         create_old(comment)
       end
     end
+    project.tasks.each do |task|
+      create_old(task)
+      task.comments.each do |comment|
+        create_old(comment)
+      end
+    end
   end
   def create_old(object)
-    activity=activities.find_or_create_by_resource_type_and_resource_id(object.class.to_s,object.id)
+    activity=activities.find_or_create_by_resource_type_and_resource_id(object.class.name,object.id)
     activity.update_attributes(:created_at=>object.created_at,:updated_at=>object.updated_at)
   end
   def unread_all_message
@@ -300,4 +310,7 @@ class User < ActiveRecord::Base
   def self.find_all_user_with_guest
     find(:all,:conditions=>['is_guest=?',true])
   end
+  def chat_name
+    "#{first_name.capitalize} #{last_name.first.capitalize}"
   end
+end
