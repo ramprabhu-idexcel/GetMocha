@@ -19,6 +19,7 @@
     var project_id=$(this).attr('href').split('#')[1];
     $('#chat_project_id').val(project_id);
     $('.r-panel').show();
+    $('.invite').show();
   });
   
   
