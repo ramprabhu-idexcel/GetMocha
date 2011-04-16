@@ -1,6 +1,6 @@
 (function($) {
   initial_setup();
-  
+  $.unread_count={};
   Socky.prototype.respond_to_message = function(msg) {
     data = JSON.parse(msg);	
     if(data[3]==$('#chat_project_id').val())
@@ -9,6 +9,14 @@
       chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
       chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
       $('.chat-container').prepend(chat_content);
+    }
+    else
+    {
+      if(typeof($.unread_count[data[3]])!="undefined")
+        $.unread_count[data[3]]+=1;
+      else
+        $.unread_count[data[3]]=1;
+      alert($.unread_count[data[3]]);
     }
   }
   
