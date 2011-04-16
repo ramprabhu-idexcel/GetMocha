@@ -34,3 +34,40 @@
 
 
  })(jQuery);
+//~ $('#people_settings_popup').live('click',function(){
+//~ $('.modal invite-modal').toggle()
+//~ });
+//~ function add_people_settings()
+//~ {
+//~ document.getElementById('add_people').style.display="block";
+//~ document.getElementById('invite_message').value="";
+//~ document.getElementById('invite_name').value="";
+//~ document.getElementById('invite_email').value="";
+//~ }
+
+//~ function send_people_invite()
+//~ {
+//~ proj_id=document.getElementById('project_id').value;
+//~ name=document.getElementById('invite_name').value;
+//~ email=document.getElementById('invite_email').value;
+//~ message=document.getElementById('message').value;
+//~ var pars = "project_id=" + proj_id +  "&name="+ name +  "&email="+ email +  "&message="+ message;
+//~ $.ajax({
+       //~ type :'get',
+       //~ url : "/projects/invite_people_settings?"+pars,
+			  //~ success: function(data){
+				//~ if(data.length==1)
+				//~ document.getElementById('add_people').style.display="none";
+							//~ document.getElementById('invite_name').value="";
+			//~ document.getElementById('invite_email').value="";
+			//~ document.getElementById('message').value="";
+				//~ }
+    //~ });
+//~ }
+//~ function cancel_people_invite()
+//~ {
+			//~ document.getElementById('add_people').style.display="none";
+			//~ document.getElementById('invite_name').value="";
+			//~ document.getElementById('invite_email').value="";
+			//~ document.getElementById('message').value="";
+//~ }
