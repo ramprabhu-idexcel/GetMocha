@@ -6,4 +6,8 @@ class Chat < ActiveRecord::Base
   def user_name
     user.chat_name
   end
+  
+  def user_color
+    user.color ? "##{user.color}" : "#ffffff"
+  end
 end

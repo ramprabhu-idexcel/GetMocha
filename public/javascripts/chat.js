@@ -33,18 +33,24 @@
       }
     });
     $('.r-panel').show();
+    $('#chat-message').focus();
   });
   
   
   $('#chat-send').live('click',function(){
     var chat=$('#chat-message').val();
     var project_id=$('#chat_project_id').val();
-    $.ajax({
-      url:'/chats',
-      type: 'post',
-      data:{'chat[message]':chat,
-            'chat[project_id]':project_id}
-    });
+    if($.trim(chat)!="")
+    {
+      $.ajax({
+        url:'/chats',
+        type: 'post',
+        data:{'chat[message]':chat,
+              'chat[project_id]':project_id}
+      });
+      $('#chat-message').val('');
+    }
+    $('#chat-message').focus();
   });
   
   

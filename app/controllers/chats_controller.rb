@@ -5,6 +5,8 @@ class ChatsController < ApplicationController
   end
   def create
     send_to_clients ["message", {:name=>current_user.chat_name,:color=>current_user.color}, params[:chat][:message],params[:chat][:project_id]]
+    chat=current_user.chats.build(params[:chat])
+    chat.save if chat.valid?
     render :nothing=>true
   end
   def project_chat
