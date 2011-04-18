@@ -117,7 +117,7 @@ class TasksController < ApplicationController
     task=activity.resource
     comment_ids=task.comments.map(&:id)
     task_values=task.third_pane_data
-    render :json=>{:task=>task_values,:comments=>current_user.hash_activities_comments(comment_ids),:attach=>task.attach_urls}.to_json
+    render :json=>{:task=>task_values,:comments=>current_user.hash_activities_comments(comment_ids),:attach=>task.attach_urls,:subscribed_user=>task.display_subscribed_users}.to_json
   end
   def assign_task
     assigned_user=@task.assigned_user

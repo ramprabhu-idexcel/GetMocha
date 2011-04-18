@@ -1,5 +1,4 @@
 <head>
-  <link rel="stylesheet" href="/stylesheets/demo.css">
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
    <%= javascript_include_tag 'jquery.fileupload-ui','jquery.fileupload' %>
 </head>
@@ -8,15 +7,15 @@
 	<div class="modal-top-center">
 		<a class="save-btn" id="tl_add" href="#message_create" >Save</a>
 		<a class="cancel-btn" id="tl_can" href="#message_cancel" >Cancel</a>
-		Add New Task
+		Add New Task List
 	</div>
 	<div class="modal-top-right"></div>
 	<div class="modal-body-contain">
 		<div class="modal-body">
 			<div class="modal-input">
 <%form_for :tasklists, :url=>{ :controller => "task_lists", :action => "create" }, :html=>{:id=>"form4"} do |f4|%>
-				<fieldset style="border-top:medium none;">
-					<label>Name</label>
+				<fieldset  style="border-top:medium none;">
+					<label>Name:</label>
 							<%=f4.text_field 'tlname', :class=>"textfield"%>
 		    </fieldset>
 			    <fieldset>

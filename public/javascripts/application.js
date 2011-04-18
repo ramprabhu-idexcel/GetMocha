@@ -489,7 +489,12 @@ alert('afetrr bt');
       return false;
     });
     
-    
+    $('#sub_other_users').live('click',function(){
+      var subscribe=$('#submsg').text();
+      var content=$('#all_subscribed').html();
+      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="submsg">'+subscribe+'</a>');
+      return false;
+    });
     
     
 //    hide_header(); //hide the message headers initially
