@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails
 	has_many :chats
+  has_many :recent_chats, :class_name => 'Chat', :order => 'updated_at DESC', :limit => 20
 	has_many :invitations
   belongs_to :owner,:class_name=>"User"
 	attr_accessible :name,:status,:message_email_id,:task_email_id,:is_public,:user_id
