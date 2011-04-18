@@ -1288,7 +1288,7 @@ function find_month(month)
 }
 function close_comment_area()
 {
-  $('.comment-contain').toggle('slow');
+  $('.comment-contain').hide();
   $('#comment-message').val('');
 }
 
