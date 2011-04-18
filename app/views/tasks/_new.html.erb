@@ -38,12 +38,12 @@
 					 <% end %>
 			    </fieldset>
           <fieldset>
-            <label>Tasklist:</label>
+            <label>Task List:</label>
 						<%=text_field_tag  'tasklist',nil, :class=>"textfield", :id=>"t_list"  %>
 						<input type="hidden" id="t_list_hidden" name="task[task_list_id]" value=""/>
 					</fieldset>
 					<fieldset>
-            <label>Assign:</label>
+            <label>Assign to:</label>
 						<%=text_field_tag  'recipient',nil, :class=>"textfield", :id=>"assign_to"  %>
           </fieldset>
 					<fieldset>
@@ -51,7 +51,7 @@
 						<%=text_field_tag  'notify',nil, :class=>"textfield" , :id=>"notifys" %>
 			    </fieldset>
 					<fieldset>
-					<label>Due_Date:</label>
+					<label>Due Date:</label>
 						<span style="width:100px;" class="textfield" id="txtInput3">   </span>
 						<input type="hidden" id="date_hidden" name="task[due_date]" />
 						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
