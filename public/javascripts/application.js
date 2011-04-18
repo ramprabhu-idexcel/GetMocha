@@ -190,9 +190,13 @@ alert('afetrr bt');
       if(sec=="project")
         sec=c[0]+'/'+c[1];
       var sort_by=$('.sort.selected').text();
+      //~ $('.starred starred_count').addClass('open');      
       var order=$('.asc-desc.selected').children('span').attr('class');
       window.location="#"+sec+'?sort_by='+sort_by+'&order='+order;
-    }
+       if(sort_by=="Starred")
+          $('#all_messages').attr('class','all-messages has-unread');
+          $('#starred_messages').attr('class','starred starred_count open');
+       }
     
     //Expand all message
     $('#message_expand').live('click',function(){
