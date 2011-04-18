@@ -40,11 +40,28 @@
 					<%=hidden_field_tag "chat[project_id]",:id=>"chat_project_id"%>
 					<textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
 					<div class="chat-right">
-						<a class="attach" href="/chats-1"></a>
+						<a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
 						<input type="submit" value="Send" class="chat-send" id="chat-send"></input>
 					</div>
 					<%=clear_fix%>
 				</div>
+						<div class="attach-contain" style="display:none;">
+				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
+				<input type="hidden" id="attach_hidden" name="attach_id" value=""/>
+						<fieldset id="attach" class="open">
+						<div id="loader1" style="display:none;">
+	           <img src="/images/spinner.gif" />
+					</div>
+					
+					<div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
+						<div class="drag-drop">Drag and drop files here</div>
+						<table id="files"></table>
+						<div id="attachment_files"> </div>
+						</div>
+		        </fieldset>
+					    <button id="start_uploads", style="display:none;">Start uploads</button>
+		      <% end %>
+					<iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 				<%=clear_fix%>
 			</div>
 			<div class="chat-container" style="height: 159px;">
@@ -54,3 +71,45 @@
 			</div>
 		</div>
 	</div>
+	
+			<script>
+	function show_drag_and_drop()
+	{
+	
+	if ($('.attach-contain').css('display')=="block")
+		$('.attach-contain').css('display','none');
+	else
+		$('.attach-contain').css('display','block');
+	}
+	var attachitem=[];
+		$(function () {
+    $('#form4').fileUploadUI({
+    uploadTable: $('#files'),
+    downloadTable: $('#attachment_files'),
+			onProgress: function(event, files, index, xhr, handler){
+		$('#loader1').show();
+		},
+    buildUploadRow: function (files, index) {
+        return false;    },
+    buildDownloadRow: function (file) {
+a=file.id;
+var original=file.file
+var b=original.lastIndexOf('.')
+var c=original.substring(b)
+var d=original.split(c)[0]
+if(d.length > 12)
+{
+   var e=d.substring(original,10)
+   var file1=e.concat(c)
+ }
+ 		 attachitem.push(a);
+     document.getElementById('attach_hidden').value=attachitem;
+ 	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file+ '</span></div>');
+    },
+			onComplete:function (event, files, index, xhr, handler) {
+    $('#loader1').hide();
+}
+});
+});
+	
+	</script>
