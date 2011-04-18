@@ -33,44 +33,44 @@
 
 
 <div class="r-panel-contain">
-		<div class="r-panel" style="display:none;">
-			<div class="comment-contain">
-				<div class="comment-input no-attach">
-					<label class="hidden">Message:</label> 
-					<%=hidden_field_tag "chat[project_id]",:id=>"chat_project_id"%>
-					<textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
-					<div class="chat-right">
-						<a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
-						<input type="submit" value="Send" class="chat-send" id="chat-send"></input>
-					</div>
-					<%=clear_fix%>
-				</div>
-						<div class="attach-contain" style="display:none;">
+  <div class="r-panel" style="display:none;">
+    <div class="comment-contain">
+      <div class="comment-input no-attach">
+        <label class="hidden">Message:</label> 
+        <textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
+        <div class="chat-right">
+          <a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
+          <input type="submit" value="Send" class="chat-send" id="chat-send"></input>
+        </div>
+        <%=clear_fix%>
+      </div>
+      <div class="attach-contain" style="display:none;">
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
-				<input type="hidden" id="attach_hidden" name="attach_id" value=""/>
-						<fieldset id="attach" class="open">
-						<div id="loader1" style="display:none;">
-	           <img src="/images/spinner.gif" />
-					</div>
-					
-					<div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
-						<div class="drag-drop">Drag and drop files here</div>
-						<table id="files"></table>
-						<div id="attachment_files"> </div>
-						</div>
-		        </fieldset>
-					    <button id="start_uploads", style="display:none;">Start uploads</button>
-		      <% end %>
-					<iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
-				<%=clear_fix%>
-			</div>
-			<div class="chat-container" style="height: 159px;">
+          <input type="hidden" id="attach_hidden" name="attach_id" value=""/>
+          <fieldset id="attach" class="open">
+            <div id="loader1" style="display:none;">
+               <img src="/images/spinner.gif" />
+            </div>
+
+            <div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
+              <div class="drag-drop">Drag and drop files here</div>
+              <table id="files"></table>
+              <div id="attachment_files"> </div>
+            </div>
+          </fieldset>
+          <button id="start_uploads", style="display:none;">Start uploads</button>
+        <% end %>
+        <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
+      <%=clear_fix%>
+    </div>
+
+  </div>
+  <div class="chat-container" style="height: 159px;">
 				
 				
-				<%=clear_fix%>
-			</div>
-		</div>
-	</div>
+    
+  </div>
+</div>
 	
 			<script>
 	function show_drag_and_drop()

@@ -7,9 +7,10 @@ class ChatsController < ApplicationController
     send_to_clients ["message", {:name=>current_user.chat_name,:color=>current_user.color}, params[:chat][:message],params[:chat][:project_id]]
     render :nothing=>true
   end
-  def show
-    @project=Project.find_by_id(params[:id])
+  def project_chat
+    @project=Project.find_by_id(params[:project_id])
     @chats=@project.chats
+    render :partial=>"chat_content",:locals=>{:project=>@project}
   end
   private
   def send_to_clients(data)	

@@ -96,7 +96,13 @@ end
   match 'unsubscribe_task_email/:user_id/:task_id'=>'activities#unsubscribe',:as=>'unsubscribe',:method=>:get
   resources :activities
   resources :task_lists
-  resources :chats
+  resources :chats do
+    collection do
+      get :subscribe
+      get :unsubscribe
+    end
+  end
+  match 'chats/:project_id/project_chat'=>'chats#project_chat',:as=>'project_chats',:method=>:get
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"

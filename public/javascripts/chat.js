@@ -25,7 +25,13 @@
     $('a.project').removeClass('open');
     $(this).addClass('open');
     var project_id=$(this).attr('href').split('#')[1];
-    $('#chat_project_id').val(project_id);
+    $.ajax({
+      url:'/chats/'+project_id+'/project_chat',
+      type: 'get',
+      success:function(data){
+        $('.chat-container').html(data);
+      }
+    });
     $('.r-panel').show();
   });
   
