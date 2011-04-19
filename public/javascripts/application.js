@@ -1509,10 +1509,8 @@ function close_comment_area()
     });
     return valid;
   }
-<<<<<<< HEAD:public/javascripts/application.js
   function close_shortcut()
   {
    $('.keyboard-shortcuts').css('display','none');
   }
-=======
->>>>>>> master:public/javascripts/application.js
+

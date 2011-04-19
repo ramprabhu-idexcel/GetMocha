@@ -71,10 +71,11 @@
 <script>
   $('.chat-container').scroll(function(){	
     var page_number=parseInt($('#page_number').val());
+    var project_id=$('#chat_project_id').val();
     if($('.chat-container').scrollTop() > ($('.chat-container').position().top + $('.chat-container').height()) && page_number!=0)
     {
       $.ajax({
-        url:'/load_more/1?page='+page_number,
+        url:'/load_more/'+project_id+'?page='+page_number,
         type:'get',
         success:function(data){
           $('.chat-container').append(data);
