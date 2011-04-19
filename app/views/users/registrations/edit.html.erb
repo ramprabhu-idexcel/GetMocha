@@ -174,13 +174,13 @@
 						<div class="info-right">
 						
 			       <%= hidden_field :color,:data,:size =>1,:id =>'choose_color_value' ,:value=>current_user.color%>
-			       <%= text_field :color,:data,:class=>"textfield",:size =>1,:disabled=>true,:id =>'color_code' ,:style=>"width:19px;height:19px;background-color:##{current_user.color}"%>
+			       <%= text_field :color,:data,:class=>"textfield",:size =>1,:disabled=>false,:id =>'color_code' ,:style=>"width:19px;height:19px;background-color:##{current_user.color}"%>
              <!--<img src="/images/color-chooser.png" alt="color-choose" id="colorSelector"/>-->
 						 
-						 						<div class="fieldHolder">
+						 						<!--<div class="fieldHolder">
 								 
 						<input type="text" value="" id="myField1" alt="Select a Color"  style="width: 30px;height: 22px;background: none;border: none;color: #000000; cursor:pointer;" onHide="javascript:alert("sdSD");" readonly>
-						</div> 
+						</div> -->
 						 </div>
 				    </fieldset>
 						<div class="color-chooser-display" id="color" style="margin-right: 0px; ">
@@ -191,7 +191,7 @@
 <!--<input id="myField1" class="color {valueElement:'color_code',styleElement:'color_code'}">-->
 
 <script type="text/javascript">
-var myPicker = new jscolor.color(document.getElementById('myField1'), {valueElement:'choose_color_value',styleElement:'color_code'})
+var myPicker = new jscolor.color(document.getElementById('color_code'), {valueElement:'choose_color_value',styleElement:'color_code'})
 //myPicker.fromString('99FF33')  // now you can access API via 'myPicker' variable
 </script>
 				</form>
