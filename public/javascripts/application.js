@@ -722,24 +722,22 @@ alert('afetrr bt');
   $('.my-account.open').live('click',function(){
     return false;
   });
-  
-  $('#mycontact1').live('click',function(){
-    $('#mycontact1').toggleClass('open')
+ $('#mycontact1').live('click',function(){
+    $('#mycontact1').attr('Class','m-tab alt open')
     $('#my_profile').hide();
-    $('#myprofile1').toggleClass('open')
+    $('#myprofile1').attr('Class','m-tab')
     $('#my_contacts').show();
     $('#people_settings_popup').show();
     return false;
   });
       
   $('#myprofile1').live('click',function(){
-    $('#mycontact1').toggleClass('open')
+    $('#mycontact1').attr('Class','m-tab alt')
     $('#my_profile').show();
-    $('#myprofile1').toggleClass('open')
+    $('#myprofile1').attr('Class','m-tab open')
     $('#my_contacts').hide();
     return false;
    });
-  
   
   
   $('#colorSelector').ColorPicker({
