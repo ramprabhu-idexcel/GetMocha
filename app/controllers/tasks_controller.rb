@@ -1,9 +1,14 @@
 class TasksController < ApplicationController
-	before_filter :authenticate_user!
+	before_filter :authenticate_user!, :except=>['unsubscribe_via_email_task']
 #  before_filter :find_activity,:only=>['subscribe','star_task','show','unsubscribe','destroy','project_task_comment']
 	layout 'application', :except=>['new']
 	 before_filter :find_task,:only=>['update','complete_task','destroy','assign_task']
 	 before_filter :clear_session_project,:only=>['all_tasks','starred_tasks','my_tasks','completed_tasks']
+	 		def unsubscribe_via_email_task
+		@activity=Activity.find_by_user_id_and_resource_type_and_resource_id(params[:user_id],"Task",params[:message_id])
+		@activity.update_attribute(:is_subscribed,false)
+		redirect_to "/"
+	end
 	def index
 		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
@@ -145,6 +150,7 @@ class TasksController < ApplicationController
   end
 	def find_task
 		@task=Task.find_by_id(params[:id])
-	 end	
+	end	
+
 end
 
