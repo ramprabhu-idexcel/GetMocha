@@ -125,9 +125,7 @@ end
 	end
 	def unsubscribe_via_email
 		@activity=Activity.find_by_user_id_and_resource_type_and_resource_id(params[:user_id],"Message",params[:message_id])
-		p @activity
 		@activity.update_attribute(:is_subscribed,false)
-		p @activity
 		redirect_to "/"
 	end
   def destroy

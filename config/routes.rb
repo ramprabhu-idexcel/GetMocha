@@ -70,6 +70,7 @@ end
   match 'subscribe/:activity_id'=>'activities#subscribe',:as=>'subscribe_activity',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
+  match 'unsubscribe_via_email_task/:user_id/:message_id'=>'tasks#unsubscribe_via_email_task',:as=>'unsubscribe_message_via_email_task',:method=>:post
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
   resource :comments
   match '/remove_attach/:id' =>"attachments#remove_attach"
