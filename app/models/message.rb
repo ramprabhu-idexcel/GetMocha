@@ -31,9 +31,9 @@ class Message < ActiveRecord::Base
 	#~ end
 	#~ end
   def add_in_activity(to_users)
-    to_users=to_users.split(', ') unless to_users.is_a?(Array)
+    to_users=to_users.split(',') unless to_users.is_a?(Array)
       self.project.users.each do |user|
-      activity=self.activities.create! :user=>user
+			activity=self.activities.create! :user=>user
       activity.update_attributes(:is_read=>(user.id==self.user_id),:is_subscribed=>true) if user.id==self.user_id || to_users.include?(user.email)
     end
     to_users.each do |email|

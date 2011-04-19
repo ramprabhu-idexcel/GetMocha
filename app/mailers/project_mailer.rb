@@ -49,9 +49,10 @@ class ProjectMailer < ActionMailer::Base
     if subscribed_list
     subscribed_list.each do|activity|
       activity_name=activity.user
-      @people<<activity_name.full_name<<"," if activity.user
-     end
+      @people<<activity_name.full_name if activity.user && !activity.user.first_name.nil?
     end
+    @people=@people.join(',')
+   end
     mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}",:content_type=>"text/html")
     @content_type="text/html"
   end
