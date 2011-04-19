@@ -10,7 +10,11 @@ class ChatsController < ApplicationController
     send_to_clients ["chat", user_chat_data, params[:chat][:message],params[:chat][:project_id]]
     send_count_to_clients ["count", params[:chat][:project_id],1]
     chat=current_user.chats.build(params[:chat])
-    chat.save if chat.valid?
+    if chat.valid?
+      chat.save
+			attachment=Attachment.update_attachments(session[:attaches_id],chat) if !session[:attaches_id].nil?
+      session[:attaches_id]=nil
+    end
     render :nothing=>true
   end
   def project_chat
