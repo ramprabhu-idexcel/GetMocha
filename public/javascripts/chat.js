@@ -2,6 +2,12 @@
   initial_setup();
   $.unread_count={};
   $.prev_user_id=0;
+  var page = window.location.hash;
+  if(page!="")
+  {
+    var project_id=page.split('#')[1];
+    $('#cp'+project_id).addClass('open');
+  }
   Socky.prototype.respond_to_message = function(msg) {
     data = JSON.parse(msg);	
     //for chat messages
@@ -20,6 +26,7 @@
         var chat_content='<div class="message recent '+chat_class+'"><div class="color" style="background-color:#'+data[1].color+'"></div>';
         chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
         chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
+        
         $('.chat-container').prepend(chat_content);
       }
     }
@@ -126,7 +133,21 @@
   
   $('#chat-send').live('click',function(){
     var chat=$('#chat-message').val();
-    var project_id=get_project_id()
+    var project_id=get_project_id();
+    send_chat();
+  });
+  
+  $('#chat-message').live('keypress',function(event){
+    if(event.keyCode==13)
+    {
+      send_chat();
+    }
+  });
+  
+  function send_chat()
+  {
+    var chat=$('#chat-message').val();
+    var project_id=get_project_id();
     if($.trim(chat)!="")
     {
       $.ajax({
@@ -138,12 +159,7 @@
       $('#chat-message').val('');
     }
     $('#chat-message').focus();
-  });
-  
-  
-  $('#chat-message').live('keypress',function(){
-    var chat=$('#chat-message').val();
-  });
+  }
   
   $('.popout').live('click',function(){
     var project_id=get_project_id()
@@ -185,6 +201,6 @@
     $('.r-panel').hide();
      $('.chat-header').hide();
   }
-
+  
 
  })(jQuery);
