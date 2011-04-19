@@ -193,10 +193,33 @@ alert('afetrr bt');
       //~ $('.starred starred_count').addClass('open');      
       var order=$('.asc-desc.selected').children('span').attr('class');
       window.location="#"+sec+'?sort_by='+sort_by+'&order='+order;
-       if(sort_by=="Starred")
+      sorting(sort_by);     
+       }
+       
+       function sorting(sort_by)
+       {
+          if(sort_by=="Starred")
+         {
           $('#all_messages').attr('class','all-messages has-unread');
           $('#starred_messages').attr('class','starred starred_count open');
-       }
+         }
+         else
+         {
+          $('#all_messages').attr('class','all-messages has-unread open');
+          $('#starred_messages').attr('class','starred starred_count');
+         }
+        }
+        
+     $('#all_messages').live('click',function(){       
+       $('.sort').removeClass('selected');
+       $('#select_date').addClass('selected');
+       });
+       
+       $('.projects-list').live('click',function(){
+       $('.sort').removeClass('selected');
+       $('#select_date').addClass('selected');
+       });
+       
     
     //Expand all message
     $('#message_expand').live('click',function(){
