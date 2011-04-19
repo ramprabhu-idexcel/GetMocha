@@ -1,6 +1,7 @@
 (function($) {
   initial_setup();
   $.unread_count={};
+  $.prev_user_id=0;
   Socky.prototype.respond_to_message = function(msg) {
     data = JSON.parse(msg);	
     //for chat messages
@@ -8,7 +9,15 @@
     {
       if(data[3]==$('#chat_project_id').val())
       {
-        var chat_content='<div class="message recent"><div class="color" style="background-color:#'+data[1].color+'"></div>';
+        var chat_class="";
+        if($.prev_user_id==data[1].id)
+        {
+        chat_class="same-user";
+        }
+        else
+          chat_class="";
+        $.prev_user_id=data[1].id;
+        var chat_content='<div class="message recent '+chat_class+'"><div class="color" style="background-color:#'+data[1].color+'"></div>';
         chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
         chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
         $('.chat-container').prepend(chat_content);
