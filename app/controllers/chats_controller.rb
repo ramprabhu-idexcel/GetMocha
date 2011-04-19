@@ -12,6 +12,7 @@ class ChatsController < ApplicationController
 		end
   def create
     send_to_clients ["chat", user_chat_data, params[:chat][:message],params[:chat][:project_id]]
+    send_count_to_clients ["count", params[:chat][:project_id],1]
     chat=current_user.chats.build(params[:chat])
     chat.save if chat.valid?
     render :nothing=>true
@@ -62,6 +63,9 @@ class ChatsController < ApplicationController
   end
   def send_user_offline(data)
     Socky.send(data.to_json,:to=>{:channels=>params[:project_id]})
+  end
+  def send_count_to_clients(data)
+    Socky.send(data.to_json,:to=>{:channels=>"count"})
   end
   def update_online_status
     project_id=params[:chat][:project_id] if params[:chat]

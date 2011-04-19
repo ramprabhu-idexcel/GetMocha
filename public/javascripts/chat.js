@@ -7,7 +7,7 @@
     //for chat messages
     if(data[0]=="chat")
     {
-      if(data[3]==$('#chat_project_id').val())
+      if(data[3]==parseInt($('#chat_project_id').val()))
       {
         var chat_class="";
         if($.prev_user_id==data[1].id)
@@ -22,13 +22,14 @@
         chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
         $('.chat-container').prepend(chat_content);
       }
-      else
-      {
-        if(typeof($.unread_count[data[3]])!="undefined")
-          $.unread_count[data[3]]+=1;
+    }
+    else if(data[0]=="count")
+    {
+        if(typeof($.unread_count[data[1]])!="undefined")
+          $.unread_count[data[1]]+=1;
         else
-          $.unread_count[data[3]]=1;
-      }
+          $.unread_count[data[1]]=1;
+        show_unread_count(data[1],$.unread_count[data[1]]);
     }
     //for online users
     else if(data[0]=="online_users")
@@ -71,7 +72,26 @@
   function remove_online_user(user)
   {
     if($('#ui'+user.id).length>0)
-    $('#ui'+user.id).remove();
+      $('#ui'+user.id).remove();
+  }
+  
+  function show_unread_count(project_id,count)
+  {
+    var project_link=$('#cp'+project_id);
+    if(project_link.length>0 && !project_link.hasClass('open'))
+    {
+      var project_name=project_link.text();
+      if(count==0)
+      {
+        project_link.html('<span class="icon"></span>'+project_name);
+        project_link.removeClass('has-unread');
+      }
+      else
+      {
+        project_link.html('<span class="num-unread">'+count+'</span><span class="icon"></span>'+project_name);
+        project_link.addClass('has-unread');
+      }
+    }
   }
   
   $('a.project').live('click',function(){
@@ -81,7 +101,10 @@
       var old_project_id="";
     $('a.project').removeClass('open');
     $(this).addClass('open');
+    var project_name=$(this).html().split('<span class="icon"></span>')[1];
     var project_id=$(this).attr('href').split('#')[1];
+    $(this).html('<span class="icon"></span>'+project_name);
+    $(this).removeClass('has-unread');
     if(old_project_id==project_id)
       old_project_id="";
     $.ajax({
@@ -137,10 +160,7 @@
     
   });
   
-  $('.chat-container').scroll(function(){
-    alert('here');
-  });
-  
+ 
 
   
   function lastPostFunc()
