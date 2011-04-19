@@ -99,7 +99,14 @@
 		 {
 		  if(event.identifier=='ENTER')
       {
-        short_modal('/projects/add_new');
+					if ($('#add_new_mods').css('display')=="block")
+					{
+					$('#add_new_mods').css('display','none')
+					}
+					else
+					{
+					short_modal('/projects/add_new');	
+					}
       }
       if(event.identifier=='GS')
       {
