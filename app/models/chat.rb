@@ -1,7 +1,7 @@
 class Chat < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :user
-	belongs_to :attachable, :polymorphic => true
+  has_many :attachments ,:as => :attachable, :dependent=>:destroy
   
   def user_name
     user.chat_name
