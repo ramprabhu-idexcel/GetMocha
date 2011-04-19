@@ -190,9 +190,23 @@ alert('afetrr bt');
       if(sec=="project")
         sec=c[0]+'/'+c[1];
       var sort_by=$('.sort.selected').text();
+      //~ $('.starred starred_count').addClass('open');      
       var order=$('.asc-desc.selected').children('span').attr('class');
       window.location="#"+sec+'?sort_by='+sort_by+'&order='+order;
-    }
+       }    
+    
+     $('#all_messages').live('click',function(){       
+       $('.sort').removeClass('selected');
+       $('#select_date').addClass('selected');
+       });
+       
+       $('.projects-list').live('click',function(){
+       $('.sort').removeClass('selected');
+       $('.asc-desc').removeClass('selected');
+       $('#select_date').addClass('selected');
+       $('#select_descending').addClass('selected');
+       });
+       
     
     //Expand all message
     $('#message_expand').live('click',function(){
@@ -277,7 +291,7 @@ alert('afetrr bt');
     
     //display the sort message
     $('.sort-by.message-sort').click(function(){
-      $('.sort-by-tooltip.message-sort-down').slideToggle('slow');
+      $('.sort-by-tooltip.message-sort-down').slideToggle('fast');
       return false;
     });
     
@@ -1288,7 +1302,7 @@ function find_month(month)
 }
 function close_comment_area()
 {
-  $('.comment-contain').toggle('slow');
+  $('.comment-contain').hide();
   $('#comment-message').val('');
 }
 
