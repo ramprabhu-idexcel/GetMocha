@@ -84,6 +84,7 @@ end
     member do
       get :project_tasklists
       put :assign_task
+     
     end
     collection do
       put :complete_task
@@ -101,6 +102,7 @@ end
     collection do
       post :subscribe
       post :unsubscribe
+       get :invite_chat_settings
     end
   end
   match 'chats/:project_id/project_chat'=>'chats#project_chat',:as=>'project_chats',:method=>:get

@@ -13,3 +13,86 @@
 </div>
 
 	
+<<<<<<< HEAD:app/views/chats/index.html.erb
+=======
+		
+	<script>
+$('.chat_invite').live('click',function(){
+document.getElementById('add_people').style.display="block";
+document.getElementById('invite_message').value="";
+document.getElementById('invite_name').value="";
+document.getElementById('invite_email').value="";
+});
+
+function send_people_invite()
+{
+var proj_id=$('#chat_project_id').val();
+var name=document.getElementById('invite_name').value;
+var email=document.getElementById('invite_email').value;
+var message=document.getElementById('message').value;
+var pars = "project_id=" + proj_id +  "&name="+ name +  "&email="+ email +  "&message="+ message;
+$.ajax({
+       type :'get',
+       url : "/chats/invite_chat_settings?"+pars,
+			  success: function(data){
+				if(data.length==1)
+				document.getElementById('add_people').style.display="none";
+							document.getElementById('invite_name').value="";
+			document.getElementById('invite_email').value="";
+			document.getElementById('message').value="";
+				}
+    });
+}
+function cancel_people_invite()
+{
+			document.getElementById('add_people').style.display="none";
+			document.getElementById('invite_name').value="";
+			document.getElementById('invite_email').value="";
+			document.getElementById('message').value="";
+}
+</script>
+
+	
+			<script>
+	function show_drag_and_drop()
+	{
+	
+	if ($('.attach-contain').css('display')=="block")
+		$('.attach-contain').css('display','none');
+	else
+		$('.attach-contain').css('display','block');
+	}
+	var attachitem=[];
+		$(function () {
+    $('#form4').fileUploadUI({
+    uploadTable: $('#files'),
+    downloadTable: $('#attachment_files'),
+			onProgress: function(event, files, index, xhr, handler){
+		$('#loader1').show();
+		},
+    buildUploadRow: function (files, index) {
+        return false;    },
+    buildDownloadRow: function (file) {
+a=file.id;
+var original=file.file
+var b=original.lastIndexOf('.')
+var c=original.substring(b)
+var d=original.split(c)[0]
+if(d.length > 12)
+{
+   var e=d.substring(original,10)
+   var file1=e.concat(c)
+ }
+ 		 attachitem.push(a);
+     document.getElementById('attach_hidden').value=attachitem;
+ 	   return $('<div id="attachment_' + a + '" class="attachment">'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>' +'<span class="filename">' + file.file+ '</span></div>');
+    },
+			onComplete:function (event, files, index, xhr, handler) {
+    $('#loader1').hide();
+}
+});
+});
+	
+	</script>
+
+>>>>>>> 573d89194338d398d616d5524b71e18290a7809f:app/views/chats/index.html.erb

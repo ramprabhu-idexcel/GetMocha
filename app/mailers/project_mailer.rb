@@ -63,6 +63,14 @@ class ProjectMailer < ActionMailer::Base
     mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com",:content_type=>"text/html")
     @content_type="text/html"
   end
+  def chat_invite(user,project,email,message)
+    @user=user
+    @message=message if message.present?
+    @message="#{user.full_name} wants to chat with you on Mocha about #{project.name}." unless @message
+    @invite_link="#{APP_CONFIG[:site_url]}/chats##{project.id}"
+    mail(:to=>"#{email}", :subject=>"#{user.full_name}  wants to chat with you on Mocha",:content_type=>"text/html")
+    @content_type="text/html"
+  end
   def message_reply(user,comment)
     @user=user
     @comment=comment
@@ -123,4 +131,5 @@ class ProjectMailer < ActionMailer::Base
     @project=task.task_list.project
     mail(:to=>user.email, :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
+  
 end
