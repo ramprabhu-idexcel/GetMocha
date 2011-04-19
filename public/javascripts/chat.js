@@ -137,6 +137,17 @@
     
   });
   
+  $('.chat-container').scroll(function(){
+    alert('here');
+  });
+  
+
+  
+  function lastPostFunc()
+  {
+    alert('scrolling');
+  }
+  
   function get_project_id()
   {
     return $('#chat_project_id').val();

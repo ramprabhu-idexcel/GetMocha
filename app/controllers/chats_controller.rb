@@ -22,6 +22,10 @@ class ChatsController < ApplicationController
     send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
     render :layout=>false
   end
+  def load_more
+    @chats=@project.next_chats(params[:page].to_i)
+    render :partial=>"chat_messages",:locals=>{:chats=>@chats}
+  end
   def subscribe
     #~ update_online(params["channels"]["0"],params["client_id"])
     #~ send_to_clients ["online_users",user_chat_data, params[:chat][:message],params[:chat][:project_id]]
