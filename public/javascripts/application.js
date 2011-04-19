@@ -206,7 +206,6 @@ alert('afetrr bt');
        $('#select_date').addClass('selected');
        $('#select_descending').addClass('selected');
        });
-       
     
     //Expand all message
     $('#message_expand').live('click',function(){

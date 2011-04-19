@@ -66,12 +66,12 @@
 <div class="sort-by-tooltip task-sort-down" style="display:none;">
 	<div class="sort-by-top"></div>
 	<ul>
-		<li class="sort selected sort-task"><span class="task-date">Date</span></li>
-		<li class="sort sort-task"><span class="star-task">Starred</span></li>
+		<li class="sort selected sort-task" id="select_task_date"><span class="task-date">Date</span></li>
+		<li class="sort sort-task" id="select_task_starred"><span class="star-task">Starred</span></li>
 	</ul>
 	<ul>
-		<li class="asc-desc sort-task selected"><span class="asc">Ascending</span></li>
-		<li class="asc-desc sort-task"><span class="desc">Descending</span></li>
+		<li class="asc-desc sort-task selected" id="select_task_ascending"><span class="asc">Ascending</span></li>
+		<li class="asc-desc sort-task" id="select_task_descending"><span class="desc">Descending</span></li>
 	</ul>
 </div>
 <div id="add_new_mods" class="modal add-new-modal" style="display:none">
@@ -1210,6 +1210,29 @@ if(is_open=="0")
 			}
 		}
 		
+		$('#all_tasks').live('click',function(){
+			$('#select_task_starred').removeClass('selected');
+			$('#select_task_ascending').addClass('selected');
+       $('#select_task_date').addClass('selected');
+			 $('#select_task_descending').removeClass('selected');
+		});
+		
+		$('#my_tasks').live('click',function(){
+		$('#select_task_starred').removeClass('selected');
+		$('#select_task_ascending').addClass('selected');
+    $('#select_task_date').addClass('selected');
+		$('#select_task_descending').removeClass('selected');
+		});
+		
+	 $('#completed_tasks').live('click',function(){
+		$('#select_task_starred').removeClass('selected');
+		$('#select_task_ascending').addClass('selected');
+    $('#select_task_date').addClass('selected');
+		$('#select_task_descending').removeClass('selected');
+		});
+		
+		
+			
 </script>
 
 </html>
