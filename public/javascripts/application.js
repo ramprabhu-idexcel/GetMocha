@@ -1363,8 +1363,6 @@ function close_comment_area()
       errors.push('Task name cannot be empty');
     if($.trim(project_id)=="")
       errors.push('Please select a project');
-    if($.trim(task_list_id)=="")
-      errors.push('Please select a task list');
     if(!IsValidMultipleEmail(notification_emails))
       errors.push("Please enter valid notification emails");
     if(assign_email!="" && !IsValidEmail(assign_email))
