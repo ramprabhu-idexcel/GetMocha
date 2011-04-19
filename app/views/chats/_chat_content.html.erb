@@ -1,4 +1,5 @@
 <%= socky :channels=>[project.id],:client_id =>current_user.id%>
+<%=javascript_include_tag 'size-container','open'%>
 <div class="m-panel-contain">
   <div class="m-panel">
     <div class="sub-header">Participants</div>
@@ -53,7 +54,7 @@
     </div>
 
   </div>
-  <div class="chat-container" style="height: 159px;">
+  <div class="chat-container">
 				
     <%=hidden_field_tag "chat[project_id]",project.id,:id=>"chat_project_id"%>
     <%=hidden_field_tag "page",20,:id=>"page_number"%>
@@ -88,7 +89,10 @@
     }
 
   });
-
+  
+  inputHeight = $('.comment-contain')[0].offsetHeight;
+  panelHeight = $('.r-panel-contain')[0].offsetHeight;
+  $('.chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
 </script>
 
 
