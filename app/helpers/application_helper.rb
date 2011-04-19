@@ -7,7 +7,7 @@ module ApplicationHelper
 	end
   def comment_button
     content_tag(:div, :class=>"comment-buttons") do
-      link_to(content_tag(:span,"Add Comment"),"#",:class=>"blue-33 add_comment")+link_to("cancel","#",:class=>"cancel_comment")
+      link_to(content_tag(:span,"Add Comment"),"#",:class=>"blue-33 add_comment")+link_to("Cancel","#",:class=>"cancel cancel_comment")
     end
   end
   def clear_fix

@@ -52,8 +52,8 @@
 			    </fieldset>
 					<fieldset>
 					<label>Due Date:</label>
-						<span style="width:100px;" class="textfield" id="txtInput3">   </span>
-						<input type="hidden" id="date_hidden" name="task[due_date]" />
+						<%=text_field_tag  'task[due_date]',nil, :style=>"width:100px;", :class=>"textfield" , :id=>"txtInput3"%>
+						<!--<input type="hidden" id="date_hidden" name="task[due_date]" />-->
 						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
@@ -86,14 +86,13 @@
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
  	var attachitem=[];
- var duser=[];
-	 var dat=[];
-$(document).ready(function(){
+ $(document).ready(function(){
 	var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
 $("#project_val").autocomplete(data, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   document.getElementById('autocomplete1_hidden').value=item.id;
 });
@@ -184,13 +183,14 @@ proj=document.getElementById("autocomplete1_hidden").value
 if (document.getElementById("project_val").value!="" && proj!="")
 {
  proj=document.getElementById("autocomplete1_hidden").value
+ var duser=[];
+ var dat=[];
 $.ajax({
       url:"/tasks/"+proj+"/project_tasklists",
       type: 'get',
 			 success: function(data){
 			 a=data.datas.length
 			 b=data.datas.length
-			 //var duser=[];
 			 $.each(data.users,function(index,value){
 				duser.push({text : value.user.email,id : value.user.id})
 			 });
@@ -198,20 +198,21 @@ $.ajax({
 			$("#assign_to").autocomplete(duser, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('t_list_hidden').value=item.id;
 });
-			 //var dat=[];
 			 $.each(data.datas,function(index,value){
 				dat.push({text : value.task_list.name,id : value.task_list.id})
 			 });
 			$("#t_list").autocomplete(dat, {
-  formatItem: function(item) {
-    return item.text;
-  }
-}).result(function(event, item) {
-  document.getElementById('t_list_hidden').value=item.id;
+  formatItem: function(items) {
+    return items.text;
+  },
+	matchContains: true
+}).result(function(event, items) {
+  document.getElementById('t_list_hidden').value=items.id;
 });
 			 }
 			 });
@@ -222,35 +223,37 @@ $.ajax({
 if (document.getElementById("project_val").value!="")
 {
  proj=document.getElementById("autocomplete1_hidden").value
+ var duser=[];
+ var dat=[];
 $.ajax({
       url:"/tasks/"+proj+"/project_tasklists",
       type: 'get',
 			 success: function(data){
 			 a=data.datas.length
 			  b=data.datas.length
-			  var duser=[];
-			 $.each(data.users,function(index,value){
+			  $.each(data.users,function(index,value){
 				duser.push({text : value.user.email,id : value.user.id})
 			 });
 			$("#assign_to").autocomplete(duser, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('t_list_hidden').value=item.id;
 });
-			 var dat=[];
 			 $.each(data.datas,function(index,value){
 				dat.push({text : value.task_list.name,id : value.task_list.id})
 			 });
 				// document.getElementById('attachment_'+file).style.display="none";
 	//			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
 			$("#t_list").autocomplete(dat, {
-  formatItem: function(item) {
-    return item.text;
-  }
-}).result(function(event, item) {
-  document.getElementById('t_list_hidden').value=item.id;
+  formatItem: function(items) {
+    return items.text;
+  },
+	matchContains: true
+}).result(function(event, items) {
+  document.getElementById('t_list_hidden').value=items.id;
 });
 			 }
 			 });
@@ -258,21 +261,23 @@ $.ajax({
 			 else
 			 {
 			 alert("Please select project name first");
-			 var dat=[];
-			 var duser=[];
+			 dat=[];
+			 duser=[];
 			 $("#assign_to").autocomplete(duser, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('t_list_hidden').value=item.id;
 });
 			 $("#t_list").autocomplete(dat, {
-  formatItem: function(item) {
-    return item.text;
-  }
-}).result(function(event, item) {
-  document.getElementById('t_list_hidden').value=item.id;
+  formatItem: function(items) {
+    return items.text;
+  },
+	matchContains: true
+}).result(function(event, items) {
+  document.getElementById('t_list_hidden').value=items.id;
 });
 			 }
 			 <%end%>
@@ -537,9 +542,9 @@ function ds_onclick(d, m, y) {
 	
 		alert (ds_format_date(d, m, y));
 	}
-	
-	$('#txtInput3').html(ds_format_date(d, m, y));
-	document.getElementById('date_hidden').value=ds_format_date(d, m, y);
+	document.getElementById('txtInput3').value=ds_format_date(d, m, y);
+	//$('#txtInput3').html(ds_format_date(d, m, y));
+	//document.getElementById('date_hidden').value=ds_format_date(d, m, y);
 	
 }
 

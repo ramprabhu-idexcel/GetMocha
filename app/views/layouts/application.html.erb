@@ -11,7 +11,7 @@
   <meta charset="utf-8" />
   <%= csrf_meta_tag %>
 	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-  <%=stylesheet_link_tag "base","modal","scrollbar",'colorpicker','jquery.autocomplete','calender'%>
+  <%=stylesheet_link_tag "base","modal","scrollbar",'jquery.autocomplete','calender','colorpicker'%>
 	<script src="/closure-library/closure/goog/base.js"></script>
 
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -24,7 +24,7 @@
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
-      <%= javascript_include_tag 'jquery-1.4.4.min','jquery-latest','jquery.bgiframe.min','size-container','open','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete'%>
+      <%= javascript_include_tag 'jquery-1.4.4.min','jquery-latest','jquery.bgiframe.min','size-container','open','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete','jscolor'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
     <%= javascript_include_tag :socky %>
@@ -55,25 +55,25 @@
 <div class="sort-by-tooltip message-sort-down" style="display:none;">
 	<div class="sort-by-top"></div>
 	<ul>
-		<li class="sort selected"><span>Date</span></li>
+		<li class="sort selected" id="select_date"><span>Date</span></li>
 		<li class="sort"><span>Starred</span></li>
 		<li class="sort"><span>Unread</span></li>
 	</ul>
 	<ul>
 		<li class="asc-desc"><span class="asc">Ascending</span></li>
-		<li class="asc-desc selected"><span class="desc">Descending</span></li>
+		<li class="asc-desc selected" id="select_descending"><span class="desc">Descending</span></li>
 	</ul>
 </div>
 <!-- sort drop down-->
 <div class="sort-by-tooltip task-sort-down" style="display:none;">
 	<div class="sort-by-top"></div>
 	<ul>
-		<li class="sort selected sort-task"><span class="task-date">Date</span></li>
-		<li class="sort sort-task"><span class="star-task">Starred</span></li>
+		<li class="sort selected sort-task" id="select_task_date"><span class="task-date">Date</span></li>
+		<li class="sort sort-task" id="select_task_starred"><span class="star-task">Starred</span></li>
 	</ul>
 	<ul>
-		<li class="asc-desc sort-task selected"><span class="asc">Ascending</span></li>
-		<li class="asc-desc sort-task"><span class="desc">Descending</span></li>
+		<li class="asc-desc sort-task selected" id="select_task_ascending"><span class="asc">Ascending</span></li>
+		<li class="asc-desc sort-task" id="select_task_descending"><span class="desc">Descending</span></li>
 	</ul>
 </div>
 <div id="add_new_mods" class="modal add-new-modal" style="display:none">
@@ -179,6 +179,7 @@
 			{
 			short_modal1('/tasks/new');
 			}
+<<<<<<< HEAD:app/views/layouts/application.html.erb
 			if(event.identifier=='SLASH')
 			{
 			  $('.keyboard-shortcuts').css('display','block');
@@ -186,6 +187,33 @@
 			if(event.identifier=='SHIFT_SLASH')
 			{
 			  $('.keyboard-shortcuts').css('display','block');
+=======
+			if(event.identifier=='ENTER_M')
+			{
+			if ($('#add_new_mods').css('display')=="block")
+				short_modal1('/messages/new');
+			}
+			if(event.identifier=='ENTER_T')
+			{
+			if ($('#add_new_mods').css('display')=="block")
+				short_modal1('/tasks/new');
+			}
+						if(event.identifier=='ENTER_L')
+			{
+				if ($('#add_new_mods').css('display')=="block")
+				{
+					$('#add_new_mods').css('display','none');
+					short_modal1('/task_lists/new');
+				}
+			}
+						if(event.identifier=='ENTER_P')
+			{
+				if ($('#add_new_mods').css('display')=="block")
+				{
+					$('#add_new_mods').css('display','none');
+					short_modal1('/projects/new');
+				}
+>>>>>>> master:app/views/layouts/application.html.erb
 			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
@@ -199,12 +227,20 @@
 	 var LEFT= goog.ui.KeyboardShortcutHandler.Modifiers.LEFT;
 	 var RIGHT= goog.ui.KeyboardShortcutHandler.Modifiers.RIGHT;
    var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;
+
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
 	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
+<<<<<<< HEAD:app/views/layouts/application.html.erb
 	shortcutHandler.registerShortcut('SLASH',goog.events.KeyCodes.SLASH);
 	shortcutHandler.registerShortcut('SHIFT_SLASH',goog.events.KeyCodes.SLASH, SHIFT);
+=======
+	shortcutHandler.registerShortcut('ENTER_M',goog.events.KeyCodes.M, ENTER);
+	// shortcutHandler.registerShortcut('ENTER_T',goog.events.KeyCodes.T, ENTER);
+	shortcutHandler.registerShortcut('ENTER_P',goog.events.KeyCodes.P, ENTER);
+	shortcutHandler.registerShortcut('ENTER_L',goog.events.KeyCodes.L, ENTER);
+>>>>>>> master:app/views/layouts/application.html.erb
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q);
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);
@@ -398,9 +434,29 @@
   function short_model3()
   {
 if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
-      $('.comment-contain').slideToggle('slow');
+{
+     if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+}
+  //    $('.comment-contain').slideToggle('slow');
 else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
-$('.comment-contain').slideToggle('slow');
+{
+     if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+}
+//$('.comment-contain').slideToggle('slow');
 			 $('.attachment').remove();	
   }
 
@@ -1226,6 +1282,29 @@ if(is_open=="0")
 			}
 		}
 		
+		$('#all_tasks').live('click',function(){
+			$('#select_task_starred').removeClass('selected');
+			$('#select_task_ascending').addClass('selected');
+       $('#select_task_date').addClass('selected');
+			 $('#select_task_descending').removeClass('selected');
+		});
+		
+		$('#my_tasks').live('click',function(){
+		$('#select_task_starred').removeClass('selected');
+		$('#select_task_ascending').addClass('selected');
+    $('#select_task_date').addClass('selected');
+		$('#select_task_descending').removeClass('selected');
+		});
+		
+	 $('#completed_tasks').live('click',function(){
+		$('#select_task_starred').removeClass('selected');
+		$('#select_task_ascending').addClass('selected');
+    $('#select_task_date').addClass('selected');
+		$('#select_task_descending').removeClass('selected');
+		});
+		
+		
+			
 </script>
 
 </html>
