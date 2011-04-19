@@ -9,7 +9,7 @@ class ChatsController < ApplicationController
   end
   def new
 
-		end
+  end
   def create
     send_to_clients ["chat", user_chat_data, params[:chat][:message],params[:chat][:project_id]]
     send_count_to_clients ["count", params[:chat][:project_id],1]
@@ -29,7 +29,6 @@ class ChatsController < ApplicationController
 			render :nothing=>true
       end
   def project_chat
-    
     update_offline(params[:old],current_user.id) if params[:old].present?
     send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
     send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?

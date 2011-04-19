@@ -67,7 +67,23 @@
       <div class="message">
         <div class="color" style="background-color:<%=chat.user_color%>"></div>
         <div class="name"><span><%=chat.user_name%></span></div>
-        <div class="content most-recent"><%=chat.message%></div>
+        <div class="content most-recent"><%=chat.message%>
+        <%unless chat.attachments.empty?%>
+          <div class="attachments">
+          <%chat.attach_urls.each do |attach_type,value|%>
+            <%if attach_type==:attached_documents%>
+                <%value.each do |attach|%>
+                  <%=raw attach%><br/>
+                <%end%>
+            <%else%>
+              <%value.each do |attach|%>
+                 <div class="attachment-thumb-frame"><%=raw attach%></div>
+                <%end%>
+            <%end%>
+          <%end%>
+          </div>
+        <%end%>
+      </div>
       </div>
     <%end%>
     <%=clear_fix%>
