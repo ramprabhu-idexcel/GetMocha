@@ -129,7 +129,12 @@ class ProjectsController < ApplicationController
 		else
 			if params[:proj_status]
 				@projects=current_user.user_active_projects
-		@completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
+				@completed_projects=current_user.completed_projects
+		#~ @completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
+		puts "***********************************"
+		puts @projects.inspect
+		p @completed_projects.inspect
+		p "--------------------------------------"
 				render :partial=>'project_list',:locals=>{:projects=>@projects,:completed_projects=>@completed_projects}
 			else
 			render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
