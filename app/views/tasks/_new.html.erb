@@ -93,7 +93,8 @@ $(document).ready(function(){
 $("#project_val").autocomplete(data, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   document.getElementById('autocomplete1_hidden').value=item.id;
 });
@@ -198,7 +199,8 @@ $.ajax({
 			$("#assign_to").autocomplete(duser, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('t_list_hidden').value=item.id;
 });
@@ -207,11 +209,12 @@ $.ajax({
 				dat.push({text : value.task_list.name,id : value.task_list.id})
 			 });
 			$("#t_list").autocomplete(dat, {
-  formatItem: function(item) {
-    return item.text;
-  }
-}).result(function(event, item) {
-  document.getElementById('t_list_hidden').value=item.id;
+  formatItem: function(items) {
+    return items.text;
+  },
+	matchContains: true
+}).result(function(event, items) {
+  document.getElementById('t_list_hidden').value=items.id;
 });
 			 }
 			 });
@@ -235,7 +238,8 @@ $.ajax({
 			$("#assign_to").autocomplete(duser, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('t_list_hidden').value=item.id;
 });
@@ -246,11 +250,12 @@ $.ajax({
 				// document.getElementById('attachment_'+file).style.display="none";
 	//			data.datas.each do |tlist| %> {text:data.datas[i].name, id:'data.datas[i].id'},{text:'',id:''}];
 			$("#t_list").autocomplete(dat, {
-  formatItem: function(item) {
-    return item.text;
-  }
-}).result(function(event, item) {
-  document.getElementById('t_list_hidden').value=item.id;
+  formatItem: function(items) {
+    return items.text;
+  },
+	matchContains: true
+}).result(function(event, items) {
+  document.getElementById('t_list_hidden').value=items.id;
 });
 			 }
 			 });
@@ -263,16 +268,18 @@ $.ajax({
 			 $("#assign_to").autocomplete(duser, {
   formatItem: function(item) {
     return item.text;
-  }
+  },
+	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('t_list_hidden').value=item.id;
 });
 			 $("#t_list").autocomplete(dat, {
-  formatItem: function(item) {
-    return item.text;
-  }
-}).result(function(event, item) {
-  document.getElementById('t_list_hidden').value=item.id;
+  formatItem: function(items) {
+    return items.text;
+  },
+	matchContains: true
+}).result(function(event, items) {
+  document.getElementById('t_list_hidden').value=items.id;
 });
 			 }
 			 <%end%>
