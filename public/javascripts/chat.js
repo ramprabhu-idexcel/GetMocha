@@ -103,7 +103,7 @@
   
   $('#chat-send').live('click',function(){
     var chat=$('#chat-message').val();
-    var project_id=$('#chat_project_id').val();
+    var project_id=get_project_id()
     if($.trim(chat)!="")
     {
       $.ajax({
@@ -122,6 +122,10 @@
     var chat=$('#chat-message').val();
   });
   
+  $('.popout').live('click',function(){
+    var project_id=get_project_id()
+    window.open('/popout-chat/'+project_id, 'windowname', 'width = 580, height = 670, scrollbars,resizable,status');
+  });
   
   $(window).unload(function()
   { 
@@ -132,6 +136,11 @@
       //alert("Bye for now");
     
   });
+  
+  function get_project_id()
+  {
+    return $('#chat_project_id').val();
+  }
   
   function initial_setup()
   {
