@@ -198,7 +198,7 @@ alert('afetrr bt');
      $('#all_messages').live('click',function(){       
        $('.sort').removeClass('selected');
        $('#select_date').addClass('selected');
-       });
+      });
        
        $('.projects-list').live('click',function(){
        $('.sort').removeClass('selected');
@@ -1377,8 +1377,10 @@ function close_comment_area()
               month =duedate.substring(0,2);
              day = duedate.substring(3,5);
              year = duedate.substring(6,10);
+              if(year<100)
+              year=20+year;
               document.getElementById('txtInput3').value=month+"-"+day+"-"+year
-             if(year>1900 && year<2100)
+             if(year>0000 && year<2100)
                 {
                  if(month>0 && month<13)
                     {
@@ -1403,6 +1405,8 @@ function close_comment_area()
           month = duedate.substring(0,2);
           day = duedate.substring(2,4);
           year = duedate.substring(4,8);
+        if(year<100)
+              year=20+year;
         document.getElementById('txtInput3').value=month+"-"+day+"-"+year
           if(year>1900 && year<2100)
              {
