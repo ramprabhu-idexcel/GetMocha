@@ -1,0 +1,12 @@
+<%= socky :channels=>[project.id],:client_id =>current_user.id%>
+
+
+<%=hidden_field_tag "chat[project_id]",project.id,:id=>"chat_project_id"%>
+<%project.recent_chats.each do |chat|%>
+<div class="message">
+  <div class="color" style="background-color:<%=chat.user_color%>"></div>
+  <div class="name"><span><%=chat.user_name%></span></div>
+  <div class="content most-recent"><%=chat.message%></div>
+</div>
+<%end%>
+<%=clear_fix%>
