@@ -8,11 +8,7 @@ class ChatsController < ApplicationController
     @user_emails=new
   end
   def new
-    @users=User.all_users
-	  @user_emails=[]
-	  @users.each do |f|
-			@user_emails<<"#{f.email}"
-      end
+
 		end
   def create
     send_to_clients ["chat", user_chat_data, params[:chat][:message],params[:chat][:project_id]]
@@ -20,10 +16,23 @@ class ChatsController < ApplicationController
     chat.save if chat.valid?
     render :nothing=>true
   end
+  def invite_chat_settings
+		@project=Project.find(params[:project_id])
+		@email=params[:email]
+    @message=params[:message]
+			ProjectMailer.delay.chat_invite(current_user,@project,@email,@message)
+			render :nothing=>true
+      end
   def project_chat
+    
     update_offline(params[:old],current_user.id) if params[:old].present?
     send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
     send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?
+        users=User.members_in_project(params[:project_id])
+	  @user_emails=[]
+	  users.each do |f|
+			@user_emails<<"#{f.email}"
+      end
     render :partial=>"chat_content",:locals=>{:project=>@project}
   end
   def popout_chat
@@ -77,4 +86,5 @@ class ChatsController < ApplicationController
   def user_chat_data
     {:name=>current_user.chat_name,:color=>current_user.color,:id=>current_user.id}
   end
+  
 end

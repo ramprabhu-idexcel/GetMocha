@@ -97,11 +97,7 @@
     });
     $('.chat-header').show();
     $('.r-panel').show();
-<<<<<<< HEAD
-    $('.invite').show();
-=======
     $('#chat-message').focus();
->>>>>>> abe0a979d55a32eed19514e4d1451503a791ce31
   });
   
   
