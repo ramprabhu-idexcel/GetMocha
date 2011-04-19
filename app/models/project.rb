@@ -29,6 +29,9 @@ class Project < ActiveRecord::Base
   def all_members
     User.all_members(self.id)
   end
+  def online_members
+    User.online_members(self.id)
+  end
   def self.user_projects(user_id)
     find(:all,:conditions=>['project_users.user_id=? AND project_users.status=?',user_id,true],:include=>:project_users)
   end
