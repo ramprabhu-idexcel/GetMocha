@@ -1368,8 +1368,8 @@ function close_comment_area()
       errors.push("Please enter valid notification emails");
     if(assign_email!="" && !IsValidEmail(assign_email))
       errors.push("Please enter a valid assign to email");
-    if(description=="")
-      errors.push("Please enter the description for the task");
+    //~ if(description=="")
+      //~ errors.push("Please enter the description for the task");
     if(duedate!="")
 	      {
           if (duedate.match(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/) || duedate.match(/(\d{2})-(\d{2})-(\d{2,4})/) )

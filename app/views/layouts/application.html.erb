@@ -99,7 +99,14 @@
 		 {
 		  if(event.identifier=='ENTER')
       {
-        short_modal('/projects/add_new');
+					if ($('#add_new_mods').css('display')=="block")
+					{
+					$('#add_new_mods').css('display','none')
+					}
+					else
+					{
+					short_modal('/projects/add_new');	
+					}
       }
       if(event.identifier=='GS')
       {
@@ -176,21 +183,29 @@
 			}
 			if(event.identifier=='ENTER_M')
 			{
+			if ($('#add_new_mods').css('display')=="block")
 				short_modal1('/messages/new');
 			}
 			if(event.identifier=='ENTER_T')
 			{
+			if ($('#add_new_mods').css('display')=="block")
 				short_modal1('/tasks/new');
 			}
 						if(event.identifier=='ENTER_L')
 			{
-			$('#add_new_mods').css('display','none');
-				short_modal1('/task_lists/new');
+				if ($('#add_new_mods').css('display')=="block")
+				{
+					$('#add_new_mods').css('display','none');
+					short_modal1('/task_lists/new');
+				}
 			}
 						if(event.identifier=='ENTER_P')
 			{
-			  $('#add_new_mods').css('display','none');
-				short_modal1('/projects/new');
+				if ($('#add_new_mods').css('display')=="block")
+				{
+					$('#add_new_mods').css('display','none');
+					short_modal1('/projects/new');
+				}
 			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
