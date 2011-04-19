@@ -172,10 +172,18 @@ return false;
   });
   //task comments
   $('#reply_comment_task').live('click',function(){
-    $('.comment-contain').slideToggle('slow',function(){
+         if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+    //~ $('.comment-contain').slideToggle('slow',function(){
       $('.attachment').remove();	
       $('#comment-message').focus();
-    });
+    //~ });
     return false;  
   });
   
@@ -433,9 +441,17 @@ return false;
   });
   
   $('.reply-link').live('click',function(){
-      $('.comment-contain').slideToggle('slow',function(){
+         if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //~ $('.comment-contain').slideToggle('slow',function(){
         $('#comment-message').focus();
-      });
+      //~ });
       return false;  
     });
   
