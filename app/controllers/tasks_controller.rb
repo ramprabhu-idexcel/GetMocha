@@ -33,12 +33,12 @@ class TasksController < ApplicationController
 	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:projects=>@projects}
 	end
 	def create
-		if params[:task_list_id].blank?
+		if params[:task][:task_list_id].nil?
 			task_list=TaskList.create(:project_id=>params[:project_id], :user_id=>current_user.id, :name=>params[:tasklist])
 		end
     task=current_user.tasks.build(params[:task])
 		task.task_list_id=task_list.id if task_list
-    if task.valid?
+		if task.valid?
       task.save
       task.create_activities(params[:recipient],params[:notify])
       render :json=>task.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id])
