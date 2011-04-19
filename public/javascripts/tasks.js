@@ -406,6 +406,7 @@ return false;
     });
     $('a.assigned-to').text(name);
     $('div.task.tsem.open').children('div.info').children('span.name').text(name);
+    $('.task-dropdown.assigned-to').hide();
   });
   
   $('.name.message_name').live('click',function(){
