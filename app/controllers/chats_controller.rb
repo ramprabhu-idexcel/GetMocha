@@ -16,7 +16,6 @@ class ChatsController < ApplicationController
     @project=Project.find_by_id(params[:project_id])
     update_offline(params[:old],current_user.id) if params[:old].present?
     send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
-    puts params[:old].inspect
     send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?
     render :partial=>"chat_content",:locals=>{:project=>@project}
   end
