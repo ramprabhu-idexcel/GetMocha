@@ -193,8 +193,7 @@ alert('afetrr bt');
       //~ $('.starred starred_count').addClass('open');      
       var order=$('.asc-desc.selected').children('span').attr('class');
       window.location="#"+sec+'?sort_by='+sort_by+'&order='+order;
-       }
-    
+       }    
     
      $('#all_messages').live('click',function(){       
        $('.sort').removeClass('selected');
@@ -203,7 +202,9 @@ alert('afetrr bt');
        
        $('.projects-list').live('click',function(){
        $('.sort').removeClass('selected');
+       $('.asc-desc').removeClass('selected');
        $('#select_date').addClass('selected');
+       $('#select_descending').addClass('selected');
        });
        
     
@@ -290,7 +291,7 @@ alert('afetrr bt');
     
     //display the sort message
     $('.sort-by.message-sort').click(function(){
-      $('.sort-by-tooltip.message-sort-down').slideToggle('slow');
+      $('.sort-by-tooltip.message-sort-down').slideToggle('fast');
       return false;
     });
     
