@@ -290,7 +290,7 @@ alert('afetrr bt');
     
     //display the sort message
     $('.sort-by.message-sort').click(function(){
-      $('.sort-by-tooltip.message-sort-down').slideToggle('fast');
+     $('.sort-by-tooltip.message-sort-down').toggle();
       return false;
     });
     
@@ -537,7 +537,7 @@ alert('afetrr bt');
   //drop down
   $('#add-new').click(function(){
  if (($('#add_new_mod').css('display')=="none") || ($('.add-item-modal').css('display')=="none"))
-    $('#add_new_mods').slideToggle('fast');
+    $('#add_new_mods').toggle();
     return false;
   });
   
