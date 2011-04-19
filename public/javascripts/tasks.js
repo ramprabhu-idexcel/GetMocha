@@ -79,7 +79,7 @@
     var width=$('.filed-tasklist').width();
     var half=parseInt(width)/2.0;
     var left=half+37.25;
-    $('.task-dropdown.task_list').css('left',left)
+    $('.task-dropdown.task_list').css('left',left);
     $('.task-dropdown.task_list').fadeToggle();
     return false;
   });
@@ -389,6 +389,8 @@ return false;
           $(task_list_content).insertAfter($('#tl'+task_list_id));    
       }
     });
+    //$('.task-dropdown task_list').css('display','none');
+    $('.task-dropdown.task_list').hide();
   });
   
   $('.user_list').live('click',function(){
@@ -404,6 +406,7 @@ return false;
     });
     $('a.assigned-to').text(name);
     $('div.task.tsem.open').children('div.info').children('span.name').text(name);
+    $('.task-dropdown.assigned-to').hide();
   });
   
   $('.name.message_name').live('click',function(){

@@ -28,7 +28,11 @@ class TasksController < ApplicationController
 	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:projects=>@projects}
 	end
 	def create
+		if params[:task_list_id].blank?
+			task_list=TaskList.create(:project_id=>params[:project_id], :user_id=>current_user.id, :name=>params[:tasklist])
+		end
     task=current_user.tasks.build(params[:task])
+		task.task_list_id=task_list.id if task_list
     if task.valid?
       task.save
       task.create_activities(params[:recipient],params[:notify])
