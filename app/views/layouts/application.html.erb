@@ -104,7 +104,14 @@
 		 {
 		  if(event.identifier=='ENTER')
       {
-        short_modal('/projects/add_new');
+					if ($('#add_new_mods').css('display')=="block")
+					{
+					$('#add_new_mods').css('display','none')
+					}
+					else
+					{
+					short_modal('/projects/add_new');	
+					}
       }
       if(event.identifier=='GS')
       {
@@ -175,6 +182,14 @@
 			{
 			short_modal_down('X')
 			}
+						if(event.identifier=='D')
+			{
+			short_modal_down('D')
+			}
+						if(event.identifier=='C')
+			{
+			short_modal_down('C')
+			}
 			if(event.identifier=='SHIFT_T')
 			{
 			short_modal1('/tasks/new');
@@ -243,6 +258,8 @@
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z);
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S);
 	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X);
+	shortcutHandler.registerShortcut('D',goog.events.KeyCodes.D);
+	shortcutHandler.registerShortcut('C',goog.events.KeyCodes.C);
 	shortcutHandler.registerShortcut('W',goog.events.KeyCodes.W);
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
@@ -672,6 +689,12 @@ $('#mycontact1').toggleClass('open')
 		if(class1==0 || class_hide=="none")
 		{
 			//first panel
+			if (key=="S" || key=="X")
+			{
+				messages_navigation_right();
+			}
+			else
+			{
 			var all_messages=document.getElementById('all_messages').className;
 			if(all_messages=="all-messages has-unread open")
 			all_messages="true"
@@ -687,49 +710,40 @@ $('#mycontact1').toggleClass('open')
 			var exit1="false"
 			for(i=0; i<length; i++)
 			{
-			var class1=$('.projects-list').children('')[i].className;
-			if(class1=="project has-unread open" || class1=="project open")
-			open="true"
-			
-			open_id=$('.projects-list').children('')[i].id;
-			if(star=="true")
-			{
-			  if(key=="down" || key=="Z")
-				already_exists=$('.projects-list').children('')[0].id;
-				else if(exit1!="true" && (key=="up" || key=="A"))
+				var class1=$('.projects-list').children('')[i].className;
+				if(class1=="project has-unread open" || class1=="project open")
+				open="true"
+				open_id=$('.projects-list').children('')[i].id;
+				if(star=="true")
+				{	
+					if(key=="down" || key=="Z")
+					already_exists=$('.projects-list').children('')[0].id;
+					else if(exit1!="true" && (key=="up" || key=="A"))
+					{
+						window.location=$('#all_messages').attr('href');
+						document.getElementById('all_messages').className="all-messages has-unread open";
+						document.getElementById('starred_messages').className="starred";
+						exit1="true"
+					}
+				}
+				else if(open=="true" && i<length && (class1=="project has-unread open" || class1=="project open"))
 				{
-					window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-								document.getElementById('starred_messages').className="starred";
-								exit1="true"
-								
+					if((key=="down" || key=="Z") && i<length-1)
+					already_exists=$('.projects-list').children('')[i+1].id;
+					else if(i!=0 && i<length && (key=="up" || key=="A"))
+					already_exists=$('.projects-list').children('')[i-1].id;
+					old_id=$('.projects-list').children('')[i].id;
+					old_one="true";
+					if(i==length-1)
+					{
+						document.getElementById(old_id).className="project";
+					}
+				}
+				else
+				{
+					get_all_messages=="true"
 				}
 			}
-			else if(open=="true" && i<length && (class1=="project has-unread open" || class1=="project open"))
-			{
-			  if((key=="down" || key=="Z") && i<length-1)
-				already_exists=$('.projects-list').children('')[i+1].id;
-				else if(i!=0 && i<length && (key=="up" || key=="A"))
-				already_exists=$('.projects-list').children('')[i-1].id;
-				old_id=$('.projects-list').children('')[i].id;
-				old_one="true";
-				if(i==length-1)
-				{
-				document.getElementById(old_id).className="project";
-
-				}
-			
-				
-			}
-		
-			else
-			{
-			get_all_messages=="true"
-
-
-			}
-			}
-			
 			if(already_exists!="false")
 			{
 				//open_id=open_id.split('_')[2];
@@ -804,6 +818,7 @@ if(is_open=="0")
 				}
 			}
 		}
+		}
 		else
 		{
 		messages_second_panel_navigation(key);
@@ -862,6 +877,11 @@ if(is_open=="0")
 		
 		//for messages second panel navigation
 		function messages_second_panel_navigation(key)
+		{
+		
+		if(key=="D" || key=="C")
+		messages_third_panel(key);
+		else
 		{
 			  already_exists="false"
 				exit="false";
@@ -967,6 +987,7 @@ if(is_open=="0")
 				}
 			}
 		}
+		}
 		
 		//for displaying the message header
 		function show_header()
@@ -984,7 +1005,12 @@ if(is_open=="0")
 			
 			if(class1==0 || class_hide=="none")
 			{
-			
+				if (key=="S" || key=="X")
+			 {
+				 tasks_navigation_right();
+			 }
+			 else
+			 {
 				var all_tasks=document.getElementById('all_tasks').className;
 				var my_tasks=document.getElementById('my_tasks').className;
 				var starred_tasks=document.getElementById('starred_tasks').className;
@@ -999,7 +1025,6 @@ if(is_open=="0")
 						project_tasks=cn;
 					}
 				}
-				
 				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
 				{
 				  if(key=="down" || key=="Z")
@@ -1067,6 +1092,7 @@ if(is_open=="0")
 				else
 				  tasks_projects(key,"3");
 				}
+			}
 			}
 			else
 			{
@@ -1296,7 +1322,10 @@ if(is_open=="0")
     $('#select_task_date').addClass('selected');
 		$('#select_task_descending').removeClass('selected');
 		});
+		function messages_third_panel(key)
+		{
 		
+		}
 		
 			
 </script>
