@@ -95,6 +95,7 @@
         $(data).insertAfter('.l-panel-contain');
       }
     });
+    $('.chat-header').show();
     $('.r-panel').show();
     $('#chat-message').focus();
   });
@@ -142,6 +143,7 @@
     $('#trash_message').hide();
     $('.task_header').hide();
     $('.r-panel').hide();
+     $('.chat-header').hide();
   }
 
 
