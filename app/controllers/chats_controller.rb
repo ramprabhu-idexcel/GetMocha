@@ -2,7 +2,7 @@ class ChatsController < ApplicationController
   SUBSCRIBE_ACTIONS=['subscribe','unsubscribe']
   skip_before_filter :http_authenticate,:only=>SUBSCRIBE_ACTIONS
   before_filter :authenticate_user!,:except=>SUBSCRIBE_ACTIONS
-  before_filter :update_online_status,:only=>['project_chat','create']
+  before_filter :update_online_status,:only=>['project_chat','create','popout_chat']
   def index
     @projects=Project.user_active_projects(current_user.id)
   end
@@ -13,11 +13,14 @@ class ChatsController < ApplicationController
     render :nothing=>true
   end
   def project_chat
-    @project=Project.find_by_id(params[:project_id])
     update_offline(params[:old],current_user.id) if params[:old].present?
     send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
     send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?
     render :partial=>"chat_content",:locals=>{:project=>@project}
+  end
+  def popout_chat
+    send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
+    render :layout=>false
   end
   def subscribe
     #~ update_online(params["channels"]["0"],params["client_id"])
