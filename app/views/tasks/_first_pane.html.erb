@@ -3,10 +3,20 @@
     <%=link_to_my_tasks%>
     <%=link_to_starred_tasks%>
     <%=link_to_completed_tasks%>
-    <div class="projects-list">
+    <div class="projects-list" id="project_task_list">
       <%projects.each do |project|%>
         <%=project_tab(project)%>
       <%end%>
     </div>
     </span>
 
+
+
+ <script>
+      $('#project_task_list').click(function(){
+     	$('#select_task_starred').removeClass('selected');
+		  $('#select_task_descending').removeClass('selected');
+			$('#select_task_ascending').addClass('selected');
+      $('#select_task_date').addClass('selected');
+       });
+ </script>

@@ -11,7 +11,7 @@
   <meta charset="utf-8" />
   <%= csrf_meta_tag %>
 	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-  <%=stylesheet_link_tag "base","modal","scrollbar",'colorpicker','jquery.autocomplete','calender'%>
+  <%=stylesheet_link_tag "base","modal","scrollbar",'jscolor','jquery.autocomplete','calender','colorpicker'%>
 	<script src="/closure-library/closure/goog/base.js"></script>
 
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -66,12 +66,12 @@
 <div class="sort-by-tooltip task-sort-down" style="display:none;">
 	<div class="sort-by-top"></div>
 	<ul>
-		<li class="sort selected sort-task"><span class="task-date">Date</span></li>
-		<li class="sort sort-task"><span class="star-task">Starred</span></li>
+		<li class="sort selected sort-task" id="select_task_date"><span class="task-date">Date</span></li>
+		<li class="sort sort-task" id="select_task_starred"><span class="star-task">Starred</span></li>
 	</ul>
 	<ul>
-		<li class="asc-desc sort-task selected"><span class="asc">Ascending</span></li>
-		<li class="asc-desc sort-task"><span class="desc">Descending</span></li>
+		<li class="asc-desc sort-task selected" id="select_task_ascending"><span class="asc">Ascending</span></li>
+		<li class="asc-desc sort-task" id="select_task_descending"><span class="desc">Descending</span></li>
 	</ul>
 </div>
 <div id="add_new_mods" class="modal add-new-modal" style="display:none">
@@ -382,9 +382,29 @@
   function short_model3()
   {
 if(($('#reply_comment').parent('li.message_header').css('display')=="list-item" && ($('#reply_comment').css('display')=="block")) )
-      $('.comment-contain').slideToggle('slow');
+{
+     if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+}
+  //    $('.comment-contain').slideToggle('slow');
 else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list-item" && ($('#reply_comment_task').css('display')=="block")) )
-$('.comment-contain').slideToggle('slow');
+{
+     if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+}
+//$('.comment-contain').slideToggle('slow');
 			 $('.attachment').remove();	
   }
 
@@ -1210,6 +1230,29 @@ if(is_open=="0")
 			}
 		}
 		
+		$('#all_tasks').live('click',function(){
+			$('#select_task_starred').removeClass('selected');
+			$('#select_task_ascending').addClass('selected');
+       $('#select_task_date').addClass('selected');
+			 $('#select_task_descending').removeClass('selected');
+		});
+		
+		$('#my_tasks').live('click',function(){
+		$('#select_task_starred').removeClass('selected');
+		$('#select_task_ascending').addClass('selected');
+    $('#select_task_date').addClass('selected');
+		$('#select_task_descending').removeClass('selected');
+		});
+		
+	 $('#completed_tasks').live('click',function(){
+		$('#select_task_starred').removeClass('selected');
+		$('#select_task_ascending').addClass('selected');
+    $('#select_task_date').addClass('selected');
+		$('#select_task_descending').removeClass('selected');
+		});
+		
+		
+			
 </script>
 
 </html>

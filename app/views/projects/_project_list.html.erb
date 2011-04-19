@@ -6,7 +6,7 @@
 		<!--<a href="/settings-general" class="project open" onclick="addClass(this);"><span class="icon"></span>Simple Station</a>-->
 	<% end %>
 	</div>
-	<% if completed_projects %>
+	<% if !completed_projects.empty? %>
 		<div class="expand-completed"><span  onclick="javascript:show_completed_projects();">Show Completed</span><span class="icon"></span></div>
 	
 	<div class="projects-list" id="completed_list" style="display:none";>

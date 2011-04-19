@@ -172,10 +172,18 @@ return false;
   });
   //task comments
   $('#reply_comment_task').live('click',function(){
-    $('.comment-contain').slideToggle('slow',function(){
+         if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+    //~ $('.comment-contain').slideToggle('slow',function(){
       $('.attachment').remove();	
       $('#comment-message').focus();
-    });
+    //~ });
     return false;  
   });
   
@@ -433,9 +441,17 @@ return false;
   });
   
   $('.reply-link').live('click',function(){
-      $('.comment-contain').slideToggle('slow',function(){
+         if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //~ $('.comment-contain').slideToggle('slow',function(){
         $('#comment-message').focus();
-      });
+      //~ });
       return false;  
     });
   
@@ -568,7 +584,7 @@ return false;
       items.push('<div class="clear-fix"></div>')
       items.push('</div>');
     }
-    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#">unsubscribe</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#"> Unsubscribe</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments

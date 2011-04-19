@@ -206,7 +206,6 @@ alert('afetrr bt');
        $('#select_date').addClass('selected');
        $('#select_descending').addClass('selected');
        });
-       
     
     //Expand all message
     $('#message_expand').live('click',function(){
@@ -410,17 +409,33 @@ alert('afetrr bt');
   
     //message reply link and reply in the comment
     $('.reply').click(function(){
-      $('.comment-contain').slideToggle('slow',function(){
+        if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //~ $('.comment-contain').slideToggle('slow',function(){
          $('.attachment').remove();	
         $('#comment-message').focus();
-      });
+      //~ });
       return false;  
     });
     
     $('.reply-link').live('click',function(){
-      $('.comment-contain').slideToggle('slow',function(){
+      if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //$('.comment-contain').slideToggle('fast',function(){
         $('#comment-message').focus();
-      });
+      //});
       return false;  
     });
     
