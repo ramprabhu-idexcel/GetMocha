@@ -1,0 +1,7 @@
+ <%chats.each do |chat|%>
+    <div class="message">
+      <div class="color" style="background-color:<%=chat.user_color%>"></div>
+      <div class="name"><span><%=chat.user_name%></span></div>
+      <div class="content most-recent"><%=chat.message%></div>
+    </div>
+    <%end%>
