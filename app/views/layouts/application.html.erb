@@ -11,7 +11,7 @@
   <meta charset="utf-8" />
   <%= csrf_meta_tag %>
 	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-  <%=stylesheet_link_tag "base","modal","scrollbar",'jscolor','jquery.autocomplete','calender','colorpicker'%>
+  <%=stylesheet_link_tag "base","modal","scrollbar",'jquery.autocomplete','calender','colorpicker'%>
 	<script src="/closure-library/closure/goog/base.js"></script>
 
   <link rel="stylesheet" href="/closure-library/closure/goog/css/autocomplete.css">
@@ -176,19 +176,29 @@
 			}
 			if(event.identifier=='ENTER_M')
 			{
+			if ($('#add_new_mods').css('display')=="block")
 				short_modal1('/messages/new');
 			}
 			if(event.identifier=='ENTER_T')
 			{
+			if ($('#add_new_mods').css('display')=="block")
 				short_modal1('/tasks/new');
 			}
 						if(event.identifier=='ENTER_L')
 			{
-				short_modal1('/task_lists/new');
+				if ($('#add_new_mods').css('display')=="block")
+				{
+					$('#add_new_mods').css('display','none');
+					short_modal1('/task_lists/new');
+				}
 			}
 						if(event.identifier=='ENTER_P')
 			{
-				short_modal1('/projects/new');
+				if ($('#add_new_mods').css('display')=="block")
+				{
+					$('#add_new_mods').css('display','none');
+					short_modal1('/projects/new');
+				}
 			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
@@ -202,17 +212,15 @@
 	 var LEFT= goog.ui.KeyboardShortcutHandler.Modifiers.LEFT;
 	 var RIGHT= goog.ui.KeyboardShortcutHandler.Modifiers.RIGHT;
    var S=  goog.ui.KeyboardShortcutHandler.Modifiers.S;
-   var T=  goog.ui.KeyboardShortcutHandler.Modifiers.T;
-   var P=  goog.ui.KeyboardShortcutHandler.Modifiers.P;
-   var L=  goog.ui.KeyboardShortcutHandler.Modifiers.L;
+
   shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
 	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
 	shortcutHandler.registerShortcut('ENTER_M',goog.events.KeyCodes.M, ENTER);
-	//shortcutHandler.registerShortcut('ENTER_T',goog.events.KeyCodes.T, ENTER);
-	//shortcutHandler.registerShortcut('ENTER_P',goog.events.KeyCodes.P, ENTER);
-	//shortcutHandler.registerShortcut('ENTER_L',goog.events.KeyCodes.L, ENTER);
+	// shortcutHandler.registerShortcut('ENTER_T',goog.events.KeyCodes.T, ENTER);
+	shortcutHandler.registerShortcut('ENTER_P',goog.events.KeyCodes.P, ENTER);
+	shortcutHandler.registerShortcut('ENTER_L',goog.events.KeyCodes.L, ENTER);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q);
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);

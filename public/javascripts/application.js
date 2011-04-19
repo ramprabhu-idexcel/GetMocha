@@ -1358,6 +1358,7 @@ function close_comment_area()
     var notification_emails=$('#notifys').val();
     var assign_email=$.trim($('#assign_to').val());
     var description=$.trim($('#task_description').val());
+    var duedate=$.trim($('#txtInput3').val());
     var errors=[];
     if($.trim(task_name)=="")
       errors.push('Task name cannot be empty');
@@ -1369,7 +1370,63 @@ function close_comment_area()
       errors.push("Please enter a valid assign to email");
     if(description=="")
       errors.push("Please enter the description for the task");
-    if(errors.length==0)
+    if(duedate!="")
+	      {
+          if (duedate.match(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/) || duedate.match(/(\d{2})-(\d{2})-(\d{2,4})/) )
+            {
+              month =duedate.substring(0,2);
+             day = duedate.substring(3,5);
+             year = duedate.substring(6,10);
+              document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+             if(year>1900 && year<2100)
+                {
+                 if(month>0 && month<13)
+                    {
+                     if(day>0&&day<32)
+                        {
+                         if ((day>28 && month==2) ||(day>29 &&month==2 && year%4==0))//|| (day>31 && month==4||6||9||11)) 
+                            errors.push("Invalide date");
+                         
+                        
+                        }
+                    else
+                        errors.push("Invalide date");
+			              }
+                else
+                    errors.push("Invalide date");
+                }
+	      	else
+			      errors.push("Invalide date");
+	      }
+	  else if(duedate.match(/(\d{2})(\d{2})(\d{2,4})/))
+	    {
+          month = duedate.substring(0,2);
+          day = duedate.substring(2,4);
+          year = duedate.substring(4,8);
+        document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+          if(year>1900 && year<2100)
+             {
+              if(month>0 && month<13)
+                 {
+                  if(day>0&&day<32)
+                     {
+                       if ((day>28 && month==2)||(day>29 && month==2 && year%4==0))//||(day>31 && month==4||6||9||11))
+                           errors.push("Invalide date");
+                                               
+                      }
+                  else
+                      errors.push("Invalide date");
+                  }
+               else
+                  errors.push("Invalide date");
+               }
+            else
+              errors.push("Invalide date");
+          }
+        }
+   
+     
+  if(errors.length==0)
     {
       $.ajax({
         type :'post',
