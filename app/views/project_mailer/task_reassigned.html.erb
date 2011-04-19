@@ -14,7 +14,7 @@ Reassigned to: <%=@task.assigned_to%>
 <br/>
 Subscribed: <%=@task.subscribed_user_names.join(',')%>
 <br/>
-<a href=<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_task_email/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/> to stop recieving email notifications about this task.
+<a href=<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_task_email_task/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/> to stop recieving email notifications about this task.
 <br/>
 
 --

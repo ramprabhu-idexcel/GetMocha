@@ -79,7 +79,7 @@
     var width=$('.filed-tasklist').width();
     var half=parseInt(width)/2.0;
     var left=half+37.25;
-    $('.task-dropdown.task_list').css('left',left)
+    $('.task-dropdown.task_list').css('left',left);
     $('.task-dropdown.task_list').fadeToggle();
     return false;
   });
@@ -172,10 +172,18 @@ return false;
   });
   //task comments
   $('#reply_comment_task').live('click',function(){
-    $('.comment-contain').slideToggle('slow',function(){
+         if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+    //~ $('.comment-contain').slideToggle('slow',function(){
       $('.attachment').remove();	
       $('#comment-message').focus();
-    });
+    //~ });
     return false;  
   });
   
@@ -381,6 +389,8 @@ return false;
           $(task_list_content).insertAfter($('#tl'+task_list_id));    
       }
     });
+    //$('.task-dropdown task_list').css('display','none');
+    $('.task-dropdown.task_list').hide();
   });
   
   $('.user_list').live('click',function(){
@@ -396,6 +406,7 @@ return false;
     });
     $('a.assigned-to').text(name);
     $('div.task.tsem.open').children('div.info').children('span.name').text(name);
+    $('.task-dropdown.assigned-to').hide();
   });
   
   $('.name.message_name').live('click',function(){
@@ -433,9 +444,17 @@ return false;
   });
   
   $('.reply-link').live('click',function(){
-      $('.comment-contain').slideToggle('slow',function(){
+         if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //~ $('.comment-contain').slideToggle('slow',function(){
         $('#comment-message').focus();
-      });
+      //~ });
       return false;  
     });
   
@@ -568,7 +587,7 @@ return false;
       items.push('<div class="clear-fix"></div>')
       items.push('</div>');
     }
-    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#">unsubscribe</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#"> Unsubscribe</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments

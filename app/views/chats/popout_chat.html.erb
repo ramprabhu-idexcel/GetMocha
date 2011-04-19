@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Chats | Mocha</title>
+    <meta name="description" content="A description of the page must go here." />
+    <meta name="keywords" content="keyword1,keyword2,keyword3" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+    <%= javascript_include_tag :socky %>
+    <%= javascript_include_tag 'jquery-1.4.4.min','jquery.fileupload-ui','jquery.fileupload','size-popout','chat'%>
+    <%=stylesheet_link_tag "base"%>
+    <%= socky :channels=>[@project.id],:client_id =>current_user.id%>
+</head>
+<body class="popout-chat">
+	<div class="popout-contain">
+		<div class="comment-contain">
+			<div class="comment-input no-attach">
+        <label class="hidden">Message:</label> 
+        <textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
+        <div class="chat-right">
+          <a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
+          <input type="submit" value="Send" class="chat-send" id="chat-send"></input>
+        </div>
+        <%=clear_fix%>
+      </div>
+      </div>
+      <div class="attach-contain" style="display:none;">
+				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
+          <input type="hidden" id="attach_hidden" name="attach_id" value=""/>
+          <fieldset id="attach" class="open">
+            <div id="loader1" style="display:none;"><img src="/images/spinner.gif" /> </div>
+            <div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
+              <div class="drag-drop">Drag and drop files here</div>
+              <table id="files"></table>
+              <div id="attachment_files"> </div>
+            </div>
+          </fieldset>
+          <button id="start_uploads", style="display:none;">Start uploads</button>
+        <% end %>
+        <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
+        <%=clear_fix%>
+      </div>
+      <div class="chat-container">
+        <%=hidden_field_tag "chat[project_id]",@project.id,:id=>"chat_project_id"%>
+        <%@project.recent_chats.each do |chat|%>
+        <div class="message">
+          <div class="color" style="background-color:<%=chat.user_color%>"></div>
+          <div class="name"><span><%=chat.user_name%></span></div>
+          <div class="content most-recent"><%=chat.message%></div>
+        </div>
+        <%end%>
+        <%=clear_fix%>
+      </div>
+	</div>
+</div>
+
+</body>
+</html>

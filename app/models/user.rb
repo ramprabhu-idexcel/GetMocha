@@ -175,6 +175,9 @@ class User < ActiveRecord::Base
   def self.all_members(project_id)
     (self.members_in_project(project_id)+self.members_as_guest(project_id)).uniq
   end
+  def self.online_members(project_id)
+    find(:all,:conditions=>['project_users.project_id=? AND project_users.status=? AND project_users.online_status=?',project_id,true,true],:include=>:project_users)
+  end
   def name
     first_name && last_name ? full_name : email
   end

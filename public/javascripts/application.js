@@ -190,9 +190,22 @@ alert('afetrr bt');
       if(sec=="project")
         sec=c[0]+'/'+c[1];
       var sort_by=$('.sort.selected').text();
+      //~ $('.starred starred_count').addClass('open');      
       var order=$('.asc-desc.selected').children('span').attr('class');
       window.location="#"+sec+'?sort_by='+sort_by+'&order='+order;
-    }
+       }    
+    
+     $('#all_messages').live('click',function(){       
+       $('.sort').removeClass('selected');
+       $('#select_date').addClass('selected');
+       });
+       
+       $('.projects-list').live('click',function(){
+       $('.sort').removeClass('selected');
+       $('.asc-desc').removeClass('selected');
+       $('#select_date').addClass('selected');
+       $('#select_descending').addClass('selected');
+       });
     
     //Expand all message
     $('#message_expand').live('click',function(){
@@ -277,7 +290,7 @@ alert('afetrr bt');
     
     //display the sort message
     $('.sort-by.message-sort').click(function(){
-      $('.sort-by-tooltip.message-sort-down').slideToggle('slow');
+     $('.sort-by-tooltip.message-sort-down').toggle();
       return false;
     });
     
@@ -396,17 +409,33 @@ alert('afetrr bt');
   
     //message reply link and reply in the comment
     $('.reply').click(function(){
-      $('.comment-contain').slideToggle('slow',function(){
+        if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //~ $('.comment-contain').slideToggle('slow',function(){
          $('.attachment').remove();	
         $('#comment-message').focus();
-      });
+      //~ });
       return false;  
     });
     
     $('.reply-link').live('click',function(){
-      $('.comment-contain').slideToggle('slow',function(){
+      if ($('.comment-contain').css('display')=="none")
+      {
+      $('.comment-contain').show();
+      }
+      else
+      {
+      $('.comment-contain').hide();
+      }
+      //$('.comment-contain').slideToggle('fast',function(){
         $('#comment-message').focus();
-      });
+      //});
       return false;  
     });
     
@@ -508,7 +537,7 @@ alert('afetrr bt');
   //drop down
   $('#add-new').click(function(){
  if (($('#add_new_mod').css('display')=="none") || ($('.add-item-modal').css('display')=="none"))
-    $('#add_new_mods').slideToggle('fast');
+    $('#add_new_mods').toggle();
     return false;
   });
   
@@ -693,24 +722,22 @@ alert('afetrr bt');
   $('.my-account.open').live('click',function(){
     return false;
   });
-  
-  $('#mycontact1').live('click',function(){
-    $('#mycontact1').toggleClass('open')
+ $('#mycontact1').live('click',function(){
+    $('#mycontact1').attr('Class','m-tab alt open')
     $('#my_profile').hide();
-    $('#myprofile1').toggleClass('open')
+    $('#myprofile1').attr('Class','m-tab')
     $('#my_contacts').show();
     $('#people_settings_popup').show();
     return false;
   });
       
   $('#myprofile1').live('click',function(){
-    $('#mycontact1').toggleClass('open')
+    $('#mycontact1').attr('Class','m-tab alt')
     $('#my_profile').show();
-    $('#myprofile1').toggleClass('open')
+    $('#myprofile1').attr('Class','m-tab open')
     $('#my_contacts').hide();
     return false;
    });
-  
   
   
   $('#colorSelector').ColorPicker({
@@ -1288,7 +1315,7 @@ function find_month(month)
 }
 function close_comment_area()
 {
-  $('.comment-contain').toggle('slow');
+  $('.comment-contain').hide();
   $('#comment-message').val('');
 }
 
@@ -1331,20 +1358,75 @@ function close_comment_area()
     var notification_emails=$('#notifys').val();
     var assign_email=$.trim($('#assign_to').val());
     var description=$.trim($('#task_description').val());
+    var duedate=$.trim($('#txtInput3').val());
     var errors=[];
     if($.trim(task_name)=="")
       errors.push('Task name cannot be empty');
     if($.trim(project_id)=="")
       errors.push('Please select a project');
-    if($.trim(task_list_id)=="")
-      errors.push('Please select a task list');
     if(!IsValidMultipleEmail(notification_emails))
       errors.push("Please enter valid notification emails");
     if(assign_email!="" && !IsValidEmail(assign_email))
       errors.push("Please enter a valid assign to email");
-    if(description=="")
-      errors.push("Please enter the description for the task");
-    if(errors.length==0)
+    //~ if(description=="")
+      //~ errors.push("Please enter the description for the task");
+    if(duedate!="")
+	      {
+          if (duedate.match(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/) || duedate.match(/(\d{2})-(\d{2})-(\d{2,4})/) )
+            {
+              month =duedate.substring(0,2);
+             day = duedate.substring(3,5);
+             year = duedate.substring(6,10);
+              document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+             if(year>1900 && year<2100)
+                {
+                 if(month>0 && month<13)
+                    {
+                     if(day>0&&day<32)
+                        {
+                         if ((day>28 && month==2) ||(day>29 &&month==2 && year%4==0))//|| (day>31 && month==4||6||9||11)) 
+                            errors.push("Invalide date");
+                         
+                        
+                        }
+                    else
+                        errors.push("Invalide date");
+			              }
+                else
+                    errors.push("Invalide date");
+                }
+	      	else
+			      errors.push("Invalide date");
+	      }
+	  else if(duedate.match(/(\d{2})(\d{2})(\d{2,4})/))
+	    {
+          month = duedate.substring(0,2);
+          day = duedate.substring(2,4);
+          year = duedate.substring(4,8);
+        document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+          if(year>1900 && year<2100)
+             {
+              if(month>0 && month<13)
+                 {
+                  if(day>0&&day<32)
+                     {
+                       if ((day>28 && month==2)||(day>29 && month==2 && year%4==0))//||(day>31 && month==4||6||9||11))
+                           errors.push("Invalide date");
+                                               
+                      }
+                  else
+                      errors.push("Invalide date");
+                  }
+               else
+                  errors.push("Invalide date");
+               }
+            else
+              errors.push("Invalide date");
+          }
+        }
+   
+     
+  if(errors.length==0)
     {
       $.ajax({
         type :'post',
@@ -1427,3 +1509,8 @@ function close_comment_area()
     });
     return valid;
   }
+  function close_shortcut()
+  {
+   $('.keyboard-shortcuts').css('display','none');
+  }
+

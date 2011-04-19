@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
 	has_many :comments#, :through=>:activities
 	has_many :custom_emails
 	has_many :chats
+  has_many :recent_chats, :class_name => 'Chat', :order => 'updated_at DESC', :limit => 20
 	has_many :invitations
   belongs_to :owner,:class_name=>"User"
 	attr_accessible :name,:status,:message_email_id,:task_email_id,:is_public,:user_id
@@ -27,6 +28,9 @@ class Project < ActiveRecord::Base
   end
   def all_members
     User.all_members(self.id)
+  end
+  def online_members
+    User.online_members(self.id)
   end
   def self.user_projects(user_id)
     find(:all,:conditions=>['project_users.user_id=? AND project_users.status=?',user_id,true],:include=>:project_users)
@@ -155,4 +159,7 @@ class Project < ActiveRecord::Base
 	def self.check_project_users(current_user)
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 	end	
+  def next_chats(offset)
+    chats.find(:all,:order => 'updated_at DESC', :limit => 20,:offset=>offset)
+  end
 end

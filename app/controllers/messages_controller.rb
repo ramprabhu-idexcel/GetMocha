@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-	before_filter :authenticate_user!
+	before_filter :authenticate_user!, :except=>['unsubscribe_via_email']
   UPDATE_METHODS=['show','star_message','subscribe','unsubscribe','unsubscribe_via_email','destroy']
   before_filter :find_activity,:only=>['subscribe','star_message','show','unsubscribe','destroy','project_message_comment']
   before_filter :remove_timestamps,:only=>UPDATE_METHODS

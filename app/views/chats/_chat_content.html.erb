@@ -1,0 +1,95 @@
+<%= socky :channels=>[project.id],:client_id =>current_user.id%>
+<div class="m-panel-contain">
+  <div class="m-panel">
+    <div class="sub-header">Participants</div>
+    <%project.online_members.each do |user|%>
+      <div class="m-tab <%= cycle('alt', '') %>" id="ui<%=user.id%>">
+        <div class="left-icons">
+          <div class="avatar-mini"></div>
+          <img alt="avatar" class="avatar-mini-img" src="<%=user.image_url%>"/>
+        </div>
+        <div class="info">
+          <span class="position"><%=user.title%></span><br/>
+          <span class="name"><%=user.full_name%></span>
+          <span class="p-number"><%=user.phone%></span>
+          <span class="email"><a href="mailto:<%=user.email%>"><%=user.email%></a></span>
+        </div>
+        <%=clear_fix%>
+      </div>
+    <%end%>
+  </div>
+</div>
+
+<div class="r-panel-contain">
+  <div class="r-panel">
+    <div class="comment-contain">
+      <div class="comment-input no-attach">
+        <label class="hidden">Message:</label> 
+        <textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
+        <div class="chat-right">
+          <a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
+          <input type="submit" value="Send" class="chat-send" id="chat-send"></input>
+        </div>
+        <%=clear_fix%>
+      </div>
+      <div class="attach-contain" style="display:none;">
+				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
+          <input type="hidden" id="attach_hidden" name="attach_id" value=""/>
+          <fieldset id="attach" class="open">
+            <div id="loader1" style="display:none;">
+               <img src="/images/spinner.gif" />
+            </div>
+
+            <div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
+              <div class="drag-drop">Drag and drop files here</div>
+              <table id="files"></table>
+              <div id="attachment_files"> </div>
+            </div>
+          </fieldset>
+          <button id="start_uploads", style="display:none;">Start uploads</button>
+        <% end %>
+        <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
+      <%=clear_fix%>
+    </div>
+
+  </div>
+  <div class="chat-container" style="height: 159px;">
+				
+    <%=hidden_field_tag "chat[project_id]",project.id,:id=>"chat_project_id"%>
+    <%=hidden_field_tag "page",20,:id=>"page_number"%>
+    <%project.recent_chats.each do |chat|%>
+    <div class="message">
+      <div class="color" style="background-color:<%=chat.user_color%>"></div>
+      <div class="name"><span><%=chat.user_name%></span></div>
+      <div class="content most-recent"><%=chat.message%></div>
+    </div>
+    <%end%>
+    <%=clear_fix%>
+        
+  </div>
+</div>
+<script>
+  $('.chat-container').scroll(function(){	
+    var page_number=parseInt($('#page_number').val());
+    var project_id=$('#chat_project_id').val();
+    if($('.chat-container').scrollTop() > ($('.chat-container').position().top + $('.chat-container').height()) && page_number!=0)
+    {
+      $.ajax({
+        url:'/load_more/'+project_id+'?page='+page_number,
+        type:'get',
+        success:function(data){
+          $('.chat-container').append(data);
+          if(data.length==0)
+            $('#page_number').val(0);
+          else
+            $('#page_number').val(page_number+20);
+        }
+      });
+    }
+
+  });
+
+</script>
+
+
+

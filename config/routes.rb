@@ -70,6 +70,7 @@ end
   match 'subscribe/:activity_id'=>'activities#subscribe',:as=>'subscribe_activity',:method=>:get
   match 'unsubscribe/:activity_id'=>'messages#unsubscribe',:as=>'unsubscribe_message',:method=>:get
   match 'unsubscribe_via_email/:user_id/:message_id'=>'messages#unsubscribe_via_email',:as=>'unsubscribe_message_via_email',:method=>:post
+  match 'unsubscribe_via_email_task/:user_id/:message_id'=>'tasks#unsubscribe_via_email_task',:as=>'unsubscribe_message_via_email_task',:method=>:post
   match 'messages'=>'messages#destroy',:as=>'delete_message',:method=>:delete
   resource :comments
   match '/remove_attach/:id' =>"attachments#remove_attach"
@@ -96,7 +97,15 @@ end
   match 'unsubscribe_task_email/:user_id/:task_id'=>'activities#unsubscribe',:as=>'unsubscribe',:method=>:get
   resources :activities
   resources :task_lists
-  resources :chats
+  resources :chats do
+    collection do
+      post :subscribe
+      post :unsubscribe
+    end
+  end
+  match 'chats/:project_id/project_chat'=>'chats#project_chat',:as=>'project_chats',:method=>:get
+  match 'popout-chat/:project_id'=>'chats#popout_chat',:as=>'popout_chat',:method=>:get
+  match 'load_more/:project_id'=>'chats#load_more',:as=>'popout_chat',:method=>:get
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"

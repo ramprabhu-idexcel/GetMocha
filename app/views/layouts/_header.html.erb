@@ -29,6 +29,10 @@
 			<li class="task_header"><%=link_to 'Star',"#", :class=>"star task_star",:id=>"task_star"%></li>
 			<li class="task_header"><%=link_to 'Trash',"#", :class=>"trash task_trash",:id=>"trash_task"%></li>
 		</ul>
+    <ul class="chat-header" style="display:none;">
+			<li><a class="invite chat_invite" href="/add-contact">Invite</a></li>
+			<li><a class="popout" href="javascript:void(0)">Pop out chat</a></li>
+		</ul>
 		<a href="#account-dropdown" class="username user_drop_down"><span class="icon"></span><%=current_user.full_name%></a>
     <%=link_to '','#project-settings',:class=>"settings project-settings"%>
 		</div>
