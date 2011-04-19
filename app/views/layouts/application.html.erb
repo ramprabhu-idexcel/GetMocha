@@ -664,6 +664,12 @@ $('#mycontact1').toggleClass('open')
 		if(class1==0 || class_hide=="none")
 		{
 			//first panel
+			if (key=="S" || key=="X")
+			{
+				messages_navigation_right();
+			}
+			else
+			{
 			var all_messages=document.getElementById('all_messages').className;
 			if(all_messages=="all-messages has-unread open")
 			all_messages="true"
@@ -679,49 +685,40 @@ $('#mycontact1').toggleClass('open')
 			var exit1="false"
 			for(i=0; i<length; i++)
 			{
-			var class1=$('.projects-list').children('')[i].className;
-			if(class1=="project has-unread open" || class1=="project open")
-			open="true"
-			
-			open_id=$('.projects-list').children('')[i].id;
-			if(star=="true")
-			{
-			  if(key=="down" || key=="Z")
-				already_exists=$('.projects-list').children('')[0].id;
-				else if(exit1!="true" && (key=="up" || key=="A"))
+				var class1=$('.projects-list').children('')[i].className;
+				if(class1=="project has-unread open" || class1=="project open")
+				open="true"
+				open_id=$('.projects-list').children('')[i].id;
+				if(star=="true")
+				{	
+					if(key=="down" || key=="Z")
+					already_exists=$('.projects-list').children('')[0].id;
+					else if(exit1!="true" && (key=="up" || key=="A"))
+					{
+						window.location=$('#all_messages').attr('href');
+						document.getElementById('all_messages').className="all-messages has-unread open";
+						document.getElementById('starred_messages').className="starred";
+						exit1="true"
+					}
+				}
+				else if(open=="true" && i<length && (class1=="project has-unread open" || class1=="project open"))
 				{
-					window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-								document.getElementById('starred_messages').className="starred";
-								exit1="true"
-								
+					if((key=="down" || key=="Z") && i<length-1)
+					already_exists=$('.projects-list').children('')[i+1].id;
+					else if(i!=0 && i<length && (key=="up" || key=="A"))
+					already_exists=$('.projects-list').children('')[i-1].id;
+					old_id=$('.projects-list').children('')[i].id;
+					old_one="true";
+					if(i==length-1)
+					{
+						document.getElementById(old_id).className="project";
+					}
+				}
+				else
+				{
+					get_all_messages=="true"
 				}
 			}
-			else if(open=="true" && i<length && (class1=="project has-unread open" || class1=="project open"))
-			{
-			  if((key=="down" || key=="Z") && i<length-1)
-				already_exists=$('.projects-list').children('')[i+1].id;
-				else if(i!=0 && i<length && (key=="up" || key=="A"))
-				already_exists=$('.projects-list').children('')[i-1].id;
-				old_id=$('.projects-list').children('')[i].id;
-				old_one="true";
-				if(i==length-1)
-				{
-				document.getElementById(old_id).className="project";
-
-				}
-			
-				
-			}
-		
-			else
-			{
-			get_all_messages=="true"
-
-
-			}
-			}
-			
 			if(already_exists!="false")
 			{
 				//open_id=open_id.split('_')[2];
@@ -795,6 +792,7 @@ if(is_open=="0")
 					
 				}
 			}
+		}
 		}
 		else
 		{
