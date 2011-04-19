@@ -98,8 +98,8 @@ end
   resources :task_lists
   resources :chats do
     collection do
-      get :subscribe
-      get :unsubscribe
+      post :subscribe
+      post :unsubscribe
     end
   end
   match 'chats/:project_id/project_chat'=>'chats#project_chat',:as=>'project_chats',:method=>:get

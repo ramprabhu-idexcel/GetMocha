@@ -16,7 +16,6 @@
         $.unread_count[data[3]]+=1;
       else
         $.unread_count[data[3]]=1;
-      alert($.unread_count[data[3]]);
     }
   }
   
