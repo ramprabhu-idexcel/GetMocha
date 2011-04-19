@@ -974,7 +974,12 @@ if(is_open=="0")
 			
 			if(class1==0 || class_hide=="none")
 			{
-			
+				if (key=="S" || key=="X")
+			 {
+				 tasks_navigation_right();
+			 }
+			 else
+			 {
 				var all_tasks=document.getElementById('all_tasks').className;
 				var my_tasks=document.getElementById('my_tasks').className;
 				var starred_tasks=document.getElementById('starred_tasks').className;
@@ -989,7 +994,6 @@ if(is_open=="0")
 						project_tasks=cn;
 					}
 				}
-				
 				if(all_tasks=="all-tasks open") // to open my_tasks from all_tasks(down)
 				{
 				  if(key=="down" || key=="Z")
@@ -1057,6 +1061,7 @@ if(is_open=="0")
 				else
 				  tasks_projects(key,"3");
 				}
+			}
 			}
 			else
 			{
