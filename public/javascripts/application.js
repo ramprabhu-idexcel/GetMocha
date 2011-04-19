@@ -1427,3 +1427,7 @@ function close_comment_area()
     });
     return valid;
   }
+  function close_shortcut()
+  {
+   $('.keyboard-shortcuts').css('display','none');
+  }

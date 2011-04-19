@@ -27,7 +27,7 @@
       <%= javascript_include_tag 'jquery-1.4.4.min','jquery-latest','jquery.bgiframe.min','size-container','open','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>		
-    <%= javascript_include_tag :socky %>
+    <%#= javascript_include_tag :socky %>
 
 	<!--[if lt IE 7]>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
@@ -91,6 +91,9 @@
 	<div class="modal-bottom-left"></div>
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
+</div>
+<div class="keyboard-shortcuts" style="display:none;">
+<%= render :partial=>'layouts/keyboard_shortcuts' %>
 </div>
 <div id="add_new_mod" style="display:none;">
 </div>
@@ -176,6 +179,14 @@
 			{
 			short_modal1('/tasks/new');
 			}
+			if(event.identifier=='SLASH')
+			{
+			  $('.keyboard-shortcuts').css('display','block');
+			}
+			if(event.identifier=='SHIFT_SLASH')
+			{
+			  $('.keyboard-shortcuts').css('display','block');
+			}
     }
   var shortcutHandler = new goog.ui.KeyboardShortcutHandler(document);
   var NONE = goog.ui.KeyboardShortcutHandler.Modifiers.NONE;
@@ -192,6 +203,8 @@
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
 	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
+	shortcutHandler.registerShortcut('SLASH',goog.events.KeyCodes.SLASH);
+	shortcutHandler.registerShortcut('SHIFT_SLASH',goog.events.KeyCodes.SLASH, SHIFT);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q);
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);
@@ -351,6 +364,7 @@
 		$('#add_new_mods').hide();
 		$('.sort-by-tooltip').hide();
 		$('.ds_tbl').hide();
+		  $('.keyboard-shortcuts').css('display','none');
 		$('.task-dropdown.task_list').hide()
 			$('.task-dropdown.assigned-to').hide()
 		}
