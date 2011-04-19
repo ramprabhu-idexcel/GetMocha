@@ -1105,9 +1105,10 @@ else
         else
         {
           alert(data.error);
-        }
+          }
       }      
     });
+     $('#show_secondary').css('visibility','visible'); 
     return false;
   });
 

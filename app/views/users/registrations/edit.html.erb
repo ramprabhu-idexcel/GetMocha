@@ -83,9 +83,16 @@
 				    </fieldset>
 						
 				    <fieldset>
-						<div class="label-contain">
-							<p><%= label_tag "Secondary:"%>
+						<%if current_user.secondary_emails.present?%>
+						<div class="label-contain" id="show_secondary">
+							<p><%= label_tag "Secondary:" %>
 						</div>
+						<%else%>
+						<div class="label-contain" style="visibility:hidden;"  id="show_secondary">
+							<p><%= label_tag "Secondary:"%></p>
+						</div>
+						<%end%>
+						
 						 <div class="info-right">
 	  							<span class="info_email" id="label_secondary_email">
   	 						  <%if current_user.secondary_emails.present?%>
@@ -93,7 +100,7 @@
 					           	 						  <%if e.confirmation_token.present?%>
 										                 <span><%=raw index==0 ? "" : "<br/>"%><%=e.email%>&nbsp;(unverified)<%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete delete_exist",:id=>"delete_email"%></span>
 																		 <%else%>
-                                         <span ><%=e.email%><%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete delete_exist",:id=>"delete_email"%> </span>
+																		  <span ><%=e.email%><%=link_to "Delete",delete_email_update_path(e),:class=>"edit delete delete_exist",:id=>"delete_email"%> </span>
 																		<%end%>	
 							       			 <%end%>
 									<%end%>	
