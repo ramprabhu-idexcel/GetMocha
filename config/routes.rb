@@ -103,6 +103,7 @@ end
     end
   end
   match 'chats/:project_id/project_chat'=>'chats#project_chat',:as=>'project_chats',:method=>:get
+  match 'popout-chat/:project_id'=>'chats#popout_chat',:as=>'popout_chat',:method=>:get
   match 'faq' =>"home#faq"
   match 'terms' =>"home#terms"
   match 'privacy' =>"home#privacy"
