@@ -177,6 +177,14 @@
 			{
 			short_modal_down('X')
 			}
+						if(event.identifier=='D')
+			{
+			short_modal_down('D')
+			}
+						if(event.identifier=='C')
+			{
+			short_modal_down('C')
+			}
 			if(event.identifier=='SHIFT_T')
 			{
 			short_modal1('/tasks/new');
@@ -236,6 +244,8 @@
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z);
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S);
 	shortcutHandler.registerShortcut('X',goog.events.KeyCodes.X);
+	shortcutHandler.registerShortcut('D',goog.events.KeyCodes.D);
+	shortcutHandler.registerShortcut('C',goog.events.KeyCodes.C);
 	shortcutHandler.registerShortcut('W',goog.events.KeyCodes.W);
   shortcutHandler.registerShortcut('GS',goog.events.KeyCodes.G, NONE, goog.events.KeyCodes.S);
   shortcutHandler.registerShortcut('GP',goog.events.KeyCodes.G, NONE,goog.events.KeyCodes.P);
@@ -853,6 +863,11 @@ if(is_open=="0")
 		//for messages second panel navigation
 		function messages_second_panel_navigation(key)
 		{
+		
+		if(key=="D" || key=="C")
+		messages_third_panel(key);
+		else
+		{
 			  already_exists="false"
 				exit="false";
 			var length=$('#message_area').children('').length;
@@ -956,6 +971,7 @@ if(is_open=="0")
 					}
 				}
 			}
+		}
 		}
 		
 		//for displaying the message header
@@ -1291,7 +1307,10 @@ if(is_open=="0")
     $('#select_task_date').addClass('selected');
 		$('#select_task_descending').removeClass('selected');
 		});
+		function messages_third_panel(key)
+		{
 		
+		}
 		
 			
 </script>
