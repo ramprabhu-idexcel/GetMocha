@@ -1372,7 +1372,7 @@ function close_comment_area()
       errors.push("Please enter the description for the task");
     if(duedate!="")
 	      {
-          if (duedate.match(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/) || duedate.match(/(\d{2})-(\d{2})-(\d{4})/) )
+          if (duedate.match(/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/) || duedate.match(/(\d{2})-(\d{2})-(\d{2,4})/) )
             {
               month =duedate.substring(0,2);
              day = duedate.substring(3,5);
@@ -1398,7 +1398,7 @@ function close_comment_area()
 	      	else
 			      errors.push("Invalide date");
 	      }
-	  else if(duedate.match(/(\d{2})(\d{2})(\d{4})/))
+	  else if(duedate.match(/(\d{2})(\d{2})(\d{2,4})/))
 	    {
           month = duedate.substring(0,2);
           day = duedate.substring(2,4);
