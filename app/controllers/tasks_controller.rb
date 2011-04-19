@@ -34,7 +34,6 @@ class TasksController < ApplicationController
 	end
 	def create
 		if params[:task][:task_list_id].blank?
-			p "*****************************************"
 			task_list=TaskList.create(:project_id=>params[:project_id], :user_id=>current_user.id, :name=>params[:tasklist])
 		end
     task=current_user.tasks.build(params[:task])
