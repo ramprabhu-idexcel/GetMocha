@@ -28,8 +28,9 @@
       data:{id : task_id},
       success:function(data){
         tasks_count(data);
-      }
+        }
     });
+    
     $(".checkbox > span.icon.icon-thd").toggleClass('checked');
     var second_pane=$(this).parent().parent().parent();
     second_pane.fadeOut(700,function(){
@@ -667,11 +668,15 @@ return false;
     return filter.test(email);
 	}
   
-  function tasks_count(data)
+  function tasks_count(data)  
   {
-    if(data.completed_count<1)
-      $('#completed_tasks').html('<span class="icon"></span>Completed');
+     //~ if(data.completed_count==0)
+       //~ $('#completed_tasks').hide();
+     if(data.completed_count<1)
+      //~ $('#completed_tasks').html('<span class="icon"></span>Completed');
+        $('#completed_tasks').hide();
     else
+       $('#completed_tasks').show();
       $('#completed_tasks').html('<span class="num-tasks">'+data.completed_count+'</span><span class="icon"></span>Completed');
     if(data.starred_count<1)
       $('#starred_tasks').html('<span class="icon"></span>Starred');

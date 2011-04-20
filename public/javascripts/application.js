@@ -154,18 +154,16 @@ alert('afetrr bt');
    
 
   $('.edit.delete.delete_exist').live('click',function(){
-    alert('----------');
        $(this).parent('span').remove();
-       var len=$('#semail').children().length
-       alert(len)
+       $.ajax({
+       url: $(this).attr('href'),
+       type: 'delete'
+       });
+       var len=$('#label_secondary_email').children().length
        if(len==0)
   	   {
          $('#show_secondary').css('visibility','hidden');
 	     }	    
-        $.ajax({
-         url: $(this).attr('href'),
-         type: 'delete',
-       });
   	   return false;
   });  
   
