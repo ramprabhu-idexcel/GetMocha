@@ -28,7 +28,7 @@ end
 end
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
-  after_save :resize_image_for_thumbnail
+  #~ after_save :resize_image_for_thumbnail
   def resize_image_for_thumbnail
     #~ p self.thumbnails
     if self.content_type.split('/')[0]=="image"
