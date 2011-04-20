@@ -19,18 +19,18 @@ class TasksController < ApplicationController
     @users=current_user.my_contacts
 		#~ @projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		@projects=Project.check_project_users(current_user)
-		@user_emails=[]
+		#~ @user_emails=[]
 		#~ @t_list=[]
 		#~ @project_names=[]
 		#~ if @users
-		  @users.each do |f|
-        @user_emails<<"#{f.email}"
-		  end
+		  #~ @users.each do |f|
+        #~ @user_emails<<"#{f.email}"
+		  #~ end
 		#~ end
 	  #~ @projects.each do |project|
       #~ @project_names<<"#{project.name}"
     #~ end
-	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:projects=>@projects}
+	  render :partial=>'new',:locals=>{:m_users=>@users,:projects=>@projects}
 	end
 	def create
 		if params[:task][:task_list_id].blank?

@@ -33,8 +33,8 @@
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
 					 <% else %>
 					 		<%=f.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
+							<% end %>
 							<input type="hidden" id="autocomplete_hidden" name="project_id" value=""/>
-					 <% end %>
 			    </fieldset>
 			    <fieldset id="txtarea">
 					<label>Message:</label>
@@ -67,17 +67,20 @@
 	 <script type="text/javascript">
 	 var data="2";
 var attachitem=[];
-	 <%=names=[]%>
-	    <% user_emails.each do |f|%>
-                <%names<<f <<","%>
-                var userEmails = "<%= names %>";
-        <%end%>
-                                userEmails=userEmails.split(',');
-  var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('txtInput1'), true);
-
+	 
 
 	   $(document).ready(function(){
 var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
+	var data1 = [<% users.each do |muser| %>  {text:'<%= muser.email %>', id:'<%= muser.id %>'},<% end %>{text:'',id:''}];
+$("#txtInput1").autocomplete(data1, {
+  formatItem: function(items1) {
+    return items1.text;
+  },
+	multiple: true,
+	matchContains: true
+}).result(function(event, items1) {
+  //document.getElementById('autocomplete1_hidden').value=item.id;
+});
 $("#txtInput2").autocomplete(data, {
   formatItem: function(item)	{
     return item.text;

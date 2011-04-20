@@ -45,17 +45,16 @@
 $('.modal-bottom-left').focus();
 	}
 	});
+$(document).ready(function(){
+	var data = [<% users.each do |user| %> {text:'<%= user.email %>', id:'<%= user.id %>'},<% end %>{text:'',id:''}];
+$("#txtInput2").autocomplete(data, {
+  formatItem: function(item) {
+    return item.text;
+  },
+	matchContains: true
+}).result(function(event, item) {
+  //document.getElementById('autocomplete1_hidden').value=item.id;
+});
+}); 	
 
-
-
-<%=emails=[]%>
-	<% user_emails.each do |f|%>
-	   <%emails<<f <<","%>
-		var userEmails= "<%= emails %>";
-	<%end%>
-					userEmails=userEmails.split(',');
-					var ac2 = new goog.ui.AutoComplete.Basic(
-      userEmails, document.getElementById('txtInput2'), false);
-  </script>
-	
 
