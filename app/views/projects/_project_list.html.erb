@@ -7,8 +7,7 @@
 	<% end %>
 	</div>
 	<% if !completed_projects.empty? %>
-		<div class="expand-completed"><span  onclick="javascript:show_completed_projects();">Show Completed</span><span class="icon"></span></div>
-	
+		<div class="expand-completed"><span  onclick="javascript:show_completed_projects();">Show Completed</span><span class="icon" style="margin:-16px 0 16px 193px"></span></div>	
 	<div class="projects-list" id="completed_list" style="display:none";>
 	<% completed_projects.each do |project| %>
 		<a href="#project" class="project" onclick="javascript:settings_secondpanel('<%= project.id %>');" id="project_list_<%= project.id %>"><span class="icon"></span><%= project.name %></a>
