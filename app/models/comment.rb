@@ -66,4 +66,7 @@ class Comment < ActiveRecord::Base
   def task_comment_notify
     "Author: #{self.author} <br/> Comment: #{self.comment}"
   end
+  def comment_notify
+		"Author: #{self.author} <br/> Comment: #{self.comment}"
+	end
 end
