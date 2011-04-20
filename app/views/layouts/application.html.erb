@@ -531,6 +531,11 @@ else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list
 		//for settings page navigation
 		function settings_navigation_down(key)
 		{
+		if(key=="D" || key=="C")
+		{
+		}
+		else
+		{
 			second_panel=$('#settings_secondpanel').css('visibility');
 			people=$('#settings_people').css('display');
 			general=$('#settings_general').css('display');
@@ -598,6 +603,7 @@ else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list
 				}
 			}
 		}
+		}
 		
 		//for settings page navigation for right arrow
 		function settings_navigation_right()
@@ -639,6 +645,13 @@ else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list
 		// for profile page navigation
 		function profile_navigation_down(key)
 		{
+		
+		if(key =="D" || key =="C")
+		{
+		
+		}
+		else
+		{
 			profile=$('#my_profile').css('display');
 			contacts=$('#my_contacts').css('display');
 				if(profile=="none" && contacts=="none")
@@ -662,6 +675,7 @@ $('#mycontact1').toggleClass('open')
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').show();
         $('#people_settings_popup').show();
+				}
 				}
 		}
 	
