@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
 	belongs_to :guest
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
                     #:length     => { :within => 6..250 }
-	validates :description, :presence => true
+	#~ validates :description, :presence => true
   validates :name, :presence   => true
   validate :unique_name,:on=>:create
 
