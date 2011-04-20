@@ -1380,12 +1380,15 @@ function close_comment_area()
     var notification_emails=$('#notifys').val();
     var assign_email=$.trim($('#assign_to').val());
     var description=$.trim($('#task_description').val());
+    var tasklist=$.trim($('#t_list').val());
     var duedate=$.trim($('#txtInput3').val());
     var errors=[];
     if($.trim(task_name)=="")
       errors.push('Task name cannot be empty');
     if($.trim(project_id)=="")
       errors.push('Please select a project');
+    if(tasklist=="")
+       errors.push('Task list name cannot be empty');
     if(!IsValidMultipleEmail(notification_emails))
       errors.push("Please enter valid notification emails");
     if(assign_email!="" && !IsValidEmail(assign_email))
