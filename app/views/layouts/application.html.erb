@@ -1082,10 +1082,12 @@ if(is_open=="0")
 			else
 			{
 			
-			
-			
-			
-			
+			if(key=="D" || key=="C")
+			{
+				messages_third_panel(key);
+			}
+			else
+			{
 				var task_length=$('.m-panel').children().length;
 				var stop="false";
 				for(i=0; i<task_length; i++)
@@ -1134,7 +1136,7 @@ if(is_open=="0")
 						}
 					}
 				}
-				
+			}	
 				
 				
 				
@@ -1309,7 +1311,34 @@ if(is_open=="0")
 		});
 		function messages_third_panel(key)
 		{
-		
+			var comment_length=$('.prev-messages').children().length;
+			var comment_open="false";
+			for (i=0; i<comment_length; i++)
+			{
+				var comment=$('.prev-messages').children()[i].className;
+				if (comment=="message message_comments   open")
+				{
+				 comment_open="true"
+				 var comment_position=i;
+				}
+			}
+			if(comment_open=="false")
+			{
+			  $('.prev-messages').children()[0].className="message message_comments   open";
+			}
+			else
+			{
+			  if(key=="C")
+				{
+					$('.prev-messages').children()[comment_position].className="message message_comments  ";
+					$('.prev-messages').children()[comment_position+1].className="message message_comments   open";
+				}
+				else
+				{
+					$('.prev-messages').children()[comment_position].className="message message_comments  ";
+					$('.prev-messages').children()[comment_position-1].className="message message_comments   open";
+				}
+			}
 		}
 		
 			
