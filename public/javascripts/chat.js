@@ -147,6 +147,7 @@
     var project_id=$(this).attr('href').split('#')[1];
     $(this).html('<span class="icon"></span>'+project_name);
     $(this).removeClass('has-unread');
+     $.unread_count[project_id]=0;
     if(old_project_id==project_id)
       old_project_id="";
     $.ajax({
