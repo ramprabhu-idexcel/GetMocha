@@ -594,7 +594,7 @@ return false;
       items.push('<div class="clear-fix"></div>')
       items.push('</div>');
     }
-    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#"> Unsubscribe</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#">' + data.is_subscribed + '</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments

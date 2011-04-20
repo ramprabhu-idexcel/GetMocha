@@ -163,6 +163,9 @@ class User < ActiveRecord::Base
   def message_activity(message_id)
     activities.find_by_resource_type_and_resource_id("Message",message_id)
   end
+  def task_activity(message_id)
+    activities.find_by_resource_type_and_resource_id("Message",message_id)
+  end
   def my_contacts
     User.find(:all,:conditions=>['project_users.project_id in (?) AND users.status=? AND project_users.status=?',project_memberships,true,true],:include=>:project_users)
   end
@@ -183,6 +186,10 @@ class User < ActiveRecord::Base
   end
   def is_message_subscribed?(message_id)
     activity=message_activity(message_id)
+    activity.is_subscribed if activity
+  end
+  def is_task_subscribed?(task_id)
+    activity=task_activity(task_id)
     activity.is_subscribed if activity
   end
   def hash_activities_comments(type_ids)
