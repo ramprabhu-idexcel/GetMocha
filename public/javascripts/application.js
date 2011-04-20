@@ -145,7 +145,8 @@ alert('afetrr bt');
 	  if($('.info_email').length<3)
 	  $('#semail').children('br').remove();
     var a=$('#semail').children().length;
-    if(a==0)   
+       var len=$('#label_secondary_email').children().length;
+    if(a==0 && len==0)   
        {
          $('#show_secondary').css('visibility','hidden');
        }
@@ -159,30 +160,16 @@ alert('afetrr bt');
        url: $(this).attr('href'),
        type: 'delete'
        });
-   	  if($('.info_email').length<3)
-       alert('-----')
-	     $('#label_secondary_email').parent().children('br').remove();
-       var len=$('#label_secondary_email').children().length
-       if(len==0)
+   	  //~ if($('.info_email').length<3)
+	     //~ $('#label_secondary_email').parent().children('br').remove();
+       var len=$('#label_secondary_email').children().length;
+           var a=$('#semail').children().length;
+       
+       if(len==0 && a==0)
   	   {
          $('#show_secondary').css('visibility','hidden');
-         //~ var everything = $('#delete_fun').contents();
-         //~ for(var i=everything.length-1;i>0;i--)
-        //~ {
-        //~ if((everything.get(i).tagName)== 'br/')
-                //~ $(everything.get(i)).remove();
-        //~ else
-                //~ break;         
-       //~ }
-	     //~ 
-          //~ var regex1 = /^([\n ]*)(<br.*?>)*/;
-         //~ var regex2 = /(<br.*?>)*([\n ]*)$/;
-         //~ str = str.replace(regex1,' ');
-         //~ str = str.replace(regex2,' '); 
-         //~ alert(str);
-         //~ $('#delete_fun').html(str);
-       }
-     
+         $('#delete_fun').children('br').remove()
+         }     
   	   return false;
   });  
   
@@ -1135,7 +1122,7 @@ else
           email.remove();
           link.remove();
           $('#show_secondary').css('visibility','visible');
-        }
+          }
         else
         {
           alert(data.error);
