@@ -53,8 +53,11 @@ class ChatsController < ApplicationController
     render :text=>"ok"
   end
   def unsubscribe
-    #~ update_offline(params["channels"]["0"],params["client_id"])
-    #~ send_to_clients ["offline_users",user_chat_data, params[:chat][:message],params[:chat][:project_id]]
+    user=User.find_by_id params["client_id"] if params["client_id"]
+    if user
+      send_online_users ["offline_users", {:id=>user.id,:project_id=>params["channels"]["0"]}]
+      update_offline(params["channels"]["0"],params["client_id"])
+    end
     render :text=>"ok"
   end
   private
