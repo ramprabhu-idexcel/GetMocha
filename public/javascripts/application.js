@@ -1401,7 +1401,7 @@ function close_comment_area()
              year = duedate.substring(6,10);
               if(year<100)
               year=20+year;
-              document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+              document.getElementById('txtInput3').value=day+"-"+month+"-"+year
              if(year>0000 && year<2100)
                 {
                  if(month>0 && month<13)
@@ -1410,9 +1410,7 @@ function close_comment_area()
                         {
                          if ((day>28 && month==2) ||(day>29 &&month==2 && year%4==0))//|| (day>31 && month==4||6||9||11)) 
                             errors.push("Invalide date");
-                         
-                        
-                        }
+                         }
                     else
                         errors.push("Invalide date");
 			              }
@@ -1429,7 +1427,7 @@ function close_comment_area()
           year = duedate.substring(4,8);
         if(year<100)
               year=20+year;
-        document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+        document.getElementById('txtInput3').value=day+"-"+month+"-"+year
           if(year>1900 && year<2100)
              {
               if(month>0 && month<13)
