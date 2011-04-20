@@ -1082,10 +1082,12 @@ if(is_open=="0")
 			else
 			{
 			
-			
-			
-			
-			
+			if(key=="D" || key=="C")
+			{
+				messages_third_panel(key);
+			}
+			else
+			{
 				var task_length=$('.m-panel').children().length;
 				var stop="false";
 				for(i=0; i<task_length; i++)
@@ -1134,7 +1136,7 @@ if(is_open=="0")
 						}
 					}
 				}
-				
+			}	
 				
 				
 				
