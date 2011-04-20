@@ -12,10 +12,16 @@ Assigned to: <%=@task.assigned_to%>
 <br/>
 <%=@task.description%>
 <br/>
-Subscribed: <%=@task.subscribed_user_names.join(',')%>
-<br/>
+Subscribed: <%=@task.subscribed_user_names.join(',')%><br/>
+
 <a href=<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_task_email_task/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/> to stop recieving email notifications about this task.
 <br/>
 
---
+--<br/>
+<%if @project.is_member?(@user.id)%>
+Add tasks to this project via email: [project- <%=@project.name%>_<%=@project.id%>@t.getmocha.com or custom email]<br/>
+
 Powered by GetMocha.com
+<%else%>
+Powered by GetMocha.com
+<%end%>
