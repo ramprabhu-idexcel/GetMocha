@@ -27,7 +27,7 @@ class Task < ActiveRecord::Base
       activity=self.activities.create! :user=>user
       activity.update_attributes(:is_subscribed=>susbscribe_emails.include?(user.email),:is_assigned=>(assigned_email==user.email)) 
     end
-    susbscribe_emails.each do |email|
+     susbscribe_emails.each do |email|
       user=User.verify_email_id(email)
       user= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless user
       activity=Activity.find_or_create_by_user_id_and_resource_type_and_resource_id(user.id,self.class.name,self.id)
