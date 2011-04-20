@@ -23,17 +23,17 @@ class MessagesController < ApplicationController
 		end
 		#@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 	  @projects=Project.verify_project(current_user)
-		@user_emails=[]
-		@project_names=[]
-		if @users
-		  @users.each do |f|
-			@user_emails<<"#{f.email}"
-		  end
-		end
+		#~ @user_emails=[]
+		#~ @project_names=[]
+		#~ if @users
+		  #~ @users.each do |f|
+			#~ @user_emails<<"#{f.email}"
+		  #~ end
+		#~ end
 	  #~ @projects.each do |project|
 		#~ @project_names<<"#{project.name}"
 	#~ end
-	  render :partial=>'new',:locals=>{:user_emails=>@user_emails,:projects=>@projects}
+	  render :partial=>'new',:locals=>{:users=>@users,:projects=>@projects}
   end
 	def create
 	errors=[]
