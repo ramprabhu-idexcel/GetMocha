@@ -725,6 +725,7 @@ alert('afetrr bt');
     $('.task_header').hide();
     $('body').attr('class','settings');
     $('.sort-by').hide();
+    $('.chat-header').hide();
     document.title="Settings | Mocha"
     return false;
   });
