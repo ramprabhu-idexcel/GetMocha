@@ -5,12 +5,12 @@ class ProjectsController < ApplicationController
 	layout "application", :except=>['new','settings']
 	  include AWS::S3
 	def new
-		@users=User.all_users
-	  @user_emails=[]
-	  @users.each do |f|
-			@user_emails<<"#{f.email}"
-		end
-		render :partial => 'new',:locals=>{:user_emails=>@user_emails}
+		@users=current_user.my_contacts
+	  #~ @user_emails=[]
+	  #~ @users.each do |f|
+			#~ @user_emails<<"#{f.email}"
+		#~ end
+		render :partial => 'new',:locals=>{:users=>@users}
 		end
 		def create		
 		invite_users=params[:invite][:email].split(',')

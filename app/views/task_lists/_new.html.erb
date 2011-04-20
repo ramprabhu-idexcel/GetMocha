@@ -23,9 +23,10 @@
 					<% p session[:project_name] %>
 					<% if session[:project_name] %>
 					 		<%=f4.text_field  'project', :class=>"textfield", :id=>"txtInput2" , :value=>"#{session[:project_name]}", :disabled=>true%>
-					 <% else %>
+						<% else %>
 					 		<%=f4.text_field  'project', :class=>"textfield", :id=>"txtInput2" %>
-					 <% end %>
+						<% end %>
+					 <input type="hidden" id="autocomplete_hidden" name="project_id" value=""/>
 					</fieldset>
 								<% end %>
 					</div>
@@ -36,10 +37,15 @@
 	<div class="modal-bottom"></div>
 	<div class="modal-bottom-right"></div>
 <script type="text/javascript">
-<%=projects=[]%>
-<% project_names.each do |f|%>
-	    <%projects<<f <<","%>
-		var projectNames = "<%= projects %>";
-	<%end%>
-				projectNames=projectNames.split(',');
- var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('txtInput2'),false);
+$(document).ready(function(){
+	var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
+	$("#txtInput2").autocomplete(data, {
+  formatItem: function(itemp) {
+    return itemp.text;
+  },
+	matchContains: true
+}).result(function(event, itemp) {
+  document.getElementById('autocomplete1_hidden').value=itemp.id;
+});
+}); 	
+</script>
