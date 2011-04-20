@@ -149,7 +149,7 @@ alert('afetrr bt');
     if(a==0 && len==0)   
        {
          $('#show_secondary').css('visibility','hidden');
-       }
+        }
     return false;
   });
    
@@ -162,13 +162,13 @@ alert('afetrr bt');
        });
    	  //~ if($('.info_email').length<3)
 	     //~ $('#label_secondary_email').parent().children('br').remove();
-       var len=$('#label_secondary_email').children().length;
-           var a=$('#semail').children().length;
-       
+      var len=$('#label_secondary_email').children().length;
+      var a=$('#semail').children().length;
+      $('#label_secondary_email').children('br').remove();         
        if(len==0 && a==0)
   	   {
          $('#show_secondary').css('visibility','hidden');
-         $('#delete_fun').children('br').remove()
+         $('#delete_fun').children('br').remove();         
          }     
   	   return false;
   });  
