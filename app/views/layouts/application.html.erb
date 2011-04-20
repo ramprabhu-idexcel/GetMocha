@@ -1108,11 +1108,11 @@ if(is_open=="0")
 					{
 					
 					var task_id=task.split("actk:")[1];
-						task_id=task_id.split(" task tsem")[0];
+						task_id=task_id.split(" task")[0];
 					
 					
 						
-						if((task=="actk:"+task_id+" task tsem open" && stop=="false") || (task=="actk:"+task_id+" task tsem  open" && stop=="false"))
+						if(((task=="actk:"+task_id+" task tsem open" && stop=="false") || (task=="actk:"+task_id+" task tsem  open" && stop=="false")) || ((task=="actk:"+task_id+" task alt tsem open" && stop=="false") || (task=="actk:"+task_id+" task alt tsem  open" && stop=="false")))
 						{
 						  if(key=="down" || key=="X")
 							var move_task=$('.m-panel').children()[i+1].className;
@@ -1124,7 +1124,7 @@ if(is_open=="0")
 							else
 							move_task=$('.m-panel').children()[i-2].className;
 							move_task_id=move_task.split("actk:")[1];
-							move_task_id=move_task_id.split(" task tsem")[0];
+							move_task_id=move_task_id.split(" task")[0];
 							var b=window.location.href;
 							b=b.split("<%= APP_CONFIG[:site_url] %>/")[1];
 							b=b.split("/")
@@ -1246,7 +1246,7 @@ if(is_open=="0")
 			{
 				var task=$('.m-panel').children()[1].className;
 				var task_id=task.split("actk:")[1];
-				task_id=task_id.split(" task tsem")[0];
+				task_id=task_id.split(" task")[0];
 				
 				if(task!="sub-header" && stop=="false")
 				{
@@ -1287,7 +1287,7 @@ if(is_open=="0")
 				if(task!="sub-header")
 				{
 				var task_id=task.split("actk:")[1];
-				task_id=task_id.split(" task tsem")[0];
+				task_id=task_id.split(" task")[0];
 					var a=document.getElementById("tk_"+task_id).className;
 					a=a.split(" open")[0];
 					
