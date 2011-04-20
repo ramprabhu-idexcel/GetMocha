@@ -687,7 +687,7 @@ $('#mycontact1').toggleClass('open')
 		class1=$('#comment_area').children('').length;
 		class_hide=$('#comment_area').css('display');
 		
-		if(class1==0 || class_hide=="none")
+		if((class1==0 || class_hide=="none") || (key=="Z" || key=="A"))
 		{
 			//first panel
 			if (key=="S" || key=="X")
@@ -696,6 +696,7 @@ $('#mycontact1').toggleClass('open')
 			}
 			else
 			{
+			messages_navigation_left();
 			var all_messages=document.getElementById('all_messages').className;
 			if(all_messages=="all-messages has-unread open")
 			all_messages="true"
@@ -819,6 +820,7 @@ if(is_open=="0")
 				}
 			}
 		}
+					setTimeout("messages_navigation_right()", 1000);
 		}
 		else
 		{
@@ -829,6 +831,7 @@ if(is_open=="0")
 		//for messages navigation right arrow
 		function messages_navigation_right()
 		{
+		
 		  var already_exists="false"
 			var length=$('#message_area').children('').length;
 			var exit="false";
@@ -1004,8 +1007,12 @@ if(is_open=="0")
 			var class_hide=$('#comment_area').css('display');
 			var project="true";
 			
-			if(class1==0 || class_hide=="none")
+			if((class1==0 || class_hide=="none") || (key=="A" || key=="Z"))
 			{
+			  if(key=="A" || key=="Z")
+				{
+					tasks_navigation_left();
+				}
 				if (key=="S" || key=="X")
 			 {
 				 tasks_navigation_right();
@@ -1032,6 +1039,7 @@ if(is_open=="0")
 					{
 						window.location.hash="#my_tasks";
 						document.getElementById('my_tasks').className="my-tasks open";
+								
 					}
 					else
 					{
@@ -1094,14 +1102,18 @@ if(is_open=="0")
 				  tasks_projects(key,"3");
 				}
 			}
+			setTimeout("tasks_navigation_right()", 1000);
+			
 			}
 			else
 			{
 			
-			
-			
-			
-			
+			if(key=="D" || key=="C")
+			{
+				messages_third_panel(key);
+			}
+			else
+			{
 				var task_length=$('.m-panel').children().length;
 				var stop="false";
 				for(i=0; i<task_length; i++)
@@ -1150,7 +1162,7 @@ if(is_open=="0")
 						}
 					}
 				}
-				
+			}	
 				
 				
 				
@@ -1243,6 +1255,7 @@ if(is_open=="0")
 		
 		function tasks_navigation_right()
 		{
+		//alert("dssd");
 			var task_length=$('.m-panel').children().length;
 			var stop="false";
 			for(i=0; i<task_length; i++)
@@ -1276,6 +1289,7 @@ if(is_open=="0")
 					stop="true";
 				}
 			}
+			
 		}
 		
 		function tasks_navigation_left()
@@ -1325,7 +1339,34 @@ if(is_open=="0")
 		});
 		function messages_third_panel(key)
 		{
-		
+			var comment_length=$('.prev-messages').children().length;
+			var comment_open="false";
+			for (i=0; i<comment_length; i++)
+			{
+				var comment=$('.prev-messages').children()[i].className;
+				if (comment=="message message_comments   open")
+				{
+				 comment_open="true"
+				 var comment_position=i;
+				}
+			}
+			if(comment_open=="false")
+			{
+			  $('.prev-messages').children()[0].className="message message_comments   open";
+			}
+			else
+			{
+			  if(key=="C")
+				{
+					$('.prev-messages').children()[comment_position].className="message message_comments  ";
+					$('.prev-messages').children()[comment_position+1].className="message message_comments   open";
+				}
+				else
+				{
+					$('.prev-messages').children()[comment_position].className="message message_comments  ";
+					$('.prev-messages').children()[comment_position-1].className="message message_comments   open";
+				}
+			}
 		}
 		
 			

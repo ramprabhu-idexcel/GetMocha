@@ -141,20 +141,32 @@ alert('afetrr bt');
          type: 'delete'
        });
     $(this).parent().parent().parent().parent().next().remove()
-        $(this).parent().parent().parent().parent().remove();
-	if($('.info_email').length<3)
-	$('#semail').children('br').remove()
+    $(this).parent().parent().parent().parent().remove();
+	  if($('.info_email').length<3)
+	  $('#semail').children('br').remove();
+    var a=$('#semail').children().length;
+    if(a==0)   
+       {
+         $('#show_secondary').css('visibility','hidden');
+       }
     return false;
   });
    
 
   $('.edit.delete.delete_exist').live('click',function(){
-         $(this).parent('span').remove();
-       $.ajax({
+    alert('----------');
+       $(this).parent('span').remove();
+       var len=$('#semail').children().length
+       alert(len)
+       if(len==0)
+  	   {
+         $('#show_secondary').css('visibility','hidden');
+	     }	    
+        $.ajax({
          url: $(this).attr('href'),
          type: 'delete',
        });
-    return false;
+  	   return false;
   });  
   
   //Message page codings
@@ -1119,6 +1131,8 @@ else
 
 
 
+
+	
 
 
 
