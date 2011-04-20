@@ -2,7 +2,7 @@
   initial_setup();
   $.unread_count={};
   $.prev_user_id=0;
-  
+  $.chat_ids=[];
   $(window).load(function() {
     var page = window.location.hash;
     if(page!="")
@@ -19,46 +19,50 @@
     //for chat messages
     if(data[0]=="chat")
     {
-      if(data[3]==parseInt($('#chat_project_id').val()))
+      if($.inArray(data[5],$.chat_ids)<0)
       {
-        var chat_class="";
-        if($.prev_user_id==data[1].id)
+        $.chat_ids.push(data[5]);
+        if(data[3]==parseInt($('#chat_project_id').val()))
         {
-        chat_class="same-user";
-        }
-        else
-          chat_class="";
-        $.prev_user_id=data[1].id;
-        var chat_content='<div class="message recent '+chat_class+'"><div class="color" style="background-color:#'+data[1].color+'"></div>';
-        chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
-        chat_content+='<div class="content most-recent">'+data[2];
-        var image_attachments=data[4].attach_image;
-        var file_attachments=data[4].attached_documents;
-        if(file_attachments.length>0 && image_attachments.length>0)
-        {
-          chat_content+='<div class="attachments">';
-          //File attachments
-          if(file_attachments.length>0)
+          var chat_class="";
+          if($.prev_user_id==data[1].id)
           {
-            $.each(file_attachments,function(index,value){
-              chat_content+=(value+'<br />');
-            });
+          chat_class="same-user";
           }
-          
-          //Image attachments
-          if(image_attachments.length>0)
+          else
+            chat_class="";
+          $.prev_user_id=data[1].id;
+          var chat_content='<div class="message recent '+chat_class+'"><div class="color" style="background-color:#'+data[1].color+'"></div>';
+          chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
+          chat_content+='<div class="content most-recent">'+data[2];
+          var image_attachments=data[4].attach_image;
+          var file_attachments=data[4].attached_documents;
+          if(file_attachments.length>0 && image_attachments.length>0)
           {
-            chat_content+=('<div class="attachments">');
-            $.each(image_attachments,function(index,value){
-              chat_content+=('<div class="attachment-thumb-frame">'+value+'</div>');
-            });
-            chat_content+=('<div class="clear-fix"></div>')
-            chat_content+=('</div>');
+            chat_content+='<div class="attachments">';
+            //File attachments
+            if(file_attachments.length>0)
+            {
+              $.each(file_attachments,function(index,value){
+                chat_content+=(value+'<br />');
+              });
+            }
+            
+            //Image attachments
+            if(image_attachments.length>0)
+            {
+              chat_content+=('<div class="attachments">');
+              $.each(image_attachments,function(index,value){
+                chat_content+=('<div class="attachment-thumb-frame">'+value+'</div>');
+              });
+              chat_content+=('<div class="clear-fix"></div>')
+              chat_content+=('</div>');
+            }
+             chat_content+=('</div>');
           }
-           chat_content+=('</div>');
+          chat_content+=('</div></div>');
+          $('.chat-container').prepend(chat_content);
         }
-        chat_content+=('</div></div>');
-        $('.chat-container').prepend(chat_content);
       }
     }
     else if(data[0]=="count")

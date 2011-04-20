@@ -1,9 +1,9 @@
-<%= socky :channels=>[project.id],:client_id =>current_user.id%>
 <div id="add_people" style="display:none;">
 		<%= render :partial=>'projects/invite',:locals=>{:user_emails=>@user_emails} %>
 		</div>
 <div class="m-panel-contain">
   <div class="m-panel">
+  <%= socky :channels=>project.id,:client_id =>current_user.id%>
     <div class="sub-header">Participants</div>
     <%project.online_members.each do |user|%>
       <div class="m-tab <%= cycle('alt', '') %>" id="ui<%=user.id%>">
