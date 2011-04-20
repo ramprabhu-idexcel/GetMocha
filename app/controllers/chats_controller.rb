@@ -2,7 +2,7 @@ class ChatsController < ApplicationController
   SUBSCRIBE_ACTIONS=['subscribe','unsubscribe']
   skip_before_filter :http_authenticate,:only=>SUBSCRIBE_ACTIONS
   before_filter :authenticate_user!,:except=>SUBSCRIBE_ACTIONS
-  before_filter :update_online_status,:only=>['project_chat','create','popout_chat']
+  #~ before_filter :update_online_status,:only=>['project_chat','create','popout_chat']
   def index
     @projects=Project.user_active_projects(current_user.id)
     @user_emails=new
