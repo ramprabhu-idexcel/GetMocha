@@ -123,5 +123,6 @@ DEPENDENCIES
   rails (= 3.0.5)
   rmagick (= 2.8.0)
   sanitize (= 2.0.1)
+  socky-client
   socky-client-rails
   socky-server
