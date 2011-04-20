@@ -31,8 +31,33 @@
         $.prev_user_id=data[1].id;
         var chat_content='<div class="message recent '+chat_class+'"><div class="color" style="background-color:#'+data[1].color+'"></div>';
         chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
-        chat_content+='<div class="content most-recent">'+data[2]+'</div></div>'
-        
+        chat_content+='<div class="content most-recent">'+data[2];
+        var image_attachments=data[4].attach_image;
+        var file_attachments=data[4].attached_documents;
+        if(file_attachments.length>0 && image_attachments.length>0)
+        {
+          chat_content+='<div class="attachments">';
+          //File attachments
+          if(file_attachments.length>0)
+          {
+            $.each(file_attachments,function(index,value){
+              chat_content+=(value+'<br />');
+            });
+          }
+          
+          //Image attachments
+          if(image_attachments.length>0)
+          {
+            chat_content+=('<div class="attachments">');
+            $.each(image_attachments,function(index,value){
+              chat_content+=('<div class="attachment-thumb-frame">'+value+'</div>');
+            });
+            chat_content+=('<div class="clear-fix"></div>')
+            chat_content+=('</div>');
+          }
+           chat_content+=('</div>');
+        }
+        chat_content+=('</div></div>');
         $('.chat-container').prepend(chat_content);
       }
     }
