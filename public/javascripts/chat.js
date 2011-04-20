@@ -200,7 +200,7 @@
   
   $('.popout').live('click',function(){
     var project_id=get_project_id()
-    window.open('/popout-chat/'+project_id, 'windowname', 'width = 580, height = 670, scrollbars,resizable,status');
+    window.open('/popout-chat/'+project_id, 'Chat'+project_id, 'width = 580, height = 670, scrollbars,resizable,status');
   });
   
   $(window).unload(function()
