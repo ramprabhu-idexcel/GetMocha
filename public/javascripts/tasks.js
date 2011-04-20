@@ -28,8 +28,9 @@
       data:{id : task_id},
       success:function(data){
         tasks_count(data);
-      }
+        }
     });
+    
     $(".checkbox > span.icon.icon-thd").toggleClass('checked');
     var second_pane=$(this).parent().parent().parent();
     second_pane.fadeOut(700,function(){
@@ -159,15 +160,19 @@
     return false;    
   });
   //subscribe
-  $('.task-subscribe').live('click',function(){
+		  $('.task-subscribe').live('click',function(){
     var id=get_activity_id();
     var content=$(this).text();
     $.ajax({
       url:'/subscribe/'+id,
-      type: 'get'
+      type: 'get',
+      success:function(data){
+        var task=data.task;
+        var result = data.subscribe;
+        $('.subscribers').html('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#"> '+result+'</a></p>');
+      }
     });
-    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
-    $(this).text(result);
+    
 return false;
   });
   //task comments
@@ -510,9 +515,10 @@ return false;
     var items=[];
     $.each(data,function(index,value){
       items.push('<div class="sub-header" id="tl'+value[0].activity.resource.task_list_id+'"><a href="#" class="sec task_list">'+value[0].activity.resource.task_list_name+'</a></div>');
+      var count=1;
       $.each(value,function(i,v){
         var starred=v.activity.is_starred;
-        items.push('<div id="tk_'+ v.activity.id+'" class="actk:'+v.activity.id+' task tsem '+(starred ? "starred" : "")+'"><div class="left-icons">');
+        items.push('<div id="tk_'+ v.activity.id+'" class="actk:'+v.activity.id+' task '+(count%2==0 ? "alt " : "") +'tsem '+(starred ? "starred" : "")+'"><div class="left-icons">');
         items.push('<a class="task-star" href="#" '+(starred ? '' : 'style="display:none;"')+'>Star</a>');    
         items.push('<div class="checkbox"><span class="tk:'+v.activity.resource_id+' icon icon-sec '+(v.activity.resource.is_completed ? "checked" : "")+'"></span></div></div>');
         items.push('<div class="info">');
@@ -521,6 +527,7 @@ return false;
         items.push('</div>');
         items.push('<div class="task-name"><h4>'+truncate_task_name(v.activity.resource.name)+'</h4></div>');
         items.push('<div class="clear-fix"/></div>');        
+        count=count+1;
       });
     });
     $('.m-panel').html(items.join(''));
@@ -667,11 +674,15 @@ return false;
     return filter.test(email);
 	}
   
-  function tasks_count(data)
+  function tasks_count(data)  
   {
-    if(data.completed_count<1)
-      $('#completed_tasks').html('<span class="icon"></span>Completed');
+     //~ if(data.completed_count==0)
+       //~ $('#completed_tasks').hide();
+     if(data.completed_count<1)
+      //~ $('#completed_tasks').html('<span class="icon"></span>Completed');
+        $('#completed_tasks').hide();
     else
+       $('#completed_tasks').show();
       $('#completed_tasks').html('<span class="num-tasks">'+data.completed_count+'</span><span class="icon"></span>Completed');
     if(data.starred_count<1)
       $('#starred_tasks').html('<span class="icon"></span>Starred');

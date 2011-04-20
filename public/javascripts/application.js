@@ -154,18 +154,16 @@ alert('afetrr bt');
    
 
   $('.edit.delete.delete_exist').live('click',function(){
-    alert('----------');
        $(this).parent('span').remove();
-       var len=$('#semail').children().length
-       alert(len)
+       $.ajax({
+       url: $(this).attr('href'),
+       type: 'delete'
+       });
+       var len=$('#label_secondary_email').children().length
        if(len==0)
   	   {
          $('#show_secondary').css('visibility','hidden');
 	     }	    
-        $.ajax({
-         url: $(this).attr('href'),
-         type: 'delete',
-       });
   	   return false;
   });  
   
@@ -518,22 +516,25 @@ alert('afetrr bt');
     });
       
     //subscribe/unsubscribe message
-    $('#submsg').live('click',function(){
+   $('#submsg').live('click',function(){
       var id=$('.message.messow.open').attr('id').split('msac')[1];
       $.ajax({
         url:'/subscribe/'+id,
-        type: 'get'
-      });
-      var content=$(this).text();
-      var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
-      $(this).text(result);
-      return false;
-    });
+        type: 'get', 
+        success:function(data){
+        
+        var task=data.task;
+        var result = data.subscribe;
+
+         
+        $('.subscribers').html('<p class="subscribers">'+task+' <span id="all_subscribed" style="display:none;">'+data.all_subscribed+'</span><a href="#" id="submsg">'+(data.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
+        
     
-    $('#sub_other_users').live('click',function(){
-      var subscribe=$('#submsg').text();
-      var content=$('#all_subscribed').html();
-      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="submsg">'+subscribe+'</a>');
+      }
+      });
+      //~ var content=$(this).text();
+      //~ var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
+      //~ $(this).text(result);
       return false;
     });
     
