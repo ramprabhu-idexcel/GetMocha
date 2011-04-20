@@ -30,8 +30,8 @@ class ChatsController < ApplicationController
       end
   def project_chat
     #~ update_offline(params[:old],current_user.id) if params[:old].present?
-    send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
-    send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?
+    #~ send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
+    #~ send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?
         #~ users=User.members_in_project(params[:project_id])
 	  @user_emails=[]
 	  #~ users.each do |f|
