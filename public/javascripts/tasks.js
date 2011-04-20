@@ -160,15 +160,19 @@
     return false;    
   });
   //subscribe
-  $('.task-subscribe').live('click',function(){
+		  $('.task-subscribe').live('click',function(){
     var id=get_activity_id();
     var content=$(this).text();
     $.ajax({
       url:'/subscribe/'+id,
-      type: 'get'
+      type: 'get',
+      success:function(data){
+        var task=data.task;
+        var result = data.subscribe;
+        $('.subscribers').html('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#"> '+result+'</a></p>');
+      }
     });
-    var result = (content=="Subscribe" ? "Unsubscribe" : "Subscribe");
-    $(this).text(result);
+    
 return false;
   });
   //task comments
