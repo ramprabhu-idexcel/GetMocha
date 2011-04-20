@@ -2,12 +2,18 @@
   initial_setup();
   $.unread_count={};
   $.prev_user_id=0;
-  var page = window.location.hash;
-  if(page!="")
-  {
-    var project_id=page.split('#')[1];
-    $('#cp'+project_id).addClass('open');
-  }
+  
+  $(window).load(function() {
+    var page = window.location.hash;
+    if(page!="")
+    {
+      
+      var project_id=page.split('#')[1];
+      $('#cp'+project_id).addClass('open');
+      $('#cp'+project_id).click();
+    }
+  });
+  
   Socky.prototype.respond_to_message = function(msg) {
     data = JSON.parse(msg);	
     //for chat messages
