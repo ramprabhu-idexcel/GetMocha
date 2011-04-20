@@ -163,6 +163,8 @@
               'chat[project_id]':project_id}
       });
       $('#chat-message').val('');
+      $('.attach-contain').hide();
+      $('#attachment_files').html('');
     }
     $('#chat-message').focus();
   }
