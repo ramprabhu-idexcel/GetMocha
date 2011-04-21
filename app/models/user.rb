@@ -260,17 +260,43 @@ class User < ActiveRecord::Base
     not_completed_tasks(find_all_tasks(sort_by=nil,order))
   end
   def group_all_tasks(order=nil)
-    all_tasks(order).group_by{|a| a.resource.task_list_id}
+    sort_group_all_tasks(order)
   end
-  def find_my_tasks(sort_by,order)
-    Activity.check_my_tasks_info(self.id,sort_by,order)
+  def sort_group_all_tasks(order=nil)
+    order="asc" unless order
+    tasks=all_tasks.group_by{|a| a.resource.task_list_id}
+    temp=tasks
+    temp.each do |b|
+      if order=="desc"
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+      else
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      end
+    end
+    tasks
   end
-  def my_tasks(sort_by,order)
+  def find_my_tasks(sort_by)
+    Activity.check_my_tasks_info(self.id,sort_by)
+  end
+  def my_tasks(sort_by)
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at desc")
-    not_completed_tasks(find_my_tasks(sort_by,order))
+    not_completed_tasks(find_my_tasks(sort_by))
   end
   def group_my_tasks(sort_by=nil,order=nil)
-    my_tasks(sort_by,order).group_by{|a| a.resource.task_list_id}
+    sort_my_tasks(sort_by,order)
+  end
+  def sort_my_tasks(sort_by=nil,order=nil)
+    order="asc" unless order
+    tasks=my_tasks(sort_by).group_by{|a| a.resource.task_list_id}
+    temp=tasks
+    temp.each do |b|
+      if order=="desc"
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+      else
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      end
+    end
+    tasks
   end
   def find_starred_tasks
     Activity.check_starred_task(self.id)
@@ -279,16 +305,42 @@ class User < ActiveRecord::Base
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=?',"Task",false,true],:order=>"created_at desc")
     not_completed_tasks(find_starred_tasks)
   end
-  def group_starred_tasks
-    total_starred_tasks.group_by{|a| a.resource.task_list_id}
+  def group_starred_tasks(order=nil)
+      sort_group_sort_tasks(order)
+  end
+  def sort_group_sort_tasks(order=nil)
+    order="asc" unless order
+    tasks=total_starred_tasks.group_by{|a| a.resource.task_list_id}
+    temp=tasks
+    temp.each do |b|
+      if order=="desc"
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+      else
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      end
+    end
+    tasks
   end
   def completed_tasks(sort_by,order)
     activities=[]
-    find_all_tasks(sort_by,order).collect{|t| activities << t if t.resource && t.resource.is_completed}
+    find_all_tasks(sort_by).collect{|t| activities << t if t.resource && t.resource.is_completed}
     activities
   end
-  def group_completed_tasks(sort_by,order)
-    completed_tasks(sort_by,order).group_by{|a| a.resource.task_list_id}
+  def sort_completed_tasks(sort_by=nil,order=nil)
+     order="asc" unless order
+    tasks=completed_tasks(sort_by,order).group_by{|a| a.resource.task_list_id}
+    temp=tasks
+    temp.each do |b|
+      if order=="desc"
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+      else
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      end
+    end
+    tasks
+  end
+  def group_completed_tasks(sort_by=nil,order=nil)
+    sort_completed_tasks(sort_by,order)
   end
   def project_tasks(task_ids)
     Activity.user_projects_tasks(task_ids,self.id)
@@ -299,8 +351,21 @@ class User < ActiveRecord::Base
     collection.collect{|t| activities << t if t.resource && !t.resource.is_completed}
     return activities
   end
-  def group_project_tasks(task_ids)
-    project_tasks(task_ids).group_by{|a| a.resource.task_list_id}
+  def group_project_tasks(task_ids,order=nil)
+     sort_group_project_tasks(task_ids,order)
+  end
+  def sort_group_project_tasks(task_ids,order)
+    order="asc" unless order
+    tasks=project_tasks(task_ids).group_by{|a| a.resource.task_list_id}
+    temp=tasks
+    temp.each do |b|
+      if order=="desc"
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+      else
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      end
+    end
+    tasks
   end
   def self.u_count_val
     find(:all,:conditions=>['is_guest=?',false])

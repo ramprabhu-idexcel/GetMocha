@@ -13,11 +13,10 @@ class ProjectsController < ApplicationController
 		render :partial => 'new',:locals=>{:users=>@users}
 		end
 		def create		
-		invite_users=params[:invite][:email].split(',')
 		#~ @project=Project.new(params[:project])
 		#~ @project.user_id=current_user.id
 		@project=current_user.projects.build(params[:project])
-		project=@project.valid?
+			project=@project.valid?
 		errors=[]
 		if @project.errors[:name][0]=="can't be blank"
 			errors<<"Please enter project name"
@@ -25,17 +24,15 @@ class ProjectsController < ApplicationController
 			errors<<@project.errors[:name][0]
 		end
 		if !params[:invite][:email].blank?
-    	 invites=params[:invite][:email].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
-			 if !invites
-				errors<<"Please enter valid email addresses for invite"
-    		end
-			else
-				invites=true
+			if params[:invite][:email].match(/^\s*([-a-z0-9&\'*+.\/=?^_{}~]+@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)+[a-z]{2,5}\s*(,\s*|\z))+$/i).nil?
+			 errors<<"Please enter valid email"
+			end
 		end
-		if project && invites
+		if project && errors.empty?
 			@project.save
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
+			invite_users=params[:invite][:email].split(',')
 			#~ invite_users=invite_users.split(',')
 			#~ p invite_users
 			invite_users.each do |invite_user|

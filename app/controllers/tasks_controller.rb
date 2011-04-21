@@ -74,7 +74,7 @@ class TasksController < ApplicationController
 		session[:project_name]=project.name if project
     session[:project_selected]=project.id if project
     task_ids=project.all_uncompleted_task_ids
-    render :json=>current_user.group_project_tasks(task_ids).to_json(options)
+    render :json=>current_user.group_project_tasks(task_ids,params[:order]).to_json(options)
   end
 	def update
 		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
@@ -106,6 +106,7 @@ class TasksController < ApplicationController
     if(params[:sort_by] && params[:sort_by]=="star-task")
       render :json=>current_user.group_starred_tasks.to_json(options)
     else
+			puts params[:order].inspect
       render :json=>current_user.group_all_tasks(params[:order]).to_json(options)
     end
   end
@@ -113,7 +114,7 @@ class TasksController < ApplicationController
     render :json=>current_user.group_my_tasks(params[:sort_by],params[:order]).to_json(options)
   end
 	def starred_tasks
-    render :json=>current_user.group_starred_tasks.to_json(options)
+    render :json=>current_user.group_starred_tasks(params[:order]).to_json(options)
   end
 	def completed_tasks
     render :json=>current_user.group_completed_tasks(params[:sort_by],params[:order]).to_json(options)
