@@ -12,6 +12,15 @@
       $('#cp'+project_id).addClass('open');
       $('#cp'+project_id).click();
     }
+    else
+    {
+      if($('.project').length>0)
+      {
+        var url=$($('.project')[0]).attr('href');
+        window.location.hash=url;
+        $($('.project')[0]).click();
+      }
+    }
   });
   
   Socky.prototype.respond_to_message = function(msg) {
