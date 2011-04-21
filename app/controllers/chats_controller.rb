@@ -70,7 +70,7 @@ class ChatsController < ApplicationController
     Socky.send(data.to_json,:to=>{:channels=>params[:chat][:project_id]})
 	end
   def send_online_users(data)
-    Socky.send(data.to_json,:to=>{:channels=>params[:project_id]})
+    Socky.send(data.to_json,:to=>{:channels=>"count"})
   end
   def send_user_offline(data)
     Socky.send(data.to_json,:to=>{:channels=>params[:project_id]})
