@@ -149,7 +149,7 @@ alert('afetrr bt');
     if(a==0 && len==0)   
        {
          $('#show_secondary').css('visibility','hidden');
-       }
+        }
     return false;
   });
    
@@ -162,13 +162,13 @@ alert('afetrr bt');
        });
    	  //~ if($('.info_email').length<3)
 	     //~ $('#label_secondary_email').parent().children('br').remove();
-       var len=$('#label_secondary_email').children().length;
-           var a=$('#semail').children().length;
-       
+      var len=$('#label_secondary_email').children().length;
+      var a=$('#semail').children().length;
+      $('#label_secondary_email').children('br').remove();         
        if(len==0 && a==0)
   	   {
          $('#show_secondary').css('visibility','hidden');
-         $('#delete_fun').children('br').remove()
+         $('#delete_fun').children('br').remove();         
          }     
   	   return false;
   });  
@@ -1381,12 +1381,15 @@ function close_comment_area()
     var notification_emails=$('#notifys').val();
     var assign_email=$.trim($('#assign_to').val());
     var description=$.trim($('#task_description').val());
+    var tasklist=$.trim($('#t_list').val());
     var duedate=$.trim($('#txtInput3').val());
     var errors=[];
     if($.trim(task_name)=="")
       errors.push('Task name cannot be empty');
     if($.trim(project_id)=="")
       errors.push('Please select a project');
+    if(tasklist=="")
+       errors.push('Task list name cannot be empty');
     if(!IsValidMultipleEmail(notification_emails))
       errors.push("Please enter valid notification emails");
     if(assign_email!="" && !IsValidEmail(assign_email))
@@ -1402,7 +1405,7 @@ function close_comment_area()
              year = duedate.substring(6,10);
               if(year<100)
               year=20+year;
-              document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+              document.getElementById('txtInput3').value=day+"-"+month+"-"+year
              if(year>0000 && year<2100)
                 {
                  if(month>0 && month<13)
@@ -1411,9 +1414,7 @@ function close_comment_area()
                         {
                          if ((day>28 && month==2) ||(day>29 &&month==2 && year%4==0))//|| (day>31 && month==4||6||9||11)) 
                             errors.push("Invalide date");
-                         
-                        
-                        }
+                         }
                     else
                         errors.push("Invalide date");
 			              }
@@ -1430,7 +1431,7 @@ function close_comment_area()
           year = duedate.substring(4,8);
         if(year<100)
               year=20+year;
-        document.getElementById('txtInput3').value=month+"-"+day+"-"+year
+        document.getElementById('txtInput3').value=day+"-"+month+"-"+year
           if(year>1900 && year<2100)
              {
               if(month>0 && month<13)
