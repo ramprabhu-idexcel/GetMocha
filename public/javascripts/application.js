@@ -173,6 +173,11 @@ alert('afetrr bt');
   	   return false;
   });  
   
+  
+  //~ $('.edit.delete.delete_exist').live('click',function(){   
+       //~ $(this).parent('span').next('span').children('br').remove();
+//~ });
+  
   //Message page codings
   if(typeof Message!="undefined" && Message==true)
   {   
@@ -533,7 +538,7 @@ alert('afetrr bt');
         var result = data.subscribe;
 
          
-        $('.subscribers').html('<p class="subscribers">'+task+' <span id="all_subscribed" style="display:none;">'+data.all_subscribed+'</span><a href="#" id="submsg">'+(data.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
+        $('.subscribers').html('<p class="subscribers">'+task+' <span id="all_subscribed" style="display:none;">'+data.all_subscribed+'</span><a href="#" id="submsg"> '+(data.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
         
     
       }
