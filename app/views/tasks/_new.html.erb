@@ -52,8 +52,8 @@
 			    </fieldset>
 					<fieldset>
 					<label>Due Date:</label>
-						<%=text_field_tag  'task[due_date]',nil, :style=>"width:100px;", :class=>"textfield" , :id=>"txtInput3"%>
-						<!--<input type="hidden" id="date_hidden" name="task[due_date]" />-->
+						<%=text_field_tag  'due_date',nil, :style=>"width:100px;", :class=>"textfield" , :id=>"txtInput3"%>
+						<input type="hidden" id="date_hidden" name="task[due_date]" />
 						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
@@ -139,6 +139,8 @@ if(d.length > 12)
 });
 function delete_attachment(file)
 {
+ attachitem.pop(file);
+ document.getElementById('attach_hidden').value=attachitem;
  $.ajax({
       url:'/remove_attach/'+file,
       type: 'get',
