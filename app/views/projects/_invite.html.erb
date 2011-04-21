@@ -40,13 +40,15 @@
 	document.getElementById('ellaborates').className="open";
 	document.getElementById('message').className="textarea";
 	}
-<%=emails=[]%>
-	<% user_emails.each do |f|%>
-	
-	<%emails<<f <<","%>
-		var userEmails= "<%= emails %>";
-	<%end%>
-
-				userEmails=userEmails.split(',');
-				var ac2 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById("invite_email"), false);
+	$(document).ready(function(){
+	var data = [<%@users.each do |user| %> {text:'<%= user.email %>', id:'<%= user.id %>'},<% end %>{text:'',id:''}];
+$("#invite_email").autocomplete(data, {
+  formatItem: function(item) {
+    return item.text;
+  },
+	matchContains: true
+}).result(function(event, item) {
+  //document.getElementById('autocomplete1_hidden').value=item.id;
+});
+}); 	
   </script>
