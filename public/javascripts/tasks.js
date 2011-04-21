@@ -35,7 +35,7 @@
     $('#comment_area').fadeOut('fast');
     var second_pane=$(this).parent().parent().parent();
     second_pane.fadeOut(700,function(){
-      if(second_pane.prev().hasClass('sub-header') && second_pane.next().hasClass('sub-header'))
+      if(second_pane.prev().hasClass('sub-header') && (second_pane.next().hasClass('sub-header') || second_pane.next().length==0))
         second_pane.prev().remove();
     });
     return false;
@@ -467,7 +467,7 @@ return false;
    $('#sub_other_users').live('click',function(){
       var subscribe=$('#submsg').text();
       var content=$('#all_subscribed').html();
-      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="submsg">'+subscribe+'</a>');
+      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="submsg"> '+subscribe+'</a>');
       return false;
     });
   
@@ -597,7 +597,7 @@ return false;
       items.push('<div class="clear-fix"></div>')
       items.push('</div>');
     }
-    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#">' + data.is_subscribed + '</a></p>');
+    items.push('<p class="subscribers">'+task.subscribe+'<span id="all_subscribed" style="display:none;">'+task.all_subscribed+'</span><a id="subscribe_task" class="task-subscribe" href="#"> '+ data.is_subscribed + '</a></p>');
     items.push('<span id="pk:'+task.project_id+'" class="pl_tk" style="display:none">Show</span>');
     items.push('</div>');
     //comments
