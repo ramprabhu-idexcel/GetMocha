@@ -178,15 +178,17 @@ class Task < ActiveRecord::Base
   end
   def third_pane_data
     project=self.task_list.project
-    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users,:project_id=>self.task_list.project_id})
+    self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users,:project_id=>self.task_list.project_id, :all_subscribed=>self.all_subscribed})
   end
   def subscribed_users
+    
     activities.where('is_subscribed=? and users.status=?',true,true).includes(:user)
   end
   def subscribed_user_names
     subscribed_users.collect{|a| a.user.name if a.user}.sort
   end
   def all_subscribed
+    
     "#{subscribed_user_names.join(',')} | "
   end
   def display_subscribed_users
