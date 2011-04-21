@@ -129,6 +129,10 @@
       {
         short_modal2('/tasks');
       }
+			if(event.identifier=='E')
+      {
+        short_modal2('/chats');
+      }
       if(event.identifier=='SHIFT_M')
       {
         short_modal1('/messages/new');
@@ -255,6 +259,7 @@
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);
 	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T);
+	shortcutHandler.registerShortcut('E',goog.events.KeyCodes.E);
 	shortcutHandler.registerShortcut('A',goog.events.KeyCodes.A);
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z);
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S);
