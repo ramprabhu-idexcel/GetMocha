@@ -85,13 +85,13 @@ $('#user_signup').live('click',function(){
         data: $('form#user_login').serialize(),
         type: "POST",
         success: function(data){
-          if(data!="redirect")
+          if(typeof(data)=="object")
           {
-            alert(data);
+            window.location.href=data.url;            
           }
           else
           {
-            window.location.href="/messages";
+            alert(data);
           }
         }
       });

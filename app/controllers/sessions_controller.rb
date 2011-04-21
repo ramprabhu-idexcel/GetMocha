@@ -8,7 +8,7 @@ class SessionsController <  Devise::SessionsController
     session[:project_name]=nil
 		session[:project_selected]=nil
     resource = warden.authenticate!(:scope => resource_name)
-    render :text=>"redirect"
+    
 		if resource
 		 invitations=Invitation.resource_email(resource)
       invitations.each do |invite|
@@ -18,6 +18,11 @@ class SessionsController <  Devise::SessionsController
         end
         invite.update_attributes(:status=>true)	
      end
-	  end	
+    end	
+    if session[:chat_invite]
+      render :json=>{:url=>session[:chat_invite]}
+    else
+      render :json=>{:url=>messages_path}
+    end
   end
 end

@@ -67,7 +67,7 @@ class ProjectMailer < ActionMailer::Base
     @user=user
     @message=message if message.present?
     @message="#{user.full_name} wants to chat with you on Mocha about #{project.name}." unless @message
-    @invite_link="#{APP_CONFIG[:site_url]}/chats##{project.id}"
+    @invite_link="#{APP_CONFIG[:site_url]}/chat_invite/#{project.id}"
     mail(:to=>"#{email}", :subject=>"#{user.full_name}  wants to chat with you on Mocha",:content_type=>"text/html")
     @content_type="text/html"
   end

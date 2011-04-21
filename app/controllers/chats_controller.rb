@@ -1,9 +1,10 @@
 class ChatsController < ApplicationController
-  SUBSCRIBE_ACTIONS=['subscribe','unsubscribe']
+  SUBSCRIBE_ACTIONS=['subscribe','unsubscribe','chat_invite']
   skip_before_filter :http_authenticate,:only=>SUBSCRIBE_ACTIONS
   before_filter :authenticate_user!,:except=>SUBSCRIBE_ACTIONS
   before_filter :update_online_status,:only=>['project_chat','create','popout_chat']
   def index
+    session[:chat_invite]=nil
     @projects=Project.user_active_projects(current_user.id)
     @user_emails=new
   end
@@ -59,6 +60,10 @@ class ChatsController < ApplicationController
       update_offline(params["channels"]["0"],params["client_id"])
     end
     render :text=>"ok"
+  end
+  def chat_invite
+    session[:chat_invite]=chats_path+"##{params[:project_id]}"
+    redirect_to session[:chat_invite]
   end
   private
   def send_to_clients(data)	
