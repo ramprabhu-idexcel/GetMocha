@@ -38,7 +38,7 @@ class Task < ActiveRecord::Base
       end
       self.send_task_notification(user)
     end
-    self.send_assign_notification(assigned_email)
+   # self.send_assign_notification(assigned_email)
   end
   def get_emails(emails,assigned_email)
     subscribe_emails=emails.split(',').collect{ |arr| arr.strip }

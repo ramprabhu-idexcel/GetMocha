@@ -92,8 +92,12 @@ count=count+1;
                   if(!test_array){
                     $('#message_area').html('');
                   }
+                  if($('.message.messow').children().length > 0)
+                       $($('.message.messow')[0]).click();
                 }
+                    
              });
+                 
          },
          loadCommentData :function(pageUrl){
             var comments=[];
@@ -178,7 +182,9 @@ else
                 }
 }
                });
+  
          }
+         
       });
 
      var app = new restfulApp;
@@ -186,5 +192,4 @@ else
      Backbone.emulateHTTP = true;
      Backbone.emulateJSON = true
      Backbone.history.start();
- 
   })(jQuery);
