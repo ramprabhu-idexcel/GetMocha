@@ -146,8 +146,8 @@ class Task < ActiveRecord::Base
   def task_list_name
     self.task_list.name
   end
-  def project
-    self.task_list.project
+  def project_ids
+    self.task_list.project.id
   end
   def due_date_value
     get_date_value
