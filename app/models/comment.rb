@@ -14,12 +14,12 @@ class Comment < ActiveRecord::Base
     if self.commentable_type=="Message"
       self.commentable.subscribed_users.each do |activity|
         user=activity.user
-        ProjectMailer.delay.message_reply(user,self)
+        ProjectMailer.delay.message_reply(user,self) unless user==self.user
       end
     elsif  self.commentable_type=="Task"
       self.commentable.subscribed_users.each do |activity|
         user=activity.user
-        ProjectMailer.delay.task_reply(user,self)
+        ProjectMailer.delay.task_reply(user,self) unless user==self.user
       end
     end
   end
