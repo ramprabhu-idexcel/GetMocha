@@ -91,8 +91,8 @@ class ProjectMailer < ActionMailer::Base
     @comment=comment
     task=@comment.commentable
     check_task_task_list=task.task_list
-    project=check_task_task_list.project
-    custom_email=project.task_email_id
+    @project=check_task_task_list.project
+    custom_email=@project.task_email_id
     if custom_email && !custom_email.blank?
       from=custom_email
     else
@@ -130,6 +130,12 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     @project=task.task_list.project
     mail(:to=>user.email, :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+  end
+  def task_completed(task,user)
+    @user=user
+    @task=task
+    @project=task.task_list.project
+    mail(:to=>user.email, :subject=>"Task Completed - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   
 end
