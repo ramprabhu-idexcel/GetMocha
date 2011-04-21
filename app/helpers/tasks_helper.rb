@@ -8,7 +8,7 @@ module TasksHelper
   end
   def link_to_all_tasks
     count=current_user.all_tasks.count
-    link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks",:id=>"all_tasks"
+    link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks open",:id=>"all_tasks"
   end
   def link_to_my_tasks
     count=current_user.my_tasks(nil,nil).count

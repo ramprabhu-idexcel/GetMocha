@@ -40,6 +40,8 @@ class TasksController < ApplicationController
 		task.task_list_id=task_list.id if params[:task][:task_list_id].blank?
 		if task.valid?
       task.save
+			attachment=Attachment.update_attachments(session[:attaches_id],task) if !session[:attaches_id].nil?
+			session[:attaches_id]=nil
       task.create_activities(params[:recipient],params[:notify])
 			if !task_list
       render :json=>task.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id])

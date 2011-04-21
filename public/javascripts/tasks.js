@@ -533,6 +533,8 @@ return false;
     });
     $('.m-panel').html(items.join(''));
     $('.sort-by.task-sort').show();
+    if($('.task.tsem').children().length > 0)
+    $($('.task.tsem')[0]).click();
   }
   
   function load_third_pane(data)

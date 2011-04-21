@@ -1,20 +1,31 @@
-<html>
-<body>
-  <%=raw @task_details%>
-  <% @task.attachments.each do |attach| %>
+-- Reply above this line to add a comment to this task --
+<br/>
+Project: <%=@project.name%>
+<br/>
+Task List: <%=@task.task_list_name%>
+<br/>
+Task: <%=@task.name%>
+<br/>
+Assigned to: <%=@task.assigned_to%>
+<br/>
+<%=@task.due_date_mail%>
+<br/>
+<%=@task.description%>
+<br/>
+<% @task.attachments.each do |attach| %>
     <br/>
     <a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email_task/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
-  <%end %>
-  <br/>
-  Subscribed: <%=@task.subscribed_user_names.join(',')%><br/>
-  <a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email_task/<%= @user.id %>/<%= @task.id %>"> Unsubscribe from this message </a>to stop recieving email notifications about this message thread<br/><br/>
-  <br/>
-  --<br/>
-  <%if @project.is_member?(@user.id)%>
+  <%end %><br/>
+Subscribed: <%=@task.subscribed_user_names.join(',')%><br/>
+
+<a href=<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_task_email_task/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/> 
+<br/>
+
+--<br/>
+<%if @project.is_member?(@user.id)%>
 Add tasks to this project via email: [project- <%=@project.name%>_<%=@project.id%>@t.getmocha.com or custom email]<br/>
+
 Powered by GetMocha.com
 <%else%>
 Powered by GetMocha.com
 <%end%>
-</body>
-</html>
