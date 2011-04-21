@@ -51,6 +51,7 @@ $("#txtInput2").autocomplete(data, {
   formatItem: function(item) {
     return item.text;
   },
+	multiple: true,
 	matchContains: true
 }).result(function(event, item) {
   //document.getElementById('autocomplete1_hidden').value=item.id;
