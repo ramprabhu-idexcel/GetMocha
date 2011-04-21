@@ -153,7 +153,10 @@
       var old_project_id="";
     $('a.project').removeClass('open');
     $(this).addClass('open');
-    var project_name=$(this).html().split('<span class="icon"></span>')[1];
+    if($.browser.msie)
+      var project_name=$(this).html().split('<SPAN class=icon></SPAN>')[1];
+    else
+      var project_name=$(this).html().split('<span class="icon"></span>')[1];
     var project_id=$(this).attr('href').split('#')[1];
     $(this).html('<span class="icon"></span>'+project_name);
     $(this).removeClass('has-unread');
