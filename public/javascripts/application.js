@@ -1103,7 +1103,7 @@ else
     
    
   $('a#add_new_email').live('click',function(){
-    $('#semail').append("<div class='info-right'><span class='info hidden'>********</span><input class='textfield' type='text' value='' name='secondary_emails' /> <a class='edit save_email' href='#' >Save</a></div><br />");
+    $('#semail').append("<div class='info-right'><span class='info hidden'>********</span><input class='textfield' type='text' value='' name='secondary_emails' ></input> <a class='edit save_email' href='#' >Save</a></div><br style='clear:both;' />");
     return false;
   });
   
