@@ -96,7 +96,7 @@ class ChatsController < ApplicationController
     end
   end    
   def user_data(user)
-    {:name=>user.chat_name,:title=>(user.title ? user.title : ""),:email=>user.email,:id=>user.id,:image=>user.image_url}
+    {:name=>user.full_name,:title=>(user.title ? user.title : ""),:email=>user.email,:id=>user.id,:image=>user.image_url}
   end
   def user_chat_data
     {:name=>current_user.chat_name,:color=>current_user.color,:id=>current_user.id}
