@@ -177,6 +177,7 @@
     if(event.keyCode==13)
     {
       send_chat();
+      event.preventDefault();
     }
   });
   
