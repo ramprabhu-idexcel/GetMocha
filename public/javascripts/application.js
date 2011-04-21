@@ -1483,6 +1483,8 @@ function close_comment_area()
                 $('.m-panel').append(items.join('')); 
               else
                 $(items.join('')).insertAfter($('#tl'+task.task_list_id));    
+              if(data.task.task_list_name)
+                  $('#tpi'+data.task.project_ids).children('ul').append('<li><span>'+data.task.task_list_name+'</span></li>')
             }
           }
         },

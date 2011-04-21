@@ -85,11 +85,11 @@
 				    <fieldset>
 						<%if current_user.secondary_emails.present?%>
 						<div class="label-contain" id="show_secondary">
-							<p><%= label_tag "Secondary:" %>
+							<%= label_tag "Secondary:" %>
 						</div>
 						<%else%>
 						<div class="label-contain" style="visibility:hidden;"  id="show_secondary">
-							<p><%= label_tag "Secondary:"%></p>
+							<%= label_tag "Secondary:"%>
 						</div>
 						<%end%>
 						
@@ -104,7 +104,7 @@
 																		<%end%>	
 							       			 <%end%>
 									<%end%>	
-</p>									
+								
 									</span>
 							    <input type="text" name="secondary-email" value="" class="textfield hidden" /><%if current_user.secondary_emails.present?%><br/><% end %>
                    <span id="semail"></span>

@@ -41,7 +41,11 @@ class TasksController < ApplicationController
 		if task.valid?
       task.save
       task.create_activities(params[:recipient],params[:notify])
+			if !task_list
       render :json=>task.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id])
+			else
+				render :json=>task.to_json(:only=>[:id,:name,:task_list_id],:methods=>[:task_list_name,:assigned_to,:due_date_value,:activity_id,:project_ids])
+				end
     else
       errors=[]
       task.errors.each_full{|msg| errors<< msg }
