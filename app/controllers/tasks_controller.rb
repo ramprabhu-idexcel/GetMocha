@@ -33,6 +33,7 @@ class TasksController < ApplicationController
 	  render :partial=>'new',:locals=>{:m_users=>@users,:projects=>@projects}
 	end
 	def create
+		session[:attaches_id]=params[:attach_id]
 		if params[:task][:task_list_id].blank?
 			task_list=TaskList.create(:project_id=>params[:project_id], :user_id=>current_user.id, :name=>params[:tasklist])
 		end
