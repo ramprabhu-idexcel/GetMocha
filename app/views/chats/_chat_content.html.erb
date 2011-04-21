@@ -120,10 +120,16 @@
 	function show_drag_and_drop()
 	{
 	
-	if ($('.attach-contain').css('display')=="block")
-		$('.attach-contain').css('display','none');
-	else
-		$('.attach-contain').css('display','block');
+    if ($('.attach-contain').css('display')=="block")
+    {
+      $('.attach-contain').css('display','none');
+      $('.attach').show();
+    }
+    else
+    {
+      $('.attach-contain').css('display','block');
+      $('.attach').hide();
+    }
 	}
 	var attachitem=[];
 		$(function () {
