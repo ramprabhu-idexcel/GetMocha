@@ -208,6 +208,7 @@
       $('.attach-contain').hide();
       $('#attachment_files').html('');
     }
+    $('.attach').show();
     $('#chat-message').focus();
   }
   
