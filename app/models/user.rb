@@ -321,6 +321,6 @@ class User < ActiveRecord::Base
     find(:all,:conditions=>['is_guest=?',true])
   end
   def chat_name
-    "#{first_name.capitalize} #{last_name.first.capitalize}"
+    "#{first_name.capitalize} #{last_name.first.capitalize}."
   end
 end
