@@ -11,7 +11,7 @@ module TasksHelper
     link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks open",:id=>"all_tasks"
   end
   def link_to_my_tasks
-    count=current_user.my_tasks(nil,nil).count
+    count=current_user.my_tasks(nil).count
     link_to form_content(count,"My Tasks"),"#my_tasks",:class=>"my-tasks", :id=>"my_tasks"
   end
   def link_to_starred_tasks
