@@ -185,8 +185,9 @@
   function send_chat()
   {
     var chat=$('#chat-message').val();
+    var attachments=$.trim($('#attachment_files').text());
     var project_id=get_project_id();
-    if($.trim(chat)!="")
+    if($.trim(chat)!="" ||  attachments!="")
     {
       $.ajax({
         url:'/chats',
