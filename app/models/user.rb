@@ -320,11 +320,24 @@ class User < ActiveRecord::Base
   end
   def completed_tasks(sort_by,order)
     activities=[]
-    find_all_tasks(sort_by,order).collect{|t| activities << t if t.resource && t.resource.is_completed}
+    find_all_tasks(sort_by).collect{|t| activities << t if t.resource && t.resource.is_completed}
     activities
   end
-  def group_completed_tasks(sort_by,order)
-    completed_tasks(sort_by,order).group_by{|a| a.resource.task_list_id}
+  def sort_completed_tasks(sort_by=nil,order=nil)
+     order="asc" unless order
+    tasks=completed_tasks(sort_by,order).group_by{|a| a.resource.task_list_id}
+    temp=tasks
+    temp.each do |b|
+      if order=="desc"
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+      else
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      end
+    end
+    tasks
+  end
+  def group_completed_tasks(sort_by=nil,order=nil)
+    sort_completed_tasks(sort_by,order)
   end
   def project_tasks(task_ids)
     Activity.user_projects_tasks(task_ids,self.id)
