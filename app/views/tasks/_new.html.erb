@@ -86,38 +86,7 @@
 <iframe id='upload_frame' name="upload_frame" style="width:0px;height:0px;border:0px;display:none" src="about:blank"></iframe>
 <script type="text/javascript">
  	var attachitem=[];
- $(document).ready(function(){
-	var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
-$("#project_val").autocomplete(data, {
-  formatItem: function(item) {
-    return item.text;
-  },
-	matchContains: true
-}).result(function(event, item) {
-  document.getElementById('autocomplete1_hidden').value=item.id;
-});
-}); 	
-
-<%=names=[]%>
-<%=tlist=[]%>
-<%=projects=[]%>
-	<% user_emails.each do |f|%>
-		<%names<<f <<","%>
-		<%end%>
-			<%#project_names.each do |f|%>
-			  <%#projects<<f <<","%>
-	<%#end%>
-	<%#t_list.each do |f|%>
-			  <%#tlist<<f <<","%>
-	<%#end%>
-	var userEmails = "<%= names %>";	
-var projectNames = "<%#= projects %>";
-var tasklist="<%#= tlist %>";
-userEmails=userEmails.split(',');
-	//projectNames=projectNames.split(',');
-   // var ac1 = new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('assign_to'),false);
-  //  var ac2 = new goog.ui.AutoComplete.Basic(projectNames, document.getElementById('project_val'),false);
-	 var ac3= new goog.ui.AutoComplete.Basic(userEmails, document.getElementById('notifys'),true);
+ 
 	$('#task_txtarea').click(function(){
 document.getElementById('task_description').style.display="block";
 	document.getElementById('task_txtarea').className="open";
@@ -219,7 +188,27 @@ $.ajax({
 			 }
 			});
 	$('.document').ready(function(){
-	<% if !session[:project_selected].nil?%>
+	var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
+	var data1 = [<% m_users.each do |muser| %>  {text:'<%= muser.email %>', id:'<%= muser.id %>'},<% end %>{text:'',id:''}];
+$("#notifys").autocomplete(data1, {
+  formatItem: function(items1) {
+    return items1.text;
+  },
+	multiple: true,
+	matchContains: true
+}).result(function(event, items1) {
+  //document.getElementById('autocomplete1_hidden').value=item.id;
+});
+$("#project_val").autocomplete(data, {
+  formatItem: function(itemp) {
+    return itemp.text;
+  },
+	matchContains: true
+}).result(function(event, itemp) {
+  document.getElementById('autocomplete1_hidden').value=itemp.id;
+});
+
+		<% if !session[:project_selected].nil?%>
 if (document.getElementById("project_val").value!="")
 {
  proj=document.getElementById("autocomplete1_hidden").value

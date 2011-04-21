@@ -7,11 +7,11 @@ class TaskListsController < ApplicationController
 	end
 	def new
 		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
-		@project_names=[]
-		@projects.each do |project|
-		@project_names<<"#{project.name}"
-		end
-		render :partial => 'new',:locals=>{:project_names=>@project_names}
+		#~ @project_names=[]
+		#~ @projects.each do |project|
+		#~ @project_names<<"#{project.name}"
+		#~ end
+		render :partial => 'new',:locals=>{:projects=>@projects}
 	end
 	def create
 		errors=[]

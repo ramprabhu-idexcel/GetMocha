@@ -32,18 +32,19 @@
     });
     
     $(".checkbox > span.icon.icon-thd").toggleClass('checked');
+    $('#comment_area').fadeOut('fast');
     var second_pane=$(this).parent().parent().parent();
     second_pane.fadeOut(700,function(){
       if(second_pane.prev().hasClass('sub-header') && second_pane.next().hasClass('sub-header'))
         second_pane.prev().remove();
-      $('#comment_area').fadeOut('fast');
     });
     return false;
   });
 
   $(".checkbox > span.icon.icon-thd").live('click',function(){
     $(this).toggleClass('checked');
-    $('.task.tsem.open').children('.left-icons').children('.checkbox').children('span').toggleClass('checked');
+    var second_pane=$('.task.tsem.open');
+    second_pane.children('.left-icons').children('.checkbox').children('span').toggleClass('checked');
     var task_id=get_task_id();
     $.ajax({
       url:'/tasks/complete_task',
@@ -53,11 +54,11 @@
         tasks_count(data);
       }
     });
-    var secondpane=$('.task.tsem.open')
+    $('#comment_area').fadeOut('fast');
     $('.task.tsem.open').fadeOut(700,function(){
     if(second_pane.prev().hasClass('sub-header') && second_pane.next().hasClass('sub-header'))
       second_pane.prev().remove();
-      $('#comment_area').fadeOut('fast');
+      
     });
     return false;
   });
