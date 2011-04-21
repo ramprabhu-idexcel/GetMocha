@@ -97,6 +97,7 @@
   });
     
   $('.expand_user').live('click',function(){
+    $('#all_subscribed').css('display','block');
     return false;
   });
   
