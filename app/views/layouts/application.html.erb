@@ -560,6 +560,12 @@ else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list
 			else
 			{
 				//first_panel_navigation
+				if(key=="S" || key=="X")
+				{
+				 settings_navigation_right();
+				}
+				else
+				{
 				var active_length=$('#active_projects').children('').length;
 				var length=$('.projects-list').children("").length;
 				already_exists="false";
@@ -604,7 +610,7 @@ else if(($('#reply_comment_task').parent('li.task_header').css('display')=="list
 			}
 		}
 		}
-		
+		}
 		//for settings page navigation for right arrow
 		function settings_navigation_right()
 		{
