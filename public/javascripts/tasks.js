@@ -97,7 +97,9 @@
   });
     
   $('.expand_user').live('click',function(){
-    $('#all_subscribed').css('display','block');
+      var subscribe=$('.task-subscribe').text();
+      var content=$('#all_subscribed').html();
+      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="subscribe_task" class="task-subscribe"> '+subscribe+'</a>');
     return false;
   });
   
