@@ -97,7 +97,7 @@ class ProjectMailer < ActionMailer::Base
  	def author
     	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
     end
-  def task_notification(user,task)
+  def task_assign_notification(user,task)
     @user = user
     @task=task
     task_list=task.task_list
@@ -111,7 +111,7 @@ class ProjectMailer < ActionMailer::Base
     @footer_details=details.last
     mail(:from=>from,:to=>user.email, :reply_to=>"ctzt#{task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Task - #{task.name}",:content_type=>"text/html")
   end
-  def task_assign_notification(user,task)
+  def task_notification(user,task)
     @user = user
     @task=task
     @project=task.task_list.project
