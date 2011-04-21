@@ -76,7 +76,8 @@
     //for online users
     else if(data[0]=="online_users")
     {
-      if($('#cp'+data[1].project_id).hasClass('open') && $('#ui'+data[1].id).length==0)
+      var current_user_id=parseInt($('#soc_user').val());
+      if($('#cp'+data[1].project_id).hasClass('open') && data[1].id!=current_user_id && $('#ui'+data[1].id).length==0)
       {
         var content=add_online_users(data[1]);
         $('.m-panel').append(content.join(''));
@@ -214,14 +215,6 @@
       //alert("Bye for now");
     
   });
-  
- 
-
-  
-  function lastPostFunc()
-  {
-    alert('scrolling');
-  }
   
   function get_project_id()
   {
