@@ -37,7 +37,7 @@
           chat_content+='<div class="content most-recent">'+data[2];
           var image_attachments=data[4].attach_image;
           var file_attachments=data[4].attached_documents;
-          if(file_attachments.length>0 && image_attachments.length>0)
+          if(file_attachments.length>0 || image_attachments.length>0)
           {
             chat_content+='<div class="attachments">';
             //File attachments
