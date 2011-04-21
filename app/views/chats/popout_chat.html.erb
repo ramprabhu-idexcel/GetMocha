@@ -114,17 +114,17 @@ if(d.length > 12)
     $('#loader1').hide();
 }
 });
+});
 function delete_attachment(file)
 {
- $.ajax({
-      url:'/remove_attach/'+file,
-      type: 'get',
-			 success: function(file){
-			 document.getElementById('attachment_'+file).style.display="none";
-			 }
-    });
+  $.ajax({
+    url:'/remove_attach/'+file,
+    type: 'get',
+    success: function(file){
+      document.getElementById('attachment_'+file).style.display="none";
+    }  
+  });
 }
-});
 
 	
 	</script>
