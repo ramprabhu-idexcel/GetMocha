@@ -77,6 +77,8 @@ a=file.id;
 });
 function delete_attachments(file)
 {
+ attachitem.pop(file);
+ document.getElementById('attach_hidden').value=attachitem;
  $.ajax({
       url:'/remove_attach/'+file,
       type: 'get',
