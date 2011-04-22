@@ -129,9 +129,11 @@ class TasksController < ApplicationController
     #~ task=Task.find_by_id(params[:id])
     @task.update_attribute(:is_completed,!@task.is_completed)
 		@users=@task.subscribed_users
+		if @task.is_completed
 		@users.each do |users|
 		ProjectMailer.delay.task_completed(@task,users)
-		end
+	end
+	end
     render :json=>current_user.all_tasks_count.to_json
   end
 	def project_tasks
