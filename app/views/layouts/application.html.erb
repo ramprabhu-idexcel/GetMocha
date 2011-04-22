@@ -781,6 +781,7 @@ $('#mycontact1').toggleClass('open')
 				}
 				else
 				{
+				
 					get_all_messages=="true"
 				}
 			}
@@ -817,21 +818,21 @@ $('#mycontact1').toggleClass('open')
 				}
 				else if(all_messages=="true" && (key=="up" || key=="A") && star!="true")
 				{
-					first=$('.projects-list').children('')[length-1].id;
+				/*	first=$('.projects-list').children('')[length-1].id;
 					window.location=$('#'+first).attr('href');
 					is_open=$('#'+first).children('.num-unread').length;
 					if(is_open=="0")
 					document.getElementById(first).className="project open";
 					else
 					document.getElementById(first).className="project has-unread open";
-					document.getElementById('all_messages').className="all-messages has-unread";
+					document.getElementById('all_messages').className="all-messages has-unread"; */
 				}
 				else if(open=="true" && (key=="down" || key=="Z"))
 				{
-					window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-					first=$('.projects-list').children('')[length-1].id;
-					document.getElementById(first).className="project";
+					/* window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open"; */
+					first=$('.projects-list').children('')[length-1].id; 
+					document.getElementById(first).className="project open"; 
 				}
 
 				else if((open=="true" && (key=="up" || key=="A") && exit1=="false"))
