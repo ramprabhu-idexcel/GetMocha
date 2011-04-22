@@ -616,9 +616,10 @@ $('#submsg').click();
 					 else if((key=="up" || key=="A") && (i == active_length))
 					 $('#completed_list').hide();
 					 if((key=="down" || key=="Z") && (i==length-1))
-						already_exists=$('.projects-list').children("")[0].id;
+					 
+						var lrdssdsdeady_exists=$('.projects-list').children("")[0].id;
 						else if((key=="up" || key=="A") && (i==0))
-						already_exists=$('.projects-list').children("")[length-1].id;
+						var lready_exists=$('.projects-list').children("")[length-1].id;
 						else
 						if(key=="down" || key=="Z")
 						already_exists=$('.projects-list').children("")[i+1].id;
@@ -628,7 +629,7 @@ $('#submsg').click();
 				}
 				if(already_exists=="false")
 				{
-						first_item=$('.projects-list').children("")[0].id;
+					//	first_item=$('.projects-list').children("")[0].id;
 						id=first_item.split('_');
 						id=id[id.length-1];
 						settings_secondpanel(id);
