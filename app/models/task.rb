@@ -11,6 +11,8 @@ class Task < ActiveRecord::Base
 	#~ validates :description, :presence => true
   validates :name, :presence   => true
   validate :unique_name,:on=>:create
+  scope :late_tasks,:conditions=>['due_date=?',Date.tomorrow]
+  scope :task_due,:conditions=>['due_date=?',Date.yesterday]
 
   def unique_name
     task_list=self.task_list
@@ -181,7 +183,10 @@ class Task < ActiveRecord::Base
     self.attributes.merge({:task_list_name=>self.task_list_name,:assigned_to=>self.assigned_to,:other_task_lists=>self.other_task_lists,:team_members=>project.members_list,:subscribe=>self.display_subscribed_users,:project_id=>self.task_list.project_id, :all_subscribed=>self.all_subscribed})
   end
   def subscribed_users
-     activities.where('is_subscribed=? and users.status=?',true,true).includes(:user)
+    activities.where('is_subscribed=? and users.status=?',true,true).includes(:user)
+  end
+  def subscribed_members
+    subscribed_users
   end
   def subscribed_user_names
     subscribed_users.collect{|a| a.user.name if a.user}.sort
@@ -233,5 +238,4 @@ class Task < ActiveRecord::Base
       ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]
     end
   end
-
 end

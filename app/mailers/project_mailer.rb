@@ -143,5 +143,17 @@ class ProjectMailer < ActionMailer::Base
     @project=task.task_list.project
     mail(:to=>@user.user.email, :subject=>"Task Moved To New Tasklist",:content_type=>"text/html")
     end
-  
+  def task_due(task,user)
+    @user=user
+    @task=task
+    @project=task.task_list.project
+    mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}" :subject=>"Task Due - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+  end
+  def late_task(task,user)
+    @user=user
+    @task=task
+    @project=task.task_list.project
+    mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}" :subject=>"Task Late (1 Day Late) - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+  end
+
 end
