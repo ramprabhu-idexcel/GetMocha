@@ -528,7 +528,7 @@ return false;
         items.push('<div class="info">');
         items.push('<span class="task-time '+due_date_class(v.activity.resource.due_date_value[1])+'">'+v.activity.resource.due_date_value[0]+'</span>');
         items.push('<span class="name">'+v.activity.resource.assigned_to[0]+'</span>');
-        items.push('</div>');
+        items.push('</div><br />');
         items.push('<div class="task-name"><h4>'+truncate_task_name(v.activity.resource.name)+'</h4></div>');
         items.push('<div class="clear-fix"/></div>');        
         count=count+1;
