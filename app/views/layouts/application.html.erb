@@ -581,11 +581,11 @@ $('#submsg').click();
 				{
 					settings_thirdpanel('general');
 				}
-				else if(people=="none")
+				else if((people=="none") && (key=="down" || key=="X"))
 				{
 					settings_thirdpanel('people');
 				}
-				else
+				else if(key=="up" || key=="S")
 				{
 					settings_thirdpanel('general');
 				}
