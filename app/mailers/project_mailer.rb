@@ -147,21 +147,13 @@ class ProjectMailer < ActionMailer::Base
     @user=user
     @task=task
     @project=task.task_list.project
-<<<<<<< HEAD
-    mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}" ,:subject=>"Task Due - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
-=======
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Task Due - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
->>>>>>> 910d7b800a2d6427a629c8c49df6d4bd7efc7140
   end
   def late_task(task,user)
     @user=user
     @task=task
     @project=task.task_list.project
-<<<<<<< HEAD
-    mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}" ,:subject=>"Task Late (1 Day Late) - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
-=======
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Task Late (1 Day Late) - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
->>>>>>> 910d7b800a2d6427a629c8c49df6d4bd7efc7140
   end
 
 end
