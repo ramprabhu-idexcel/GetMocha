@@ -374,7 +374,7 @@ class User < ActiveRecord::Base
     find(:all,:conditions=>['project_users.project_id=:project_id AND project_users.status=:value AND users.status=:value',{:project_id=>project_id,:value=>true}],:include=>:project_users,:select=>[:id,:first_name,:last_name])
   end
   def all_tasks_count
-    {:completed_count=>completed_tasks(nil,nil).count,:all_count=>all_tasks(nil).count,:starred_count=>starred_task_count,:my_count=>my_tasks(nil,nil).count}
+    {:completed_count=>completed_tasks(nil,nil).count,:all_count=>all_tasks(nil).count,:starred_count=>starred_task_count,:my_count=>my_tasks(nil).count}
   end
   def self.find_all_user_except_guest
     find(:all,:conditions=>['is_guest=?',false])
