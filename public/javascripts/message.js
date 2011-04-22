@@ -193,3 +193,9 @@ else
      Backbone.emulateJSON = true
      Backbone.history.start();
   })(jQuery);
+$('#sub_other_users').live('click',function(){
+      var subscribe=$('#submsg').text();
+      var content=$('#all_subscribed').html();
+      $('p.subscribers').html('Subscribed: '+content+'<a href="#" id="submsg"> '+subscribe+'</a>');
+      return false;
+    });
