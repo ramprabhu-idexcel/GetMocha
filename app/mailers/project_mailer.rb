@@ -129,12 +129,13 @@ class ProjectMailer < ActionMailer::Base
     @user=user
     @task=task
     @project=task.task_list.project
-    mail(:to=>user.email, :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+    mail(:to=>"#{user.email}", :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
-  def task_completed(task,user)
-    @user=user
+  def task_completed(task,users)
+    @user=users
     @task=task
     @project=task.task_list.project
+<<<<<<< HEAD:app/mailers/project_mailer.rb
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}" :subject=>"Task Completed - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   def task_due(task,user)
@@ -150,4 +151,9 @@ class ProjectMailer < ActionMailer::Base
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}" :subject=>"Task Late (1 Day Late) - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
 
+=======
+    mail(:to=>@user.user.email, :subject=>"Task Completed - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+    end
+  
+>>>>>>> 74156dc9a3ba42aef6b8d8607dea863d66f8b694:app/mailers/project_mailer.rb
 end
