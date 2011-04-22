@@ -1428,9 +1428,7 @@ function chats_navigation_down(key)
 		{
 	  if(key=="down" || key=="Z")
 		{
-			if(i == chat_length-1)
-			var next_chat=$('.projects-list').children()[0].id;
-			else
+
 			var next_chat=$('.projects-list').children()[i+1].id;
 			
 			$('#'+next_chat).click();
@@ -1438,9 +1436,7 @@ function chats_navigation_down(key)
 		}
 		 else if(key=="up" || key=="A")
 		{
-			if(i == 0)
-			var next_chat=$('.projects-list').children()[chat_length-1].id;
-			else
+
 			var next_chat=$('.projects-list').children()[i-1].id;
 			
 			$('#'+next_chat).click();
