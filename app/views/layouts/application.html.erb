@@ -581,11 +581,11 @@ $('#submsg').click();
 				{
 					settings_thirdpanel('general');
 				}
-				else if(people=="none")
+				else if((people=="none") && (key=="down" || key=="X"))
 				{
 					settings_thirdpanel('people');
 				}
-				else
+				else if(key=="up" || key=="S")
 				{
 					settings_thirdpanel('general');
 				}
@@ -616,9 +616,10 @@ $('#submsg').click();
 					 else if((key=="up" || key=="A") && (i == active_length))
 					 $('#completed_list').hide();
 					 if((key=="down" || key=="Z") && (i==length-1))
-						already_exists=$('.projects-list').children("")[0].id;
+					 
+						var lrdssdsdeady_exists=$('.projects-list').children("")[0].id;
 						else if((key=="up" || key=="A") && (i==0))
-						already_exists=$('.projects-list').children("")[length-1].id;
+						var lready_exists=$('.projects-list').children("")[length-1].id;
 						else
 						if(key=="down" || key=="Z")
 						already_exists=$('.projects-list').children("")[i+1].id;
@@ -628,7 +629,7 @@ $('#submsg').click();
 				}
 				if(already_exists=="false")
 				{
-						first_item=$('.projects-list').children("")[0].id;
+					//	first_item=$('.projects-list').children("")[0].id;
 						id=first_item.split('_');
 						id=id[id.length-1];
 						settings_secondpanel(id);
@@ -700,14 +701,14 @@ $('#submsg').click();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').hide();
 				}
-				else if(profile=="none")
+				else if((profile=="none") && (key=="up" || key=="S"))
 				{
 									 $('#mycontact1').toggleClass('open')
         $('#my_profile').show();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').hide();
 				}
-				else
+				else if((contacts=="none") && (key=="down" || key=="X"))
 				{
 $('#mycontact1').toggleClass('open')
         $('#my_profile').hide();
@@ -781,6 +782,7 @@ $('#mycontact1').toggleClass('open')
 				}
 				else
 				{
+				
 					get_all_messages=="true"
 				}
 			}
@@ -817,21 +819,21 @@ $('#mycontact1').toggleClass('open')
 				}
 				else if(all_messages=="true" && (key=="up" || key=="A") && star!="true")
 				{
-					first=$('.projects-list').children('')[length-1].id;
+				/*	first=$('.projects-list').children('')[length-1].id;
 					window.location=$('#'+first).attr('href');
 					is_open=$('#'+first).children('.num-unread').length;
 					if(is_open=="0")
 					document.getElementById(first).className="project open";
 					else
 					document.getElementById(first).className="project has-unread open";
-					document.getElementById('all_messages').className="all-messages has-unread";
+					document.getElementById('all_messages').className="all-messages has-unread"; */
 				}
 				else if(open=="true" && (key=="down" || key=="Z"))
 				{
-					window.location=$('#all_messages').attr('href');
-					document.getElementById('all_messages').className="all-messages has-unread open";
-					first=$('.projects-list').children('')[length-1].id;
-					document.getElementById(first).className="project";
+					/* window.location=$('#all_messages').attr('href');
+					document.getElementById('all_messages').className="all-messages has-unread open"; */
+					first=$('.projects-list').children('')[length-1].id; 
+					document.getElementById(first).className="project open"; 
 				}
 
 				else if((open=="true" && (key=="up" || key=="A") && exit1=="false"))
@@ -1081,7 +1083,7 @@ if(is_open=="0")
 					}
 					else
 					{
-						tasks_projects(key, "1")
+							//tasks_projects(key, "1")
 					}					
 					document.getElementById('all_tasks').className="all-tasks";
 					project="false";
@@ -1254,9 +1256,9 @@ if(is_open=="0")
 					}
 					else if(key=="down" || key=="Z")
 					{
-						window.location.hash="#all_tasks";
-						document.getElementById('all_tasks').className="all-tasks open";
-						$('.projects-list').children()[i].className="project";
+					//	window.location.hash="#all_tasks";
+					//	document.getElementById('all_tasks').className="all-tasks open";
+//						$('.projects-list').children()[i].className="project";
 					}
 					
 				}
@@ -1426,9 +1428,7 @@ function chats_navigation_down(key)
 		{
 	  if(key=="down" || key=="Z")
 		{
-			if(i == chat_length-1)
-			var next_chat=$('.projects-list').children()[0].id;
-			else
+
 			var next_chat=$('.projects-list').children()[i+1].id;
 			
 			$('#'+next_chat).click();
@@ -1436,9 +1436,7 @@ function chats_navigation_down(key)
 		}
 		 else if(key=="up" || key=="A")
 		{
-			if(i == 0)
-			var next_chat=$('.projects-list').children()[chat_length-1].id;
-			else
+
 			var next_chat=$('.projects-list').children()[i-1].id;
 			
 			$('#'+next_chat).click();
