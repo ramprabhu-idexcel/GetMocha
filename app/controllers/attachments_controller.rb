@@ -10,7 +10,7 @@ class AttachmentsController < ApplicationController
 		session[:attaches_id] << @attachment.id
 		#@attachment.after_process_attachment
 		#~ render :nothing=>true
-		render :json=>{:file=>@attachment.filename, :id=>@attachment.id}.to_json
+		render :json=>{:file=>@attachment.filename, :id=>@attachment.id,:size=>@attachment.size/1024}.to_json
 	end
 	def remove_attach
 	@attach=Attachment.delete(params[:id])
