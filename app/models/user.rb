@@ -42,7 +42,6 @@ class User < ActiveRecord::Base
     sort_field=find_sort_field(sort_by)
     message=[]
     starred_comments(nil,nil).each do |act|
-      puts act.resource.commentable.id.inspect
       message<<last_created_message(act.resource.commentable.id)
     end
     message.flatten.uniq
@@ -267,10 +266,12 @@ class User < ActiveRecord::Base
     tasks=all_tasks.group_by{|a| a.resource.task_list_id}
     temp=tasks
     temp.each do |b|
-      if order=="desc"
-        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
-      else
-         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+      unless b.nil?
+        if order=="desc"
+          tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}.reverse
+        else
+           tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
+        end
       end
     end
     tasks
@@ -291,9 +292,9 @@ class User < ActiveRecord::Base
     temp=tasks
     temp.each do |b|
       if order=="desc"
-        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}.reverse
       else
-         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
       end
     end
     tasks
@@ -314,9 +315,9 @@ class User < ActiveRecord::Base
     temp=tasks
     temp.each do |b|
       if order=="desc"
-        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}.reverse
       else
-         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
       end
     end
     tasks
@@ -332,9 +333,9 @@ class User < ActiveRecord::Base
     temp=tasks
     temp.each do |b|
       if order=="desc"
-        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}.reverse
       else
-         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
       end
     end
     tasks
@@ -360,9 +361,9 @@ class User < ActiveRecord::Base
     temp=tasks
     temp.each do |b|
       if order=="desc"
-        tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}.reverse
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}.reverse
       else
-         tasks[b[0]]= b[1].sort_by{|a| a.resource.due_date}
+         tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
       end
     end
     tasks

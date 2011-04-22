@@ -206,6 +206,9 @@ class Task < ActiveRecord::Base
   def ex_task(title,project)
     find(:first, :conditions=>['tasks.name=? AND task_lists.project_id=?',title, project.id], :include=>:task_list)
   end
+  def test_date
+    due_date ? due_date : Date.new(9850,7,12)
+  end
   def activity_id
     activities.find_by_user_id(self.user_id).id
   end
