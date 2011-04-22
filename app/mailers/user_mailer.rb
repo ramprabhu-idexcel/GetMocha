@@ -130,6 +130,6 @@ class UserMailer < ActionMailer::Base
     end
   end
   def test_mail
-    mail(:to=>"priya@railsfactory.org", :subject=>"Test Mail for ticket #24873",:content_type=>"text/html")
+    mail(:to=>"florin@sendgrid.com", :subject=>"Test Mail for ticket #24873",:content_type=>"text/html")
   end
 end
