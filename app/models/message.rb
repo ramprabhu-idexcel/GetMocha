@@ -95,7 +95,7 @@ class Message < ActiveRecord::Base
       when 2
         "Subscribed: #{subscribed_user_names.join(' and ')} |"
       else
-        "Subscribed: #{subscribed_user_names[0]} and <a href='#' id='sub_other_users'>#{pluralize(subscribed_user_names.count, "other")}</a> |"
+        "Subscribed: #{subscribed_user_names[0]} and <a href='#' id='sub_other_users'>#{pluralize(subscribed_user_names.count-1, "other")}</a> |"
     end
   end
 	def all_subscribed
