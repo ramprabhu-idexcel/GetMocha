@@ -402,7 +402,16 @@
 		}
 				else
 		{
+			find_loc1=location1.search(/chats/);
+		
+				if(find_loc1!=-1)
+				{
+		chats_navigation_down('up');
+		}
+		else
+		{
 		tasks_navigation_down('up');
+		}
 		}
 		}
 		}
@@ -1421,6 +1430,16 @@ function chats_navigation_down(key)
 			var next_chat=$('.projects-list').children()[0].id;
 			else
 			var next_chat=$('.projects-list').children()[i+1].id;
+			
+			$('#'+next_chat).click();
+			stop="true";
+		}
+		 else if(key=="up" || key=="A")
+		{
+			if(i == 0)
+			var next_chat=$('.projects-list').children()[chat_length-1].id;
+			else
+			var next_chat=$('.projects-list').children()[i-1].id;
 			
 			$('#'+next_chat).click();
 			stop="true";
