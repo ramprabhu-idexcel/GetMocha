@@ -701,14 +701,14 @@ $('#submsg').click();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').hide();
 				}
-				else if(profile=="none")
+				else if((profile=="none") && (key=="up" || key=="S"))
 				{
 									 $('#mycontact1').toggleClass('open')
         $('#my_profile').show();
         $('#myprofile1').toggleClass('open')
         $('#my_contacts').hide();
 				}
-				else
+				else if((contacts=="none") && (key=="down" || key=="X"))
 				{
 $('#mycontact1').toggleClass('open')
         $('#my_profile').hide();
