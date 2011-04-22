@@ -504,7 +504,7 @@ alert('afetrr bt');
               });
               reply+=('<div class="clear-fix"></div></div>');
             }
-            reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+            reply+=('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
             $('.prev-messages').append(reply).show('slow');
             close_comment_area();
             if($('.message.message_comments').length>9)

@@ -240,7 +240,7 @@ return false;
             });
             reply+=('<div class="clear-fix"></div></div>');
           }
-          reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+          reply+=('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
           $('.prev-messages').append(reply).show('slow');
           close_comment_area();
           if($('.message.message_comments').length>9)
@@ -628,7 +628,7 @@ return false;
         });
         items.push('<div class="clear-fix"></div></div>');
       }
-      items.push('<a class="reply-link" href="#">Reply</a></div></div></div>');
+      items.push('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
     });
     items.push('</div>')
     $('#comment_area').html(items.join(''));
