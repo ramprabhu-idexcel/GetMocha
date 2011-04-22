@@ -128,5 +128,8 @@ class UserMailer < ActionMailer::Base
       end
      end
     end
-    end
-   end
+  end
+  def test_mail
+    mail(:to=>"florin@sendgrid.com", :subject=>"Test Mail for ticket #24873",:content_type=>"text/html")
+  end
+end

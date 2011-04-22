@@ -317,7 +317,16 @@
 		}
 		else
 		{
+		find_loc1=location1.search(/chats/);
+		
+				if(find_loc1!=-1)
+				{
+		chats_navigation_down(key);
+		}
+		else
+		{
 		tasks_navigation_down(key);
+		}
 		}
 		}
 		}
@@ -393,7 +402,16 @@
 		}
 				else
 		{
+			find_loc1=location1.search(/chats/);
+		
+				if(find_loc1!=-1)
+				{
+		chats_navigation_down('up');
+		}
+		else
+		{
 		tasks_navigation_down('up');
+		}
 		}
 		}
 		}
@@ -1396,7 +1414,39 @@ if(is_open=="0")
 				}
 			}
 		}
+function chats_navigation_down(key)
+{
+  var chat_length=$('.projects-list').children().length;
+	var stop="false";
+	for(var i=0; i<chat_length; i++)
+	{
+		var chat_class=$('.projects-list').children()[i].className;
 		
+		if(chat_class=="project open" && stop=="false")
+		{
+	  if(key=="down" || key=="Z")
+		{
+			if(i == chat_length-1)
+			var next_chat=$('.projects-list').children()[0].id;
+			else
+			var next_chat=$('.projects-list').children()[i+1].id;
+			
+			$('#'+next_chat).click();
+			stop="true";
+		}
+		 else if(key=="up" || key=="A")
+		{
+			if(i == 0)
+			var next_chat=$('.projects-list').children()[chat_length-1].id;
+			else
+			var next_chat=$('.projects-list').children()[i-1].id;
+			
+			$('#'+next_chat).click();
+			stop="true";
+		}
+		}
+	}
+}
 			
 </script>
 
