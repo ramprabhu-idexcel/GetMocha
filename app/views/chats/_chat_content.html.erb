@@ -48,7 +48,7 @@
 
             <div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
               <div class="drag-drop">Drag and drop files here</div>
-              <table id="files"></table>
+              <div id="files"></div>
               <div id="attachment_files"> </div>
             </div>
           </fieldset>
@@ -93,6 +93,7 @@
   </div>
 </div>
 <script>
+$.chat=0;
   $('.chat-container').scroll(function(){	
     var page_number=parseInt($('#page_number').val());
     var project_id=$('#chat_project_id').val();
