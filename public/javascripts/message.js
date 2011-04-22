@@ -169,7 +169,7 @@ else
                       });
                       comments.push('<div class="clear-fix"></div></div>');
                     }
-                    comments.push('<a class="reply-link" href="#">Reply</a></div></div></div>');
+                    comments.push('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
                   });
                   comments.push('</div>');
                   var result=comments.join(' ');

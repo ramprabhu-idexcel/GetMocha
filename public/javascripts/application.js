@@ -504,7 +504,7 @@ alert('afetrr bt');
               });
               reply+=('<div class="clear-fix"></div></div>');
             }
-            reply+=('<a class="reply-link" href="#">Reply</a></div></div></div>');
+            reply+=('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
             $('.prev-messages').append(reply).show('slow');
             close_comment_area();
             if($('.message.message_comments').length>9)
@@ -1481,7 +1481,7 @@ function close_comment_area()
               items.push('<div class="info">');
               items.push('<span class="task-time '+due_date_class(task.due_date_value[1])+'">'+task.due_date_value[0]+'</span>');
               items.push('<span class="name">'+task.assigned_to[0]+'</span>');
-              items.push('</div>');
+              items.push('</div><br />');
               items.push('<div class="task-name"><h4>'+truncate_task_name(task.name)+'</h4></div>');
               items.push('<div class="clear-fix"/></div>'); 
               if($('#tl'+task.task_list_id).length==0)
