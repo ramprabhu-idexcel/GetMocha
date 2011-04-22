@@ -317,7 +317,16 @@
 		}
 		else
 		{
+		find_loc1=location1.search(/chats/);
+		
+				if(find_loc1!=-1)
+				{
+		chats_navigation_down(key);
+		}
+		else
+		{
 		tasks_navigation_down(key);
+		}
 		}
 		}
 		}
@@ -1396,7 +1405,10 @@ if(is_open=="0")
 				}
 			}
 		}
-		
+function chats_navigation_down()
+{
+
+}
 			
 </script>
 
