@@ -141,7 +141,7 @@
 			{
 			 short_modal4('U');
 			}
-			if(event.identifier=='T')
+			if(event.identifier=='SHIFT_D')
 			{
 			 short_modal4('T');
 			}
@@ -232,14 +232,15 @@
   shortcutHandler.registerShortcut('ESC',goog.events.KeyCodes.ESC);
   shortcutHandler.registerShortcut('SHIFT_M',goog.events.KeyCodes.M, SHIFT);
 	shortcutHandler.registerShortcut('SHIFT_T',goog.events.KeyCodes.T, SHIFT);
+	shortcutHandler.registerShortcut('SHIFT_D',goog.events.KeyCodes.D, SHIFT);
 	shortcutHandler.registerShortcut('ENTER_M',goog.events.KeyCodes.M, ENTER);
-	// shortcutHandler.registerShortcut('ENTER_T',goog.events.KeyCodes.T, ENTER);
+	 shortcutHandler.registerShortcut('ENTER_T',goog.events.KeyCodes.T, ENTER);
 	shortcutHandler.registerShortcut('ENTER_P',goog.events.KeyCodes.P, ENTER);
 	shortcutHandler.registerShortcut('ENTER_L',goog.events.KeyCodes.L, ENTER);
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q);
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);
-	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T);
+	
 	shortcutHandler.registerShortcut('A',goog.events.KeyCodes.A);
 	shortcutHandler.registerShortcut('Z',goog.events.KeyCodes.Z);
 	shortcutHandler.registerShortcut('S',goog.events.KeyCodes.S);
