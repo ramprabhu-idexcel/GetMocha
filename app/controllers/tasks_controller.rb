@@ -78,6 +78,7 @@ class TasksController < ApplicationController
   end
 	def update
 		t_name=@task.task_list.tasks.find_by_name(params[:task][:name])
+		p params[:task][:name]
 		if t_name
 			if @task.name == t_name.name
 				 render :nothing=>true
@@ -88,6 +89,11 @@ class TasksController < ApplicationController
 			@task.attributes=params[:task]
          if @task.valid?
            @task.update_attributes(params[:task])
+					 @users=@task.subscribed_users
+					 @project=@task.task_list.project
+					 @users.each do |user_act|
+						  ProjectMailer.delay.task_moved_other_task_list(@task,user_act) if @project.is_member?(user_act.user_id) && params[:task][:task_list_id]
+		        end
 					 render :nothing=>true
 			   else
 					render :json=>{:error=>@task.errors[0]}.to_json

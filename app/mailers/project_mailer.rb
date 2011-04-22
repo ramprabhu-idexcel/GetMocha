@@ -136,6 +136,12 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     @project=task.task_list.project
     mail(:to=>@user.user.email, :subject=>"Task Completed - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
+  end
+  def task_moved_other_task_list(task,user_act)
+    @user=user_act
+    @task=task
+    @project=task.task_list.project
+    mail(:to=>@user.user.email, :subject=>"Task Moved To New Tasklist",:content_type=>"text/html")
     end
   
 end
