@@ -200,6 +200,12 @@ return false;
   
   
   $('.blue-33.add_comment').live('click',function(){
+    if($(this).hasClass('upload_in_progress'))
+    {
+      return false;
+    }
+    else
+    {
     if($.trim($('#comment-message').val())=="")
     {
       alert('Please enter a Comment ');
@@ -251,6 +257,7 @@ return false;
       });
     }
     return false;
+  }
   });
   
   $('#trash_task').live('click',function(){
