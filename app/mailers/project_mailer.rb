@@ -99,7 +99,7 @@ class ProjectMailer < ActionMailer::Base
      from="mochabot@getmocha.com"
     end
     @task=comment.commentable
-    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Reply to #{@task.name}",:content_type=>"text/html")
+    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Task - Re: #{task.name}",:content_type=>"text/html")
     @content_type="multipart/html"
   end
  	def author
