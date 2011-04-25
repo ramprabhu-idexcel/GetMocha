@@ -52,7 +52,7 @@ class Message < ActiveRecord::Base
 		@message=message
 		to_users.each do |to_user|
 			@to_user=to_user.lstrip
-		ProjectMailer.message_notification(@user,@to_user,@message).deliver
+		ProjectMailer.delay.message_notification(@user,@to_user,@message)
 		end
 	end
   def self.find_hash(id,current_user)
