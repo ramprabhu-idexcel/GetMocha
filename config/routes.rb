@@ -84,8 +84,7 @@ end
     member do
       get :project_tasklists
       put :assign_task
-     
-    end
+      end
     collection do
       put :complete_task
       get :all_tasks

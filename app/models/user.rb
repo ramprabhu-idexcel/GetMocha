@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :tasks,:through=>:task_lists
   DEFAULT_AVATAR="/images/1300771661_stock_person.png"
   named_scope :all_users, :select=>'email',:order => 'id'
+  scope :active_users,:conditions=>['status=?',true]
 
   def self.verify_email_id(from_address)
     find(:first,:conditions=>['users.email=:email or secondary_emails.email=:email',{:email=>from_address}],:include=>:secondary_emails)
@@ -381,10 +382,10 @@ class User < ActiveRecord::Base
     {:completed_count=>completed_tasks(nil,nil).count,:all_count=>all_tasks(nil).count,:starred_count=>starred_task_count,:my_count=>my_tasks(nil).count}
   end
   def self.find_all_user_except_guest
-    find(:all,:conditions=>['is_guest=?',false])
+    find(:all,:conditions=>['is_guest=? and status=?',false,true])
   end
   def self.find_all_user_with_guest
-    find(:all,:conditions=>['is_guest=?',true])
+    find(:all,:conditions=>['is_guest=? and status=?',true,true])
   end
   def chat_name
     "#{first_name.capitalize} #{last_name.first.capitalize}."

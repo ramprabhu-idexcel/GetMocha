@@ -19,6 +19,7 @@ class Project < ActiveRecord::Base
 	validates :name, :presence   => true
 	validates :name, :length     => { :within => 4..40, :message=>"Please enter a project name with more than 3 characters and less than 20 characters" }
 	after_create :create_email_ids
+	scope :all_projects,:conditions=>['status!=?',ProjectStatus::DELETED]
   #~ named_scope :verify_project,:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users
   def all_task_ids
     tasks.map(&:id)
