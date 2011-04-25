@@ -56,7 +56,7 @@
         this.imageTypes = /^image\/(gif|jpeg|png)$/;
         this.previewSelector = '.file_upload_preview';
         this.progressSelector = '.file_upload_progress div';
-        this.cancelSelector = '.file_upload_cancel button';
+        this.cancelSelector = '.file_upload_cancel a';
         this.cssClassSmall = 'file_upload_small';
         this.cssClassLarge = 'file_upload_large';
         this.cssClassHighlight = 'file_upload_highlight';

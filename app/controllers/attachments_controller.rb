@@ -4,13 +4,19 @@ class AttachmentsController < ApplicationController
 	def new
 	end
   def create
-		session[:attaches_id] ||= []
+		
+		if params[:undefined]
+			session[:attaches_id] ||= []
 		@attachment=Attachment.new(:uploaded_data => params["undefined"])
 		@attachment.save
 		session[:attaches_id] << @attachment.id
 		#@attachment.after_process_attachment
 		#~ render :nothing=>true
+		
 		render :json=>{:file=>@attachment.filename, :id=>@attachment.id,:size=>@attachment.size/1024}.to_json
+	else
+			render :json=>{:none=>"nothing"}.to_json
+	end
 	end
 	def remove_attach
 	@attach=Attachment.delete(params[:id])
