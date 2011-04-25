@@ -70,8 +70,8 @@ end
                 d.uploaded_data = temp
                 d.save
                 File.delete(file_path)
-              end             
-          end
+              end
+              end
         end
       end
     end
