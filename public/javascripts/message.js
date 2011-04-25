@@ -75,7 +75,7 @@ $.messages;
                     items.push('<div class="date-bar"><a href="#" class="date-title">'+parse_date(index)+'</a></div>');
                     var count=1;
                     $.each(val,function(i,v){
-                      items.push('<div class="message messow '+(count%2==0 ? "alt" : "")+(v.activity.is_read ? "" : " unread")+' mpi'+v.activity.resource.project_id+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "20" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
+                      items.push('<div class="message messow '+(count%2==0 ? "alt" : "")+(v.activity.is_read ? "" : " unread")+' mpi'+v.activity.resource.project_id+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "21" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
                       if(v.activity.is_starred)
                         items.push('<a class="message-star secpan" href="#">Star</a>');
                       else
