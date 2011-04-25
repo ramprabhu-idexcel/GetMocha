@@ -81,7 +81,7 @@
 						<% if proj_user.status? %>
 								<div class="person">
 								<div class="avatar-mini"></div>
-								  	<img src="<%=proj_user.user.image_url%>" class="avatar-mini-img" alt="avatar"></img>
+								  	<img src="<%=proj_user.user.image_url%>" class="avatar-mini-img" alt="avatar" width="21" height="21"></img>
 								<span class="name"><%= proj_user.user.full_name %></span>
 								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_user.user.id %>,<%= project.id %>);">[x]</a>
 								<div class="clear-fix"></div>
@@ -97,7 +97,7 @@
 					  <%if proj_guest.status? %>
 							<div class="person">
 								<div class="avatar-mini"></div>
-								<img src="<%=proj_guest.guest.image_url%>" class="avatar-mini-img" alt="avatar"></img>
+								<img src="<%=proj_guest.guest.image_url%>" class="avatar-mini-img" alt="avatar" width="21" height="21"></img>
 								<span class="name"><%= proj_guest.guest.email %></span>
 								<a href="#" class="remove" onclick="javascript:remove_people_settings(<%= proj_guest.guest.id %>,<%= project.id %>);">[x]</a>
 								<div class="clear-fix"></div>
