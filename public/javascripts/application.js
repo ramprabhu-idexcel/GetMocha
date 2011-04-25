@@ -723,6 +723,7 @@ alert('afetrr bt');
     $('.account-dropdown').hide();
     $('.settings_header').hide();
         $('.task_header').hide();
+        $('.message_header').hide();
     $('.sort-by').hide();
      $('body').attr('class','settings');
      document.title="Settings | Mocha"
