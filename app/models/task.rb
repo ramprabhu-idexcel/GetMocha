@@ -16,7 +16,8 @@ class Task < ActiveRecord::Base
 
   def unique_name
     task_list=self.task_list
-    task=task_list.tasks.find(:first,:conditions=>['tasks.name=?',self.name])
+    find_tasklist_tasks=task_list.tasks
+    task=find_tasklist_tasks.find(:first,:conditions=>['tasks.name=?',self.name])
     task ? errors.add(:name,"A task with that name already exists") : true
   end
   def create_activities(assigned_email,susbscribe)
