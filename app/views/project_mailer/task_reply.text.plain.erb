@@ -6,12 +6,14 @@
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email_task/<%=attach.id%>"><%=attach.filename%></a> <br/>
 					<% end %>
 					<br/>
+					-----------------------------------------------------------------------------------------------------------------------------------
+					<br/>
 					<% end %>
 			<br/>
 			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email_task/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/>
  --<br/>
   <%if @project.is_member?(@user.id)%>
-Add tasks to this project via email: [project- <%=@project.name%>_<%=@project.id%>@t.getmocha.com or custom email]<br/>
+	Add tasks to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.task_email.id%> <%end%><br/>
 Powered by GetMocha.com
 <%else%>
 Powered by GetMocha.com

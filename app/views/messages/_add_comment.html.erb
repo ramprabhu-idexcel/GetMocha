@@ -96,7 +96,7 @@ $.chat =0;
         var c=original.substring(b)
         var d=original.split(c)[0]
         var total=parseInt(event.total/1024)+" KB";
-        $("#upload_" + d).html(parseInt(event.loaded/1024)+'KB / '+total);
+        $("#upload_" + d).html(parseInt(event.loaded/1024)+' KB / '+total);
       }
 });
 });
