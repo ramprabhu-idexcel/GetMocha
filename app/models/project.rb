@@ -161,6 +161,7 @@ class Project < ActiveRecord::Base
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 	end	
   def next_chats(offset)
-    chats.find(:all,:order => 'updated_at DESC', :limit => 20,:offset=>offset)
+    #~ chats.find(:all,:order => 'updated_at DESC', :limit => 20,:offset=>offset)
+		Chat.find_next_chats(self.id,offset)
   end
 end
