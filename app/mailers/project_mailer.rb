@@ -122,19 +122,22 @@ class ProjectMailer < ActionMailer::Base
   def task_notification(user,task)
     @user = user
     @task=task
-    @project=task.task_list.project
+    task_notification_task_tasklist=task.task_list
+    @project=task_notification_task_tasklist.project
     mail(:to=>user.email, :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"#{@project.name} Task - #{task.name}",:content_type=>"text/html")
   end
   def task_reassigned(task,user)
     @user=user
     @task=task
-    @project=task.task_list.project
+    task_task_list_for_reassigned=task.task_list
+    @project=task_task_list_for_reassigned.project
     mail(:to=>"#{user.email}", :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   def task_completed(task,users)
     @user=users
     @task=task
-    @project=task.task_list.project
+    task_completed_task_tasklist=task.task_list
+    @project=task_completed_task_tasklist.project
     mail(:to=>@user.user.email, :subject=>"Task Completed - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   def task_moved_other_task_list(task,user_act)
