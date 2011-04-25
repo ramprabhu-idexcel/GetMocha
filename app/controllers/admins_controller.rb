@@ -23,7 +23,7 @@ class AdminsController < ApplicationController
 	  	render :partial=>'users',:locals=>{:users=>@users,:guests=>@guests}			
 	end			
 	def projects
-		@projects=Project.find(:all)
+		@projects=Project.all_projects
 			render :partial=>'projects',:locals=>{:projects=>@projects}
 	end
 	def analetics
@@ -42,13 +42,15 @@ class AdminsController < ApplicationController
 	end
 	def remove_user
 		puts params.inspect
-		@user=User.delete(params[:id])
-		@users=User.find(:all)
+		@user=User.find_by_id(params[:id])
+		@user.update_attributes(:status=>false)
+		@users=User.active_users
 		render :partial=>'users',:locals=>{:users=>@users}
 	end
 	def remove_project
-		@project=Project.delete(params[:id])
-		@projects=Project.find(:all)
+		@project=Project.find_by_id(params[:id])
+		@project.update_attributes(:status=>ProjectStatus::DELETED)
+		@projects=Project.all_projects
 		render :partial=>'projects',:locals=>{:projects=>@projects}
   end
 end
