@@ -21,6 +21,6 @@ class Chat < ActiveRecord::Base
     {:attach_image=>images,:attached_documents=>documents}
   end
   def self.find_next_chats(project_id,offset)
-   find(:all,:order => 'updated_at DESC',:limit => 20,:offset=>offset,:project_id=>project_id)
+   find(:all,:order => 'updated_at DESC',:limit => 20,:offset=>offset,:conditions=>['project_id=?',project_id])
    end
  end
