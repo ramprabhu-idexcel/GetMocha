@@ -50,7 +50,9 @@ class Message < ActiveRecord::Base
  	def self.send_notification_to_team_members(user,to_users,message)
 		@user=user
 		@message=message
+		puts to_users.inspect
 		to_users.each do |to_user|
+			puts to_user.inspect
 			@to_user=to_user.lstrip
 		ProjectMailer.delay.message_notification(@user,@to_user,@message)
 		end

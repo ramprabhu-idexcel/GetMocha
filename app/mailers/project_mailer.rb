@@ -36,8 +36,6 @@ class ProjectMailer < ActionMailer::Base
       to_user=to_user
     end
     @existing_user=User.find_by_email(to_user)
-    p @existing_user.inspect
-    p "--------------------"
     @message=message
     @project=message.project
     @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
