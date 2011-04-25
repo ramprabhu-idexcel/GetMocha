@@ -114,7 +114,10 @@ $.chat=0;
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-			   return $('<div id="attachment_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + files[index].name+ '</span></div>'+'<a href="javascript:delete_attachment('+files[index].id+');"> Remove </a>'+'</div>');
+			   return $('<div id="attachment_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + files[index].name+ '</span></div>'+'<div class="file_upload_cancel">' +
+            '<a class="ui-state-default ui-corner-all" >' +
+            '<span class="ui-icon ui-icon-cancel">Remove</span>' +
+            '</a></div>'+'</div>');
       },
       buildDownloadRow: function (file) {
         a=file.id;
