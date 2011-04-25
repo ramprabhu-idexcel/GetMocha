@@ -239,4 +239,7 @@ class Task < ActiveRecord::Base
       ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]
     end
   end
+  def self.uncompleted_tasks_id
+    find(:all,:conditions=>['is_completed=?',false]).map(&:id)
+  end
 end
