@@ -115,7 +115,8 @@ class User < ActiveRecord::Base
   def all_task_comments
     comments=[]
     find_all_tasks.each do |activity|
-      comments<<activity.resource.comments.map(&:id)
+      find_activity_resource=activity.resource
+      comments<<find_activity_resource.comments.map(&:id)
     end
     comments.flatten!
   end
