@@ -19,9 +19,7 @@ attach.delete if attach
 end
 end
 def self.update_attachments(ids,attachable)
-  puts ids.inspect
   ids=ids.split(',').flatten
-  puts ids.inspect
   ids.each do |id|
 attach=find(:first,  :conditions=>['id=? AND attachable_id IS NULL AND parent_id IS NULL',id])
 attach.update_attributes(:attachable=>attachable) if attach
@@ -72,8 +70,8 @@ end
                 d.uploaded_data = temp
                 d.save
                 File.delete(file_path)
-              end             
-          end
+              end
+              end
         end
       end
     end

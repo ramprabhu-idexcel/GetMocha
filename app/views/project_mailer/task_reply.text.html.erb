@@ -1,6 +1,5 @@
 ##Type above this line to post a reply to this message##<br/>
-     <%task=@comment.task%>
-		 <%task.comments.each do |comment|%>
+     <%@task.comments.each do |comment|%>
      <%=raw comment.task_comment_notify%><br/>
 			<% @comment.attachments.each do |attach| %>
 			<br/>

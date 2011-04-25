@@ -3,8 +3,6 @@ class CommentsController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def create
   	session[:attaches_id]=params[:attach_id]
-    p params
-    p params[:attach_id]
     activity=Activity.find_by_id(params[:act])
     comment=current_user.comments.build(params[:comment])
     comment.commentable=activity.resource
