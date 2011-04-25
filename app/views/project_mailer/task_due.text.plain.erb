@@ -19,6 +19,6 @@ Subscribed: <%=@task.subscribed_user_names.join(', ')%><br/>
 
 --<br/>
 
-Add tasks to this project via email: [project- <%=@project.name%>_<%=@project.id%>@t.getmocha.com or custom email]<br/>
+Add tasks to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.task_email_id%> <%end%><br/>
 
 Powered by GetMocha.com

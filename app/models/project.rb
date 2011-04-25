@@ -25,7 +25,7 @@ class Project < ActiveRecord::Base
     tasks.map(&:id)
   end
   def all_uncompleted_task_ids
-    tasks.find(:all,:conditions=>['is_completed=?',false]).map(&:id)
+    tasks.uncompleted_tasks_id
   end
   def all_members
     User.all_members(self.id)

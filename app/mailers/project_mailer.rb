@@ -92,11 +92,12 @@ class ProjectMailer < ActionMailer::Base
     task=@comment.commentable
     check_task_task_list=task.task_list
     @project=check_task_task_list.project
-    custom_email=@project.task_email_id
-    if custom_email && !custom_email.blank?
-      from=custom_email
+    #custom_emails=@project.task_email_id
+    @custom_email=@project.custom_emails.find(:first,:conditions=>['custom_type=? AND verification_code IS NOT NULL','Task'])
+    if @custom_email && !@custom_email.empty?
+      from=@custom_email
     else
-     from="mochabot@getmocha.com"
+     from=@project.task_email_id
     end
     @task=comment.commentable
     mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Task - Re: #{task.name}",:content_type=>"text/html")
@@ -110,8 +111,8 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     task_list=task.task_list
     @project=task_list.project
-    custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
-    from = custom_email && !custom_email.blank? ? custom_email.email : "mochabot@getmocha.com"
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
+    from = @custom_email && !@custom_email.empty? ? custom_email.email : @project.task_email_id
     @content_type="text/html"
     @people=task.subscribed_user_names
     details=task.mail_content(user.id)
@@ -124,6 +125,7 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     task_notification_task_tasklist=task.task_list
     @project=task_notification_task_tasklist.project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>user.email, :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"#{@project.name} Task - #{task.name}",:content_type=>"text/html")
   end
   def task_reassigned(task,user)
@@ -131,6 +133,7 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     task_task_list_for_reassigned=task.task_list
     @project=task_task_list_for_reassigned.project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>"#{user.email}", :reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}",:subject=>"Task Reassigned - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   def task_completed(task,users)
@@ -138,6 +141,7 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     task_completed_task_tasklist=task.task_list
     @project=task_completed_task_tasklist.project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>@user.user.email, :subject=>"Task Completed - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   def task_moved_other_task_list(task,user_act)
@@ -145,6 +149,7 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     task_moved_other_task_list_task_tasklist=task.task_list
     @project=task_moved_other_task_list_task_tasklist.project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>@user.user.email, :subject=>"Task Moved To New Tasklist",:content_type=>"text/html")
     end
   def task_due(task,user)
@@ -152,6 +157,7 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     task_due_task_tasklist=task.task_list
     @project=task_due_task_tasklist.project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Task Due - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
   def late_task(task,user)
@@ -159,6 +165,7 @@ class ProjectMailer < ActionMailer::Base
     @task=task
     late_task_task_tasklist=task.task_list
     @project=late_task_task_tasklist.project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Task Late (1 Day Late) - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
 

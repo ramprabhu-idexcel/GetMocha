@@ -16,7 +16,8 @@ class Task < ActiveRecord::Base
 
   def unique_name
     task_list=self.task_list
-    task=task_list.tasks.find(:first,:conditions=>['tasks.name=?',self.name])
+    find_tasklist_tasks=task_list.tasks
+    task=find_tasklist_tasks.find(:first,:conditions=>['tasks.name=?',self.name])
     task ? errors.add(:name,"A task with that name already exists") : true
   end
   def create_activities(assigned_email,susbscribe)
@@ -173,7 +174,7 @@ class Task < ActiveRecord::Base
     activity=assigned_user
     #~ activity=Activity.assigned_project(self.id)
     fullname=activity.user if activity.present?
-    activity.present? ? [fullname.full_name,activity.user_id] : ['','']
+    activity.present? ? [fullname.full_name] : ['','']
   end
   def other_task_lists
     self.task_list.project.task_lists.select([:id,:name,:project_id])
@@ -237,5 +238,8 @@ class Task < ActiveRecord::Base
     else
       ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]
     end
+  end
+  def self.uncompleted_tasks_id
+    find(:all,:conditions=>['is_completed=?',false]).map(&:id)
   end
 end

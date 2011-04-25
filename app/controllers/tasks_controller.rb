@@ -51,8 +51,11 @@ class TasksController < ApplicationController
 				end
     else
       errors=[]
-      task.errors.each_full{|msg| errors<< msg }
-      render :update do |page|
+      #~ task.errors.each_full{|msg| errors<< msg }
+			 task.errors.entries.each do |err|
+				 errors << err[1]
+			 end
+		 render :update do |page|
         page.alert errors.join('\n')
       end
     end
