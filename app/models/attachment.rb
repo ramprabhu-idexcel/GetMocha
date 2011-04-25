@@ -7,9 +7,9 @@ class Attachment < ActiveRecord::Base
   belongs_to :attachable, :polymorphic => true
   #~ has_attachment :content_type => ['application/pdf', 'application/msword', 'text/plain']
   if Rails.env.development?
-    has_attachment :size => 1.megabyte..2.megabytes,:resize=>"500x500>",:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"70x70",:message=>"75x75"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+    has_attachment :size => 1.megabyte..2.megabytes,:resize=>"500x500>",:thumbnails => {:big => "461x461>", :small => "21x20>",:profile=>"70x70>",:message=>"75x75>"},:storage => :file_system, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   else
-    has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20",:profile=>"69x69",:message=>"75x75"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
+    has_attachment :size => 1.megabyte..2.megabytes,:thumbnails => {:big => "461x461>", :small => "21x20>",:profile=>"69x69>",:message=>"75x75>"},:storage => :s3, :path_prefix => 'public/attachments',  :processor => 'Rmagick'
   end
   named_scope :recent_attachments, :conditions=>['attachable_id IS NULL AND parent_id IS NULL']
 def self.delete_attachments(ids)
@@ -87,9 +87,9 @@ end
   def image_width
     case self.thumbnail
       when "small"
-        75
+        21
       when "message"
-        51
+        75
       when "profile"
         91
       when "big"
