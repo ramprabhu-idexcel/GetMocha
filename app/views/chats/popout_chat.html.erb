@@ -137,6 +137,8 @@ $.chat=0;
       },
       onComplete:function (event, files, index, xhr, handler) {
         $('#loader1').hide();
+				$('#chat-send').removeClass('upload_in_progress');
+
       },
       onProgress: function (event, files, index, xhr, handler) {
 							 var original=files[index].name;
@@ -144,6 +146,7 @@ $.chat=0;
         var c=original.substring(b)
         var d=original.split(c)[0]
         var total=parseInt(event.total/1024)+" KB";
+										 $('#chat-send').addClass('upload_in_progress');
         $("#upload_" + d).html(parseInt(event.loaded/1024)+' KB / '+total);
       }
     });
@@ -163,5 +166,11 @@ attachitem.pop(file);
 
 	
 	</script>
+		<style>
+	.upload_in_progress
+	{
+		cursor: progress;
+	}
+	</style>
 </body>
 </html>

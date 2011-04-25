@@ -67,7 +67,13 @@ $.chat =0;
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-			   return $('<div id="attachment1_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + files[index].name+ '</span></div>'+' <div class="file_upload_cancel">' +
+				var file1=d;
+				  if(d.length > 12)
+        {
+          var e=d.substring(original,10)
+          file1=e.concat(c)
+        }
+			   return $('<div id="attachment1_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +file1+'"> </span>' +'<span class="filename">' + files[index].name+ '</span></div>'+' <div class="file_upload_cancel">' +
             '<a class="ui-state-default ui-corner-all" >' +
             '<span class="ui-icon ui-icon-cancel">Remove</span>' +
             '</a></div>'+'</div>');
@@ -94,11 +100,17 @@ $.chat =0;
       onProgress: function (event, files, index, xhr, handler) {
 							 var original=files[index].name;
 							 $('.blue-33.add_comment').addClass('upload_in_progress');
-        var b=original.lastIndexOf('.')
-        var c=original.substring(b)
-        var d=original.split(c)[0]
+        var b=original.lastIndexOf('.');
+        var c=original.substring(b);
+        var d=original.split(c)[0];
+				var file1=d;
+				if(d.length > 12)
+        {
+          var e=d.substring(original,10);
+          file1=e.concat(c);
+        }
         var total=parseInt(event.total/1024)+" KB";
-        $("#upload_" + d).html(parseInt(event.loaded/1024)+' KB / '+total);
+        $("#upload_" + file1).html(parseInt(event.loaded/1024)+' KB / '+total);
       }
 });
 });

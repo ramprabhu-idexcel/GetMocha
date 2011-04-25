@@ -181,9 +181,16 @@
   
   
   $('#chat-send').live('click',function(){
+        if($(this).hasClass('upload_in_progress'))
+    {
+      return false;
+    }
+    else
+    {
     var chat=$('#chat-message').val();
     var project_id=get_project_id();
     send_chat();
+    }
   });
   
   $('#chat-message').live('keypress',function(event){
