@@ -122,7 +122,7 @@ class User < ActiveRecord::Base
     comments.flatten!
   end
   def starred_task_comments
-    activities.find(:all,:conditions=>['resource_type=? AND resource_id IN (?) AND is_starred=?',"Comment",all_task_comments,true])
+    activities.where('resource_type=? AND resource_id IN (?) AND is_starred=?',"Comment",all_task_comments,true)
   end
   def all_starred_comment_tasks
     task_ids=[]

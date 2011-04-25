@@ -89,9 +89,11 @@ $.chat =0;
       },
       onComplete:function (event, files, index, xhr, handler) {
         $('#loader1').hide();
+				$('.blue-33.add_comment').removeClass('upload_in_progress');
       },
       onProgress: function (event, files, index, xhr, handler) {
 							 var original=files[index].name;
+							 $('.blue-33.add_comment').addClass('upload_in_progress');
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
@@ -114,3 +116,9 @@ function delete_attachment(file)
 }
 
   </script>
+	<style>
+	.upload_in_progress
+	{
+		cursor: progress;
+	}
+	</style>
