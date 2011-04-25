@@ -181,7 +181,7 @@
   
   
   $('#chat-send').live('click',function(){
-        if($(this).hasClass('upload_in_progress'))
+        if($(this).css('cursor')=="progress")
     {
       return false;
     }

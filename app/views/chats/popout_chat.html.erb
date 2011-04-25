@@ -137,7 +137,7 @@ $.chat=0;
       },
       onComplete:function (event, files, index, xhr, handler) {
         $('#loader1').hide();
-				$('#chat-send').removeClass('upload_in_progress');
+			$('#chat-send').css('cursor','pointer');
 
       },
       onProgress: function (event, files, index, xhr, handler) {
@@ -146,7 +146,7 @@ $.chat=0;
         var c=original.substring(b)
         var d=original.split(c)[0]
         var total=parseInt(event.total/1024)+" KB";
-										 $('#chat-send').addClass('upload_in_progress');
+				$('#chat-send').css('cursor','progress');
         $("#upload_" + d).html(parseInt(event.loaded/1024)+' KB / '+total);
       }
     });
