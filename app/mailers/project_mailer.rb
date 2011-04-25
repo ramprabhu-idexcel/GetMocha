@@ -38,11 +38,11 @@ class ProjectMailer < ActionMailer::Base
     @existing_user=User.find_by_email(to_user)
     @message=message
     @project=message.project
-    custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
-    if custom_email && !custom_email.blank?
-      from=custom_email.email
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
+    if @custom_email && @custom_email.present?
+      from=@custom_email.email
     else
-     from="mochabot@getmocha.com"
+     from=@project.message_email_id
     end
     subscribed_list=message.activities.find(:all, :conditions=>['is_subscribed=?', true])
     @people=[]
@@ -76,11 +76,11 @@ class ProjectMailer < ActionMailer::Base
     @comment=comment
     message=@comment.commentable
     @project=message.project
-    custom_email=@project.message_email_id
-    if custom_email && !custom_email.blank?
-      from=custom_email.email
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
+    if @custom_email && @custom_email.present?
+      from=@custom_email.email
     else
-     from="mochabot@getmocha.com"
+     from=@project.message_email_id
     end
     @message=comment.commentable
     mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Message - Re: #{@message.subject}",:content_type=>"text/html")
