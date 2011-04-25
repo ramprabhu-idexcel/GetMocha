@@ -173,7 +173,7 @@ class Task < ActiveRecord::Base
     activity=assigned_user
     #~ activity=Activity.assigned_project(self.id)
     fullname=activity.user if activity.present?
-    activity.present? ? [fullname.full_name,activity.user_id] : ['','']
+    activity.present? ? [fullname.full_name] : ['','']
   end
   def other_task_lists
     self.task_list.project.task_lists.select([:id,:name,:project_id])
