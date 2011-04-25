@@ -11,7 +11,7 @@ class ProjectMailer < ActionMailer::Base
     @to_user = to_user
     @settings="#{APP_CONFIG[:site_url]}/settings"
     mail(:to=>"#{to_user.email}", :subject=>"#{project.name} has been completed")
-    @content_type="text/html"
+    #@content_type="text/html"
   end
   def project_activated(project, user, to_user)
     @user = user
@@ -25,7 +25,7 @@ class ProjectMailer < ActionMailer::Base
     @verify_email=invite.email
     @invite="#{APP_CONFIG[:site_url]}/projects/verify_email/#{invite.verification_code}"
      mail(:to=>"#{user.email}", :subject=>"Verify Your Email Address on Mocha",:content_type=>"text/html")
-    @content_type="text/html"
+    #@content_type="text/html"
   end
   def message_notification(user,to_user,message)
      @user = user
@@ -53,15 +53,15 @@ class ProjectMailer < ActionMailer::Base
     end
     @people=@people.join(',')
    end
-    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{user.first_name} posted a new message to #{to_user}",:content_type=>"text/html")
-    @content_type="text/html"
+    mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Message - #{@message.subject}",:content_type=>"text/html")
+   # @content_type="text/html"
   end
   def invite_people(user,invite)
     @user=user
     @message=invite.message
     @invite_link="#{APP_CONFIG[:site_url]}/projects/join_project/#{invite.invitation_code}"
     mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com",:content_type=>"text/html")
-    @content_type="text/html"
+   # @content_type="text/html"
   end
   def chat_invite(user,project,email,message)
     @user=user
@@ -69,22 +69,22 @@ class ProjectMailer < ActionMailer::Base
     @message="#{user.full_name} wants to chat with you on Mocha about #{project.name}." unless @message
     @invite_link="#{APP_CONFIG[:site_url]}/chat_invite/#{project.id}"
     mail(:to=>"#{email}", :subject=>"#{user.full_name}  wants to chat with you on Mocha",:content_type=>"text/html")
-    @content_type="text/html"
+    #~ @content_type="text/html"
   end
   def message_reply(user,comment)
     @user=user
     @comment=comment
     message=@comment.commentable
-    project=message.project
-    custom_email=project.message_email_id
+    @project=message.project
+    custom_email=@project.message_email_id
     if custom_email && !custom_email.blank?
       from=custom_email.email
     else
      from="mochabot@getmocha.com"
     end
     @message=comment.commentable
-    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>@message.subject,:content_type=>"text/html")
-    @content_type="multipart/html"
+    mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzm#{@message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Message - Re: #{@message.subject}",:content_type=>"text/html")
+    #~ @content_type="multipart/html"
   end
   def task_reply(user,comment)
     @user=user
@@ -101,7 +101,7 @@ class ProjectMailer < ActionMailer::Base
     end
     @task=comment.commentable
     mail(:from=>"#{from}",  :to=>@user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Task - Re: #{task.name}",:content_type=>"text/html")
-    @content_type="multipart/html"
+    #~ @content_type="multipart/html"
   end
  	def author
     	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
