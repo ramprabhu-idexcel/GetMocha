@@ -49,7 +49,7 @@ class ProjectMailer < ActionMailer::Base
     if subscribed_list
     subscribed_list.each do|activity|
       activity_name=activity.user
-      @people<<activity_name.full_name if activity.user && !activity.user.first_name.nil?
+      @people<<activity_name.full_name if activity.user && !activity_name.first_name.nil?
     end
     @people=@people.join(',')
    end
