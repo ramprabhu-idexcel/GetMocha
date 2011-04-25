@@ -1,4 +1,5 @@
 require "rubygems"
+require "tempfile"
 require 'RMagick'
 require 'aws/s3'
 class Attachment < ActiveRecord::Base
@@ -28,12 +29,14 @@ end
 end
   #~ named_scope :recent_attachments, :conditions=>['attachable_id IS NULL']
   #~ named_scope :user_attachments, :conditions=>['attachable_id = ?',self.user.id], :limit=> 1
-  #~ after_save :resize_image_for_thumbnail
+  after_save :resize_image_for_thumbnail
   def resize_image_for_thumbnail
     #~ p self.thumbnails
     if self.content_type.split('/')[0]=="image"
       if self.thumbnail.nil?
         self.thumbnails.each do |file|
+          puts "atttachment"
+          puts file.inspect
         fixed_width=200
           unless file.thumbnail=="big"
             width=file.parent.width
@@ -55,8 +58,21 @@ end
               img_part = img.crop(Magick::CenterGravity,size,size)
             end
             img_part=img_part.resize(file.image_width,file.image_width)
-            file_path="#{Rails.root}/public/#{file.public_filename}"
+            file_path="#{Rails.root}/public#{file.filename}"
             img_part.write(file_path)
+            temp_file=File.open(file_path)
+            hash={}
+            hash[:filename]=file.filename
+            hash[:type]=file.content_type
+            hash[:tempfile]=temp_file
+            hash[:size]=file.size
+            temp=ActionDispatch::Http::UploadedFile.new(hash)
+              d=Attachment.find_by_id(file.id)
+              if !d.nil?
+                d.uploaded_data = temp
+                d.save
+                File.delete(file_path)
+              end             
           end
         end
       end

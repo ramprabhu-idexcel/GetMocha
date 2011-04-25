@@ -336,7 +336,8 @@ module Technoweenie # :nodoc:
       # TODO: Allow it to work with Merb tempfiles too.
       def uploaded_data=(file_data)
         if file_data.respond_to?(:content_type)
-          return nil if file_data.size == 0
+          size= File.size(file_data.tempfile)
+          return nil if size == 0
           self.content_type = file_data.content_type
           self.filename     = file_data.original_filename if respond_to?(:filename)
         else
