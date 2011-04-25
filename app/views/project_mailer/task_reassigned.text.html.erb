@@ -19,7 +19,7 @@ Subscribed: <%=@task.subscribed_user_names.join(', ')%><br/>
 
  --<br/>
   <%if @project.is_member?(@user.id)%>
-Add tasks to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.task_email.id%> <%end%><br/>
+Add tasks to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.task_email_id%> <%end%><br/>
 Powered by GetMocha.com
 <%else%>
 Powered by GetMocha.com
