@@ -20,12 +20,12 @@ module TasksHelper
   end
   def link_to_completed_tasks
     count=current_user.completed_tasks(nil,nil).count
-    if(count>0)   
-       link_to form_content(count,"Completed"),"#completed_tasks",:class=>"completed",:id=>"completed_tasks"
-     else 
-      link_to form_content(count,"Completed"),"#completed_tasks",:class=>"completed",:style=>"display:none;",:id=>"completed_tasks"
-   end   
-  end
+    if(count>0)
+      link_to form_content(count,"Completed"),"#completed_tasks",:class=>"completed",:id=>"completed_tasks"
+     else
+     link_to form_content(count,"Completed"),"#completed_tasks",:class=>"completed",:style=>"display:none;",:id=>"completed_tasks"
+   end
+   end
   def project_tab(project)
       content_tag(:div,'',:class=>'project',:id=>"tpi#{project.id}") do
         content_tag(:span,'',:class=>'icon')+content_tag(:span,content_tag(:span,'',:class=>'icon')+project.name,:class=>'project-title')+task_list_project(project.task_lists)+content_tag(:div,'',:class=>'clear-fix')

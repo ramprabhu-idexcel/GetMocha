@@ -8,9 +8,8 @@ class SessionsController <  Devise::SessionsController
     session[:project_name]=nil
 		session[:project_selected]=nil
     resource = warden.authenticate!(:scope => resource_name)
-    
-		if resource
-		 invitations=Invitation.resource_email(resource)
+    if resource
+      invitations=Invitation.resource_email(resource)
       invitations.each do |invite|
         proj_user=ProjectUser.find_by_project_id_and_user_id(invite.project_id, resource.id)
         if !proj_user

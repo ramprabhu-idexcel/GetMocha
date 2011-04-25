@@ -32,12 +32,9 @@ class ActivitiesController < ApplicationController
   end
 
   def unsubscribe
-
     activity=Activity.find_by_user_id_and_resource_type_and_resource_id(params[:user_id],"Task",params[:task_id])
-    
     render :nothing=>true
-    
-  end
+    end
   private
   def find_activity
     params[:sort_by] ||="Date"

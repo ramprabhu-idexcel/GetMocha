@@ -27,15 +27,15 @@ class Task < ActiveRecord::Base
     assigned_email=self.user.email unless assigned_email.present?
     project.all_members.each do |user|
       activity=self.activities.create! :user=>user
-      activity.update_attributes(:is_subscribed=>susbscribe_emails.include?(user.email),:is_assigned=>(assigned_email==user.email)) 
-    end
+      activity.update_attributes(:is_subscribed=>susbscribe_emails.include?(user.email),:is_assigned=>(assigned_email==user.email))
+      end
      susbscribe_emails.each do |email|
       user=User.verify_email_id(email)
       user= User.create(:email=>email,:is_guest=>true, :password=>Encrypt.default_password) unless user
       activity=Activity.find_or_create_by_user_id_and_resource_type_and_resource_id(user.id,self.class.name,self.id)
       activity.update_attributes(:is_subscribed=>true)
       if !project.project_member?(user.id)
-        ProjectGuest.create(:guest_id=>user.id,:project_id=>self.task_list.project_id) 
+        ProjectGuest.create(:guest_id=>user.id,:project_id=>self.task_list.project_id)
         activity.update_attributes(:is_delete=>true)
       end
       self.send_task_notification(user)
@@ -73,8 +73,8 @@ class Task < ActiveRecord::Base
 				#~ a=Activity.find(:first, :conditions=>['user_id=? AND resource_type=? AND resource_id=?', u.id, "Task", self.id])
         #~ if u && u.id && !self.task_list.project.is_member?(u.id)
           #~ self.activities.create(:is_subscribed=>true,:is_delete=>true,:user_id=>u.id)
-          #~ ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id) 
-      #~ end
+          #~ ProjectGuest.create(:guest_id=>u.id,:project_id=>self.task_list.project_id)
+          #~ end
     #~ end
   #~ end
 	def self.task_due_time(time,current_user)
@@ -232,7 +232,7 @@ class Task < ActiveRecord::Base
   end
   def mail_content(user_id)
     project=self.task_list.project
-    if project.is_a_guest?(user_id) 
+    if project.is_a_guest?(user_id)
       ["Author: #{self.author} <br/>#{self.description} <br/>","Powered by GetMocha.com" ]
     else
       ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]

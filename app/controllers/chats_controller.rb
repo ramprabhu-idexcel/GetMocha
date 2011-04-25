@@ -94,12 +94,11 @@ class ChatsController < ApplicationController
       project_user=ProjectUser.find_by_project_id_and_user_id(project_id,user_id)
       project_user.update_attributes(:online_status=>false) if project_user
     end
-  end    
+  end
   def user_data(user)
     {:name=>user.full_name,:title=>(user.title ? user.title : ""),:email=>user.email,:id=>user.id,:image=>user.image_url}
   end
   def user_chat_data
     {:name=>current_user.chat_name,:color=>current_user.color,:id=>current_user.id}
   end
-  
-end
+  end

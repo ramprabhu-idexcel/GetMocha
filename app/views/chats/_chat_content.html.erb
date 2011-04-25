@@ -30,8 +30,8 @@
   <div class="r-panel">
     <div class="comment-contain">
       <div class="comment-input no-attach">
-        <label class="hidden">Message:</label> 
-        <textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
+        <label class="hidden">Message:</label>
+				<textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
         <div class="chat-right">
           <a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
           <input type="submit" value="Send" class="chat-send" id="chat-send"></input>
@@ -89,8 +89,7 @@
       </div>
     <%end%>
     <%=clear_fix%>
-        
-  </div>
+		</div>
 </div>
 <script>
 $.chat=0;
@@ -113,8 +112,7 @@ $.chat=0;
     }
 
   });
-  
-  inputHeight = $('.comment-contain')[0].offsetHeight;
+	inputHeight = $('.comment-contain')[0].offsetHeight;
   panelHeight = $('.r-panel-contain')[0].offsetHeight;
   $('.chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
 
