@@ -67,9 +67,7 @@
 	 <script type="text/javascript">
 	 var data="2";
 var attachitem=[];
-	 
-
-	   $(document).ready(function(){
+$(document).ready(function(){
 var data = [<% projects.each do |project| %> {text:'<%= project.name %>', id:'<%= project.id %>'},<% end %>{text:'',id:''}];
 	var data1 = [<% users.each do |muser| %>  {text:'<%= muser.email %>', id:'<%= muser.id %>'},<% end %>{text:'',id:''}];
 $("#txtInput1").autocomplete(data1, {

@@ -87,8 +87,8 @@ $('#user_signup').live('click',function(){
         success: function(data){
           if(typeof(data)=="object")
           {
-            window.location.href=data.url;            
-          }
+            window.location.href=data.url;
+						}
           else
           {
             alert(data);

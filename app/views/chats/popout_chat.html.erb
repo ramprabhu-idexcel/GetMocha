@@ -16,7 +16,7 @@
 	<div class="popout-contain">
 		<div class="comment-contain">
 			<div class="comment-input no-attach">
-        <label class="hidden">Message:</label> 
+        <label class="hidden">Message:</label>
         <textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
         <div class="chat-right">
           <a class="attach" href="javascript:show_drag_and_drop();" ondragover="javascript:show_drag_and_drop();" ></a>
@@ -93,8 +93,7 @@ $.chat=0;
     }
 
   });
-  
- // $('.chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
+  // $('.chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
 
 	function show_drag_and_drop()
 	{
@@ -155,8 +154,8 @@ attachitem.pop(file);
     type: 'get',
     success: function(file){
       document.getElementById('attachment_'+file).style.display="none";
-    }  
-  });
+    }
+    });
 }
 
 	
