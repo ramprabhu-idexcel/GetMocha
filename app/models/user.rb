@@ -126,7 +126,8 @@ class User < ActiveRecord::Base
   def all_starred_comment_tasks
     task_ids=[]
     starred_task_comments.each do |activity|
-     task_ids<< activity.resource.commentable_id
+     find_activity_resource_for_starredcomments=activity.resource
+     task_ids<<find_activity_resource_for_starredcomments.commentable_id
    end
    task_ids.uniq
   end
