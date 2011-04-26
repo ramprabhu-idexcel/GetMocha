@@ -18,7 +18,7 @@ class ChatsController < ApplicationController
       chat.save
 			attachment=Attachment.update_attachments(session[:attaches_id],chat) if !session[:attaches_id].nil?
       session[:attaches_id]=nil
-      send_to_clients ["chat", current_user.user_chat_data, chat.message,chat.project_id,chat.attach_urls,chat.id]
+      send_to_clients chat.send_chat_data
     end
     send_count_to_clients ["count", params[:chat][:project_id],1]
     render :nothing=>true
