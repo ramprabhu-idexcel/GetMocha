@@ -82,7 +82,6 @@ class TasksController < ApplicationController
 	def update
 		update_task_tasklist=@task.task_list
 		t_name=update_task_tasklist.tasks.find_by_name(params[:task][:name])
-		p params[:task][:name]
 		if t_name
 			if @task.name == t_name.name
 				 render :nothing=>true
