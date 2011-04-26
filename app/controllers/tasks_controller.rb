@@ -149,9 +149,8 @@ class TasksController < ApplicationController
     activity=Activity.find_by_id(params[:activity_id])
     task=activity.resource
     comment_ids=task.comments.map(&:id)
-    task_values=task.third_pane_data
 		is_subs=current_user.is_task_subscribed?(task.id)
-    render :json=>{:task=>task_values,:comments=>current_user.hash_activities_comments(comment_ids),:attach=>task.attach_urls,:subscribed_user=>task.display_subscribed_users,:is_subscribed=>is_subs==false ? "Subscribe" : "Unsubscibe"}.to_json
+    render :json=>{:comments=>current_user.hash_activities_comments(comment_ids),:is_subscribed=>is_subs==false ? "Subscribe" : "Unsubscibe"}.merge(task.task_comment_data).to_json
   end
   def assign_task
     assigned_user=@task.assigned_user
