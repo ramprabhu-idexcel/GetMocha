@@ -392,4 +392,10 @@ class User < ActiveRecord::Base
   def chat_name
     "#{first_name.capitalize} #{last_name.first.capitalize}."
   end
+  def user_data
+    {:name=>self.full_name,:title=>(title ? title : ""),:email=>email,:id=>id,:image=>self.image_url}
+  end
+  def user_chat_data
+    {:name=>self.chat_name,:color=>color,:id=>id}
+  end
 end

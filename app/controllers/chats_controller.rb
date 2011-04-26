@@ -18,7 +18,7 @@ class ChatsController < ApplicationController
       chat.save
 			attachment=Attachment.update_attachments(session[:attaches_id],chat) if !session[:attaches_id].nil?
       session[:attaches_id]=nil
-      send_to_clients ["chat", user_chat_data, chat.message,chat.project_id,chat.attach_urls,chat.id]
+      send_to_clients ["chat", current_user.user_chat_data, chat.message,chat.project_id,chat.attach_urls,chat.id]
     end
     send_count_to_clients ["count", params[:chat][:project_id],1]
     render :nothing=>true
@@ -32,7 +32,7 @@ class ChatsController < ApplicationController
       end
   def project_chat
     update_offline(params[:old],current_user.id) if params[:old].present?
-    send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
+    send_online_users ["online_users", (current_user.user_data).merge({:project_id=>params[:project_id]})]
     send_online_users ["offline_users", {:id=>current_user.id,:project_id=>params[:old]}] if params[:old].present?
         @users=User.members_in_project(params[:project_id])
 	  @user_emails=[]
@@ -42,7 +42,7 @@ class ChatsController < ApplicationController
     render :partial=>"chat_content",:locals=>{:project=>@project}
   end
   def popout_chat
-    send_online_users ["online_users", user_data(current_user).merge({:project_id=>params[:project_id]})]
+    send_online_users ["online_users", (current_user.user_data).merge({:project_id=>params[:project_id]})]
     render :layout=>false
   end
   def load_more
@@ -51,7 +51,7 @@ class ChatsController < ApplicationController
   end
   def subscribe
     #~ update_online(params["channels"]["0"],params["client_id"])
-    #~ send_to_clients ["online_users",user_chat_data, params[:chat][:message],params[:chat][:project_id]]
+    #~ send_to_clients ["online_users",current_user.user_chat_data, params[:chat][:message],params[:chat][:project_id]]
     render :text=>"ok"
   end
   def unsubscribe
@@ -87,7 +87,7 @@ class ChatsController < ApplicationController
   def update_online(project_id,user_id)
     if project_id && user_id
       project_user=ProjectUser.find_by_project_id_and_user_id(project_id,user_id)
-      project_user.update_attributes(:online_status=>true,:last_activity=>Time.now) if project_user
+      project_user.update_attributes(:online_status=>true) if project_user
     end
   end
   def update_offline(project_id,user_id)
@@ -96,10 +96,4 @@ class ChatsController < ApplicationController
       project_user.update_attributes(:online_status=>false) if project_user
     end
   end
-  def user_data(user)
-    {:name=>user.full_name,:title=>(user.title ? user.title : ""),:email=>user.email,:id=>user.id,:image=>user.image_url}
-  end
-  def user_chat_data
-    {:name=>current_user.chat_name,:color=>current_user.color,:id=>current_user.id}
-  end
-  end
+end
