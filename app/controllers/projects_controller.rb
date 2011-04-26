@@ -6,17 +6,11 @@ class ProjectsController < ApplicationController
 	  include AWS::S3
 	def new
 		@users=current_user.my_contacts
-	  #~ @user_emails=[]
-	  #~ @users.each do |f|
-			#~ @user_emails<<"#{f.email}"
-		#~ end
-		render :partial => 'new',:locals=>{:users=>@users}
-		end
-		def create		
-		#~ @project=Project.new(params[:project])
-		#~ @project.user_id=current_user.id
+	  render :partial => 'new',:locals=>{:users=>@users}
+	end
+	def create		
 		@project=current_user.projects.build(params[:project])
-			project=@project.valid?
+		project=@project.valid?
 		errors=[]
 		if @project.errors[:name][0]=="can't be blank"
 			errors<<"Please enter project name"
@@ -33,16 +27,12 @@ class ProjectsController < ApplicationController
 			@p_user=ProjectUser.new(:user_id => current_user.id, :project_id => @project.id, :status => true)
 			@p_user.save
 			invite_users=params[:invite][:email].split(',')
-			#~ invite_users=invite_users.split(',')
-			#~ p invite_users
 			invite_users.each do |invite_user|
 				invite_user=invite_user.strip
-			#~ @invite=Invitation.new(:email=>invite_user,:message=>params[:invite][:message])
-		  #~ @invite.project_id=@project.id
-			@invite=@project.invitations.build(:email=>invite_user,:message=>params[:invite][:message])
-			@invite.save
-			ProjectMailer.delay.invite_people(current_user,@invite)
-	   end
+			   @invite=@project.invitations.build(:email=>invite_user,:message=>params[:invite][:message])
+				 @invite.save
+				 ProjectMailer.delay.invite_people(current_user,@invite)
+	     end
 		@projects=current_user.user_active_projects
     if params[:task]
       render :partial=>"tasks/first_pane",:locals=>{:projects=>@projects}
@@ -67,7 +57,6 @@ class ProjectsController < ApplicationController
 		end
 	def settings_pane
 		session[:project_selected]=nil
-		#~ session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
 		@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
 		if @project.status.to_i!=3
@@ -80,7 +69,6 @@ class ProjectsController < ApplicationController
 		render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
   end
 	def remove_people
-		#~ @project=Project.find(params[:project_id])
 		@user=User.find(params[:user])
 		@proj_user=ProjectUser.find_by_project_id_and_status_and_user_id(@project.id,true,@user.id)
 		if @proj_user
@@ -93,7 +81,6 @@ class ProjectsController < ApplicationController
 		render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
 	end
 	def update_proj_settings
-		#~ @project=Project.find(params[:project_id])
 		if params[:checked]
 			checked=params[:checked]=="false" ? true : false
 			@project.update_attributes(:is_public=>checked)
@@ -135,7 +122,6 @@ class ProjectsController < ApplicationController
 			if params[:proj_status]
 				@projects=current_user.user_active_projects
 				@completed_projects=current_user.completed_projects
-		#~ @completed_projects=Project.find_all_by_status_and_user_id(3,current_user.id)
 				render :partial=>'project_list',:locals=>{:projects=>@projects,:completed_projects=>@completed_projects}
 			else
 			render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
