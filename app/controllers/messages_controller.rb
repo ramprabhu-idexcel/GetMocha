@@ -81,7 +81,10 @@ class MessagesController < ApplicationController
 				#	attachment.attachable=@message
 				#attachment.save
         activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
-				render :json=>@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url,:has_attachment=>@message.attachments.present?})
+        message_value=@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url,:has_attachment=>@message.attachments.present?})
+        client_ids=@message.project.team_members.map(&:id).collect{|i| "message#{i}"}
+        send_message_to_clients(['message',message_value],client_ids)
+				render :json=>message_value
 			else
 				render :update do |page|
 				page.alert errors.join("\n")
@@ -159,5 +162,7 @@ end
   session[:project_name]=nil
   #~ session[:project_selected]=nil
 	end	
-	
+	def send_message_to_clients(data,client_ids)
+    Socky.send(data.to_json,:to=>{:channels=>client_ids})
+  end
 end

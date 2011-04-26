@@ -2,7 +2,9 @@
 var Message=true;
 $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
 </script>
+<%= socky :channels=>"message#{current_user.id}"%>
 <%=javascript_include_tag "message"%>
+<span id="check<%=current_user.id%>" class= "hide_value" style="display:none;">user</span>
 <div class="l-panel-contain" id="projects_list">
 	<% if @projects %>
 		<%= render :partial=>'project_list',:locals=>{:projects=>@projects} %>

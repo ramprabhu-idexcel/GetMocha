@@ -1,6 +1,35 @@
 $.messages;
  (function($) {
     $('.task_header').hide();
+    
+    Socky.prototype.respond_to_message = function(msg) {
+      data = JSON.parse(msg);	
+      //for chat messages
+      var user_id=$('.hide_value').attr('id').split('check')[1];
+      if(data[0]=="message" && data[1].user_id!=parseInt(user_id))
+      {
+        var message='';
+        message+='<div id="msac'+data[1].activity_id+'" class="message messow mpi'+data[1].project_id+'">';
+        message+='<div class="left-icons"><div class="avatar-mini"></div><img width="20" height="21" src="'+data[1].user_image+'" class="avatar-mini-img" alt="avatar"/>';
+        message+='<a class="message-star secpan" style="display: none;" href="#">Star</a>';
+        if(data[1].has_attachment)
+        message+='<div class="has-attachment"></div>';
+        message+='</div>';
+        message+='<div class="info"><span class="name">'+data[1].name+'</span><span class="message-time">'+data[1].message_date+'</span></div> ';
+        message+='<div class="excerpt"><h4>'+data[1].subject+'</h4><p>'+data[1].message+'</p></div><div class="clear-fix"></div></div>';
+        header=$('a.date-title:contains("'+data[1].date_header+'")');
+        if(header.length>0)
+        {
+          $(message).insertAfter(header.parent());
+        }
+        else
+        {
+          date_header='<div class="date-bar"><a class="date-title" href="#">'+data[1].date_header+'</a></div>';
+          $(date_header+message).prependTo('#message_area')
+        }
+      }
+    }   
+    
      var restfulApp = Backbone.Controller.extend({
          restfulUrl: $.host,
          routes: {
