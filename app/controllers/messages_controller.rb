@@ -22,7 +22,7 @@ class MessagesController < ApplicationController
 		  @users=current_user.my_contacts
 		end
 		#@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
-	  @projects=Project.verify_project(current_user)
+	  @projects=current_user.user_active_projects
 		#~ @user_emails=[]
 		#~ @project_names=[]
 		#~ if @users
