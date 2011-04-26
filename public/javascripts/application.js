@@ -425,6 +425,7 @@ alert('afetrr bt');
       //hide the header and the sort drop down
       $('.sort-by-tooltip.message-sort-down').hide();
       $('.message_header').show(); 
+      $('#comment_area').show();
       
     });
   
