@@ -164,4 +164,7 @@ class Project < ActiveRecord::Base
     #~ chats.find(:all,:order => 'updated_at DESC', :limit => 20,:offset=>offset)
 		Chat.find_next_chats(self.id,offset)
   end
+  def delete_guest(user_id)
+    self.guest_object(user_id).delete if self.is_a_guest?(user_id)
+  end
 end
