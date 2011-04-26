@@ -46,8 +46,6 @@ class ChatsController < ApplicationController
     render :partial=>"chat_messages",:locals=>{:chats=>@chats}
   end
   def subscribe
-    #~ update_online(params["channels"]["0"],params["client_id"])
-    #~ send_to_clients ["online_users",current_user.user_chat_data, params[:chat][:message],params[:chat][:project_id]]
     render :text=>"ok"
   end
   def unsubscribe
