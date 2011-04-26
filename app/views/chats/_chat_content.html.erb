@@ -39,8 +39,9 @@
         <%=clear_fix%>
       </div>
       <div class="attach-contain" style="display:none;">
+			          <input type="hidden" id="attach_hidden" name="attach_id" value=""/>
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
-          <input type="hidden" id="attach_hidden" name="attach_id" value=""/>
+
           <fieldset id="attach" class="open">
             <div id="loader1" style="display:none;">
                <img src="/images/spinner.gif" />
@@ -147,7 +148,7 @@ $.chat=0;
           var e=d.substring(original,20)
           file1=e.concat(c)
         }
-				file1="sss"
+				
 				file1=file1.split('.').join('_')
 				file1=file1.split(' ').join('')
 			   return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + file1+ '</span></div>'+'<div class="file_upload_cancel">' +
@@ -167,6 +168,7 @@ $.chat=0;
           var e=d.substring(original,20)
           file1=e.concat(c)
         }
+				
         attachitem.push(a);
         document.getElementById('attach_hidden').value=attachitem;
 				file1=file1.split('.').join('_')

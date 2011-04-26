@@ -206,13 +206,14 @@
     var chat=$('#chat-message').val();
     var attachments=$.trim($('#attachment_files').text());
     var project_id=get_project_id();
+    var attached_files=document.getElementById('attach_hidden').value;
     if($.trim(chat)!="" ||  attachments!="")
     {
       $.ajax({
         url:'/chats',
         type: 'post',
         data:{'chat[message]':chat,
-              'chat[project_id]':project_id}
+              'chat[project_id]':project_id,'attach_id':attached_files}
       });
       $('#chat-message').val('');
       $('.attach-contain').hide();
