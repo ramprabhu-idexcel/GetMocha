@@ -10,27 +10,14 @@ class TasksController < ApplicationController
 		redirect_to "/"
 	end
 	def index
-		#~ session[:project_name][]=nil
 		@projects=current_user.user_active_projects
 	end
   def new
 		attachs=Attachment.delete_attachments(session[:attaches_id]) if !session[:attaches_id].nil?
 		session[:attaches_id]=nil
     @users=current_user.my_contacts
-		#~ @projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
 		@projects=Project.check_project_users(current_user)
-		#~ @user_emails=[]
-		#~ @t_list=[]
-		#~ @project_names=[]
-		#~ if @users
-		  #~ @users.each do |f|
-        #~ @user_emails<<"#{f.email}"
-		  #~ end
-		#~ end
-	  #~ @projects.each do |project|
-      #~ @project_names<<"#{project.name}"
-    #~ end
-	  render :partial=>'new',:locals=>{:m_users=>@users,:projects=>@projects}
+		render :partial=>'new',:locals=>{:m_users=>@users,:projects=>@projects}
 	end
 	def create
 		session[:attaches_id]=params[:attach_id]
@@ -51,8 +38,7 @@ class TasksController < ApplicationController
 				end
     else
       errors=[]
-      #~ task.errors.each_full{|msg| errors<< msg }
-			 task.errors.entries.each do |err|
+      task.errors.entries.each do |err|
 				 errors << err[1]
 			 end
 		 render :update do |page|
@@ -64,12 +50,7 @@ class TasksController < ApplicationController
 		@proj=Project.find_by_id(params[:id])
 		@tlist=@proj.task_lists
 		@users=@proj.users
-		 #~ if !@tlist.nil?
-	#~ @tlist.each do |tl|
-		 #~ @t_list<<"#{tl.name}" if !tl.name.nil?
-		 #~ end
 		render :json=>{:datas=>@tlist, :users=>@users}.to_json
-	#~ end
   end
 
   def show
@@ -130,7 +111,6 @@ class TasksController < ApplicationController
     render :json=>current_user.group_completed_tasks(params[:sort_by],params[:order]).to_json(options)
   end
 	def complete_task
-    #~ task=Task.find_by_id(params[:id])
     @task.update_attribute(:is_completed,!@task.is_completed)
 		@users=@task.subscribed_users
 		if @task.is_completed
