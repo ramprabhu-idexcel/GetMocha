@@ -8,8 +8,6 @@ class MessagesController < ApplicationController
 	before_filter :clear_session_project,:only=>['all_messages','starred_messages']
 	before_filter :session_project_name,:only=>['index']
  	def index
-		#~ session[:project_name]=nil
-		#~ session[:project_selected]=nil
 		@projects=current_user.user_active_projects
 	end
 	def new
@@ -21,26 +19,14 @@ class MessagesController < ApplicationController
 		else
 		  @users=current_user.my_contacts
 		end
-		#@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
-	  @projects=current_user.user_active_projects
-		#~ @user_emails=[]
-		#~ @project_names=[]
-		#~ if @users
-		  #~ @users.each do |f|
-			#~ @user_emails<<"#{f.email}"
-		  #~ end
-		#~ end
-	  #~ @projects.each do |project|
-		#~ @project_names<<"#{project.name}"
-	#~ end
-	  render :partial=>'new',:locals=>{:users=>@users,:projects=>@projects}
+		  @projects=current_user.user_active_projects
+		render :partial=>'new',:locals=>{:users=>@users,:projects=>@projects}
   end
 	def create
 	errors=[]
 	session[:attaches_id]=params[:attach_id]
 		if !params[:message][:recipient].blank?
-			#~ errors<<"Please enter To_email address"
-		  if !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
+			if !params[:message][:recipient].match(/([a-z0-9_.-]+)@([a-z0-9-]+)\.([a-z.]+)/i)
 			errors<<"Please enter valid email"
 		end
 		end
@@ -59,9 +45,7 @@ class MessagesController < ApplicationController
 		   end
 		else
 			@message=Message.new(:subject=> params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
-			#~ ~ @message=Message.verify_message_parameters
-			#~ @message=Message.verify_message_parameters(params[:message][:subject], :message=> params[:message][:message],:user_id=>current_user.id, :project_id=>@project.id)
-  		message=@message.valid?
+			message=@message.valid?
 			if @message.errors[:subject][0]=="can't be blank"
 				errors<<"Please enter subject"
 			elsif @message.errors[:message][0]=="can't be blank"
@@ -70,17 +54,13 @@ class MessagesController < ApplicationController
 			if message && errors.empty?
 					@message.save
 					@to_users=params[:message][:recipient].split(',')
-					#@project=Project.find_by_name(params[:message][:project])
-					#~ Message.send_message_to_team_members(@project,@message,@to_users)
-          @message.add_in_activity(@to_users)
+					@message.add_in_activity(@to_users)
 					Message.send_notification_to_team_members(current_user,@to_users,@message)
 					if !session[:attaches_id].nil?
 					attachment=Attachment.update_attachments(session[:attaches_id],@message)
 				 end
 				session[:attaches_id]=nil
-				#	attachment.attachable=@message
-				#attachment.save
-        activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
+				activity_id=current_user.activities.find_by_resource_type_and_resource_id("Message",@message.id).id
         message_value=@message.attributes.merge({:date_header=>@message.date_header,:message_date=>@message.message_date,:activity_id=>activity_id,:name=>current_user.name,:user_image=>current_user.image_url,:has_attachment=>@message.attachments.present?})
         client_ids=@message.project.team_members.map(&:id).collect{|i| "message#{i}"}
         send_message_to_clients(['message',message_value],client_ids)
@@ -99,13 +79,9 @@ end
     render :nothing=>true
   end
   def all_messages
-		#~ session[:project_name]=nil
-		#~ session[:project_selected]=nil
 		render :json=>current_user.all_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time,:has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def starred_messages
-		#~ session[:project_name]=nil
-		#~ session[:project_selected]=nil
 		render :json=>current_user.group_starred_messages(params[:sort_by],params[:order]).to_json(:except=>unwanted_columns,:methods=>[:created_time, :has_attachment],:include=>{:resource=>{:only=>resource_columns,:methods=>[:message_trucate],:include=>{:user=>{:methods=>[:name,:image_url]}}}})
   end
   def project_messages
@@ -160,8 +136,7 @@ end
   end
 	def session_project_name
   session[:project_name]=nil
-  #~ session[:project_selected]=nil
-	end	
+  end	
 	def send_message_to_clients(data,client_ids)
     Socky.send(data.to_json,:to=>{:channels=>client_ids})
   end
