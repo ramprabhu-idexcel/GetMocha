@@ -47,7 +47,7 @@ module ApplicationHelper
 			return "Help | Mocha"
 		elsif cn=="home" && an=="email"
 			return "Email | Mocha"
-		else
+		elsif cn=="errors"
 			return "Page Not Found - Mocha"
 		end
 	end
