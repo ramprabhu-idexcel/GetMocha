@@ -2,15 +2,10 @@ class TaskListsController < ApplicationController
 	layout "application", :except=>['new','settings']
 	def index
 		session[:project_name][]=nil
-		#~ session[:project_selected]=nil
 		@projects=current_user.user_active_projects
 	end
 	def new
 		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=? AND projects.status!=?',current_user.id,ProjectStatus::COMPLETED],:include=>:project_users)
-		#~ @project_names=[]
-		#~ @projects.each do |project|
-		#~ @project_names<<"#{project.name}"
-		#~ end
 		render :partial => 'new',:locals=>{:projects=>@projects}
 	end
 	def create
