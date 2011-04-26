@@ -937,7 +937,7 @@ if(is_open=="0")
 			{
 			if($('#message_area').children()[i].className.search('open')!=-1)
 			{
-				if(sm==0)
+				if(sm!=0)
 				{
 				smlink=$('#message_area').children()[i].className;
 				smid=$('#message_area').children()[i].id;
@@ -1338,6 +1338,7 @@ if(is_open=="0")
 					$('.task_header').show();
 			$('#comment_area').show();
 					var a=document.getElementById("tk_"+task_id).className;
+					if(a.search('open')==-1)
 					document.getElementById("tk_"+task_id).className=a+" open";
 					}
 					else
@@ -1350,7 +1351,7 @@ if(is_open=="0")
 					var a=document.getElementById("tk_"+task_id).className;
 					if(comment_area=="none")
 					{
-					
+					if(a.search('open')==-1)
 					document.getElementById("tk_"+task_id).className=a+" open";
 					}
 						$('#comment_area').show();
@@ -1359,7 +1360,8 @@ if(is_open=="0")
 					stop="true";
 				}
 			}
-			
+		
+	
 		}
 		
 		function tasks_navigation_left()
