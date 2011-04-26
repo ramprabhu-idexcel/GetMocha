@@ -130,7 +130,7 @@ $.chat=0;
       $('.attach').hide();
     }
 	}
-var attachitem=[];
+	var attachitem=[];
 		$(function () {
     $('#form4').fileUploadUI({
     uploadTable: $('#files'),
@@ -141,13 +141,7 @@ var attachitem=[];
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-				var file1=original
-					if(d.length > 20)
-        {
-          var e=d.substring(original,20)
-          file1=e.concat(c)
-        }
-			   return $('<div id="attachment_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + file1 + '</span></div>'+'<div class="file_upload_cancel">' +
+			   return $('<div id="attachment_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + files[index].name+ '</span></div>'+'<div class="file_upload_cancel">' +
             '<a class="ui-state-default ui-corner-all" >' +
             '<span class="ui-icon ui-icon-cancel">Remove</span>' +
             '</a></div>'+'</div>');
@@ -158,16 +152,15 @@ var attachitem=[];
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-var file1=original
-					if(d.length > 20)
+        if(d.length > 12)
         {
-          var e=d.substring(original,20)
-          file1=e.concat(c)
+          var e=d.substring(original,10)
+          var file1=e.concat(c)
         }
         attachitem.push(a);
         document.getElementById('attach_hidden').value=attachitem;
 				
-        return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt">'+file.size+'KB / '+ file.size +'KB  </span>' +'<span class="filename">' + file1+ '</span></div>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>'+'</div>');
+        return $('<div id="attachment_' + a + '" class="attachment"><div class="left">'+'<span class="upload-amt">'+file.size+'KB / '+ file.size +'KB  </span>' +'<span class="filename">' + file.file+ '</span></div>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>'+'</div>');
       },
       onComplete:function (event, files, index, xhr, handler) {
         $('#loader1').hide();
@@ -178,15 +171,9 @@ var file1=original
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-				var file1=original
-					if(d.length > 20)
-        {
-          var e=d.substring(original,20)
-          file1=e.concat(c)
-        }
         var total=parseInt(event.total/1024)+" KB";
         		$('#chat-send').css('cursor','progress');
-        $("#upload_" + file1).html(parseInt(event.loaded/1024)+' KB / '+total);
+        $("#upload_" + d).html(parseInt(event.loaded/1024)+' KB / '+total);
       }
 });
 });
@@ -204,6 +191,4 @@ attachitem.pop(file);
 }
 	
 	</script>
-
-
 
