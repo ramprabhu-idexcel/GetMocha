@@ -12,6 +12,8 @@ class ChatsController < ApplicationController
 
   end
   def create
+    p params
+    session[:attaches_id]=params[:attach_id]
     chat=current_user.chats.build(params[:chat])
     if chat.valid?
       chat.save
