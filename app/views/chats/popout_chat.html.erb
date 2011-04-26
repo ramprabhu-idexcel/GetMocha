@@ -120,6 +120,8 @@ $.chat=0;
           var e=d.substring(original,20)
           file1=e.concat(c)
         }
+        				file1=file1.split('.').join('_')
+				file1=file1.split(' ').join('')
 			   return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + file1+ '</span></div>'+'<div class="file_upload_cancel">' +
             '<a class="ui-state-default ui-corner-all" >' +
             '<span class="ui-icon ui-icon-cancel">Remove</span>' +
@@ -139,7 +141,8 @@ $.chat=0;
         }
 				attachitem.push(a);
         document.getElementById('attach_hidden').value=attachitem;
-				
+								file1=file1.split('.').join('_')
+				file1=file1.split(' ').join('')
         return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt">'+file.size+'KB / '+ file.size +'KB  </span>' +'<span class="filename">' + file1+ '</span></div>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>'+'</div>');
       },
       onComplete:function (event, files, index, xhr, handler) {
@@ -158,6 +161,8 @@ $.chat=0;
           var e=d.substring(original,20)
           file1=e.concat(c)
         }
+        				file1=file1.split('.').join('_')
+				file1=file1.split(' ').join('')
         var total=parseInt(event.total/1024)+" KB";
 				$('#chat-send').css('cursor','progress');
         $("#upload_" + file1).html(parseInt(event.loaded/1024)+' KB / '+total);
