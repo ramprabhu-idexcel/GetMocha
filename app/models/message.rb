@@ -143,5 +143,11 @@ def comment_notify
 	def self.verify_message_parameters(params)
 	
 		
-		end
+  end
+  def subscribe_data(user)
+    task_values=self.display_subscribed_users
+    is_subs=user.is_message_subscribed?(self.id)
+    all_subs=self.all_subscribed
+    {:task=>task_values,:is_subscribed=>is_subs,:all_subscribed=>all_subs}
+  end
 end

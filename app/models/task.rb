@@ -242,4 +242,8 @@ class Task < ActiveRecord::Base
   def self.uncompleted_tasks_id
     find(:all,:conditions=>['is_completed=?',false]).map(&:id)
   end
+  def subscribe_data(user)
+    task_values=self.third_pane_data
+    {:task=>task_values,:subscribe=>user.is_task_subscribed?(self.id) ?  "Unsubscribe" : "Subscribe"}
+  end
 end

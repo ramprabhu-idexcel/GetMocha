@@ -16,19 +16,9 @@ class ActivitiesController < ApplicationController
   def subscribe
     subscribed=!@activity.is_subscribed
     @activity.update_attribute(:is_subscribed,subscribed)
-    p @activity
-    if @activity.resource_type=="Task"
-      task=@activity.resource
-      task_values=task.third_pane_data
-      render :json=>{:task=>task_values,:subscribe=>subscribed==false ? "Subscribe" : "Unsubscribe"}
-    else
-      task=@activity.resource
-      task_values=task.display_subscribed_users
-      is_subs=current_user.is_message_subscribed?(task.id)
-      all_subs=task.all_subscribed
-      render :json=>{:task=>task_values,:is_subscribed=>is_subs,:all_subscribed=>all_subs}
-      #~ render :nothing
-    end
+    puts @activity.inspect
+    resource=@activity.resource
+    render :json=>resource.subscribe_data(current_user)
   end
 
   def unsubscribe

@@ -194,8 +194,8 @@ class User < ActiveRecord::Base
     activity.is_subscribed if activity
   end
   def is_task_subscribed?(task_id)
-    activity=task_activity(task_id)
-    activity.is_subscribed if activity
+    activity=Activity.find_task_activity(task_id,self.id)
+    activity.is_subscribed
   end
   def hash_activities_comments(type_ids)
     type_ids=[type_ids] unless type_ids.is_a?(Array)
