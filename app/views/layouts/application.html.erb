@@ -864,6 +864,7 @@ if(is_open=="0")
 		else
 		{
 		messages_second_panel_navigation(key);
+		
 		}
 		}
 		
@@ -929,7 +930,28 @@ if(is_open=="0")
 			  already_exists="false"
 				exit="false";
 			var length=$('#message_area').children('').length;
+			var sm=0;
+			var smlink;
+			var smid;
+			for(i=0;i<length;i++)
+			{
+			if($('#message_area').children()[i].className.search('open')!=-1)
+			{
+				if(sm==0)
+				{
+				smlink=$('#message_area').children()[i].className;
+				smid=$('#message_area').children()[i].id;
+				}
+				sm=sm+1;	
+			}
+			}
 			
+			if(sm>1)
+			{
+				$('#message_area').children().removeClass('open');
+				document.getElementById(''+smid).className=smlink;
+				
+			}
 			for(i=0; i<length; i++)
 			{
 			
@@ -952,7 +974,7 @@ if(is_open=="0")
 						exists=exists.split('msac')[1];
 						var a_firstclass=$('#message_area').children('')[i+1].className;
 						var b_firstclass=$('#message_area').children('')[i].className;
-						
+
 						loc=window.location.href.split(exists)[0];
 						window.location=loc+already_exists;
 						loc="";
@@ -1030,6 +1052,7 @@ if(is_open=="0")
 				}
 			}
 		}
+
 		}
 		
 		//for displaying the message header
