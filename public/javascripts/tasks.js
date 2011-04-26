@@ -516,7 +516,12 @@ return false;
       $.ajax({
         url: pageUrl,
         success: function(data){
+          if(data=="The page you were looking doesn't exist")
+document.getElementById('comment_area').innerHTML=data
+else
+{
           load_third_pane(data);
+}
         }
       });
     }

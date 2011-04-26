@@ -150,7 +150,18 @@ class TasksController < ApplicationController
     task=activity.resource
     comment_ids=task.comments.map(&:id)
 		is_subs=current_user.is_task_subscribed?(task.id)
+					if activity.resource_type=="Comment"
+				valid_member=true
+			else
+			check_activity_resource=activity.resource	
+      @project=task.task_list.project
+      valid_member=@project.is_member?(current_user.id)
+		end
+		 unless valid_member
+      render :text=>"The page you were looking doesn't exist" 
+			else
     render :json=>{:comments=>current_user.hash_activities_comments(comment_ids),:is_subscribed=>is_subs==false ? "Subscribe" : "Unsubscibe"}.merge(task.task_comment_data).to_json
+		end
   end
   def assign_task
     assigned_user=@task.assigned_user
