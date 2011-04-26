@@ -137,8 +137,7 @@ $.chat=0;
           var e=d.substring(original,20)
           file1=e.concat(c)
         }
-        
-        attachitem.push(a);
+				attachitem.push(a);
         document.getElementById('attach_hidden').value=attachitem;
 				
         return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt">'+file.size+'KB / '+ file.size +'KB  </span>' +'<span class="filename">' + file1+ '</span></div>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>'+'</div>');
