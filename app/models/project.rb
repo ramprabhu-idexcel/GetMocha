@@ -158,7 +158,7 @@ class Project < ActiveRecord::Base
 		find(:all, :conditions=>['status=?',3])
 	end	
 	def self.check_project_users(current_user)
-		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=? AND projects.status!=?',current_user.id,ProjectStatus::COMPLETED],:include=>:project_users)
 	end	
   def next_chats(offset)
     #~ chats.find(:all,:order => 'updated_at DESC', :limit => 20,:offset=>offset)
