@@ -112,9 +112,7 @@ class Project < ActiveRecord::Base
     project=@invite.project
 		if @user && @user.is_guest == false
       project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
-			#~ @project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
-			#~ @project_user.save
-      @user.guest_update_message(@invite.project_id)
+			@user.guest_update_message(@invite.project_id)
 			@invite.update_attributes(:invitation_code=>nil, :status=>true)
 			redirect_to "/"
 		else
@@ -161,8 +159,7 @@ class Project < ActiveRecord::Base
 		find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=? AND projects.status!=?',current_user.id,ProjectStatus::COMPLETED],:include=>:project_users)
 	end	
   def next_chats(offset)
-    #~ chats.find(:all,:order => 'updated_at DESC', :limit => 20,:offset=>offset)
-		Chat.find_next_chats(self.id,offset)
+    Chat.find_next_chats(self.id,offset)
   end
   def delete_guest(user_id)
     self.guest_object(user_id).delete if self.is_a_guest?(user_id)
