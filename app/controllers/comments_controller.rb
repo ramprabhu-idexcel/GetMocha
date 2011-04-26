@@ -8,22 +8,13 @@ class CommentsController < ApplicationController
     comment.commentable=activity.resource
     if comment.valid?
       comment.save
-      if !session[:attaches_id].nil?
-					  attachment=Attachment.update_attachments(session[:attaches_id],comment)
-					 end
-      session[:attaches_id]=nil
+      attachment=Attachment.update_attachments(session[:attaches_id],comment) unless session[:attaches_id].nil?
 		  attachs=Attachment.recent_attachments
-      if !attachs.nil?
-		    attachs.each do |attach|
-		      Attachment.delete(attach)
-        end
-      end
+      attachs.each do |attach|
+        Attachment.delete(attach)
+      end unless attachs.nil?
  	    session[:attaches_id]=nil
-      if comment.attachments.blank?
-        render :json=>{:comment=>current_user.hash_activities_comments(comment.id),:attach=>false}.to_json
-      else
-        render :json=>{:comment=>current_user.hash_activities_comments(comment.id),:attach=>true}.to_json
-      end
+      render :json=>{:comment=>current_user.hash_activities_comments(comment.id),:attach=>!comment.attachments.blank?}.to_json
     end
   end
 end
