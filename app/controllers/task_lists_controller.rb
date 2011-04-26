@@ -6,7 +6,7 @@ class TaskListsController < ApplicationController
 		@projects=current_user.user_active_projects
 	end
 	def new
-		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=?',current_user.id],:include=>:project_users)
+		@projects=Project.find(:all,:select=>{[:name],[:id]},:conditions=>['project_users.user_id=? AND projects.status!=?',current_user.id,ProjectStatus::COMPLETED],:include=>:project_users)
 		#~ @project_names=[]
 		#~ @projects.each do |project|
 		#~ @project_names<<"#{project.name}"
