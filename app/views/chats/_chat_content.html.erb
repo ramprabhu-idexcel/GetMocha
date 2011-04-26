@@ -142,9 +142,9 @@ $.chat=0;
         var c=original.substring(b)
         var d=original.split(c)[0]
                 var file1=original
-        if(d.length > 12)
+        if(d.length > 20)
         {
-          var e=d.substring(original,10)
+          var e=d.substring(original,20)
           file1=e.concat(c)
         }
 			   return $('<div id="attachment_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + file1+ '</span></div>'+'<div class="file_upload_cancel">' +
@@ -159,9 +159,9 @@ $.chat=0;
         var c=original.substring(b)
         var d=original.split(c)[0]
         var file1=original
-        if(d.length > 12)
+        if(d.length > 20)
         {
-          var e=d.substring(original,10)
+          var e=d.substring(original,20)
           file1=e.concat(c)
         }
         attachitem.push(a);
