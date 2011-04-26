@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Chats | Mocha</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Chats | Mocha</title>
     <meta name="description" content="A description of the page must go here." />
     <meta name="keywords" content="keyword1,keyword2,keyword3" />
     <meta name="robots" content="INDEX,FOLLOW" />
@@ -13,9 +13,9 @@
     <%= socky :channels=>[@project.id],:client_id =>current_user.id%>
 </head>
 <body class="popout-chat">
-	<div class="popout-contain">
-		<div class="comment-contain">
-			<div class="comment-input no-attach">
+<div class="popout-contain">
+<div class="comment-contain">
+<div class="comment-input no-attach">
         <label class="hidden">Message:</label>
         <textarea cols="" rows="" onfocus="this.select()" id="chat-message" class="textarea comment-message" name="message"></textarea>
         <div class="chat-right">
@@ -26,11 +26,11 @@
       </div>
       </div>
       <div class="attach-contain" style="display:none;">
-				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
+<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form4"} do |f3| %>
           <input type="hidden" id="attach_hidden" name="attach_id" value=""/>
           <fieldset id="attach" class="open">
             <div id="loader1" style="display:none;"><img src="/images/spinner.gif" /> </div>
-            <div  id="attach_upload" class="attachment-upload" style="min-height:62px;">
+            <div id="attach_upload" class="attachment-upload" style="min-height:62px;">
               <div class="drag-drop">Drag and drop files here</div>
               <div id="files"></div>
               <div id="attachment_files"> </div>
@@ -70,11 +70,11 @@
         <%end%>
         <%=clear_fix%>
       </div>
-	</div>
+</div>
 </div>
 <script>
 $.chat=0;
-  $('.chat-container').scroll(function(){	
+  $('.chat-container').scroll(function(){
     var page_number=parseInt($('#page_number').val());
     var project_id=$('#chat_project_id').val();
     if($('.chat-container').scrollTop() > ($('.chat-container').position().top + $('.chat-container').height()) && page_number!=0)
@@ -95,34 +95,26 @@ $.chat=0;
   });
   // $('.chat-container')[0].style.height = (panelHeight - inputHeight - 30) +"px";
 
-	function show_drag_and_drop()
-	{
-	
-	if ($('.attach-contain').css('display')=="block")
-		$('.attach-contain').css('display','none');
-	else
-		$('.attach-contain').css('display','block');
-	}
-	var attachitem=[];
+function show_drag_and_drop()
+{
+
+if ($('.attach-contain').css('display')=="block")
+$('.attach-contain').css('display','none');
+else
+$('.attach-contain').css('display','block');
+}
+var attachitem=[];
   $(function () {
     $('#form4').fileUploadUI({
       uploadTable: $('#files'),
       downloadTable: $('#attachment_files'),
       buildUploadRow: function (files, index) {
-				$.chat=$.chat+1;
-				 var original=files[index].name;
+$.chat=$.chat+1;
+var original=files[index].name;
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-				var file1=original
-				if(d.length > 20)
-        {
-          var e=d.substring(original,20)
-          file1=e.concat(c)
-        }
-        				file1=file1.split('.').join('_')
-				file1=file1.split(' ').join('')
-			   return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + file1+ '</span></div>'+'<div class="file_upload_cancel">' +
+return $('<div id="attachment_' + $.chat + '" class="attachment"><div class="left">'+'<span class="upload-amt" id="upload_' +d+'"> </span>' +'<span class="filename">' + files[index].name+ '</span></div>'+'<div class="file_upload_cancel">' +
             '<a class="ui-state-default ui-corner-all" >' +
             '<span class="ui-icon ui-icon-cancel">Remove</span>' +
             '</a></div>'+'</div>');
@@ -133,39 +125,29 @@ $.chat=0;
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-				var file1=original
-				if(d.length > 20)
+        if(d.length > 12)
         {
-          var e=d.substring(original,20)
-          file1=e.concat(c)
+          var e=d.substring(original,10)
+          var file1=e.concat(c)
         }
-				attachitem.push(a);
+        attachitem.push(a);
         document.getElementById('attach_hidden').value=attachitem;
-								file1=file1.split('.').join('_')
-				file1=file1.split(' ').join('')
-        return $('<div id="attachment_' + file1 + '" class="attachment"><div class="left">'+'<span class="upload-amt">'+file.size+'KB / '+ file.size +'KB  </span>' +'<span class="filename">' + file1+ '</span></div>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>'+'</div>');
+
+        return $('<div id="attachment_' + a + '" class="attachment"><div class="left">'+'<span class="upload-amt">'+file.size+'KB / '+ file.size +'KB </span>' +'<span class="filename">' + file.file+ '</span></div>'+'<a href="javascript:delete_attachment('+a+');"> Remove </a>'+'</div>');
       },
       onComplete:function (event, files, index, xhr, handler) {
         $('#loader1').hide();
-			$('#chat-send').css('cursor','pointer');
+$('#chat-send').css('cursor','pointer');
 
       },
       onProgress: function (event, files, index, xhr, handler) {
-							 var original=files[index].name;
+var original=files[index].name;
         var b=original.lastIndexOf('.')
         var c=original.substring(b)
         var d=original.split(c)[0]
-				var file1=original
-				if(d.length > 20)
-        {
-          var e=d.substring(original,20)
-          file1=e.concat(c)
-        }
-        				file1=file1.split('.').join('_')
-				file1=file1.split(' ').join('')
         var total=parseInt(event.total/1024)+" KB";
-				$('#chat-send').css('cursor','progress');
-        $("#upload_" + file1).html(parseInt(event.loaded/1024)+' KB / '+total);
+$('#chat-send').css('cursor','progress');
+        $("#upload_" + d).html(parseInt(event.loaded/1024)+' KB / '+total);
       }
     });
   });
@@ -182,13 +164,13 @@ attachitem.pop(file);
     });
 }
 
-	
-	</script>
-		<style>
-	.upload_in_progress
-	{
-		cursor: progress;
-	}
-	</style>
+
+</script>
+<style>
+.upload_in_progress
+{
+cursor: progress;
+}
+</style>
 </body>
 </html>
