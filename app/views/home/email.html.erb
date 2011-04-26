@@ -70,21 +70,21 @@
 	<div class="grid-630">
 		<h1>Contact Mocha</h1>
 		<hr class="light-hr" />
-		<form>
-
+			<% form_for :contact, :url=>{:controller=>"home", :action=>"contact_via_email"}, :html=>{:id=>"form_con"} do |f3| %>
+        <span id='success'></span>
 			<label for="contact-name">Your Name</label>
 			<label for="contact-email" class="last">Email Address</label>
 			<input id="contact-name" type="text" class="textfield" value="" />
 			<input id="contact-email" type="text" class="textfield last" value="" />
 			<label for="contact-subjet">Subject</label><br />
-			<input id="contact-name" type="text" class="textfield" value="" /><br />
+			<input id="contact-subjet" type="text" class="textfield" value="" /><br />
 			
 			<label for="contact-message" class="last">Message</label><br />
 
 			<textarea id="contact-message" class="textfield last" rows="" cols="" style="width:552px; height: 180px;"></textarea>
-			<input type="submit" value="Submit" class="btn signup-btn">
+			<input type="submit" value="Submit" class="btn signup-btn" id="submit_con">
 			<p style="margin-top: 10px;">Bibendum non venenatis nisl tempor.</p>
-		</form>
+		<%end%>
 	</div>
 	<div class="clear-fix"></div>
 </div>
@@ -98,5 +98,35 @@
 </div>
 
 </body>
+<script>
+//$('#submit_con').live('click',function(){
+//var errors=[];
+ //var emails=document.getElementById('contact-email').value
+// var messages=document.getElementById('contact-message').value
+//if(emails=="")
+//alert("Please Enter your E-mail address");
+//else if(emails.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)==null)
+//alert("Please enter valid email address");
+//else if(messages=="")
+//alert("Please enter message");
+//else
+//{
+//$.ajax({
+   //   url:'/home/contact_via_email',
+      //type: 'get',
+			//data :{"name" : $('#contact-name').val(), "email" : $('#contact-email').val(), "subject" : $('#contact-subjet').val(), "message" : $('#contact-message').val()},
+			// success: function(data){
+			// alert("Message send successfully");
+			// document.getElementById('contact-name').value="";
+			// document.getElementById('contact-email').value="";
+			// document.getElementById('contact-subjet').value="";
+			// document.getElementById('contact-message').value="";
+			// }
+    //});
+		//return false;
+//}
+//return false;
+//});
+</script>
 </html>
 

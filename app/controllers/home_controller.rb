@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 layout "before_login"
-  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy','message_create_via_email','check_from_address_email']
+  skip_before_filter :http_authenticate,:only=>['check_email_reply_and_save','privacy','message_create_via_email','check_from_address_email','contact_via_email']
 	before_filter :check_from_address_email,:only=>['message_create_via_email']
 	protect_from_forgery  :except=>:check_email_reply_and_save
 def index
@@ -386,6 +386,11 @@ end
 end
 end
 
+#~ def contact_via_email
+  #~ @message=params
+  #~ ProjectMailer.delay.contact_message_send(@message)
+  #~ render :nothing=>true
+#~ end
 
  #~ def check_from_address_email
   #~ logger.info "********************************"

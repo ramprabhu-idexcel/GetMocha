@@ -114,6 +114,7 @@ end
   match 'help' =>"home#help"
   match 'email' =>"home#email"
   match '/home/images'=>"home#images"
+  #~ match '/home/contact_via_email'=>"home#contact_via_email"
   match '*a', :to => 'errors#routing'
   # The priority is based upon order of creation:
   # first created -> highest priority.

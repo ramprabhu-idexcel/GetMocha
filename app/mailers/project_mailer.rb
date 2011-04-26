@@ -168,5 +168,8 @@ class ProjectMailer < ActionMailer::Base
     @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Task"])
     mail(:to=>user.email,:reply_to=>"ctzt#{@task.id}@#{APP_CONFIG[:reply_email]}", :subject=>"Task Late (1 Day Late) - #{@project.name} Re: #{@task.name}",:content_type=>"text/html")
   end
-
+  #~ def contact_message_send(messages)
+    #~ @message=messages
+    #~ mail(:to=>"kiruthiru007@gmail.com",:reply_to=>"#{@message[:email]}", :subject=>"Mocha Contact Details",:content_type=>"text/html")
+    #~ end
 end
