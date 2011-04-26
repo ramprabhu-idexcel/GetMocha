@@ -246,4 +246,7 @@ class Task < ActiveRecord::Base
     task_values=self.third_pane_data
     {:task=>task_values,:subscribe=>user.is_task_subscribed?(self.id) ?  "Unsubscribe" : "Subscribe"}
   end
+  def task_comment_data
+    {:task=>self.third_pane_data,:attach=>self.attach_urls,:subscribed_user=>self.display_subscribed_users}
+  end
 end
