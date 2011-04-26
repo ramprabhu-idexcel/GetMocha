@@ -67,11 +67,16 @@ class ProjectsController < ApplicationController
 		end
 	def settings_pane
 		session[:project_selected]=nil
-		session[:project_selected]=params[:id]
+		#~ session[:project_selected]=params[:id]
 		@project=Project.find(params[:id])
 		@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
-		session[:project_name]=@project.name
-		session[:project_selected]=@project.id
+		if @project.status.to_i!=3
+			session[:project_name]=@project.name
+			session[:project_selected]=@project.id
+		else
+			session[:project_name]=nil
+			session[:project_selected]=nil
+		end
 		render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
   end
 	def remove_people
