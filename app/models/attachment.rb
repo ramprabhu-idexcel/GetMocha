@@ -99,4 +99,7 @@ end
   def find_thumbnail(name)
     image=Attachment.find_by_parent_id_and_thumbnail(id,name)
   end
+  def display_data
+    {:file=>filename, :id=>id,:size=>size/1024}
+  end
 end
