@@ -175,24 +175,21 @@ class ProjectsController < ApplicationController
     render :nothing=>true
   end
   def join_project
-		@invite=Invitation.find_by_invitation_code(params[:invitation_code])
-		if @invite
-			@user=User.find_by_email(@invite.email)
-			project=@invite.project
-			if @user && @user.is_guest == false
-				project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
-				@project_user=ProjectUser.new(:project_id=>@invite.project_id, :user_id=>@user.id, :status=>true)
-				@project_user.save
-				@user.guest_update_message(@invite.project_id)
-				@invite.update_attributes(:invitation_code=>nil, :status=>true)
+		invite=Invitation.find_by_invitation_code(params[:invitation_code])
+		if invite
+			user=User.find_by_email(invite.email)
+			project=invite.project
+      project.delete_guest(user.id) if user
+			if user && user.is_guest == false
+				project_user=user.project_users.build(:project_id=>invite.project_id, :status=>true)
+				project_user.save
+				user.guest_update_message(invite.project_id)
+				invite.update_attributes(:invitation_code=>nil, :status=>true)
 				redirect_to "/"
 			else
-				if @user
-					project.guest_object(@user.id).delete if project.is_a_guest?(@user.id)
-					@user.guest_update_message(@invite.project_id)
-				end
-				@invite.update_attributes(:invitation_code=>nil)
-        session[:invite_email]=@invite.email
+        user.guest_update_message(invite.project_id) if user
+				invite.update_attributes(:invitation_code=>nil)
+        session[:invite_email]=invite.email
 				redirect_to new_user_registration_path
 			end
 		end
