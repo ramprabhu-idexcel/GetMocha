@@ -630,6 +630,7 @@ alert('afetrr bt');
   //cancel message modal
   $('#m_can').live('click',function(){
     $('.add-item-modal').hide();
+    $('#add_new_mod').hide();
     return false;
   });
   
