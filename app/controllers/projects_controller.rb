@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
 				invite_user=invite_user.strip
 			   @invite=@project.invitations.build(:email=>invite_user,:message=>params[:invite][:message])
 				 @invite.save
-				 ProjectMailer.delay.invite_people(current_user,@invite)
+				 ProjectMailer.delay.invite_people(current_user,@invite,@project)
 	     end
 		@projects=current_user.user_active_projects
     if params[:task]
@@ -141,7 +141,7 @@ class ProjectsController < ApplicationController
 		@invite.save
 		@project=Project.find(params[:project_id])
 		if @invite.valid?
-			ProjectMailer.delay.invite_people(current_user,@invite)
+			ProjectMailer.delay.invite_people(current_user,@invite,@project)
 			render :nothing=>true
 		else
 			errors=[]
