@@ -192,7 +192,7 @@ class User < ActiveRecord::Base
     activity.is_subscribed if activity
   end
   def is_task_subscribed?(task_id)
-    activity=Activity.find_task_activity(task_id,self.id)
+    activity=Activity.find_activity(task_id,self.id,"Task")
     activity.is_subscribed
   end
   def hash_activities_comments(type_ids)
@@ -318,7 +318,7 @@ class User < ActiveRecord::Base
       if order=="desc"
         tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}.reverse
       else
-         tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
+        tasks[b[0]]= b[1].sort_by{|a| a.resource.test_date}
       end
     end
     tasks
@@ -329,7 +329,7 @@ class User < ActiveRecord::Base
     activities
   end
   def sort_completed_tasks(sort_by=nil,order=nil)
-     order="asc" unless order
+    order="asc" unless order
     tasks=completed_tasks(sort_by,order).group_by{|a| a.resource.task_list_id}
     temp=tasks
     temp.each do |b|
