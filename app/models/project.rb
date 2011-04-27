@@ -496,7 +496,7 @@ end
 end
 end
 
-def invite_via_email
+def invite_via_email(params)
 from_address_invite=params[:from].to_s
 if(from_address_invite.include?('<'))
 from_invite=from_address_invite.split('<')
