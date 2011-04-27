@@ -34,29 +34,30 @@
 <%end%>
 <script>
 	$('#ellaborate').click(function(){
-	document.getElementById('ellaborate').className="open";
-	document.getElementById('invite_message').className="textarea";
-	$('#invite_message').focus()
+		document.getElementById('ellaborate').className="open";
+		document.getElementById('invite_message').className="textarea";
+		$('#invite_message').focus();
 	});
 		$('#txtInput2').keydown(function(event){
-	if (event.keyCode == 9) {
-	document.getElementById('ellaborate').className="open";
-	document.getElementById('invite_message').className="textarea";
-	document.getElementById('invite_message').style.display="black"
-$('.modal-bottom-left').focus();
-	}
+		if (event.keyCode == 9) {
+			document.getElementById('ellaborate').className="open";
+			document.getElementById('invite_message').className="textarea";
+			//~ document.getElementById('invite_message').style.display="block";
+				//~ $('#invite_message').focus();
+			$('.modal-bottom').focus();
+		}
 	});
 $(document).ready(function(){
 	var data = [<% users.each do |user| %> {text:'<%= user.email %>', id:'<%= user.id %>'},<% end %>{text:'',id:''}];
-$("#txtInput2").autocomplete(data, {
-  formatItem: function(item) {
-    return item.text;
-  },
-	multiple: true,
-	matchContains: true
-}).result(function(event, item) {
+	$("#txtInput2").autocomplete(data, {
+		formatItem: function(item) {
+			return item.text;
+		},
+		multiple: true,
+		matchContains: true
+		}).result(function(event, item) {
   //document.getElementById('autocomplete1_hidden').value=item.id;
-});
+	});
 }); 	
-
+</script>
 
