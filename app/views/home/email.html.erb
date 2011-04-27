@@ -99,34 +99,34 @@
 
 </body>
 <script>
-//$('#submit_con').live('click',function(){
-//var errors=[];
- //var emails=document.getElementById('contact-email').value
-// var messages=document.getElementById('contact-message').value
-//if(emails=="")
-//alert("Please Enter your E-mail address");
-//else if(emails.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)==null)
-//alert("Please enter valid email address");
-//else if(messages=="")
-//alert("Please enter message");
-//else
-//{
-//$.ajax({
-   //   url:'/home/contact_via_email',
-      //type: 'get',
-			//data :{"name" : $('#contact-name').val(), "email" : $('#contact-email').val(), "subject" : $('#contact-subjet').val(), "message" : $('#contact-message').val()},
-			// success: function(data){
-			// alert("Message send successfully");
-			// document.getElementById('contact-name').value="";
-			// document.getElementById('contact-email').value="";
-			// document.getElementById('contact-subjet').value="";
-			// document.getElementById('contact-message').value="";
-			// }
-    //});
-		//return false;
-//}
-//return false;
-//});
+$('#submit_con').live('click',function(){
+var errors=[];
+ var emails=document.getElementById('contact-email').value
+ var messages=document.getElementById('contact-message').value
+if(emails=="")
+alert("Please Enter your E-mail address");
+else if(emails.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)==null)
+alert("Please enter valid email address");
+else if(messages=="")
+alert("Please enter message");
+else
+{
+$.ajax({
+    url:'/home/contact_via_email',
+    type: 'get',
+		data :{"name" : $('#contact-name').val(), "email" : $('#contact-email').val(), "subject" : $('#contact-subjet').val(), "message" : $('#contact-message').val()},
+		success: function(data){
+		alert("Message send successfully");
+		document.getElementById('contact-name').value="";
+		document.getElementById('contact-email').value="";
+		document.getElementById('contact-subjet').value="";
+		document.getElementById('contact-message').value="";
+		}
+	});
+	return false;
+}
+return false;
+});
 </script>
 </html>
 
