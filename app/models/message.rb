@@ -47,38 +47,6 @@ class Message < ActiveRecord::Base
       end
     end
   end
- 	def self.send_notification_to_team_members(user,to_users,message)
-		@user=user
-		@message=message
-		puts to_users.inspect
-		to_users.each do |to_user|
-			puts to_user.inspect
-			@to_user=to_user.lstrip
-		ProjectMailer.delay.message_notification(@user,@to_user,@message)
-		end
-	end
-  def self.find_hash(id,current_user)
-    message=self.find_by_id(id,:select=>[:id,:subject,:message,:project_id,:user_id,:updated_at])
-    user=message.user
-    message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at,current_user),:attach=>message.attach_urls})
-  end
-	def self.message_created_time(time,current_user)
-    user_time=current_user.user_time(time)
-    diff=current_user.user_time(Time.now)-current_user.user_time(time)
-		case diff
-      when 0..59
-     "Posted #{pluralize(diff.to_i,"second")} ago"
-      when 60..3599
-      "Posted #{pluralize((diff/60).to_i,"minute")} ago"
-      when 3600..86399
-      "Posted #{pluralize((diff/3600).to_i,"hour")} ago"
-      else
-        "Posted on #{user_time.strftime("%d/%m/%y")}"
-    end
-  end
-	def self.pluralize(count, singular, plural = nil)
-    "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
-  end
 	def pluralize(count, singular, plural = nil)
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
@@ -131,23 +99,60 @@ class Message < ActiveRecord::Base
 	def message_trucate
     message.truncate(200)
   end
-def author
-	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
-end
-def msg_notification
-	"Subject: #{self.subject} <br/> Author: #{self.author} <br/> Message: #{self.message}"
-end
-def comment_notify
+  def author
+    "#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
+  end
+  def msg_notification
+    "Subject: #{self.subject} <br/> Author: #{self.author} <br/> Message: #{self.message}"
+  end
+  def comment_notify
 		"Author: #{self.author} <br/> Comment: #{self.comment}"
 	end	
-	def self.verify_message_parameters(params)
-	
-		
-  end
   def subscribe_data(user)
     task_values=self.display_subscribed_users
     is_subs=user.is_message_subscribed?(self.id)
     all_subs=self.all_subscribed
     {:task=>task_values,:is_subscribed=>is_subs,:all_subscribed=>all_subs}
+  end
+  class <<self
+  	def send_notification_to_team_members(user,to_users,message)
+      @user=user
+      @message=message
+      puts to_users.inspect
+      to_users.each do |to_user|
+        puts to_user.inspect
+        @to_user=to_user.lstrip
+      ProjectMailer.delay.message_notification(@user,@to_user,@message)
+      end
+    end
+    def find_hash(id,current_user)
+      message=self.find_by_id(id,:select=>[:id,:subject,:message,:project_id,:user_id,:updated_at])
+      user=message.user
+      message.attributes.merge!({:name=>user.name,:updated_date=>message_created_time(message.updated_at,current_user),:attach=>message.attach_urls})
+    end
+    def message_created_time(time,current_user)
+      user_time=current_user.user_time(time)
+      diff=current_user.user_time(Time.now)-current_user.user_time(time)
+      case diff
+        when 0..59
+       "Posted #{pluralize(diff.to_i,"second")} ago"
+        when 60..3599
+        "Posted #{pluralize((diff/60).to_i,"minute")} ago"
+        when 3600..86399
+        "Posted #{pluralize((diff/3600).to_i,"hour")} ago"
+        else
+          "Posted on #{user_time.strftime("%d/%m/%y")}"
+      end
+    end
+    def pluralize(count, singular, plural = nil)
+      "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
+    end
+    def all_messages(project_ids)
+      project_ids=[project_ids] unless project_ids.is_a?(Array)
+      find(:all,:conditions=>['project_id in (?)',project_ids])
+    end
+    def all_message_ids(project_ids)
+      all_messages(project_ids).map(&:id)
+    end
   end
 end
