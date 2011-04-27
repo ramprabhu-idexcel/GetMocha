@@ -95,7 +95,7 @@ class TasksController < ApplicationController
   end
 	def all_tasks
     if(params[:sort_by] && params[:sort_by]=="star-task")
-      render :json=>current_user.group_starred_tasks.to_json(options)
+      render :json=>current_user.group_starred_tasks(params[:order]).to_json(options)
     else
 			puts params[:order].inspect
       render :json=>current_user.group_all_tasks(params[:order]).to_json(options)
