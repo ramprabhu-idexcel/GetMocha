@@ -63,6 +63,9 @@ class User < ActiveRecord::Base
   def all_message_ids
     Message.all_message_ids(user_active_project_ids)
   end
+  def all_task_ids
+    Task.all_task_ids(user_active_project_ids)
+  end
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     order="desc" unless order
@@ -259,7 +262,7 @@ class User < ActiveRecord::Base
     unread_all_message.count
   end
   def find_all_tasks(sort_by=nil,order=nil)
-    Activity.check_all_tasks_info(self.id,sort_by,order)
+    Activity.check_all_tasks_info(self.id,all_task_ids,sort_by,order)
   end
   def all_tasks(order=nil)
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=?',"Task",false],:order=>"created_at desc")
