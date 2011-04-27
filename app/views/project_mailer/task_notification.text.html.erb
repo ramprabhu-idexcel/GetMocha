@@ -1,5 +1,5 @@
 ##Reply above this line to add a comment to this task##
-<br/>
+<br/><br/>
 Project: <%=@project.name%>
 <br/>
 Task List: <%=@task.task_list_name%>
@@ -11,7 +11,7 @@ Assigned to: <%=@task.assigned_to%>
 <%=@task.due_date_mail%>
 <br/>
 <%=@task.description%>
-<br/>
+<br/><br/>
 <% @task.attachments.each do |attach| %>
     <br/>
    <a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
