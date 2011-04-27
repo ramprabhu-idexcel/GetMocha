@@ -79,35 +79,10 @@ class Task < ActiveRecord::Base
           #~ end
     #~ end
   #~ end
-	def self.task_due_time(time,current_user)
-    user_time=current_user.user_time(time)
-    diff=current_user.user_time(Time.now)-current_user.user_time(time)
-		case diff
-      when 0..59
-     "Posted #{pluralize(diff.to_i,"second")} ago"
-      when 60..3599
-      "Posted #{pluralize((diff/60).to_i,"minute")} ago"
-      when 3600..86399
-      "Posted #{pluralize((diff/3600).to_i,"hour")} ago"
-      else
-        "Posted on #{user_time.strftime("%d/%m/%y")}"
-    end
-  end
-	def self.pluralize(count, singular, plural = nil)
-    "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
-  end
+	
 	def pluralize(count, singular, plural = nil)
     "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
   end
-	
-	def self.send_task_notification_to_team_members(user,to_users,task)
-		@user=user
-		@task=task
-		to_users.each do |to_user|
-			@to_user=to_user
-		ProjectMailer.delay.task_notification(@user,@to_user,@task)
-		end
-	end
   def update_task_list
     self.task_list.touch
   end
@@ -240,14 +215,44 @@ class Task < ActiveRecord::Base
       ["Project: #{project.name} <br/> #{self.task_notification}<br/>","Post new task to this project via email : #{project.task_email_id} or custom email<br/>"]
     end
   end
-  def self.uncompleted_tasks_id
-    find(:all,:conditions=>['is_completed=?',false]).map(&:id)
-  end
   def subscribe_data(user)
     task_values=self.third_pane_data
     {:task=>task_values,:subscribe=>user.is_task_subscribed?(self.id) ?  "Unsubscribe" : "Subscribe"}
   end
   def task_comment_data
     {:task=>self.third_pane_data,:attach=>self.attach_urls,:subscribed_user=>self.display_subscribed_users}
+  end
+  class<<self
+    def uncompleted_tasks_id
+      find(:all,:conditions=>['is_completed=?',false]).map(&:id)
+    end
+    def send_task_notification_to_team_members(user,to_users,task)
+      to_users.each do |to_user|
+        ProjectMailer.delay.task_notification(user,to_user,task)
+      end
+    end
+    def task_due_time(time,current_user)
+      user_time=current_user.user_time(time)
+      diff=current_user.user_time(Time.now)-current_user.user_time(time)
+      case diff
+        when 0..59
+       "Posted #{pluralize(diff.to_i,"second")} ago"
+        when 60..3599
+        "Posted #{pluralize((diff/60).to_i,"minute")} ago"
+        when 3600..86399
+        "Posted #{pluralize((diff/3600).to_i,"hour")} ago"
+        else
+          "Posted on #{user_time.strftime("%d/%m/%y")}"
+      end
+    end
+    def pluralize(count, singular, plural = nil)
+      "#{count || 0} " + ((count == 1 || count =~ /^1(\.0+)?$/) ? singular : (plural || singular.pluralize))
+    end
+    def find_all_tasks(project_ids)
+      find(:all,:conditions=>['task_lists.project_id in (?)',project_ids],:include=>:task_list)
+    end
+    def all_task_ids(project_ids)
+      find_all_tasks(project_ids).map(&:id)
+    end
   end
 end
