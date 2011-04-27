@@ -37,13 +37,14 @@ class Activity < ActiveRecord::Base
       order="asc" if order.nil?
       find(:all,:conditions=>['resource_type=? AND resource_id in (?) AND is_delete=? AND user_id=?',"Task",project_ids,false,user_id],:order=>"#{sort_by} #{order}")
     end
-    def check_my_tasks_info(user_id,sort_by=nil)
+    def check_my_tasks_info(user_id,collection_ids,sort_by=nil)
+      collection_ids=[collection_ids] unless collection_ids.is_a?(Array)
       if sort_by=="star-task"
         sort_by="is_starred"
       else
         sort_by="created_at"
       end
-      find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=? AND user_id=?',"Task",false,true,user_id],:order=>"#{sort_by}")
+      find(:all,:conditions=>['resource_type=? AND resource_id IN (?) AND is_delete=? AND is_assigned=? AND user_id=?',"Task",collection_ids,false,true,user_id],:order=>"#{sort_by}")
     end
     def check_hash_activities_comments_info(resource_id,user_id)
       find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=? AND user_id=?',"Comment",resource_id,false,user_id],:select=>[:is_starred,:is_read,:resource_id,:id])
