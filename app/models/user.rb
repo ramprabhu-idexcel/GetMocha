@@ -63,10 +63,8 @@ class User < ActiveRecord::Base
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     order="desc" unless order
-    if sort_field=="is_starred"
-      activities.where('resource_type=? AND is_delete=? AND is_starred=?',"Message",false,true).order("created_at #{order}")
-    elsif sort_field=="is_read"
-      activities.where('resource_type=? AND is_read=? AND is_delete=?',"Message",false,false).order("created_at #{order}")
+    if sort_field=="is_starred" || sort_field="is_read"
+      activities.where("resource_type=? AND is_delete=? AND #{sort_field}=?","Message",false,true).order("created_at #{order}")
     else
       activities.where('resource_type=? AND is_delete=?',"Message",false).order("#{sort_field} #{order}")
     end
@@ -108,7 +106,7 @@ class User < ActiveRecord::Base
     (starred_tasks+starred_task_com).uniq
   end
   def starred_task_com
-    Activity.find_all_task_activity(self.all_starred_comment_tasks,self.id)
+    Activity.find_all_activity(self.all_starred_comment_tasks,self.id,"Task")
   end
   def starred_task_count
     starred_tasks.count+starred_task_comments.count
