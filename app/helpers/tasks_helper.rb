@@ -7,7 +7,7 @@ module TasksHelper
     end
   end
   def link_to_all_tasks
-    count=current_user.all_tasks.count
+    count=current_user.find_all_tasks.count
     link_to form_content(count,"All Tasks"),"#all_tasks",:class=>"all-tasks open",:id=>"all_tasks"
   end
   def link_to_my_tasks
