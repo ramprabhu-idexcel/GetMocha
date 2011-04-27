@@ -165,7 +165,7 @@ class Project < ActiveRecord::Base
     self.guest_object(user_id).delete if self.is_a_guest?(user_id)
   end
 	
-	def via_email_contents(params)
+	def self.via_email_contents(params)
 		  @dest_address=params[:to].split(',')
 	  dest_address=@dest_address[0]
 			if  dest_address.include?('<')

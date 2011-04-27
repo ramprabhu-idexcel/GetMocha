@@ -8,7 +8,7 @@ def index
 end	
 def check_email_reply_and_save
 	  if params[:from]
-      via_email_contents(params)
+      Project.via_email_contents(params)
 			render :text => "success"
 	  end
 	end
