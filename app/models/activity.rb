@@ -53,8 +53,8 @@ class Activity < ActiveRecord::Base
     def check_starred_task(user_id)
       find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_starred=? AND user_id=?',"Task",false,true,user_id],:order=>"created_at desc")
     end
-    def check_all_unread_messages(user_id)
-      find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=? AND user_id=?',"Message",false,false,user_id])
+    def check_all_unread_messages(user_id,message_ids)
+      find(:all,:conditions=>['resource_type=? AND resource_id in (?) AND is_read = ? AND is_delete=? AND user_id=?',"Message",message_ids,false,false,user_id])
     end
     def check_all_tasks_info(user_id,sort_by=nil,order=nil)
       if sort_by=="star-task"

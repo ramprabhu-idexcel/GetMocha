@@ -60,13 +60,16 @@ class User < ActiveRecord::Base
   def all_messages(sort_by,order)
     total_messages(sort_by,order).group_by{|m| m.updated_at.to_date}
   end
+  def all_message_ids
+    Message.all_message_ids(user_active_project_ids)
+  end
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     order="desc" unless order
     if sort_field=="is_starred" || sort_field="is_read"
-      activities.where("resource_type=? AND is_delete=? AND #{sort_field}=?","Message",false,true).order("created_at #{order}")
+      activities.where("resource_type=? AND resource_id IN (?) AND is_delete=? AND #{sort_field}=?","Message",all_message_ids,false,true).order("created_at #{order}")
     else
-      activities.where('resource_type=? AND is_delete=?',"Message",false).order("#{sort_field} #{order}")
+      activities.where('resource_type=? AND resource_id IN (?) AND is_delete=?',"Message",all_message_ids,false).order("#{sort_field} #{order}")
     end
   end
   def last_created_message(message_id)
@@ -153,6 +156,9 @@ class User < ActiveRecord::Base
   end
   def completed_projects
     Project.find(:all,:conditions=>['project_users.status=? AND project_users.user_id=? AND projects.status=?',true,self.id,ProjectStatus::COMPLETED],:include=>:project_users)
+  end
+  def user_active_project_ids
+    user_active_projects.map(&:id)
   end
   def full_name
     "#{first_name} #{last_name}"
@@ -247,7 +253,7 @@ class User < ActiveRecord::Base
   end
   def unread_all_message
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_read = ? AND is_delete=?',"Message",false,false])
-    Activity.check_all_unread_messages(self.id)
+    Activity.check_all_unread_messages(self.id,self.all_message_ids)
   end
   def unread_all_message_count
     unread_all_message.count
