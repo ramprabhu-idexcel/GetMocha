@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   def total_messages(sort_by=nil,order=nil)
     sort_field=find_sort_field(sort_by)
     order="desc" unless order
-    if sort_field=="is_starred" || sort_field="is_read"
+    if sort_field=="is_starred" || sort_field=="is_read"
       activities.where("resource_type=? AND resource_id IN (?) AND is_delete=? AND #{sort_field}=?","Message",all_message_ids,false,true).order("created_at #{order}")
     else
       activities.where('resource_type=? AND resource_id IN (?) AND is_delete=?',"Message",all_message_ids,false).order("#{sort_field} #{order}")
