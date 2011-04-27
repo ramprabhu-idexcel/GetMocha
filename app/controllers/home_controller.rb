@@ -386,11 +386,11 @@ end
 end
 end
 
-#~ def contact_via_email
-  #~ @message=params
-  #~ ProjectMailer.delay.contact_message_send(@message)
-  #~ render :nothing=>true
-#~ end
+def contact_via_email
+  @message=params
+  ProjectMailer.delay.contact_message_send(@message)
+  render :nothing=>true
+end
 
  #~ def check_from_address_email
   #~ logger.info "********************************"
