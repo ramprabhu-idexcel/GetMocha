@@ -287,7 +287,7 @@ class User < ActiveRecord::Base
     tasks
   end
   def find_my_tasks(sort_by)
-    Activity.check_my_tasks_info(self.id,sort_by)
+    Activity.check_my_tasks_info(self.id,all_task_ids,sort_by)
   end
   def my_tasks(sort_by)
     #~ activities.find(:all,:conditions=>['resource_type=? AND is_delete=? AND is_assigned=?',"Task",false,true],:order=>"created_at desc")
