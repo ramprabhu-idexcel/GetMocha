@@ -99,7 +99,7 @@ class ProjectsController < ApplicationController
 				if @project.status == 3
 					ProjectMailer.delay.project_completed(@project,current_user,proj_user.user)
 				else
-					ProjectMailer.delay.project_activated(@project,current_user,proj_user.user)
+					ProjectMailer.delay.project_reactivated(@project,current_user,proj_user.user)
 				end
 			end
 		elsif params[:email]

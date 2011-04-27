@@ -13,12 +13,11 @@ class ProjectMailer < ActionMailer::Base
     mail(:to=>"#{to_user.email}", :subject=>"#{project.name} has been completed")
     #@content_type="text/html"
   end
-  def project_activated(project, user, to_user)
+  def project_reactivated(project, user, to_user)
     @user = user
     @to_user = to_user
     @project=project
-    @user = user
-    @to_user = to_user
+    mail(:to=>"#{to_user.email}", :subject=>"#{project.name} Project Is Now In Progress")
   end
   def custom_email(user, invite)
     @user = user
