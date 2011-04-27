@@ -3,8 +3,9 @@ class Task < ActiveRecord::Base
 	has_many :activities, :as => :resource, :dependent=>:destroy
 	has_many :comments, :as=>:commentable, :dependent=>:destroy
 	has_many :attachments ,:as => :attachable, :dependent=>:destroy
+  has_one :project,:through=>:task_list
 	belongs_to :task_list
-		belongs_to :project
+		#~ belongs_to :project
 	belongs_to :guest
 	attr_accessible :name,:notify,:due_date,:recipient,:description,:project_id,:user_id,:task_list_id
                     #:length     => { :within => 6..250 }
