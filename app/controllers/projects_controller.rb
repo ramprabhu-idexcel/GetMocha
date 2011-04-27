@@ -76,8 +76,8 @@ class ProjectsController < ApplicationController
 		else
 			@guest_user=ProjectGuest.find_by_project_id_and_status_and_guest_id(@project.id,true,@user.id)
 			@guest_user.update_attributes(:status=>false)
-			@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
 		end
+				@project_guest=@project.project_guests.find(:all, :conditions=>['status=?',true])
 		render :partial=>'settings_pane',:locals=>{:project=>@project,:project_guest=>@project_guest}
 	end
 	def update_proj_settings
