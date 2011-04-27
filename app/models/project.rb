@@ -174,22 +174,22 @@ class Project < ActiveRecord::Base
 				@dest_address=@dest_address[0].to_s
 			end
 			if @dest_address[0].to_s.include?("#{APP_CONFIG[:project_email]}")
-				new_project_via_email
+				new_project_via_email(params)
 			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:message_email]}")
-				message_create_via_email
+				message_create_via_email(params)
 			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:task_email]}")
-				task_create_via_email
+				task_create_via_email(params)
 			elsif @dest_address[0].to_s.include?("#{APP_CONFIG[:invite_email]}")
-				invite_via_email
+				invite_via_email(params)
 			elsif @dest_address[0].to_s.include?("ctzm")
-				reply_to_message_via_email
+				reply_to_message_via_email(params)
 			elsif @dest_address[0].to_s.include?("ctzt")
-				reply_to_task_via_email
+				reply_to_task_via_email(params)
 			end
 		end
 		
 		
-def message_create_via_email
+def self.message_create_via_email(params)
     from_address1=params[:from].to_s
 if(from_address1.include?('<'))
 from=from_address1.split('<')
@@ -261,7 +261,7 @@ end
 end
 end
 
-def new_project_via_email
+def self.new_project_via_email(params)
     from_address=params[:from].to_s
 if(from_address.include?('<'))
 from_add=from_address.split('<')
@@ -305,7 +305,7 @@ end
 end
 end
 end
-  def task_create_via_email
+  def task_create_via_email(params)
     from_address2=params[:from].to_s
     if(from_address2.include?('<'))
       from2=from_address2.split('<')
@@ -403,7 +403,7 @@ end
     #~ task.send_task_notification_to_team_members(user,@notify,@tasks)
   end
 
-def reply_to_message_via_email
+def reply_to_message_via_email(params)
 from_address_reply=params[:from].to_s
 if(from_address_reply.include?('<'))
 from_reply=from_address_reply.split('<')
@@ -449,7 +449,7 @@ end
 end
 end
 
-def reply_to_task_via_email
+def reply_to_task_via_email(params)
 from_address_reply_task=params[:from].to_s
 if(from_address_reply_task.include?('<'))
 from_address_task=from_address_reply_task.split('<')
