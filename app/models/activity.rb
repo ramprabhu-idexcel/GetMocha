@@ -76,7 +76,7 @@ class Activity < ActiveRecord::Base
     def check_hash_activities_comments_info(resource_id,user_id)
       find(:all,:conditions=>['resource_type=? and resource_id in (?) and is_delete=? AND user_id=?',"Comment",resource_id,false,user_id],:select=>[:is_starred,:is_read,:resource_id,:id])
     end
-    def find_activity(class_name,task_id,user_id)
+    def find_activity(task_id,user_id,class_name)
       find(:first,:conditions=>['resource_type=? AND resource_id=? AND user_id=?',class_name,task_id,user_id])
     end
     def t_assigned_user
