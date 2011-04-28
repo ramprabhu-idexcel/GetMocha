@@ -1499,103 +1499,108 @@ function close_comment_area()
    $('.keyboard-shortcuts').css('display','none');
   }
   
-  function load_second_pane_message(data)
+function load_second_pane_message(data)
+{
+  $.messages=data
+  var items=[];
+  var test_array=false;
+  $.each(data,function(index,val){
+    test_array=true;
+    items.push('<div class="date-bar"><a href="#" class="date-title">'+parse_date(index)+'</a></div>');
+    var count=1;
+    $.each(val,function(i,v){
+      items.push('<div class="message messow '+(count%2==0 ? "alt" : "")+(v.activity.is_read ? "" : " unread")+' mpi'+v.activity.resource.project_id+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "21" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
+      if(v.activity.is_starred)
+        items.push('<a class="message-star secpan" href="#">Star</a>');
+      else
+        items.push('<a class="message-star secpan" href="#" style="display:none;">Star</a>');
+      if(v.activity.has_attachment)
+        items.push('<div class="has-attachment"></div>');
+      items.push('</div><div class="info"><span class="name">'+v.activity.resource.user.name+'</span><span class="message-time">'+v.activity.created_time+'</span></div>')
+      items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message_trucate+'</p></div><div class="clear-fix"></div></div>');
+      result=items.join(' ')
+      $('#message_area').html(result);
+      count=count+1;
+    });
+  });
+  if(!test_array){
+    $('#message_area').html('');
+  }
+  if($('.message.messow').children().length > 0)
+    $($('.message.messow')[0]).click();
+}
+
+function load_third_pane_message(data)
+{
+  var comments=[];
+  if(data=="The page you were looking doesn't exist")
+    $('#comment_area').html(data);
+  else
+  {
+    comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit subject_edit" href="#">Edit</a></h2>');
+    comments.push('<p class="post-time">'+data.message.updated_date+' by <a href="#" class="user-name">'+data.message.name+'</a></p><hr/>');
+    comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit message_edit" href="#">Edit</a></p></div>');
+    //Document attachment
+    if(data.message.attach.attached_documents.length>0)
     {
-      $.messages=data
-      var items=[];
-      var test_array=false;
-      $.each(data,function(index,val){
-        test_array=true;
-        items.push('<div class="date-bar"><a href="#" class="date-title">'+parse_date(index)+'</a></div>');
-        var count=1;
-        $.each(val,function(i,v){
-          items.push('<div class="message messow '+(count%2==0 ? "alt" : "")+(v.activity.is_read ? "" : " unread")+' mpi'+v.activity.resource.project_id+'" id= "msac'+v.activity.id+'"><div class="left-icons"><div class="avatar-mini"></div><img alt="avatar" width= "21" height ="21" class="avatar-mini-img" src="'+v.activity.resource.user.image_url+'"/>')
-          if(v.activity.is_starred)
-            items.push('<a class="message-star secpan" href="#">Star</a>');
-          else
-            items.push('<a class="message-star secpan" href="#" style="display:none;">Star</a>');
-          if(v.activity.has_attachment)
-            items.push('<div class="has-attachment"></div>');
-          items.push('</div><div class="info"><span class="name">'+v.activity.resource.user.name+'</span><span class="message-time">'+v.activity.created_time+'</span></div>')
-          items.push('<div class="excerpt"><h4>'+v.activity.resource.subject+'</h4><p>'+v.activity.resource.message_trucate+'</p></div><div class="clear-fix"></div></div>');
-          result=items.join(' ')
-          $('#message_area').html(result);
-          count=count+1;
-        });
+      comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
+      $.each(data.message.attach.attached_documents,function(index,value){
+        comments.push('<p>'+value+'</a></p>');
       });
-      if(!test_array){
-        $('#message_area').html('');
-      }
-      if($('.message.messow').children().length > 0)
-        $($('.message.messow')[0]).click();
+      comments.push('</div>')
     }
     
-    function load_third_pane_message(data)
+    //Image attachments
+    if(data.message.attach.attach_image.length>0)
     {
-      var comments=[];
-      if(data=="The page you were looking doesn't exist")
-        $('#comment_area').html(data);
-      else
+      comments.push('<div class="attachments">');
+      $.each(data.message.attach.attach_image,function(index,value){
+        comments.push('<div class="attachment-thumb-frame">'+value+'</div>');
+      });
+      comments.push('<div class="clear-fix"></div>')
+      comments.push('</div>');
+    }
+   
+    comments.push('<p class="subscribers">'+data.message.subscribed_user+' <span id="all_subscribed" style="display:none;">'+data.message.all_subscribed+'</span><a href="#" id="submsg">'+(data.message.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
+    //Comments
+    comments.push('<div class="prev-messages">');
+    $.each(data.comments,function(index,comment){
+      comments.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
+      comments.push('<a class="name message_name" href="#">'+comment.user+'</a>');
+      if((comment.attach.attached_documents.length>0) || (comment.attach.attach_image.length>0))
+        comments.push('<div class="has-attachment"></div>');
+      comments.push('<span class="message-time">'+comment.created_at+'</span>');
+      comments.push('<div class="comment"><p>'+comment.comment+'</p>');
+      if(comment.attach.attached_documents.length>0)
       {
-        comments.push('<div class="message-body"><h2>'+data.message.subject+'<a class="edit subject_edit" href="#">Edit</a></h2>');
-        comments.push('<p class="post-time">'+data.message.updated_date+' by <a href="#" class="user-name">'+data.message.name+'</a></p><hr/>');
-        comments.push('<div class="main-content"><p>'+data.message.message+'<a class="edit message_edit" href="#">Edit</a></p></div>');
-        //Document attachment
-        if(data.message.attach.attached_documents.length>0)
-        {
-          comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
-          $.each(data.message.attach.attached_documents,function(index,value){
-            comments.push('<p>'+value+'</a></p>');
-          });
-          comments.push('</div>')
-        }
-        
-        //Image attachments
-        if(data.message.attach.attach_image.length>0)
-        {
-          comments.push('<div class="attachments">');
-          $.each(data.message.attach.attach_image,function(index,value){
-            comments.push('<div class="attachment-thumb-frame">'+value+'</div>');
-          });
-          comments.push('<div class="clear-fix"></div>')
-          comments.push('</div>');
-        }
-       
-        comments.push('<p class="subscribers">'+data.message.subscribed_user+' <span id="all_subscribed" style="display:none;">'+data.message.all_subscribed+'</span><a href="#" id="submsg">'+(data.message.is_subscribed ? "Unsubscribe": "Subscribe")+'</a></p></div>');
-        //Comments
-        comments.push('<div class="prev-messages">');
-        $.each(data.comments,function(index,comment){
-          comments.push('<div class="message message_comments '+(comment.is_starred ? "starred" : "" )+' " ><div class="message-body"><a class="message-star star_comment" href="/star_message/'+comment.id+'">Star</a>');
-          comments.push('<a class="name message_name" href="#">'+comment.user+'</a>');
-          if((comment.attach.attached_documents.length>0) || (comment.attach.attach_image.length>0))
-            comments.push('<div class="has-attachment"></div>');
-          comments.push('<span class="message-time">'+comment.created_at+'</span>');
-          comments.push('<div class="comment"><p>'+comment.comment+'</p>');
-          if(comment.attach.attached_documents.length>0)
-          {
-            comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
-            $.each(comment.attach.attached_documents,function(index,value){
-              comments.push('<p>'+value+'</p>');
-            });
-            comments.push('</div>')
-          }
-          if(comment.attach.attach_image.length>0)
-          {
-            comments.push('<div class="attachments">');
-            $.each(comment.attach.attach_image,function(index,value){
-              comments.push('<div class="attachment-thumb-frame">'+value+'</div>');
-            });
-            comments.push('<div class="clear-fix"></div></div>');
-          }
-          comments.push('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
+        comments.push('<div style="margin-top:20px;margin-bottom:20px;">')
+        $.each(comment.attach.attached_documents,function(index,value){
+          comments.push('<p>'+value+'</p>');
         });
-        comments.push('</div>');
-        var result=comments.join(' ');
-        $('#comment_area').html(result);
-        if(data.comments.length>9)
-          $('.expand-all').show();
-        else
-          $('.expand-all').hide();
-        $('.message_header').show();
+        comments.push('</div>')
       }
-    }     
+      if(comment.attach.attach_image.length>0)
+      {
+        comments.push('<div class="attachments">');
+        $.each(comment.attach.attach_image,function(index,value){
+          comments.push('<div class="attachment-thumb-frame">'+value+'</div>');
+        });
+        comments.push('<div class="clear-fix"></div></div>');
+      }
+      comments.push('<a class="reply-link" href="#">Reply</a></div></div><div class="clear-fix"></div></div>');
+    });
+    comments.push('</div>');
+    var result=comments.join(' ');
+    $('#comment_area').html(result);
+    if(data.comments.length>9)
+      $('.expand-all').show();
+    else
+      $('.expand-all').hide();
+    $('.message_header').show();
+  }
+}     
+
+function replaceURLWithHTMLLinks(text) {
+  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  return text.replace(exp,"<a href='$1'>$1</a>"); 
+}
