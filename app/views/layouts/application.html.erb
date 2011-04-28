@@ -110,12 +110,14 @@
       {
 					if ($('#add_new_mods').css('display')=="block")
 					{
+						hide_add_new();
 					$('#add_new_mods').css('display','none')
 					}
 					else
 					{
+					hide_add_new();
 					short_modal('/projects/add_new');	
-					}
+						}
       }
       if(event.identifier=='GS')
       {
@@ -442,6 +444,7 @@
 					}
     else
     {
+		$('.add-new').css('background-position','-143px -1px');
 		$('#add_new_mod').hide();
 		$('#add_people').hide();
 		$('#add_new_mods').hide();
@@ -1476,7 +1479,12 @@ function chats_navigation_down(key)
 		}
 	}
 }
-			
+function hide_add_new()
+{
+$('.add-new').css('background-position','-143px -34px');
+										setTimeout("$('.add-new').css('background-position','-143px -1px')",100);
+}
+
 </script>
 
 </html>
