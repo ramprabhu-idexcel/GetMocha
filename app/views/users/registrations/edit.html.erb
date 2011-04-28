@@ -256,7 +256,7 @@ var UserEdit=true;
 
 $('#file_upload').fileUploadUI({
    initUpload: function (event, files, index, xhr, handler, callBack) {
-        var regexp = /\.(png)|(jpg)|(gif)$/i;
+        var regexp = /\.(png)|(jpg)|(gif)|(jpeg)|(bmp)|(tiff)|(raw)|(webp)$/i;
          if (!regexp.test(files[index].name)) {
             alert('ONLY IMAGES ALLOWED!');
             return;
