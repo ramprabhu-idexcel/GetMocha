@@ -20,7 +20,6 @@ Socky.UNAUTHENTICATED = 4;
 Socky.prototype.connect = function() {
   var instance = this;
   instance.state = Socky.CONNECTING;
-
   var ws = new WebSocket(this.host + ':' + this.port + '/?' + this.params);
   ws.onopen    = function()    { instance.onopen(); };
   ws.onmessage = function(evt) { instance.onmessage(evt); };
@@ -110,5 +109,5 @@ Socky.prototype.respond_to_message = function(msg) {
 // At default it will try to reconnect after 1 second.
 Socky.prototype.respond_to_disconnect = function() {
     var instance = this;
-    setTimeout(function() { instance.connect(); }, 1000);
+    setTimeout(function() { instance.connect(); }, 500);
 }
