@@ -305,7 +305,7 @@ end
 end
 end
 end
-  def task_create_via_email(params)
+  def self.task_create_via_email(params)
     from_address2=params[:from].to_s
     if(from_address2.include?('<'))
       from2=from_address2.split('<')
@@ -403,7 +403,7 @@ end
     #~ task.send_task_notification_to_team_members(user,@notify,@tasks)
   end
 
-def reply_to_message_via_email(params)
+def self.reply_to_message_via_email(params)
 from_address_reply=params[:from].to_s
 if(from_address_reply.include?('<'))
 from_reply=from_address_reply.split('<')
@@ -449,7 +449,7 @@ end
 end
 end
 
-def reply_to_task_via_email(params)
+def self.reply_to_task_via_email(params)
 from_address_reply_task=params[:from].to_s
 if(from_address_reply_task.include?('<'))
 from_address_task=from_address_reply_task.split('<')
@@ -496,7 +496,7 @@ end
 end
 end
 
-def invite_via_email(params)
+def self.invite_via_email(params)
 from_address_invite=params[:from].to_s
 if(from_address_invite.include?('<'))
 from_invite=from_address_invite.split('<')

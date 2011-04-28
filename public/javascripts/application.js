@@ -506,6 +506,8 @@ $(document).ready(function() {
   //drop down
   $('#add-new').click(function(){
  if (($('#add_new_mod').css('display')=="none") || ($('.add-item-modal').css('display')=="none"))
+    $('.add-new').css('background-position','-143px -34px');
+		setTimeout("$('.add-new').css('background-position','-143px -1px')",100);
     $('#add_new_mods').toggle();
     return false;
   });
