@@ -1609,7 +1609,7 @@ function load_third_pane_message(data)
   }
 }     
 
-function replaceURLWithHTMLLinks(text) {
+function replace_links(text) {
   var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
   return text.replace(exp,"<a href='$1'>$1</a>"); 
 }

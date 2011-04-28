@@ -33,7 +33,7 @@ GetMocha::Application.configure do
   #~ config.action_controller.asset_host = "https://mocha-asset%d.s3.amazonaws.com"
   #~ config.action_controller.asset_host = "https://asset%d.getmocha.com"
   #~ ActionController::Base.asset_host = Proc.new { |source|
-    #~ "http://asset#{source.hash % 2 }.getmocha.com"
+    #~ "http://asset#{source.hash % 2 + 2 }.getmocha.com"
   #~ }
 
   # Send deprecation notices to registered listeners

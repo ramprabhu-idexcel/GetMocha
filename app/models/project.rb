@@ -168,7 +168,7 @@ class Project < ActiveRecord::Base
 	def self.via_email_contents(params)
 		  @dest_address=params[:to].split(',')
 	  dest_address=@dest_address[0]
-			if  dest_address.include?('<')
+			if  dest_address && dest_address.include?('<')
 				@dest_address=@dest_address.split('<')
 				@dest_address=@dest_address[1].split('>')
 				@dest_address=@dest_address[0].to_s
