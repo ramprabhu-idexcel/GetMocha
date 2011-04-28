@@ -7,22 +7,20 @@
     <div class="sub-header">Participants</div>
     <%=hidden_field_tag "soc_user",current_user.id,:id=>"soc_user"%>
     <%project.online_members.each do |user|%>
-      <%unless user==current_user%>
         <div class="m-tab <%= cycle('alt', '') %>" id="ui<%=user.id%>">
           <div class="left-icons">
             <div class="avatar-mini"></div>
             <img alt="avatar" class="avatar-mini-img" src="<%=user.image_url%>"/>
           </div>
           <div class="info">
-            <span class="position"><%=user.title%></span><br/>
-            <span class="name"><%=user.full_name%></span>
-            <span class="p-number"><%=user.phone%></span>
-            <span class="email"><a href="mailto:<%=user.email%>"><%=user.email%></a></span>
+             <span class="name"><%=user.full_name%></span>
+             <span class="p-number"><%=user.phone%></span>
+             <span class="email"><a href="mailto:<%=user.email%>"><%=user.email%></a></span>
+             <span class="position"><%=user.title%></span>
           </div>
           <%=clear_fix%>
         </div>
-      <%end%>
-    <%end%>
+       <%end%>
   </div>
 </div>
 
