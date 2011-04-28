@@ -9,16 +9,15 @@ Task: <%=@task.name%>
 Assigned to: <%=@task.assigned_to%>
 <br/>
 <%=@task.due_date_mail%>
-<br/><br/>
-<%=@task.description%>
 <br/>
+<%if !@task.description.blank?%><br/><%=@task.description%><br/><%end%>
 <% @task.attachments.each do |attach| %>
     <br/>
    <a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
   <%end %><br/>
 Subscribed: <%=@task.subscribed_user_names.join(', ')%><br/>
 
-<a href=<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email_task/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a>to stop recieving email notifications about this task<br/><br/>
+<a href=<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email_task/<%= @user.id%>/<%= @task.id %>"> Unsubscribe from this task </a> to stop recieving email notifications about this task<br/><br/>
 --<br/>
 <%if @project.is_member?(@user.id)%>
 Add tasks to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.task_email_id%> <%end%><br/>
