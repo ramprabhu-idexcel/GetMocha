@@ -54,7 +54,7 @@
 					<label>Due Date:</label>
 						<%=text_field_tag  'due_date',nil, :style=>"width:100px;", :class=>"textfield" , :id=>"txtInput3"%>
 						<input type="hidden" id="date_hidden" name="task[due_date]" />
-						<img alt="Calendar" style="float: right; margin: 4px 15px 0pt 0pt;" src="/images/icons/calendar.png" onclick='ds_sh(this);'>
+						<%=image_tag "/images/icons/calendar.png",:style=>"float: right; margin: 4px 15px 0pt 0pt;" ,onclick=>'ds_sh(this);',:alt=>"Calendar"%>
 							    </fieldset>
 			    <fieldset id="task_txtarea">
 					<label>Message:</label>
@@ -65,7 +65,7 @@
 				<% form_for :attachs, :url=>{:controller=>"attachments", :action=>"create"}, :html=>{:multipart=>true, :id=>"form3"} do |f3| %>
 						<fieldset id="attach" class="open">
 						<div id="loader1" style="display:none;">
-	           <img src="/images/spinner.gif" />
+	           <%= image_tag "spinner.gif" %>
        </div>
 					<label>Attachments:</label>
 					<div style="display: none; min-height: 62px;" class="attachment-upload" id="attach_upload">
