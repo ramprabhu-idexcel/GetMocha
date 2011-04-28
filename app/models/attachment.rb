@@ -35,7 +35,7 @@ end
         self.thumbnails.each do |file|
           puts "atttachment"
           puts file.inspect
-        fixed_width=200
+        fixed_width=50
           unless file.thumbnail=="big"
             width=file.parent.width
             height=file.parent.height
