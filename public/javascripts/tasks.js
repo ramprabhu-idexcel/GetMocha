@@ -66,6 +66,10 @@
   
   
   $('.task.tsem').live('click',function(){
+    if($(this).attr('class').search('starred') > -1)
+            $('#task_star').css('background-position','-108px -29px');
+        else
+        $('#task_star').css('background-position','-108px -59px');
     var activity_id=$(this).attr('class').split(' ')[0].split('actk:')[1];
     var has_url=window.location.hash;
     $('.task.tsem').removeClass('open');
