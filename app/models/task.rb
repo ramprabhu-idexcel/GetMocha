@@ -114,7 +114,7 @@ class Task < ActiveRecord::Base
     {:attach_image=>images,:attached_documents=>documents}
   end
 	def author
-	"#{self.user.name} at  #{self.created_at.strftime('%l:%M %p')} on #{self.created_at.strftime('%B %e, %Y') }"
+	"#{self.user.name} at  #{self.created_at.strftime('%l:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
   end
   def task_notification
     "Subject: #{self.name} <br/> Author: #{self.author} <br/> Task: #{self.description}"
