@@ -513,6 +513,15 @@ return false;
       });
     },
     loadCommentData: function( pageUrl ){
+      var purl=window.location.hash;
+      if (purl.search('starred_tasks')>-1)
+      {
+        $('#starred_tasks').addClass('open');
+      }
+      else if (purl.search('all_tasks')>-1)
+      {
+        $('#all_tasks').addClass('open');
+      }
       $.ajax({
         url: pageUrl,
         success: function(data){
