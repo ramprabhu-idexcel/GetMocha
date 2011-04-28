@@ -93,7 +93,7 @@ class ProjectMailer < ActionMailer::Base
     task=@comment.commentable
     check_task_task_list=task.task_list
     @project=check_task_task_list.project
-    #custom_emails=@project.task_email_id
+    @comments=task.comments.find(:all,:order=>"created_at desc")
     @custom_email=@project.custom_emails.find(:first,:conditions=>['custom_type=? AND verification_code IS NOT NULL','Task'])
     if @custom_email && !@custom_email.empty?
       from=@custom_email
