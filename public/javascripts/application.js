@@ -231,9 +231,9 @@ $(document).ready(function() {
     });
     function display_star_count(count){
       if(count==0)
-        $('a.starred.starred_count').html('<span class="icon"></span>Starred' );
+        $('a.starred').html('<span class="icon"></span>Starred' );
       else
-        $('a.starred.starred_count').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
+        $('a.starred').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
     }
     //delete the messages
     $('#trash_message').live('click',function(){
