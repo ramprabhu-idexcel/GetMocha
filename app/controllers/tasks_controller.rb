@@ -58,7 +58,8 @@ class TasksController < ApplicationController
 		session[:project_name]=project.name if project
     session[:project_selected]=project.id if project
     task_ids=project.all_uncompleted_task_ids
-    render :json=>current_user.group_project_tasks(task_ids,params[:order]).to_json(options)
+		valid_member=project.is_member?(current_user.id)
+    render :json=>current_user.group_project_tasks(task_ids,params[:order]).to_json(options) if valid_member
   end
 	def update
 		update_task_tasklist=@task.task_list
