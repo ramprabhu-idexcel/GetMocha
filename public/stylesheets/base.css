@@ -21,7 +21,7 @@ h6{font-size:15px}
 
 /* Base generic styles */
 body, select, input, button, textarea {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Arial, sans-serif; /* font changed as per the requirement change */
 	font-size: 14px;
 	font-weight: 300;
 	line-height: 24px;

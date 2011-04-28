@@ -211,7 +211,11 @@
 			if(event.identifier=='ENTER_M')
 			{
 			if ($('#add_new_mods').css('display')=="block")
+			{
+							    $('#add_new_mods').hide();
+							$('#add_new_mod').hide();
 				short_modal1('/messages/new');
+				}
 			}
 			if(event.identifier=='ENTER_T')
 			{
