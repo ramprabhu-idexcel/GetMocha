@@ -196,6 +196,8 @@
   $('#chat-message').live('keypress',function(event){
     if(event.keyCode==13)
     {
+      $('#chat-send').css('background-position','center -40px');
+										setTimeout("$('#chat-send').css('background-position','center -0px')",100);
       send_chat();
       event.preventDefault();
     }
@@ -258,6 +260,16 @@
   
 
  })(jQuery);
+
+ //~ function showTriggered(event)
+		 //~ {
+		  //~ if(event.identifier=='ENTER')
+      //~ {
+				//~ $('#chat-send').click();
+      //~ }
+    //~ }
+    //~ var ENTER= goog.ui.KeyboardShortcutHandler.Modifiers.ENTER;
+    //~ shortcutHandler.registerShortcut('ENTER',goog.events.KeyCodes.ENTER);
 //~ $('#people_settings_popup').live('click',function(){
 //~ $('.modal invite-modal').toggle()
 //~ });
