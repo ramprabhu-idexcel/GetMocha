@@ -120,7 +120,7 @@ class Task < ActiveRecord::Base
     "Subject: #{self.name} <br/> Author: #{self.author} <br/> Task: #{self.description}"
   end
   def comment_notify
-		"Author: #{self.author} <br/> Comment: #{self.comment}"
+		"Author: #{self.author} <br/><br/> #{self.comment}"
 	end
   def task_list_name
     self.task_list.name
