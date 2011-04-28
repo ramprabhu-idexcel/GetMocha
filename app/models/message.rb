@@ -100,7 +100,7 @@ class Message < ActiveRecord::Base
     message.truncate(200)
   end
   def author
-    "#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
+    "#{self.user.name} at  #{self.created_at.strftime('%l:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
   end
   def msg_notification
     "Subject: #{self.subject} <br/> Author: #{self.author} <br/><br/> #{self.message}"
