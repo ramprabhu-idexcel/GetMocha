@@ -204,14 +204,14 @@
 			{
 			short_modal1('/tasks/new');
 			}
-			if(event.identifier=='SLASH')
+			if((event.identifier=='SLASH') || (event.identifier=='SHIFT_SLASH'))
 			{
-			  $('.keyboard-shortcuts').css('display','block');
+				if ($('.keyboard-shortcuts').css('display')=="none")
+					$('.keyboard-shortcuts').css('display','block');
+				else
+					$('.keyboard-shortcuts').css('display','none');
 			}
-			if(event.identifier=='SHIFT_SLASH')
-			{
-			  $('.keyboard-shortcuts').css('display','block');
-      }
+			
 			if(event.identifier=='ENTER_M')
 			{
 			if ($('#add_new_mods').css('display')=="block")
