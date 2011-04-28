@@ -5,4 +5,5 @@
 Please click the following link to join GetMocha.com<br/>
 <a href="<%= @invite_link %>"><%= @invite_link %></a><br/><br/>
 --<br/>
-Powered by GetMocha.com
+Powered by GetMocha.com<br/>
+Post new messages to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.message_email_id%><%end%> <br/>

@@ -13,12 +13,11 @@ class ProjectMailer < ActionMailer::Base
     mail(:to=>"#{to_user.email}", :subject=>"#{project.name} has been completed")
     #@content_type="text/html"
   end
-  def project_activated(project, user, to_user)
+  def project_reactivated(project, user, to_user)
     @user = user
     @to_user = to_user
     @project=project
-    @user = user
-    @to_user = to_user
+    mail(:to=>"#{to_user.email}", :subject=>"#{project.name} Project Is Now In Progress")
   end
   def custom_email(user, invite)
     @user = user
@@ -56,9 +55,11 @@ class ProjectMailer < ActionMailer::Base
     mail(:from=>"#{from}", :to=>"#{to_user}", :reply_to=>"ctzm#{message.id}@#{APP_CONFIG[:reply_email]}", :subject=>"#{@project.name} Message - #{@message.subject}",:content_type=>"text/html")
    # @content_type="text/html"
   end
-  def invite_people(user,invite)
+  def invite_people(user,invite,project)
     @user=user
     @message=invite.message
+    @project=project
+    @custom_email=@project.custom_emails.find(:first, :conditions=>['custom_type=? AND verification_code IS NULL', "Message"])
     @invite_link="#{APP_CONFIG[:site_url]}/projects/join_project/#{invite.invitation_code}"
     mail(:to=>"#{invite.email}", :subject=>"#{user.full_name} has invited you to join #{invite.project.name} on GetMocha.com",:content_type=>"text/html")
    # @content_type="text/html"

@@ -568,6 +568,7 @@ $(document).ready(function() {
   $('#m_can').live('click',function(){
     $('.add-item-modal').hide();
     $('#add_new_mod').hide();
+        $('#add_new_mods').hide();
     return false;
   });
   

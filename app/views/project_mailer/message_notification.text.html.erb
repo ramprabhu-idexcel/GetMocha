@@ -1,9 +1,10 @@
 <html>
 <body>
  ##Type above this line to post a reply to this message##<br/>
-			Project: <%="#{@project.name}" %> <br/>
+		<br/>	Project: <%="#{@project.name}" %> <br/>
 			<%= raw @message.msg_notification %><br/>
 			<% @message.attachments.each do |attach| %>
+			<br/>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%= "#{attach.filename}" %></a> <br/>
 					<% end %>
 		<br/>

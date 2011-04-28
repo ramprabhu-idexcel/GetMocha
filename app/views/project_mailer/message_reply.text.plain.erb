@@ -1,5 +1,5 @@
-##Type above this line to post a reply to this message##<br/>
-     <%=raw @comment.comment_notify%><br/>
+##Type above this line to post a reply to this message##
+<br/><%=raw @comment.comment_notify%><br/>
 			<% @comment.attachments.each do |attach| %>
 			<br/>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%=attach.filename%></a> <br/>
@@ -8,7 +8,7 @@
 			<a href="<%= APP_CONFIG[:site_url] %>/unsubscribe_via_email/<%= @user.id%>/<%= @message.id %>"> Unsubscribe from this message </a>to stop recieving email notifications about this message thread<br/><br/>
 --<br/>
 <%if @project.is_member?(@user.id)%>
-	Add tasks to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.message_email_id%> <%end%><br/>
+	Post new messages to this project via email: <%if !@custom_email.nil? %> <%=@custom_email.email%> <%else%> <%=@project.message_email_id%> <%end%><br/>
 Powered by GetMocha.com
 <%else%>
 Powered by GetMocha.com
