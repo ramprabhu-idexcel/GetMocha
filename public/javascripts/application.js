@@ -188,7 +188,11 @@ $(document).ready(function() {
         success:function(data)
         { 
           display_star_count(data.count);
-        }
+          if($('.message.messow.open').children('.left-icons').children('a.message-star.secpan').css('display')=="block")
+            $('#message_star').css('background-position','-108px -29px');
+          else
+            $('#message_star').css('background-position','-108px -59px');
+          }
       });
       return false;
     });
@@ -359,6 +363,11 @@ $(document).ready(function() {
       //chane the read class
       $(this).removeClass('unread');
       $(this).addClass('open');
+      
+      if($(this).children('.left-icons').children('a.message-star.secpan').css('display')=="block")
+      $('#message_star').css('background-position','-108px -29px');
+      else
+      $('#message_star').css('background-position','-108px -59px');
       //hide the header and the sort drop down
       $('.sort-by-tooltip.message-sort-down').hide();
       $('.message_header').show(); 
