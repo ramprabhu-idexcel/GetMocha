@@ -70,19 +70,7 @@ if(existing_project)
       //~ });
     //~ }
   
-  $('.m-panel-contain').infinitescroll({
-    nextSelector : "div.navigation a:first",    
-                   // selector for the NEXT link (to page 2)
-    itemSelector : "#message_area",          
-                   // selector for all items you'll retrieve
-    debug        : true,                        
-    loadingText  : "Loading new posts...",      
-    extraScrollPx: 50,      
-    bufferPx     : 40,
-    localMode    : true 
-    },function(data){
-    load_second_pane_message(data);
-  });
+
   
   //~ });
 </script>
