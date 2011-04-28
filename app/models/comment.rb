@@ -61,7 +61,7 @@ class Comment < ActiveRecord::Base
     {:attach_image=>images,:attached_documents=>documents}
   end
   def author
-    "#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
+    "#{self.user.name} at  #{self.created_at.strftime('%l:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
   end
   def task_comment_notify
     "Author: #{self.author} <br/> Comment: #{self.comment}"
