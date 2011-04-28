@@ -11,7 +11,7 @@ namespace :due_date_notification do
   task :task_due => :environment do
     tasks=Task.task_due
     tasks.each do |task|
-      project_guests=task.task_list.project_guests.map(&:user_id)
+      project_guests=task.task_list.project_guests.map(&:guest_id)
       task.subscribed_users.each do |activity|
         ProjectMailer.task_due(task,activity.user).deliver unless project_guests.include?(activity.user_id)
       end
