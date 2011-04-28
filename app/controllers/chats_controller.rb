@@ -14,8 +14,7 @@ class ChatsController < ApplicationController
   def create
     session[:attaches_id]=params[:attach_id]
     chat=current_user.chats.build(params[:chat])
-    if chat.valid?
-      chat.save
+    if chat.save
 			attachment=Attachment.update_attachments(session[:attaches_id],chat) if !session[:attaches_id].nil?
       session[:attaches_id]=nil
       send_to_clients chat.send_chat_data
