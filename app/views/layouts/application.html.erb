@@ -102,6 +102,10 @@
 <script>
     function showTriggered(event)
 		 {
+		 if(event.identifier=="TAB")
+		 {
+		 $('#chat-message').focus()
+		 }
 		  if(event.identifier=='ENTER')
       {
 					if ($('#add_new_mods').css('display')=="block")
@@ -270,6 +274,7 @@
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q);
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);
+	shortcutHandler.registerShortcut('TAB',goog.events.KeyCodes.TAB);
 
 //	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T);
 	shortcutHandler.registerShortcut('E',goog.events.KeyCodes.E);
