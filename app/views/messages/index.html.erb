@@ -2,7 +2,6 @@
 var Message=true;
 $.host="<%="#{APP_CONFIG[:site_url]}/"%>";
 </script>
-<script src="/javascripts/jquery.infinitescroll.js" type="text/javascript"></script>
 <%= socky :channels=>"message#{current_user.id}"%>
 <%=javascript_include_tag "message"%>
 <span id="check<%=current_user.id%>" class= "hide_value" style="display:none;">user</span>
@@ -45,32 +44,4 @@ if(existing_project)
   }
  }
  
- //~ $('.m-panel-contain').scroll(function(){	
-    //~ var page_number=parseInt($('#page_number').val());
-    //~ var project_id=$('#chat_project_id').val();
-    //~ var hash_url=window.location.hash.split('#')[1].split('/')[0];
-    //~ var total_height=0;
-    //~ $.each($('#message_area').children() ,function(index,v){
-        //~ total_height=total_height+parseInt($(v).height());
-    //~ });
-    //~ if($('.m-panel-contain').scrollTop() > (total_height - $('.m-panel-contain').height()) && page_number!=0)
-    //~ {
-      //~ $.ajax({
-        //~ url:'/'+hash_url+'?page='+page_number,
-        //~ type:'get',
-        //~ success:function(data){
-          //~ if(data.length==0)
-            //~ $('#page_number').val(0);
-          //~ else
-          //~ {
-            //~ $('#page_number').val(page_number+20);
-            //~ load_second_pane_message(data);
-          //~ }
-        //~ }
-      //~ });
-    //~ }
-  
-
-  
-  //~ });
 </script>

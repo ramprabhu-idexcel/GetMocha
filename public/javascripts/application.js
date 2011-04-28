@@ -1609,7 +1609,18 @@ function load_third_pane_message(data)
   }
 }     
 
-function replace_links(text) {
-  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-  return text.replace(exp,"<a href='$1'>$1</a>"); 
+function replace_links(text)
+{
+  if( !text ) return text;
+  text = text.replace(/((https?\:\/\/|ftp\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi,function(url){
+    nice = url;
+    if( url.match('^https?:\/\/') )
+    {
+      nice = nice.replace(/^https?:\/\//i,'')
+    }
+    else
+      url = 'http://'+url;
+    return '<a href="'+ url +'">'+ nice +'</a>';
+  });
+  return text;
 }
