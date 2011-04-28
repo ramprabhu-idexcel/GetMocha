@@ -161,7 +161,8 @@ class ProjectsController < ApplicationController
     invitation=Invitation.new(params[:invite])
     if invitation.valid?
       invitation.save
-      ProjectMailer.delay.invite_people(current_user,invitation)
+			@project=Project.find(invitation.project_id)
+      ProjectMailer.delay.invite_people(current_user,invitation,@project)
     end
     render :nothing=>true
   end
