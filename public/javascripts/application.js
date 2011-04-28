@@ -64,6 +64,7 @@ $(document).ready(function() {
   }
 
   $('.user_drop_down').click(function(){
+    $(this).toggleClass('expand');
     $('.account-dropdown').toggle();
     return false;
   });
