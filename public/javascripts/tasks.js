@@ -297,6 +297,10 @@ return false;
       success:function(data)
       { 
         display_star_count(data.count);
+        if(parent_div.hasClass('starred'))
+        $('#task_star').css('background-position','-108px -29px');
+        else
+        $('#task_star').css('background-position','-108px -59px');
       }
     });
     return false;
