@@ -105,7 +105,7 @@ class ProjectMailer < ActionMailer::Base
     #~ @content_type="multipart/html"
   end
  	def author
-    	"#{self.user.name} at  #{self.created_at.strftime('%I:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
+    	"#{self.user.name} at  #{self.created_at.strftime('%l:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
     end
   def task_assign_notification(user,task)
     @user = user
