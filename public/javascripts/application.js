@@ -188,7 +188,11 @@ $(document).ready(function() {
         success:function(data)
         { 
           display_star_count(data.count);
-        }
+          if($('.message.messow.open').children('.left-icons').children('a.message-star.secpan').css('display')=="block")
+            $('#message_star').css('background-position','-108px -29px');
+          else
+            $('#message_star').css('background-position','-108px -59px');
+          }
       });
       return false;
     });
