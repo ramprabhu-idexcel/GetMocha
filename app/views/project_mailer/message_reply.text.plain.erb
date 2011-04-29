@@ -1,5 +1,5 @@
 ##Type above this line to post a reply to this message##
-<br/><%=raw @comment.comment_notify%><br/>
+<br/><br/><%=raw @comment.comment_notify%><br/>
 			<% @comment.attachments.each do |attach| %>
 			<br/>
 						<a href="<%= APP_CONFIG[:site_url] %>/file_download_from_email/<%=attach.id%>"><%=attach.filename%></a> <br/>
