@@ -64,10 +64,10 @@ class Comment < ActiveRecord::Base
     "#{self.user.name} at  #{self.created_at.strftime('%l:%M %p')} on #{self.created_at.strftime('%B %d, %Y') }"
   end
   def task_comment_notify
-    "Author: #{self.author} <br/> Comment: #{self.comment}"
+    "Author: #{self.author} <br/><br/> #{self.comment}"
   end
   def comment_notify
-		"Author: #{self.author} <br/> Comment: #{self.comment}"
+		"Author: #{self.author} <br/><br/> #{self.comment}"
 	end
   def comment_data
     {:comment=>self.user.hash_activities_comments(self.id),:attach=>!self.attachments.blank? }
