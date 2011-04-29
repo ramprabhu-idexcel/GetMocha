@@ -24,13 +24,9 @@
 		<!--[if lte IE 9]>
 		<link rel="stylesheet" type="text/css" href="/styles/ie.css" />
 	<![endif]-->
-    <script src="/javascripts/socky.js" type="text/javascript"></script>
-    <script src="/javascripts/socky/swfobject.js" type="text/javascript"></script>
-    <script src="/javascripts/socky/FABridge.js" type="text/javascript"></script>
-    <script src="/javascripts/socky/web_socket.js" type="text/javascript"></script>
-    <script src="/javascripts/socky/json2.js" type="text/javascript"></script>
 
-      <%= javascript_include_tag 'jquery-1.4.4.min','jquery-latest','jquery.bgiframe.min','size-container','open','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete','jscolor'%>
+    <%= javascript_include_tag 'socky','/javascripts/socky/swfobject','/javascripts/socky/FABridge','/javascripts/socky/web_socket','/javascripts/socky/json2'%>
+    <%= javascript_include_tag 'jquery-1.4.4.min','jquery-latest','jquery.bgiframe.min','size-container','open','jquery.validate','date', 'colorpicker','eye','utils','jquery.fileupload-ui','jquery.fileupload','json2','application','jquery.autocomplete','jscolor'%>
     <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
     <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
  <!--[if lt IE 7]>
@@ -106,6 +102,10 @@
 <script>
     function showTriggered(event)
 		 {
+		 if(event.identifier=="TAB")
+		 {
+		 $('#chat-message').focus()
+		 }
 		  if(event.identifier=='ENTER')
       {
 					if ($('#add_new_mods').css('display')=="block")
@@ -215,7 +215,11 @@
 			if(event.identifier=='ENTER_M')
 			{
 			if ($('#add_new_mods').css('display')=="block")
+			{
+							    $('#add_new_mods').hide();
+							$('#add_new_mod').hide();
 				short_modal1('/messages/new');
+				}
 			}
 			if(event.identifier=='ENTER_T')
 			{
@@ -270,6 +274,7 @@
   shortcutHandler.registerShortcut('Q',goog.events.KeyCodes.Q);
   shortcutHandler.registerShortcut('R',goog.events.KeyCodes.R);
 	shortcutHandler.registerShortcut('U',goog.events.KeyCodes.U);
+	shortcutHandler.registerShortcut('TAB',goog.events.KeyCodes.TAB);
 
 //	shortcutHandler.registerShortcut('T',goog.events.KeyCodes.T);
 	shortcutHandler.registerShortcut('E',goog.events.KeyCodes.E);

@@ -31,10 +31,10 @@ GetMocha::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
   #~ config.action_controller.asset_host = "https://mocha-asset%d.s3.amazonaws.com"
-  #~ config.action_controller.asset_host = "https://asset%d.getmocha.com"
-  #~ ActionController::Base.asset_host = Proc.new { |source|
-    #~ "http://asset#{source.hash % 2 + 2 }.getmocha.com"
-  #~ }
+  #~ config.action_controller.asset_host = "http://asset%d.getmocha.com"
+  ActionController::Base.asset_host = Proc.new { |source|
+    "http://asset#{source.hash % 2 + 1 }.getmocha.com"
+  }
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify

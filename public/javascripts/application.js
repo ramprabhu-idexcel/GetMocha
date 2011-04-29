@@ -64,6 +64,7 @@ $(document).ready(function() {
   }
 
   $('.user_drop_down').click(function(){
+    $(this).toggleClass('expand');
     $('.account-dropdown').toggle();
     return false;
   });
@@ -231,9 +232,9 @@ $(document).ready(function() {
     });
     function display_star_count(count){
       if(count==0)
-        $('a.starred.starred_count').html('<span class="icon"></span>Starred' );
+        $('a.starred').html('<span class="icon"></span>Starred' );
       else
-        $('a.starred.starred_count').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
+        $('a.starred').html('<span class="num-tasks">'+count+'</span><span class="icon"></span>Starred' );
     }
     //delete the messages
     $('#trash_message').live('click',function(){
@@ -1609,7 +1610,18 @@ function load_third_pane_message(data)
   }
 }     
 
-function replace_links(text) {
-  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-  return text.replace(exp,"<a href='$1'>$1</a>"); 
+function replace_links(text)
+{
+  if( !text ) return text;
+  text = text.replace(/((https?\:\/\/|ftp\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi,function(url){
+    nice = url;
+    if( url.match('^https?:\/\/') )
+    {
+      nice = nice.replace(/^https?:\/\//i,'')
+    }
+    else
+      url = 'http://'+url;
+    return '<a href="'+ url +'">'+ nice +'</a>';
+  });
+  return text;
 }

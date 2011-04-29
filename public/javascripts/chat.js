@@ -43,7 +43,7 @@
           $.prev_user_id=data[1].id;
           var chat_content='<div class="message recent '+chat_class+'"><div class="color" style="background-color:#'+data[1].color+'"></div>';
           chat_content+='<div class="name"><span>'+data[1].name+'</span></div>';
-          chat_content+='<div class="content most-recent">'+data[2];
+          chat_content+='<div class="content most-recent">'+replace_links(data[2]);
           var image_attachments=data[4].attach_image;
           var file_attachments=data[4].attached_documents;
           if(file_attachments.length>0 || image_attachments.length>0)
